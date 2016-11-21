@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://appconfig.aura.nav.no http://maven.adeo.no/xsd/appconfig.xsd">
+
+    <name>moteoversiktfssfront</name>
+
+    <selftest>
+        <path>moteoversikt/internal/selftest</path>
+        <humanReadablePath>moteoversikt/internal/selftest</humanReadablePath>
+    </selftest>
+
+    <artifacts>
+        <ear groupId="no.nav.sbl" artifactId="moteoversiktfssfront-ear"/>
+    </artifacts>
+
+    <security serviceUserResourceAlias="srvmoteoversiktfssfront">
+        <logins>
+            <spnego/>
+        </logins>
+    </security>
+
+    <resources>
+        <baseUrl alias="modapp" mapToProperty="modapp"/>
+        <baseUrl alias="sykefravaerapi.fss" mapToProperty="sykefravaerapi.fss"/>
+    </resources>
+
+    <loadBalancer isAlive="/moteoversikt/internal/isAlive" />
+</application>

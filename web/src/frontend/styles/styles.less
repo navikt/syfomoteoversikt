@@ -1,0 +1,67 @@
+@modigFrontendBaseUrl: "../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less";
+
+@import "@{modigFrontendBaseUrl}/includes/variables";
+
+@modig-frontend-images-root-url: "/sykefravaer/img/modig-frontend";
+
+@import "@{modigFrontendBaseUrl}/includes/mixins/mixins-grid";
+@import "@{modigFrontendBaseUrl}/includes/mixins/mixins-knapper";
+@import "@{modigFrontendBaseUrl}/includes/mixins/mixins-typografi";
+@import "@{modigFrontendBaseUrl}/includes/mixins/mixins-utils";
+
+@import "@{modigFrontendBaseUrl}/includes/mixins/mixins-utils";
+
+@import "@{modigFrontendBaseUrl}/nav_extra/paneler";
+@import "@{modigFrontendBaseUrl}/nav_extra/hoder";
+@import "@{modigFrontendBaseUrl}/nav_extra/utilities";
+@import "@{modigFrontendBaseUrl}/nav_extra/knapperader";
+@import "@{modigFrontendBaseUrl}/nav_extra/skjema";
+@import "@{modigFrontendBaseUrl}/nav_extra/modaler";
+@import "@{modigFrontendBaseUrl}/nav_extra/hjelpetekst";
+@import "@{modigFrontendBaseUrl}/nav_extra/validering";
+
+@import "vendor/_normalize";
+@import "vendor/_loader";
+@import "vendor/_grid";
+@import "_variables";
+@import "_app";
+@import "_utils";
+
+.mixin-panel-padding() {
+    padding-left: 1rem; 
+    padding-right: 1rem; 
+
+    @media(min-width: @screen-xs) {
+        padding-left: 2rem; 
+        padding-right: 2rem; 
+    }
+}
+
+.redaksjonelt-innhold {
+
+    // Brukes på redaktørstyrt HTML.
+
+    line-height: 1.6; 
+
+    h2, h3, h4 {
+        .mixin-typo-element(); 
+        margin-top: 20px;
+        margin-bottom: 0; 
+    }
+
+}
+
+.select-container {
+    box-sizing: border-box;
+}
+
+select.input-xxl {
+    padding-left: .45rem;
+    width: ~'calc(100% - 1.7rem - .45rem - 2px)';
+    max-width: ~'calc(420px - 1.7rem - .45rem - 2px)';
+
+    option {
+        line-height: 2;
+        .mixin-typo-infotekst();
+    }
+}
