@@ -21,7 +21,6 @@
 
     <resources>
         <baseUrl alias="modapp" mapToProperty="modapp"/>
-        <baseUrl alias="sykefravaerapi.fss" mapToProperty="sykefravaerapi.fss"/>
     </resources>
 
     <loadBalancer isAlive="/moteoversikt/internal/isAlive" />
