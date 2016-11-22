@@ -6,7 +6,7 @@ import * as actions from '../actions/moter_actions';
 export function* hentMoter(action) {
     yield put(actions.henterMoter());
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?fnr=${action.fnr}`);
+        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?veiledersmoter=true`);
         yield put(actions.moterHentet(data));
     } catch (e) {
         yield put(actions.hentMoterFeilet());

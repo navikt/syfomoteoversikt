@@ -1,7 +1,6 @@
-export function hentMoter(fnr) {
+export function hentMoter() {
     return {
         type: 'HENT_MOTER_FORESPURT',
-        fnr,
     };
 }
 

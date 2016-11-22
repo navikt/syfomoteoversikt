@@ -3,15 +3,18 @@ import { connect } from 'react-redux';
 import Side from '../sider/Side';
 import Feilmelding from '../components/Feilmelding';
 import AppSpinner from '../components/AppSpinner';
+import Moter from '../components/Moter';
 import * as moterActions from '../actions/moter_actions';
+
 
 export class MoteSide extends Component {
     constructor(props) {
         super(props);
     }
 
+
     render() {
-        const { henter, hentMoterFeiletBool, mote } = this.props;
+        const { henter, hentMoterFeiletBool, moter } = this.props;
         return (<Side tittel="Møteoversikt">
             {
                 (() => {
@@ -21,10 +24,10 @@ export class MoteSide extends Component {
                     if (hentMoterFeiletBool) {
                         return <Feilmelding />;
                     }
-                    if (mote) {
-                        return <p>Her kommer mer</p>;
+                    if (moter) {
+                        return <Moter moter={moter} />;
                     }
-                    return <p>Her kommer mer</p>;
+                    return <p>Bruker har ingen møter</p>;
                 })()
             }
         </Side>);
@@ -32,18 +35,16 @@ export class MoteSide extends Component {
 }
 
 MoteSide.propTypes = {
-    fnr: PropTypes.string,
-    mote: PropTypes.object,
+    moter: PropTypes.array,
     hentMoter: PropTypes.func,
     henter: PropTypes.bool,
     hentMoterFeiletBool: PropTypes.bool,
 };
 
 export const mapStateToProps = (state) => {
-
     return {
         henter: state.moter.henter,
-        sender: state.moter.sender,
+        moter: state.moter.data
     };
 };
 
