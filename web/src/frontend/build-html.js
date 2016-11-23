@@ -19,7 +19,7 @@ var dev = {
 
 var prod = {
     timestamp: timestamp,
-    buildRoot: '/moteoversiktfssfront/js',
+    buildRoot: '/moteoversikt/js',
     restRoot: '/mote/rest',
     bundleFileName: 'bundle-prod.js',
     decoratorRoot: '',
