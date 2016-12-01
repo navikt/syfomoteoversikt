@@ -101,6 +101,8 @@
     "mock-socket": "6.0.1",
     "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-3.0.23",
     "mustache": "2.2.1",
+    "nav-frontend-core": "1.0.10",
+    "nav-frontend-typografi-design": "1.0.2",
     "nodemon": "1.8.1",
     "nyc": "8.3.2",
     "parallelshell": "2.0.0",

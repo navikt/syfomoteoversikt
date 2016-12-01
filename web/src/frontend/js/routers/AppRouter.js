@@ -4,8 +4,8 @@ import MoteContainer from '../containers/MoteContainer';
 
 const AppRouter = ({ history }) => {
     return (<Router history={history}>
-        <Route path="/moteoversikt" component={MoteContainer}/>
-        <Route path="/" component={MoteContainer}/>
+        <Route path="/moteoversikt" component={MoteContainer} />
+        <Route path="/" component={MoteContainer} />
     </Router>);
 };
 

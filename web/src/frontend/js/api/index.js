@@ -1,4 +1,4 @@
-import { getCookie, log } from 'digisyfo-npm';
+import { log } from 'digisyfo-npm';
 
 export function get(url) {
     return fetch(url, {

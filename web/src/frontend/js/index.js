@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
-import { ledetekster, hentLedetekster } from 'digisyfo-npm';
+import { ledetekster } from 'digisyfo-npm';
 import moter from './reducers/moter';
 import rootSaga from './sagas/index';
 import { hentMoter } from './actions/moter_actions';

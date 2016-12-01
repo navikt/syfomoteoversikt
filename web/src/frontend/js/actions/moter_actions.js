@@ -22,5 +22,3 @@ export function hentMoterFeilet() {
         type: 'HENT_MOTER_FEILET',
     };
 }
-
-

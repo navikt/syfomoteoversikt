@@ -1,0 +1,44 @@
+.moteoversikt {
+    border-top: 1px solid @ikonGraa;
+    padding-top: 1em;
+}
+
+.motetabell {
+    width: 100%; 
+    border-collapse: collapse;
+
+    th, td {
+        border-bottom: 1em solid @bakgrunnGraa;
+        padding: 1em;
+    }
+
+    th {
+        color: @hvit;
+        background: @navTekst;
+        text-align: left;
+        .mixin-typo-etikettStor();
+    }
+
+    td {
+        background: @hvit;
+        .mixin-typo-normal();
+    }
+
+}
+
+.veileder {
+    padding-bottom: 1em;
+}
+
+.veileder__navn {
+    margin: 0;
+    margin-bottom: 2em;
+    .mixin-typo-etikettStor();
+    padding-bottom: .5em;
+    display: inline-block;
+    border-bottom: .25em @navTekst solid;
+}
+
+.moteoversikt__meta {
+    .mixin-typo-element();
+}

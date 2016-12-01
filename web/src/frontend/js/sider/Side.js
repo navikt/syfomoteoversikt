@@ -2,11 +2,9 @@ import React, { PropTypes } from 'react';
 const DocumentTitle = require('react-document-title');
 
 const Side = ({ tittel = '', children }) => {
-    return (<DocumentTitle title='Møteoversikt'>
+    return (<DocumentTitle title={tittel}>
         <div className="container">
-            <div>
-                {children}
-            </div>
+            {children}
         </div>
     </DocumentTitle>);
 };

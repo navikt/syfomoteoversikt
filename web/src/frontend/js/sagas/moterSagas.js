@@ -1,9 +1,9 @@
 import { call, put, fork } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
-import { post, get } from '../api/index';
+import { get } from '../api/index';
 import * as actions from '../actions/moter_actions';
 
-export function* hentMoter(action) {
+export function* hentMoter() {
     yield put(actions.henterMoter());
     try {
         const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?veiledersmoter=true`);
