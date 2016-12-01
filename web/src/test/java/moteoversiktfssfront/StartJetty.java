@@ -13,7 +13,7 @@ import static no.nav.modig.lang.collections.RunnableUtils.waitFor;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 
 public class StartJetty {
-    private static final int PORT = 8190;
+    private static final int PORT = 8290;
 
     public static void main(String[] args) throws Exception {
         setProperty(SUBJECTHANDLER_KEY, StaticSubjectHandler.class.getName());

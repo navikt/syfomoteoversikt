@@ -8,7 +8,7 @@ var timestamp = Date.now().toString();
 
 var dev = {
     timestamp: timestamp,
-    buildRoot: 'http://localhost:3040/assets',
+    buildRoot: 'http://localhost:3050/assets',
     restRoot: 'http://localhost:8185/mote/rest',
     bundleFileName: 'bundle.js',
     decoratorRoot: 'https://modapp-q1.adeo.no',
