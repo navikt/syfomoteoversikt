@@ -6,7 +6,7 @@ import AppSpinner from '../components/AppSpinner';
 import Moter from '../components/Moter';
 import * as moterActions from '../actions/moter_actions';
 
-const Moteside = ({ henter, hentMoterFeiletBool, moter }) => {
+const Moteside = ({ henter, hentMoterFeiletBool, moter, veileder }) => {
     return (<Side tittel="Møteoversikt">
         {
             (() => {
@@ -17,7 +17,7 @@ const Moteside = ({ henter, hentMoterFeiletBool, moter }) => {
                     return <Feilmelding />;
                 }
                 if (moter) {
-                    return <Moter moter={moter} />;
+                    return <Moter veileder={veileder} moter={moter} />;
                 }
                 return <p>Bruker har ingen møter</p>;
             })()
@@ -29,13 +29,15 @@ Moteside.propTypes = {
     moter: PropTypes.array,
     henter: PropTypes.bool,
     hentMoterFeiletBool: PropTypes.bool,
+    veileder: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => {
     return {
         hentMoterFeiletBool: state.moter.hentingFeilet,
-        henter: state.moter.henter,
+        henter: state.moter.henter || state.veileder.henter,
         moter: state.moter.data,
+        veileder: state.veileder.data,
     };
 };
 

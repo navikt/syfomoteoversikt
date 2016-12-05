@@ -5,18 +5,47 @@ const statuser = {
     AVBRUTT: 'Avbrutt',
     BEKREFTET: 'Bekreftet',
     OPPRETTET: 'Opprettet',
+    SVAR_MOTTATT: 'Svar mottatt',
 };
 
-const Mote = ({ status, opprettetTidspunkt, leder }) => {
+export const erSvarMottatt = (mote) => {
+    let svar = mote.deltakere.map((deltaker) => {
+        return deltaker.svar;
+    });
+    svar = [].concat.apply([], svar);
+    const mottatteSvar = svar.filter((s) => {
+        return s.valgt;
+    });
+    let mottatteAvvik = mote.deltakere.map((deltaker) => {
+        return deltaker.avvik;
+    });
+    mottatteAvvik = [].concat.apply([], mottatteAvvik);
+    return mottatteSvar.length > 0 || mottatteAvvik.length > 0;
+};
+
+export const setMoteStatus = (mote) => {
+    if (mote.status === 'BEKREFTET' || mote.status === 'AVBRUTT') {
+        return mote;
+    }
+    const svarMottatt = erSvarMottatt(mote);
+    if (svarMottatt) {
+        return Object.assign({}, mote, {
+            status: 'SVAR_MOTTATT',
+        });
+    }
+    return mote;
+};
+
+const Mote = ({ status, opprettetTidspunkt, leder, bruker }) => {
     return (<tr>
         <td>
-            Mangler
+            {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
         </td>
         <td>
-            Mangler
+            {bruker && bruker.navn ? bruker.navn : 'Ukjent navn'}
         </td>
         <td>
-            {leder.navn}
+            {leder && leder.navn ? leder.navn : 'Ukjent'}
         </td>
         <td>
             {getDatoFraZulu(opprettetTidspunkt)}
@@ -30,7 +59,8 @@ const Mote = ({ status, opprettetTidspunkt, leder }) => {
 Mote.propTypes = {
     status: PropTypes.string,
     opprettetTidspunkt: PropTypes.string,
-    leder: PropTypes.string,
+    leder: PropTypes.object,
+    bruker: PropTypes.object,
 };
 
 const Moteoversikt = ({ moter }) => {
@@ -56,10 +86,13 @@ const Moteoversikt = ({ moter }) => {
                     }
                     return 0;
                 }).map((mote, index) => {
-                    const leder = mote.deltakere.filter((deltaker) => {
-                        return deltaker.type === 'arbeidsgiver';
+                    const bruker = mote.deltakere.filter((deltaker) => {
+                        return deltaker.type.toUpperCase() === 'BRUKER';
                     })[0];
-                    return <Mote key={index} {...mote} leder={leder} />;
+                    const leder = mote.deltakere.filter((deltaker) => {
+                        return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
+                    })[0];
+                    return <Mote key={index} {...mote} leder={leder} bruker={bruker} />;
                 })}
             </tbody>
         </table>
@@ -70,24 +103,28 @@ Moteoversikt.propTypes = {
     moter: PropTypes.array,
 };
 
-const Moter = ({ moter }) => {
+const Moter = ({ veileder, moter }) => {
+    const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
+        return mote.status !== 'AVBRUTT';
+    });
     return (<div>
         <header className="veileder">
-            <h2 className="veileder__navn">BERIT STENERSEN</h2>
+            <h2 className="veileder__navn">{veileder.navn}</h2>
         </header>
         {
-            moter.length === 0 && (<div className="panel">
-                <p>Du har ingen møter.</p>
+            moterMedStatus.length === 0 && (<div className="panel">
+                <p>Du har ingen aktive møter.</p>
             </div>)
         }
         {
-            moter.length > 0 && <Moteoversikt moter={moter} />
+            moterMedStatus.length > 0 && <Moteoversikt moter={moterMedStatus} />
         }
     </div>);
 };
 
 Moter.propTypes = {
     moter: PropTypes.array,
+    veileder: PropTypes.object,
 };
 
 export default Moter;
