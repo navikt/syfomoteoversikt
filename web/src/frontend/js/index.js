@@ -9,13 +9,16 @@ import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
 import { ledetekster } from 'digisyfo-npm';
 import moter from './reducers/moter';
+import veileder from './reducers/veileder';
 import rootSaga from './sagas/index';
 import { hentMoter } from './actions/moter_actions';
+import { hentVeileder } from './actions/veileder_actions';
 
 const rootReducer = combineReducers({
     history,
     moter,
     ledetekster,
+    veileder,
     form: formReducer,
 });
 
@@ -28,6 +31,7 @@ const store = createStore(rootReducer,
 sagaMiddleware.run(rootSaga);
 
 store.dispatch(hentMoter());
+store.dispatch(hentVeileder());
 
 render(<Provider store={store}>
         <AppRouter history={history} /></Provider>,
