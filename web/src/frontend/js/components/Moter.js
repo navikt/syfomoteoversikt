@@ -46,6 +46,15 @@ class Mote extends Component {
     render() {
         const { status, opprettetTidspunkt, leder, bruker } = this.props;
 
+        let virksomhetsnavn;
+        if (leder && leder.virksomhet) {
+            virksomhetsnavn = leder.virksomhet;
+        } else if (leder && leder.orgnummer) {
+            virksomhetsnavn = 'Henter virksomhet...';
+        } else {
+            virksomhetsnavn = 'Fant ikke virksomheten';
+        }
+
         return (<tr>
             <td>
                 {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
@@ -57,7 +66,7 @@ class Mote extends Component {
                 {leder && leder.navn ? leder.navn : 'Ukjent'}
             </td>
             <td>
-                {leder && leder.virksomhet ? leder.virksomhet : leder.orgnummer ? 'Henter virksomhet...' : 'Fant ikke virksomheten'}
+                {virksomhetsnavn}
             </td>
             <td>
                 {getDatoFraZulu(opprettetTidspunkt)}
@@ -74,6 +83,7 @@ Mote.propTypes = {
     opprettetTidspunkt: PropTypes.string,
     leder: PropTypes.object,
     hentVirksomhet: PropTypes.func,
+    moteUuid: PropTypes.string,
     bruker: PropTypes.object,
 };
 
@@ -116,6 +126,7 @@ const Moteoversikt = ({ moter, hentVirksomhet }) => {
 
 Moteoversikt.propTypes = {
     moter: PropTypes.array,
+    hentVirksomhet: PropTypes.func,
 };
 
 const Moter = ({ veileder, moter, hentVirksomhet }) => {
@@ -140,6 +151,7 @@ const Moter = ({ veileder, moter, hentVirksomhet }) => {
 Moter.propTypes = {
     moter: PropTypes.array,
     veileder: PropTypes.object,
+    hentVirksomhet: PropTypes.func,
 };
 
 export default Moter;
