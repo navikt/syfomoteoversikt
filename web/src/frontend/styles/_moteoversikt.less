@@ -33,12 +33,23 @@
 .veileder__navn {
     margin: 0;
     margin-bottom: 2em;
-    .mixin-typo-etikettStor();
+    background: url("/moteoversikt/img/nav-frontend-grafikk/ikoner/person.svg") no-repeat left top;
+    background-size: 1.2em 1.2em;
+    padding-left: 1.5em;
+    .mixin-typo-undertittel();
     padding-bottom: .5em;
     display: inline-block;
-    border-bottom: .25em @navTekst solid;
+    border-bottom: 2px @navTekst solid;
 }
 
 .moteoversikt__meta {
     .mixin-typo-element();
+}
+
+.motestatus--svar_mottatt {
+    color: @suksessGroenn;
+}
+
+.motestatus--opprettet {
+    color: @advarselRoed;
 }
