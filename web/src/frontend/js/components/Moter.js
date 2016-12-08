@@ -52,7 +52,7 @@ const Mote = ({ status, opprettetTidspunkt, leder, bruker }) => {
         </td>
         <td>
             <span className={`motestatus motestatus--${status.toLowerCase()}`}>
-                <img src={`/moteoversikt/img/svg/status_${status.toLowerCase()}.svg`} />
+                <img src={`/moteoversikt/img/svg/status_${status.toLowerCase()}.svg`} alt="" />
                 <span>{statuser[status]}</span>
             </span>
         </td>
@@ -175,7 +175,7 @@ const Moter = ({ moter }) => {
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt moter={moter} />
+            moterMedStatus.length > 0 && <Moteoversikt moter={moterMedStatus} />
         }
     </div>);
 };
