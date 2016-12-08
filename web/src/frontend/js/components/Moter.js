@@ -160,7 +160,7 @@ Moteoversikt.propTypes = {
     moter: PropTypes.array,
 };
 
-const Moter = ({ moter, veileder }) => {
+const Moter = ({ moter }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
@@ -182,7 +182,6 @@ const Moter = ({ moter, veileder }) => {
 
 Moter.propTypes = {
     moter: PropTypes.array,
-    veileder: PropTypes.object,
 };
 
 export default Moter;
