@@ -1,0 +1,24 @@
+import { call, put, fork } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga';
+import { get } from '../api/index';
+import * as actions from '../actions/bruker_actions';
+
+export function* hentBruker(action) {
+    yield put(actions.henterBruker());
+    try {
+        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/brukerinfo/${action.fnr}`);
+        yield put(actions.brukerHentet(data, action.moteUuid));
+    } catch (e) {
+        yield put(actions.hentBrukerFeilet());
+    }
+}
+
+function* watchHentBruker() {
+    yield* takeEvery('HENT_BRUKER_FORESPURT', hentBruker);
+}
+
+export default function* brukerSagas() {
+    yield [
+        fork(watchHentBruker),
+    ];
+}
