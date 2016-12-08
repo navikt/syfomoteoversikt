@@ -3,7 +3,7 @@ import { getDatoFraZulu } from '../utils/index';
 
 const statuser = {
     AVBRUTT: 'Avbrutt',
-    BEKREFTET: 'Bekreftet',
+    BEKREFTET: 'Ikke svart',
     OPPRETTET: 'Opprettet',
     SVAR_MOTTATT: 'Svar mottatt',
 };
@@ -39,10 +39,10 @@ export const setMoteStatus = (mote) => {
 const Mote = ({ status, opprettetTidspunkt, leder, bruker }) => {
     return (<tr>
         <td>
-            {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
+            {bruker && bruker.fnr ? <a href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.fnr}</a> : 'Ukjent fnr'}
         </td>
         <td>
-            {bruker && bruker.navn ? bruker.navn : 'Ukjent navn'}
+            {bruker && bruker.navn ? <a href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a> : 'Ukjent navn'}
         </td>
         <td>
             {leder && leder.navn ? leder.navn : 'Ukjent'}
@@ -50,7 +50,7 @@ const Mote = ({ status, opprettetTidspunkt, leder, bruker }) => {
         <td>
             {getDatoFraZulu(opprettetTidspunkt)}
         </td>
-        <td className={`${status.toLowerCase()}`}>
+        <td className={`motestatus--${status.toLowerCase()}`}>
             {statuser[status]}
         </td>
     </tr>);
@@ -109,7 +109,7 @@ const Moter = ({ veileder, moter }) => {
     });
     return (<div>
         <header className="veileder">
-            <h2 className="veileder__navn">{veileder.navn}</h2>
+            <h2 className="veileder__navn">{veileder.navn} ({moterMedStatus.length})</h2>
         </header>
         {
             moterMedStatus.length === 0 && (<div className="panel">
@@ -117,7 +117,7 @@ const Moter = ({ veileder, moter }) => {
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt moter={moterMedStatus} />
+            moterMedStatus.length > 0 && <Moteoversikt moter={moter} />
         }
     </div>);
 };
