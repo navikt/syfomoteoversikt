@@ -41,6 +41,37 @@ export default function moter(state = defaultState, action) {
                 avbrytFeilet: false,
             };
         }
+        case 'HENTER_VIRKSOMHET': {
+            return Object.assign({}, defaultState, {
+                data: state.data,
+            });
+        }
+        case 'VIRKSOMHET_HENTET': {
+            const data = state.data
+                .map(function (mote) {
+                    if (mote.moteUuid !== action.moteUuid) {
+                        return mote;
+                    }
+                    const deltakere = mote.deltakere.map((deltaker) => {
+                         if (deltaker.type !== 'arbeidsgiver') {
+                             return deltaker;
+                         }
+                        return Object.assign({}, deltaker, {
+                             virksomhet: action.data.navn,
+                         });
+                    });
+                    return Object.assign({}, mote, {deltakere: deltakere });
+                });
+            return Object.assign({}, defaultState, {
+                data
+            });
+        }
+        case 'HENT_VIRKSOMHET_FEILET': {
+            return Object.assign({}, defaultState, {
+                data: state.data,
+            });
+        }
+
         default: {
             return state;
         }
