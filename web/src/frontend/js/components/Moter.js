@@ -3,8 +3,8 @@ import { getDatoFraZulu } from '../utils/index';
 
 const statuser = {
     AVBRUTT: 'Avbrutt',
-    BEKREFTET: 'Ikke svart',
-    OPPRETTET: 'Opprettet',
+    BEKREFTET: 'Bekreftet',
+    OPPRETTET: 'Ikke svart',
     SVAR_MOTTATT: 'Svar mottatt',
 };
 
@@ -117,7 +117,7 @@ const Moter = ({ veileder, moter }) => {
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt moter={moter} />
+            moterMedStatus.length > 0 && <Moteoversikt moter={moterMedStatus} />
         }
     </div>);
 };
