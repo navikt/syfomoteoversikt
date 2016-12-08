@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { getDatoFraZulu } from '../utils/index';
 
 const statuser = {
@@ -35,35 +35,49 @@ export const setMoteStatus = (mote) => {
     }
     return mote;
 };
+class Mote extends Component {
 
-const Mote = ({ status, opprettetTidspunkt, leder, bruker }) => {
-    return (<tr>
-        <td>
-            {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
-        </td>
-        <td>
-            {bruker && bruker.navn ? bruker.navn : 'Ukjent navn'}
-        </td>
-        <td>
-            {leder && leder.navn ? leder.navn : 'Ukjent'}
-        </td>
-        <td>
-            {getDatoFraZulu(opprettetTidspunkt)}
-        </td>
-        <td className={`${status.toLowerCase()}`}>
-            {statuser[status]}
-        </td>
-    </tr>);
-};
+    componentDidMount() {
+        const { leder, hentVirksomhet, moteUuid } = this.props;
+        if (!leder.virksomhet && leder.orgnummer) {
+            hentVirksomhet(leder.orgnummer, moteUuid);
+        }
+    }
+    render() {
+        const { status, opprettetTidspunkt, leder, bruker } = this.props;
+
+        return (<tr>
+            <td>
+                {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
+            </td>
+            <td>
+                {bruker && bruker.navn ? bruker.navn : 'Ukjent navn'}
+            </td>
+            <td>
+                {leder && leder.navn ? leder.navn : 'Ukjent'}
+            </td>
+            <td>
+                {leder && leder.virksomhet ? leder.virksomhet : leder.orgnummer ? 'Henter virksomhet...' : 'Fant ikke virksomheten'}
+            </td>
+            <td>
+                {getDatoFraZulu(opprettetTidspunkt)}
+            </td>
+            <td className={`${status.toLowerCase()}`}>
+                {statuser[status]}
+            </td>
+        </tr>);
+    }
+}
 
 Mote.propTypes = {
     status: PropTypes.string,
     opprettetTidspunkt: PropTypes.string,
     leder: PropTypes.object,
+    hentVirksomhet: PropTypes.func,
     bruker: PropTypes.object,
 };
 
-const Moteoversikt = ({ moter }) => {
+const Moteoversikt = ({ moter, hentVirksomhet }) => {
     return (<div className="moteoversikt">
             <h3 className="moteoversikt__meta">Viser {moter.length} {moter.length === 1 ? 'møte' : 'møter'}</h3>
             <table className="motetabell">
@@ -72,6 +86,7 @@ const Moteoversikt = ({ moter }) => {
                     <th>F.nr</th>
                     <th>Navn</th>
                     <th>Nærmeste leder</th>
+                    <th>Virksomhet</th>
                     <th>Sendt dato</th>
                     <th>Status</th>
                 </tr>
@@ -92,7 +107,7 @@ const Moteoversikt = ({ moter }) => {
                     const leder = mote.deltakere.filter((deltaker) => {
                         return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
                     })[0];
-                    return <Mote key={index} {...mote} leder={leder} bruker={bruker} />;
+                    return <Mote hentVirksomhet={hentVirksomhet} key={index} {...mote} leder={leder} bruker={bruker} />;
                 })}
             </tbody>
         </table>
@@ -103,7 +118,7 @@ Moteoversikt.propTypes = {
     moter: PropTypes.array,
 };
 
-const Moter = ({ veileder, moter }) => {
+const Moter = ({ veileder, moter, hentVirksomhet }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
@@ -117,7 +132,7 @@ const Moter = ({ veileder, moter }) => {
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt moter={moterMedStatus} />
+            moterMedStatus.length > 0 && <Moteoversikt hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
         }
     </div>);
 };
