@@ -2,7 +2,7 @@ export function hentVirksomhet(orgnummer, moteUuid) {
     return {
         type: 'HENT_VIRKSOMHET_FORESPURT',
         orgnummer,
-        moteUuid
+        moteUuid,
     };
 }
 
@@ -16,7 +16,7 @@ export function virksomhetHentet(data, moteUuid) {
     return {
         type: 'VIRKSOMHET_HENTET',
         data,
-        moteUuid
+        moteUuid,
     };
 }
 
