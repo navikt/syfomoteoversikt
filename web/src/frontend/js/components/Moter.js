@@ -50,8 +50,11 @@ const Mote = ({ status, opprettetTidspunkt, leder, bruker }) => {
         <td>
             {getDatoFraZulu(opprettetTidspunkt)}
         </td>
-        <td className={`motestatus--${status.toLowerCase()}`}>
-            {statuser[status]}
+        <td>
+            <span className={`motestatus motestatus--${status.toLowerCase()}`}>
+                <img src={`/moteoversikt/img/svg/status_${status.toLowerCase()}.svg`} />
+                <span>{statuser[status]}</span>
+            </span>
         </td>
     </tr>);
 };
@@ -163,8 +166,8 @@ const Moter = ({ moter, veileder }) => {
     });
 
     return (<div>
-        <header className="veileder">
-            <h2 className="veileder__navn">{veileder.navn} ({moterMedStatus.length})</h2>
+        <header className="navigasjon">
+            <h2 className="navigasjon__element navigasjon__element--dine">Dine møter</h2>
         </header>
         {
             moterMedStatus.length === 0 && (<div className="panel">
