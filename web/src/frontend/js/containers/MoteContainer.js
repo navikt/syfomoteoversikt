@@ -6,8 +6,9 @@ import AppSpinner from '../components/AppSpinner';
 import Moter from '../components/Moter';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as moterActions from '../actions/moter_actions';
+import * as brukerActions from '../actions/bruker_actions';
 
-const Moteside = ({ henter, hentMoterFeiletBool, moter, veileder, hentVirksomhet }) => {
+const Moteside = ({ henter, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker }) => {
     return (<Side tittel="Møteoversikt">
         {
             (() => {
@@ -18,7 +19,7 @@ const Moteside = ({ henter, hentMoterFeiletBool, moter, veileder, hentVirksomhet
                     return <Feilmelding />;
                 }
                 if (moter) {
-                    return <Moter hentVirksomhet={hentVirksomhet} veileder={veileder} moter={moter} />;
+                    return <Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter} />;
                 }
                 return <p>Bruker har ingen møter</p>;
             })()
@@ -30,6 +31,7 @@ Moteside.propTypes = {
     moter: PropTypes.array,
     henter: PropTypes.bool,
     hentVirksomhet: PropTypes.func,
+    hentBruker: PropTypes.func,
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
 };
@@ -43,6 +45,6 @@ export const mapStateToProps = (state) => {
     };
 };
 
-const MoteContainer = connect(mapStateToProps, Object.assign({}, moterActions, virksomhetActions))(Moteside);
+const MoteContainer = connect(mapStateToProps, Object.assign({}, moterActions, virksomhetActions, brukerActions))(Moteside);
 
 export default MoteContainer;
