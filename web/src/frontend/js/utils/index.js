@@ -58,7 +58,7 @@ export const finnVirksomhet = (leder) => {
 
 export const finnNavn = (bruker) => {
     if (bruker && bruker.navn) {
-        return bruker.navn;
+        return <a href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a>;
     } else if (bruker && bruker.fnr) {
         return 'Henter navn...';
     }
