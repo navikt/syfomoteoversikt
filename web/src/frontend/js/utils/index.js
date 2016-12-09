@@ -1,3 +1,5 @@
+import React from 'react';
+
 const kortManeder = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
 
 export const visDato = (dato) => {
@@ -44,4 +46,23 @@ export const getDatoFraZulu = (zulutid) => {
 export const getTidFraZulu = (zulutid) => {
     const d = new Date(zulutid);
     return `${getDatoFraZulu(zulutid)} kl. ${pad(d.getHours())}.${pad(d.getMinutes())}`;
+};
+
+
+export const finnVirksomhet = (leder) => {
+    if (leder && leder.virksomhet) {
+        return leder.virksomhet;
+    } else if (leder && leder.orgnummer) {
+        return 'Henter virksomhet...';
+    }
+    return 'Fant ikke virksomheten';
+};
+
+export const finnNavn = (bruker) => {
+    if (bruker && bruker.navn) {
+        return <a href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a>;
+    } else if (bruker && bruker.fnr) {
+        return 'Henter navn...';
+    }
+    return 'Fant ikke navn';
 };
