@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { getDatoFraZulu } from '../utils/index';
+import { getDatoFraZulu, finnVirksomhet, finnNavn } from '../utils/index';
 
 const statuser = {
     AVBRUTT: 'Avbrutt',
@@ -50,36 +50,18 @@ class Mote extends Component {
     render() {
         const { status, opprettetTidspunkt, leder, bruker } = this.props;
 
-        let virksomhetsnavn;
-        if (leder && leder.virksomhet) {
-            virksomhetsnavn = leder.virksomhet;
-        } else if (leder && leder.orgnummer) {
-            virksomhetsnavn = 'Henter virksomhet...';
-        } else {
-            virksomhetsnavn = 'Fant ikke virksomheten';
-        }
-
-        let brukernavn;
-        if (bruker && bruker.navn) {
-            brukernavn = bruker.navn;
-        } else if (bruker && bruker.fnr) {
-            brukernavn = 'Henter navn...';
-        } else {
-            brukernavn = 'Fant ikke navn';
-        }
-
         return (<tr>
             <td>
                 {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
             </td>
             <td>
-                {brukernavn}
+                {finnNavn(bruker)}
             </td>
             <td>
                 {leder && leder.navn ? leder.navn : 'Ukjent'}
             </td>
             <td>
-                {virksomhetsnavn}
+                {finnVirksomhet(leder)}
             </td>
             <td>
                 {getDatoFraZulu(opprettetTidspunkt)}
