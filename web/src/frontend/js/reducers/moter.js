@@ -72,6 +72,37 @@ export default function moter(state = defaultState, action) {
             });
         }
 
+        case 'HENTER_BRUKER': {
+            return Object.assign({}, defaultState, {
+                data: state.data,
+            });
+        }
+        case 'BRUKER_HENTET': {
+            const data = state.data
+                .map((mote) => {
+                    if (mote.moteUuid !== action.moteUuid) {
+                        return mote;
+                    }
+                    const deltakere = mote.deltakere.map((deltaker) => {
+                        if (deltaker.type !== 'Bruker') {
+                            return deltaker;
+                        }
+                        return Object.assign({}, deltaker, {
+                            navn: action.data.navn,
+                        });
+                    });
+                    return Object.assign({}, mote, { deltakere });
+                });
+            return Object.assign({}, defaultState, {
+                data,
+            });
+        }
+        case 'HENT_BRUKER_FEILET': {
+            return Object.assign({}, defaultState, {
+                data: state.data,
+            });
+        }
+
         default: {
             return state;
         }
