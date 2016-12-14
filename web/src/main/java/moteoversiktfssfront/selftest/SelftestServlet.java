@@ -14,7 +14,7 @@ import static no.nav.sbl.dialogarena.types.Pingable.Ping.feilet;
 import static no.nav.sbl.dialogarena.types.Pingable.Ping.lyktes;
 
 public class SelftestServlet extends SelfTestBaseServlet{
-    private static final String APPLIKASJONS_NAVN = "Moteoversiktfssfront";
+    private static final String APPLIKASJONS_NAVN = "Moteoversiktfront";
 
     @Override
     protected String getApplicationName() {
