@@ -36,7 +36,12 @@ const Moter = ({ moter, hentVirksomhet, hentBruker }) => {
 
     return (<div>
         <header className="navigasjon">
-            <h2 className="navigasjon__element navigasjon__element--dine">Dine møter</h2>
+            <h2 className="navigasjon__element">
+                <div className="navigasjon__element__inner">
+                    <img src="/moteoversikt/img/nav-frontend-grafikk/ikoner/person.svg" alt="Du" />
+                    <span>Dine møter</span>
+                </div>
+            </h2>
         </header>
         {
             moterMedStatus.length === 0 && (<div className="panel">

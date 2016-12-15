@@ -60,20 +60,23 @@
 }
 
 .navigasjon__element {
+    display: inline-block;
     padding-top: .25em;
     padding-bottom: .5em;
     padding-right: .5em;
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: 1.5em 1.5em;
-    padding-left: 2em;
     margin: 0;
     .mixin-typo-element();
     text-transform: uppercase;
-    display: inline-block;
     border-bottom: 4px @lenkeBlaa solid;
 }
 
-.navigasjon__element--dine {
-    background-image: url("/moteoversikt/img/nav-frontend-grafikk/ikoner/person.svg");
+.navigasjon__element__inner {
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: .5em;
+    }
 }
