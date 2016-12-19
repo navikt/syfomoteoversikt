@@ -61,12 +61,12 @@ class Moteoversikt extends Component {
                 <table className="motetabell">
                     <thead>
                     <tr>
-                        <th>F.nr</th>
-                        <th>Navn</th>
-                        <th>Nærmeste leder</th>
-                        <th>Virksomhet</th>
-                        <th>Sendt dato</th>
-                        <th>Status</th>
+                        <th scope="col">F.nr</th>
+                        <th scope="col">Navn</th>
+                        <th scope="col">Nærmeste leder</th>
+                        <th scope="col">Virksomhet</th>
+                        <th scope="col">Sendt dato</th>
+                        <th scope="col">Status</th>
                     </tr>
                     </thead>
                     <tbody>
