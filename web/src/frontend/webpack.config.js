@@ -4,7 +4,7 @@ var stylesPath = path.resolve(__dirname, 'styles', 'styles.less');
 var mainPath = path.resolve(__dirname, 'js', 'index.js');
 
 module.exports = {
-    entry: ['babel-polyfill', mainPath, stylesPath],
+    entry: [mainPath, stylesPath],
     output: {
         path: path.resolve(__dirname, "build"),
         publicPath: "http://localhost:3050/assets/",

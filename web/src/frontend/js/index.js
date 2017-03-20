@@ -37,6 +37,17 @@ render(<Provider store={store}>
         <AppRouter history={history} /></Provider>,
     document.getElementById('maincontent'));
 
+document.addEventListener('DOMContentLoaded', () => {
+    const config = {
+        config: {
+            toggles: {
+            },
+            applicationName: 'Oversikt dialogmøter',
+        }
+    };
+    renderDecoratorHead(config);
+});
+
 export {
     store,
     history,
