@@ -21,6 +21,7 @@
 
     <resources>
         <baseUrl alias="modapp" mapToProperty="modapp"/>
+        <rest alias="iadecorator-js" mapToProperty="iadecorator"/>
     </resources>
 
     <loadBalancer isAlive="/moteoversikt/internal/isAlive" />
