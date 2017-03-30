@@ -13,11 +13,7 @@
         <ear groupId="no.nav.sbl" artifactId="moteoversiktfssfront-ear"/>
     </artifacts>
 
-    <security serviceUserResourceAlias="srvmoteoversiktfront">
-        <logins>
-            <spnego/>
-        </logins>
-    </security>
+    <security serviceUserResourceAlias="srvmoteoversiktfront" />
 
     <resources>
         <baseUrl alias="modapp" mapToProperty="modapp"/>
