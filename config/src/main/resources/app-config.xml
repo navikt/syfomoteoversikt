@@ -16,6 +16,7 @@
     <security serviceUserResourceAlias="srvmoteoversiktfront" />
 
     <resources>
+        <rest alias="oidc-login-api" mapToProperty="oidc-redirect"/>
         <baseUrl alias="modapp" mapToProperty="modapp"/>
         <rest alias="iadecorator-js" mapToProperty="iadecorator"/>
     </resources>
