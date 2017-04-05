@@ -18,12 +18,11 @@
     </properties>
 
     <dependencies>
-
-        <!--<dependency>-->
-            <!--<groupId>no.nav.dialogarena</groupId>-->
-            <!--<artifactId>oidc-security</artifactId>-->
-            <!--<type>test-jar</type>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>no.nav.dialogarena</groupId>
+            <artifactId>oidc-security</artifactId>
+            <type>test-jar</type>
+        </dependency>
         <dependency>
             <groupId>no.nav.dialogarena</groupId>
             <artifactId>oidc-security</artifactId>
