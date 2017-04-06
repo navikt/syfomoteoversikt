@@ -41,14 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const config = {
         config: {
             toggles: {
-                visEnhet: true,
                 visEnhetVelger: true,
                 visVeileder: true,
                 visSokefelt: true,
             },
             applicationName: 'Oversikt dialogmøter',
+            handleChangeEnhet: (enhet) => {
+                console.log(enhet);
+            },
         }
     };
+
     renderDecoratorHead(config);
 });
 
