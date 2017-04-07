@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 visEnhetVelger: true,
                 visVeileder: true,
                 visSokefelt: true,
+                overrideenhetersaga: true,
+                overrideveiledersaga: true,
             },
             applicationName: 'Oversikt dialogmøter',
             handleChangeEnhet: (enhet) => {
