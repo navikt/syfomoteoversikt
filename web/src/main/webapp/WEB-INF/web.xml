@@ -37,6 +37,10 @@
         </auth-constraint>
     </security-constraint>
 
+    <security-role>
+        <role-name>0000-GA-BD06_ModiaGenerellTilgang</role-name>
+    </security-role>
+
 
     <filter>
         <filter-name>charEncodingFilter</filter-name>
