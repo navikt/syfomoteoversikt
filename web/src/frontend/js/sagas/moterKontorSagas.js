@@ -6,7 +6,7 @@ import * as actions from '../actions/moterKontor_actions';
 export function* hentKontoretsMoter(action) {
     yield put(actions.henterKontoretsMoter());
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=${action.enhet.value}`);
+        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=${action.enhet}`);
         yield put(actions.kontoretsMoterHentet(data));
     } catch (e) {
         yield put(actions.hentKontoretsMoterFeilet());
