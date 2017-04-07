@@ -51,6 +51,8 @@ Mote.propTypes = {
     hentBruker: PropTypes.func,
     moteUuid: PropTypes.string,
     bruker: PropTypes.object,
+    visMoter: PropTypes.func,
+    visMoterKontor: PropTypes.func,
 };
 
 export default Mote;
