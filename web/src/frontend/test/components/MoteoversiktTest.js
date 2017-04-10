@@ -12,25 +12,25 @@ describe('Moteovertsikt deltakerSvarStatus', () =>{
     it('skal vise 0 svar', () => {
         const mote = getMote();
         const svarStatus = deltakerSvarStatus(mote);
-        expect(svarStatus).to.equal(svarStatuser.INGEN_SVAR);
+        expect(svarStatus).to.equal('0/2 Svar');
     });
 
     it('skal vise 1 svar', () => {
         const mote = getMoteMedEttSvar();
         const svarStatus = deltakerSvarStatus(mote);
-        expect(svarStatus).to.equal(svarStatuser.ETT_SVAR);
+        expect(svarStatus).to.equal('1/2 Svar');
     });
 
     it('skal vise 2 svar når begge har svart på et alternativ', () => {
-            const mote = getMoteMedBeggeSvar();
-    const svarStatus = deltakerSvarStatus(mote);
-    expect(svarStatus).to.equal(svarStatuser.BEGGE_SVAR);
-});
+        const mote = getMoteMedBeggeSvar();
+        const svarStatus = deltakerSvarStatus(mote);
+        expect(svarStatus).to.equal('2/2 Svar');
+    });
 
     it('skal vise 2 svar når begge har svart på alle alternativer', () => {
         const mote = getMoteMedBeggeSvarBeggeAlternativer();
         const svarStatus = deltakerSvarStatus(mote);
-        expect(svarStatus).to.equal(svarStatuser.BEGGE_SVAR);
+        expect(svarStatus).to.equal('2/2 Svar');
     });
 
     it('skal vise bekreftet mote', () => {
