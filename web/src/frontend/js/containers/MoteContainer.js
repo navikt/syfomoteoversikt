@@ -14,7 +14,7 @@ export class Moteside extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            moterKontorSide: false,
+            side: 'visMoter',
         };
         this.visMoter = this.visMoter.bind(this);
         this.visMoterKontor = this.visMoterKontor.bind(this);
@@ -22,12 +22,12 @@ export class Moteside extends Component {
 
     visMoter() {
         this.setState({
-            moterKontorSide: false,
+            side: 'visMoter',
         });
     }
     visMoterKontor() {
         this.setState({
-            moterKontorSide: true,
+            side: 'visMoterKontor',
         });
     }
 
@@ -43,17 +43,24 @@ export class Moteside extends Component {
                     if (hentMoterFeiletBool) {
                         return <Feilmelding />;
                     }
-                    if (moterKontor && this.state.moterKontorSide) {
-                        return <p>Side for kontorets moter</p>;
-                    }
-                    if (moter && !this.state.moterKontorSide) {
+                    if (moterKontor && this.state.side === 'visMoterKontor') {
+                        return (<Moter
+                            hentVirksomhet={hentVirksomhet}
+                            hentBruker={hentBruker}
+                            veileder={veileder}
+                            moter={moterKontor}
+                            visMoter={this.visMoter}
+                            visMoterKontor={this.visMoterKontor}
+                            side={this.state.side} />);
+                    } else if (moter && this.state.side === 'visMoter') {
                         return (<Moter
                             hentVirksomhet={hentVirksomhet}
                             hentBruker={hentBruker}
                             veileder={veileder}
                             moter={moter}
                             visMoter={this.visMoter}
-                            visMoterKontor={this.visMoterKontor} />);
+                            visMoterKontor={this.visMoterKontor}
+                            side={this.state.side} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()

@@ -59,19 +59,27 @@
     padding-top: .25em;
     padding-bottom: .5em;
     padding-right: .5em;
-    margin: 0;
+    margin: 0 2em 0 0;
     .mixin-typo-element();
     text-transform: uppercase;
-    border-bottom: 4px @lenkeBlaa solid;
+
 }
 
 .navigasjon__element__inner {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    &:hover {
+        border-bottom: 4px @lenkeBlaa solid;
+    }
 
     img {
         width: 1.5em;
         height: 1.5em;
         margin-right: .5em;
     }
+}
+
+.navigasjon__element__inner--active {
+    border-bottom: 4px @lenkeBlaa solid;
 }
