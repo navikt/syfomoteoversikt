@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { statuser } from '../utils/Statuser';
+import { statuser, deltakerSvarStatus } from '../utils/Statuser';
 import Mote from './Mote';
 
 class Moteoversikt extends Component {
@@ -37,6 +37,8 @@ class Moteoversikt extends Component {
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
         const { moter, hentVirksomhet, hentBruker } = this.props;
+
+
         return (<div>
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy">
@@ -85,7 +87,8 @@ class Moteoversikt extends Component {
                         const leder = mote.deltakere.filter((deltaker) => {
                             return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
                         })[0];
-                        return <Mote hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} />;
+                        const svarStatus = deltakerSvarStatus(mote);
+                        return <Mote hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
                     })}
                     </tbody>
                 </table>
