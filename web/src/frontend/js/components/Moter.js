@@ -33,7 +33,6 @@ const Moter = ({ moter, hentVirksomhet, hentBruker }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
-
     return (<div>
         <header className="navigasjon">
             <h2 className="navigasjon__element">
