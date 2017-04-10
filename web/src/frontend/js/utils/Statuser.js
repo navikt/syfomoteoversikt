@@ -8,9 +8,6 @@ export const statuser = {
 export const svarStatuser = {
     AVBRUTT: 'Avbrutt',
     BEKREFTET: 'Bekreftet',
-    INGEN_SVAR: '0/2 Svar',
-    ETT_SVAR: '1/2 Svar',
-    BEGGE_SVAR: '1/2 Svar',
 };
 
 export const deltakerSvarStatus = (mote) => {
@@ -24,18 +21,7 @@ export const deltakerSvarStatus = (mote) => {
                 antallSvar++;
             }
         });
-
-        switch (antallSvar) {
-            case 1:
-                svarStatus = svarStatuser.ETT_SVAR;
-                break;
-            case 2:
-                svarStatus = svarStatuser.BEGGE_SVAR;
-                break;
-            default:
-                svarStatus = svarStatuser.INGEN_SVAR;
-                break;
-        }
+        svarStatus = `${antallSvar}/${mote.deltakere.length} Svar`;
     }
     return svarStatus;
 };
