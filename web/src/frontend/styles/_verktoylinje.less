@@ -4,10 +4,15 @@
 
 .verktoylinje__verktoy {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    margin: 0 2em 0 0;
 
     label {
         .mixin-typo-etikettLiten();
-        margin: 0 .5em 0 0;
+        margin: 0 0 1em 0;
+    }
+    .selectContainer {
+        width: 20%;
+        flex-grow: 0;
     }
 }
