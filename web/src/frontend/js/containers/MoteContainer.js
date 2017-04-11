@@ -54,7 +54,6 @@ export class Moteside extends Component {
                             side={this.state.side} />);
                     } else if (moter && this.state.side === 'visMoter') {
                         return (<Moter
-                            hentVirksomhet={hentVirksomhet}
                             hentBruker={hentBruker}
                             veileder={veileder}
                             moter={moter}
@@ -77,8 +76,6 @@ Moteside.propTypes = {
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
     moterEnhet: PropTypes.array,
-    visMoter: PropTypes.func,
-    visMoterEnhet: PropTypes.func,
 };
 
 export const mapStateToProps = (state) => {
