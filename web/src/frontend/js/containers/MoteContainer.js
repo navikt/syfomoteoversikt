@@ -7,7 +7,7 @@ import Moter from '../components/Moter';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as moterActions from '../actions/moter_actions';
 import * as brukerActions from '../actions/bruker_actions';
-import * as moterKontorActions from '../actions/moterKontor_actions';
+import * as moterEnhetActions from '../actions/moterEnhet_actions';
 
 
 export class Moteside extends Component {
@@ -17,7 +17,7 @@ export class Moteside extends Component {
             side: 'visMoter',
         };
         this.visMoter = this.visMoter.bind(this);
-        this.visMoterKontor = this.visMoterKontor.bind(this);
+        this.visMoterEnhet = this.visMoterEnhet.bind(this);
     }
 
     visMoter() {
@@ -25,14 +25,14 @@ export class Moteside extends Component {
             side: 'visMoter',
         });
     }
-    visMoterKontor() {
+    visMoterEnhet() {
         this.setState({
-            side: 'visMoterKontor',
+            side: 'visMoterEnhet',
         });
     }
 
     render() {
-        const { henter, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, moterKontor } = this.props;
+        const { henter, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, moterEnhet } = this.props;
 
         return (<Side tittel="Møteoversikt">
             {
@@ -43,14 +43,14 @@ export class Moteside extends Component {
                     if (hentMoterFeiletBool) {
                         return <Feilmelding />;
                     }
-                    if (moterKontor && this.state.side === 'visMoterKontor') {
+                    if (moterEnhet && this.state.side === 'visMoterEnhet') {
                         return (<Moter
                             hentVirksomhet={hentVirksomhet}
                             hentBruker={hentBruker}
                             veileder={veileder}
-                            moter={moterKontor}
+                            moter={moterEnhet}
                             visMoter={this.visMoter}
-                            visMoterKontor={this.visMoterKontor}
+                            visMoterEnhet={this.visMoterEnhet}
                             side={this.state.side} />);
                     } else if (moter && this.state.side === 'visMoter') {
                         return (<Moter
@@ -59,7 +59,7 @@ export class Moteside extends Component {
                             veileder={veileder}
                             moter={moter}
                             visMoter={this.visMoter}
-                            visMoterKontor={this.visMoterKontor}
+                            visMoterEnhet={this.visMoterEnhet}
                             side={this.state.side} />);
                     }
                     return <p>Bruker har ingen møter</p>;
@@ -76,9 +76,9 @@ Moteside.propTypes = {
     hentBruker: PropTypes.func,
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
-    moterKontor: PropTypes.array,
+    moterEnhet: PropTypes.array,
     visMoter: PropTypes.func,
-    visMoterKontor: PropTypes.func,
+    visMoterEnhet: PropTypes.func,
 };
 
 export const mapStateToProps = (state) => {
@@ -87,10 +87,10 @@ export const mapStateToProps = (state) => {
         henter: state.moter.henter || state.veileder.henter,
         moter: state.moter.data,
         veileder: state.veileder.data,
-        moterKontor: state.moterKontor.data,
+        moterEnhet: state.moterEnhet.data,
     };
 };
 
-const MoteContainer = connect(mapStateToProps, Object.assign({}, moterActions, virksomhetActions, brukerActions, moterKontorActions))(Moteside);
+const MoteContainer = connect(mapStateToProps, Object.assign({}, moterActions, virksomhetActions, brukerActions, moterEnhetActions))(Moteside);
 
 export default MoteContainer;

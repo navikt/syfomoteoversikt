@@ -4,13 +4,13 @@ const defaultState = {
     hentingFeilet: false,
     sender: false,
     sendingFeilet: false,
-    kontoretsMoter: false,
+    enhetsMoter: false,
 };
 
-export default function moterKontor(state = defaultState, action) {
+export default function moterEnhet(state = defaultState, action) {
     switch (action.type) {
 
-        case 'HENTER_KONTORETSMOTER' : {
+        case 'HENTER_ENHETSMOTER' : {
             return {
                 data: [],
                 sender: false,
@@ -22,7 +22,7 @@ export default function moterKontor(state = defaultState, action) {
             };
         }
 
-        case 'KONTORETSMOTER_HENTET' : {
+        case 'ENHETSMOTER_HENTET' : {
             return {
                 data: action.data,
                 sender: false,
@@ -34,7 +34,7 @@ export default function moterKontor(state = defaultState, action) {
             };
         }
 
-        case 'HENT_KONTORETSMOTER_FEILET' : {
+        case 'HENT_ENHETSMOTER_FEILET' : {
             return {
                 data: [],
                 sender: false,
