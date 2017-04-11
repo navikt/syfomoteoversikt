@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import Moteoversikt from './Moteoversikt';
+import MoteoversiktEnhet from './MoteoversiktEnhet';
+
 
 export const erSvarMottatt = (mote) => {
     let svar = mote.deltakere.map((deltaker) => {
@@ -53,7 +55,10 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, visMoter, visMoterEnhet, sid
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
+            moterMedStatus.length > 0 && side === 'visMoter' && <Moteoversikt hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
+        }
+        {
+            moterMedStatus.length > 0 && side === 'visMoterEnhet' && <MoteoversiktEnhet hentBruker={hentBruker} moter={moterMedStatus} />
         }
     </div>);
 };

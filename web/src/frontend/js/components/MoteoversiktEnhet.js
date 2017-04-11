@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { statuser, deltakerSvarStatus } from '../utils/Statuser';
-import Mote from './Mote';
+import MoteEnhet from './MoteEnhet';
 
 class Moteoversikt extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ class Moteoversikt extends Component {
 
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
-        const { moter, hentVirksomhet, hentBruker } = this.props;
+        const { moter, hentBruker } = this.props;
 
 
         return (<div>
@@ -65,8 +65,8 @@ class Moteoversikt extends Component {
                     <tr>
                         <th scope="col">Velg</th>
                         <th scope="col">Veileder</th>
-                        <th scope="col">Nærmeste leder</th>
-                        <th scope="col">Virksomhet</th>
+                        <th scope="col">Sykemeldt</th>
+                        <th scope="col">F.nr</th>
                         <th scope="col">Sendt dato</th>
                         <th scope="col">Status</th>
                     </tr>
@@ -84,11 +84,9 @@ class Moteoversikt extends Component {
                         const bruker = mote.deltakere.filter((deltaker) => {
                             return deltaker.type.toUpperCase() === 'BRUKER';
                         })[0];
-                        const leder = mote.deltakere.filter((deltaker) => {
-                            return deltaker.type.toUpperCase() === 'VEI';
-                        })[0];
+                        const eier = mote.eier;
                         const svarStatus = deltakerSvarStatus(mote);
-                        return <Mote hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
+                        return <MoteEnhet hentBruker={hentBruker} key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />;
                     })}
                     </tbody>
                 </table>
