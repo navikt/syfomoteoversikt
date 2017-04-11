@@ -9,12 +9,12 @@ import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
 import { ledetekster } from 'digisyfo-npm';
 import moter from './reducers/moter';
-import moterKontor from './reducers/moterKontor';
+import moterEnhet from './reducers/moterEnhet';
 import veileder from './reducers/veileder';
 import rootSaga from './sagas/index';
 import { hentMoter } from './actions/moter_actions';
 import { hentVeileder } from './actions/veileder_actions';
-import { hentKontoretsMoter } from './actions/moterKontor_actions';
+import { hentEnhetsMoter } from './actions/moterEnhet_actions';
 
 const rootReducer = combineReducers({
     history,
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     ledetekster,
     veileder,
     form: formReducer,
-    moterKontor,
+    moterEnhet,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             applicationName: 'Oversikt dialogmøter',
             handleChangeEnhet: (enhet) => {
-                store.dispatch(hentKontoretsMoter(enhet));
+                store.dispatch(hentEnhetsMoter(enhet));
             },
         },
     };

@@ -1,9 +1,9 @@
 import {expect} from 'chai';
-import {hentKontoretsMoter} from '../../js/sagas/moterKontorSagas';
+import {hentEnhetsMoter} from '../../js/sagas/moterEnhetSagas';
 import {get} from '../../js/api';
 import {put, call} from 'redux-saga/effects';
 
-describe("kontorMoterSagas", () => {
+describe("enhetMoterSagas", () => {
 
     beforeEach(() => {
         window.APP_SETTINGS = {
@@ -11,23 +11,23 @@ describe("kontorMoterSagas", () => {
         }
     });
 
-    const generator = hentKontoretsMoter({
+    const generator = hentEnhetsMoter({
         enhet: "0001",
     });
 
-    it("Skal dispatche HENTER_KONTORETSMOTER", () => {
-        const nextPut = put({type: 'HENTER_KONTORETSMOTER'});
+    it("Skal dispatche HENTER_ENHETSMOTER", () => {
+        const nextPut = put({type: 'HENTER_ENHETSMOTER'});
         expect(generator.next().value).to.deep.equal(nextPut);
     });
 
-    it("Skal dernest hente kontorets moter", () => {
+    it("Skal dernest hente enhets moter", () => {
         const nextCall = call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=0001`);
         expect(generator.next().value).to.deep.equal(nextCall);
     });
 
-    it("Skal dernest dispatche KONTORETSMOTER_HENTET", () => {
+    it("Skal dernest dispatche ENHETSMOTER_HENTET", () => {
         const nextPut = put({
-            type: 'KONTORETSMOTER_HENTET',
+            type: 'ENHETSMOTER_HENTET',
             data: [],
         });
         expect(generator.next([]).value).to.deep.equal(nextPut);

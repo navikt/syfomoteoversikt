@@ -29,7 +29,7 @@ export const setMoteStatus = (mote) => {
     return mote;
 };
 
-const Moter = ({ moter, hentVirksomhet, hentBruker, visMoter, visMoterKontor, side }) => {
+const Moter = ({ moter, hentVirksomhet, hentBruker, visMoter, visMoterEnhet, side }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
@@ -42,8 +42,8 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, visMoter, visMoterKontor, si
                 </div>
             </h2>
             <h2 className={`navigasjon__element ${side}`}>
-                <div className={`navigasjon__element__inner ${side === 'visMoterKontor' ? 'navigasjon__element__inner--active' : ''}`}>
-                    <span onClick={visMoterKontor}>Kontorets Møter</span>
+                <div className={`navigasjon__element__inner ${side === 'visMoterEnhet' ? 'navigasjon__element__inner--active' : ''}`}>
+                    <span onClick={visMoterEnhet}>Enhets Møter</span>
                 </div>
             </h2>
         </header>
@@ -63,7 +63,7 @@ Moter.propTypes = {
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
     visMoter: PropTypes.func,
-    visMoterKontor: PropTypes.func,
+    visMoterEnhet: PropTypes.func,
     side: PropTypes.string,
 };
 
