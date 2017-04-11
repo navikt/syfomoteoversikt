@@ -8,13 +8,15 @@ import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as moterActions from '../actions/moter_actions';
 import * as brukerActions from '../actions/bruker_actions';
 import * as moterEnhetActions from '../actions/moterEnhet_actions';
+import { hentLocalStorageState, lagreState } from '../utils/stateLocalStorage';
 
 
 export class Moteside extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            side: 'visMoter',
+            side: hentLocalStorageState('side', 'visMoter'),
         };
         this.visMoter = this.visMoter.bind(this);
         this.visMoterEnhet = this.visMoterEnhet.bind(this);
@@ -24,11 +26,13 @@ export class Moteside extends Component {
         this.setState({
             side: 'visMoter',
         });
+        lagreState('side', 'visMoter');
     }
     visMoterEnhet() {
         this.setState({
             side: 'visMoterEnhet',
         });
+        lagreState('side', 'visMoterEnhet');
     }
 
     render() {

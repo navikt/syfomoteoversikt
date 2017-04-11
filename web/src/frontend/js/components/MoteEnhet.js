@@ -12,7 +12,7 @@ class MoteEnhet extends Component {
     }
 
     render() {
-        const { opprettetTidspunkt, eier,  bruker, svarStatus } = this.props;
+        const { opprettetTidspunkt, eier, bruker, svarStatus } = this.props;
 
         return (<tr>
             <td>
