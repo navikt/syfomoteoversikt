@@ -6,23 +6,25 @@ const getPort = () => {
 };
 
 const ContextholderConnection = () => {
-    return new WebSocket(`${window.APP_SETTINGS.WEBSOCKET_PROTOCOL}://${window.location.hostname}${getPort()}/eventdistributer/websocket`);
+    return new WebSocket(`${window.APP_SETTINGS.WEBSOCKET_PROTOCOL}://${window.location.hostname}${getPort()}/modiaeventdistribution/websocket`);
 };
 
-const opprettWebsocketConnection = (callback) => {
+export const opprettWebsocketConnection = (callback) => {
     const connection = new ContextholderConnection();
     connection.onmessage = (e) => {
-        if (e.data === 'OK') {
+        if (e.data === 'Connection Established') {
             return;
         }
         callback(e);
     };
     connection.onerror = () => {
-        callback('onerror');
+        setTimeout(() => {
+            opprettWebsocketConnection();
+        }, 1000);
     };
     connection.onclose = () => {
-        callback('onerror');
+        setTimeout(() => {
+            opprettWebsocketConnection();
+        }, 1000);
     };
 };
-
-export default opprettWebsocketConnection;
