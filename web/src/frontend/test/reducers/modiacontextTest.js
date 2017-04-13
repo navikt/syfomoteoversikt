@@ -18,7 +18,7 @@ describe("modiacontext", () => {
         })
     });
 
-    it("Setter virksomhetens navn på arbeidsgiver", () => {
+    it("Håndterer hentAktivEnhetFeilet", () => {
         const action = actions.hentAktivEnhetFeilet();
         const state = modiacontext({data: {}}, action);
         expect(state).to.deep.equal({
