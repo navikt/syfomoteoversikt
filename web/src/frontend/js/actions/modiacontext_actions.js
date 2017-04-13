@@ -9,9 +9,10 @@ import {
     HENTER_AKTIVENHET,
 } from './actiontyper';
 
-export function hentAktivEnhet() {
+export function hentAktivEnhet(data) {
     return {
         type: HENT_AKTIVENHET_FORESPURT,
+        data,
     };
 }
 
