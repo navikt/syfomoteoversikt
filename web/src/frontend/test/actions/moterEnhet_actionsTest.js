@@ -16,9 +16,10 @@ describe("moterEnhet_actions", () => {
     });
 
     it("har en henterEnhetsMoter-funksjon som returnerer riktig action", () => {
-        const action = actions.henterEnhetsMoter();
+        const action = actions.henterEnhetsMoter('0021');
         expect(action).to.deep.equal({
             type: 'HENTER_ENHETSMOTER',
+            enhet: '0021',
         })
     });
 

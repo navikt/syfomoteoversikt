@@ -5,9 +5,17 @@ export function hentEnhetsMoter(enhet) {
     };
 }
 
-export function henterEnhetsMoter() {
+export function setAktivEnhet(enhet) {
+    return {
+        type: 'SET_AKTIV_ENHET',
+        enhet,
+    };
+}
+
+export function henterEnhetsMoter(enhet) {
     return {
         type: 'HENTER_ENHETSMOTER',
+        enhet,
     };
 }
 

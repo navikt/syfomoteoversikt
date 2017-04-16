@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { statuser, deltakerSvarStatus } from '../utils/Statuser';
+import { statuser, deltakerSvarStatus } from '../utils/statuser';
 import MoteEnhet from './MoteEnhet';
 
 class Moteoversikt extends Component {

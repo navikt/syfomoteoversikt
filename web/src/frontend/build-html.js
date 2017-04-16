@@ -12,8 +12,6 @@ var dev = {
     restRoot: 'http://localhost:8196/mote/rest',
     bundleFileName: 'bundle.js',
     decoratorRoot: 'http://localhost:8186',
-    websocketProtocol: 'ws',
-    contextholderRoot: 'http://localhost:8090/eventdistributer',
     enableLogging: true,
 };
 
@@ -23,8 +21,6 @@ var prod = {
     restRoot: '/mote/rest',
     bundleFileName: 'bundle-prod.js',
     decoratorRoot: '',
-    websocketProtocol: 'wss',
-    contextholderRoot: '/eventdistributer',
     enableLogging: false,
 };
 

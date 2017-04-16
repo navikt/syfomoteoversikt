@@ -4,7 +4,7 @@ import { get } from '../api/index';
 import * as actions from '../actions/moterEnhet_actions';
 
 export function* hentEnhetsMoter(action) {
-    yield put(actions.henterEnhetsMoter());
+    yield put(actions.henterEnhetsMoter(action.enhet));
     try {
         const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=${action.enhet}`);
         yield put(actions.enhetsMoterHentet(data));
