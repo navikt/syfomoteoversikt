@@ -13,10 +13,9 @@ import moterEnhet from './reducers/moterEnhet';
 import veileder from './reducers/veileder';
 import modiacontext from './reducers/modiacontext';
 import rootSaga from './sagas/index';
-import { hentMoter } from './actions/moter_actions';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
 import { hentVeileder } from './actions/veileder_actions';
-import { hentEnhetsMoter } from './actions/moterEnhet_actions';
+import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
 
 const rootReducer = combineReducers({
@@ -37,7 +36,6 @@ const store = createStore(rootReducer,
 
 sagaMiddleware.run(rootSaga);
 
-store.dispatch(hentMoter());
 store.dispatch(hentVeileder());
 const config = {
     config: {
@@ -53,7 +51,7 @@ const config = {
             window.location = `/sykefravaer/${nyttFnr}/mote`;
         },
         handleChangeEnhet: (enhet) => {
-            store.dispatch(hentEnhetsMoter(enhet));
+            store.dispatch(setAktivEnhet(enhet));
             store.dispatch(pushModiaContext({
                 verdi: enhet,
                 eventType: 'NY_AKTIV_ENHET',
@@ -65,6 +63,7 @@ store.dispatch(hentAktivEnhet({
     callback: (aktivEnhet) => {
         config.config.initiellEnhet = aktivEnhet;
         window.renderDecoratorHead(config);
+        store.dispatch(setAktivEnhet(aktivEnhet));
     },
 }));
 render(<Provider store={store}>
@@ -82,6 +81,7 @@ opprettWebsocketConnection((wsCallback) => {
                 if (config.config.initiellEnhet !== aktivEnhet) {
                     config.config.initiellEnhet = aktivEnhet;
                     window.renderDecoratorHead(config);
+                    store.dispatch(setAktivEnhet(aktivEnhet));
                 }
             },
         }));

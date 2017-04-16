@@ -2,76 +2,39 @@ const defaultState = {
     data: [],
     henter: false,
     hentingFeilet: false,
-    sender: false,
-    sendingFeilet: false,
-    enhetsMoter: false,
+    aktivEnhet: '',
+    hentetEnhet: '',
 };
 
 export default function moterEnhet(state = defaultState, action) {
     switch (action.type) {
-
         case 'HENTER_ENHETSMOTER' : {
-            return {
+            return Object.assign({}, state, {
                 data: [],
-                sender: false,
                 henter: true,
                 hentingFeilet: false,
-                sendingFeilet: false,
-                avbryter: false,
-                avbrytFeilet: false,
-            };
+                hentetEnhet: action.enhet,
+            });
         }
-
+        case 'SET_AKTIV_ENHET' : {
+            return Object.assign({}, state, {
+                aktivEnhet: action.enhet,
+            });
+        }
         case 'ENHETSMOTER_HENTET' : {
-            return {
+            return Object.assign({}, state, {
                 data: action.data,
-                sender: false,
                 henter: false,
                 hentingFeilet: false,
-                sendingFeilet: false,
-                avbryter: false,
-                avbrytFeilet: false,
-            };
+            });
         }
-
         case 'HENT_ENHETSMOTER_FEILET' : {
-            return {
+            return Object.assign({}, state, {
                 data: [],
-                sender: false,
-                sendingFeilet: false,
                 henter: false,
                 hentingFeilet: true,
-                avbryter: false,
-                avbrytFeilet: false,
-            };
-        }
-
-        case 'BRUKER_HENTET': {
-            const data = state.data
-                .map((mote) => {
-                    if (mote.moteUuid !== action.moteUuid) {
-                        return mote;
-                    }
-                    const deltakere = mote.deltakere.map((deltaker) => {
-                        if (deltaker.type !== 'Bruker') {
-                            return deltaker;
-                        }
-                        return Object.assign({}, deltaker, {
-                            navn: action.data.navn,
-                        });
-                    });
-                    return Object.assign({}, mote, { deltakere });
-                });
-            return Object.assign({}, defaultState, {
-                data,
             });
         }
-        case 'HENT_BRUKER_FEILET': {
-            return Object.assign({}, defaultState, {
-                data: state.data,
-            });
-        }
-
         default: {
             return state;
         }

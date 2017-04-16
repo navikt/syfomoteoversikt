@@ -16,7 +16,7 @@ describe("enhetMoterSagas", () => {
     });
 
     it("Skal dispatche HENTER_ENHETSMOTER", () => {
-        const nextPut = put({type: 'HENTER_ENHETSMOTER'});
+        const nextPut = put({type: 'HENTER_ENHETSMOTER', enhet: "0001"});
         expect(generator.next().value).to.deep.equal(nextPut);
     });
 

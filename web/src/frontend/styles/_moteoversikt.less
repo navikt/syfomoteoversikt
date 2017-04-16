@@ -73,6 +73,11 @@
         border-bottom: 4px @lenkeBlaa solid;
     }
 
+  a {
+    color: inherit;
+    border-bottom: none;
+  }
+
     img {
         width: 1.5em;
         height: 1.5em;
@@ -82,4 +87,9 @@
 
 .navigasjon__element__inner--active {
     border-bottom: 4px @lenkeBlaa solid;
+  a {
+    &:visited {
+      color: @lenkeBlaa;
+    }
+  }
 }
