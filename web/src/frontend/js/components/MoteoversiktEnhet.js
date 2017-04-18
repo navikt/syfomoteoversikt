@@ -36,7 +36,7 @@ class Moteoversikt extends Component {
 
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
-        const { moter, hentBruker } = this.props;
+        const { moter, hentBruker, markerMoteForOverforing } = this.props;
 
 
         return (<div>
@@ -65,7 +65,7 @@ class Moteoversikt extends Component {
                     <tr>
                         <th scope="col">Velg</th>
                         <th scope="col">Veileder</th>
-                        <th scope="col">Sykemeldt</th>
+                        <th scope="col">Sykmeldt</th>
                         <th scope="col">F.nr</th>
                         <th scope="col">Sendt dato</th>
                         <th scope="col">Status</th>
@@ -86,10 +86,13 @@ class Moteoversikt extends Component {
                         })[0];
                         const eier = mote.eier;
                         const svarStatus = deltakerSvarStatus(mote);
-                        return <MoteEnhet hentBruker={hentBruker} key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />;
+                        return <MoteEnhet markerMoteForOverforing={markerMoteForOverforing} hentBruker={hentBruker} key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />;
                     })}
                     </tbody>
                 </table>
+                <div className="knapperad">
+                    <button className="knapp" onClick={() => {  }}>Overta møter</button>
+                </div>
             </div>
         </div>);
     }
