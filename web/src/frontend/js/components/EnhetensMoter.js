@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import MoteoversiktEnhet from './MoteoversiktEnhet';
 import { setMoteStatus } from '../utils/statuser';
 
-const Moter = ({ moter, hentVirksomhet, hentBruker }) => {
+const Moter = ({ moter, hentVirksomhet, hentBruker, markerMoteForOverforing }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
@@ -14,7 +14,7 @@ const Moter = ({ moter, hentVirksomhet, hentBruker }) => {
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <MoteoversiktEnhet hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
+            moterMedStatus.length > 0 && <MoteoversiktEnhet markerMoteForOverforing={markerMoteForOverforing} hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
         }
     </div>);
 };

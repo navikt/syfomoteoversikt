@@ -11,6 +11,7 @@ import { ledetekster } from 'digisyfo-npm';
 import moter from './reducers/moter';
 import moterEnhet from './reducers/moterEnhet';
 import veileder from './reducers/veileder';
+import overfor from './reducers/overfor';
 import modiacontext from './reducers/modiacontext';
 import rootSaga from './sagas/index';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
@@ -21,6 +22,7 @@ import { opprettWebsocketConnection } from './contextHolder';
 const rootReducer = combineReducers({
     history,
     moter,
+    overfor,
     ledetekster,
     veileder,
     modiacontext,

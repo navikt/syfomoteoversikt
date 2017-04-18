@@ -25,7 +25,7 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, aktivEnhet } = this.props;
+        const { henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, markerMoteForOverforing, aktivEnhet } = this.props;
         return (<Side tittel="Møteoversikt">
             <div>
                 <NavigasjonsTopp lenker={[
@@ -52,7 +52,7 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return <EnhetensMoter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter} />;
+                        return <EnhetensMoter markerMoteForOverforing={markerMoteForOverforing} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter} />;
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -71,6 +71,7 @@ Moteside.propTypes = {
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
     hentEnhetsMoter: PropTypes.func,
+    markerMoteForOverforing: PropTypes.func,
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
 };
