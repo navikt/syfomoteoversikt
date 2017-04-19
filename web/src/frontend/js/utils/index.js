@@ -2,6 +2,10 @@ import React from 'react';
 
 const kortManeder = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
 
+export const pad = (nr) => {
+    return nr > 9 || nr.length > 1 ? nr : `0${nr}`;
+};
+
 export const visDato = (dato) => {
     const maned = kortManeder[dato.monthValue - 1];
     return `${dato.dayOfMonth}. ${maned} ${dato.year}`;
@@ -39,10 +43,6 @@ export const dagensDatoKortFormat = () => {
     return `${dag}.${maned}.${d.getFullYear()}`;
 };
 
-export const pad = (nr) => {
-    return nr > 9 || nr.length > 1 ? nr : `0${nr}`;
-};
-
 export const getDatoFraZulu = (zulutid) => {
     const d = new Date(zulutid);
     const dag = pad(d.getDate());
@@ -73,3 +73,13 @@ export const finnNavn = (bruker) => {
     }
     return 'Fant ikke navn';
 };
+
+export const finnVeilederNavn = (veileder) => {
+    if (veileder && veileder.navn) {
+        return veileder.navn;
+    } else if (veileder && veileder.henter) {
+        return 'Henter navn...';
+    }
+    return 'Fant ikke navn';
+};
+

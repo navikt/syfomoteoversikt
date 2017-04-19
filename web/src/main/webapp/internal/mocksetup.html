@@ -90,7 +90,6 @@
             withCredentials: true,
         },
     }).then(function (data) {
-        console.log(data);
         if (data.TILLATT_MOCK === false) {
             $('#statusmelding').text('Mocking er ikke skrudd på for dette miljøet!');
         }

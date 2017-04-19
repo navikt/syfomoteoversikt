@@ -18,7 +18,7 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing } = this.props;
+        const { henterMoterBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing } = this.props;
         return (<Side tittel="Møteoversikt">
             <div>
                 <NavigasjonsTopp lenker={[
@@ -35,7 +35,7 @@ export class Moteside extends Component {
                 ]} />
             {
                 (() => {
-                    if (henterMoterBool || henterVeilederBool) {
+                    if (henterMoterBool) {
                         return <AppSpinner />;
                     }
                     if (hentMoterFeiletBool) {
@@ -70,11 +70,9 @@ export const mapStateToProps = (state) => {
     return {
         harOvertattMoter: state.overfor.sendt,
         hentingFeilet: state.moter.hentingFeilet,
-        henterVeilederBool: state.veileder.henter,
         henterMoterBool: state.moter.henter,
         moter: state.moter.data,
         moterMarkertForOverforing: state.overfor.data,
-        veileder: state.veileder.data,
     };
 };
 
