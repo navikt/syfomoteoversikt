@@ -42,18 +42,20 @@ class Moteoversikt extends Component {
         return (<div>
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy">
-                    <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
-                    <div className="selectContainer">
-                        <select id="moteoversikt-filtrer" onChange={(e) => {
-                            this.setStatus(e.currentTarget.value);
-                        }}>
-                            <option value="alle">Vis alle</option>
-                            {
-                                this.getStatuser(moter).map((status, index) => {
-                                    return <option key={index} value={status}>{statuser[status]}</option>;
-                                })
-                            }
-                        </select>
+                    <div className="verktoylinje__filter">
+                        <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
+                        <div className="selectContainer">
+                            <select id="moteoversikt-filtrer" onChange={(e) => {
+                                this.setStatus(e.currentTarget.value);
+                            }}>
+                                <option value="alle">Vis alle</option>
+                                {
+                                    this.getStatuser(moter).map((status, index) => {
+                                        return <option key={index} value={status}>{statuser[status]}</option>;
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

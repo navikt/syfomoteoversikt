@@ -10,7 +10,10 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, markerMoteForOverforing, ove
     });
     return (<div>
         {overtaMoterFeilet && <div className="blokk panel"><Varselstripe type="feil">
+            <div>
             <p>Det skjedde en feil så du ikke fikk overtatt møtene</p>
+            <label>Prøv igjen senere</label>
+            </div>
         </Varselstripe></div>}
         {
             moterMedStatus.length === 0 && (<div className="panel">
