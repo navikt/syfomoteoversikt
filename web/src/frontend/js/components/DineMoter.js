@@ -34,6 +34,8 @@ Moter.propTypes = {
     hentBruker: PropTypes.func,
     visMoter: PropTypes.func,
     visMoterEnhet: PropTypes.func,
+    harOvertattMoter: PropTypes.bool,
+    moterMarkertForOverforing: PropTypes.array,
     side: PropTypes.string,
 };
 
