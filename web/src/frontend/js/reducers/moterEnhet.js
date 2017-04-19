@@ -56,7 +56,31 @@ export default function moterEnhet(state = defaultState, action) {
             });
         }
         case 'HENT_BRUKER_FEILET': {
-            console.log("HENT_BRUKER_FEILET");
+            return Object.assign({}, state, {
+                data: state.data,
+            });
+        }
+
+        case 'HENTER_VEILEDER': {
+            return Object.assign({}, state, {
+                data: state.data,
+            });
+        }
+        case 'VEILEDER_HENTET': {
+            const data = state.data
+                .map((mote) => {
+                    if (mote.eier !== action.data.ident) {
+                        return mote;
+                    }
+                    return Object.assign({}, mote, {
+                        veiledernavn: action.data.navn,
+                    });
+                });
+            return Object.assign({}, state, {
+                data,
+            });
+        }
+        case 'HENT_VEILEDER_FEILET': {
             return Object.assign({}, state, {
                 data: state.data,
             });

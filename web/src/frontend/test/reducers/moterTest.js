@@ -14,10 +14,6 @@ describe("moter", () => {
         const state = moter({data: []}, action);
         expect(state).to.deep.equal({
             data: [],
-            henter: false,
-            hentingFeilet: false,
-            sender: false,
-            sendingFeilet: false,
         })
     });
 
@@ -45,10 +41,6 @@ describe("moter", () => {
                     type: 'Bruker'
                 }]
             }],
-            henter: false,
-            hentingFeilet: false,
-            sender: false,
-            sendingFeilet: false,
         })
     });
 
@@ -75,10 +67,6 @@ describe("moter", () => {
                     type: 'Bruker'
                 }]
             }],
-            henter: false,
-            hentingFeilet: false,
-            sender: false,
-            sendingFeilet: false,
         })
     });
 
@@ -106,10 +94,6 @@ describe("moter", () => {
                     navn: 'navn',
                 }]
             }],
-            henter: false,
-            hentingFeilet: false,
-            sender: false,
-            sendingFeilet: false,
         })
     });
 
@@ -136,23 +120,6 @@ describe("moter", () => {
                     type: 'Bruker'
                 }]
             }],
-            henter: false,
-            hentingFeilet: false,
-            sender: false,
-            sendingFeilet: false,
         })
     });
-
-    it("Håndterer hentVeilederFeilet", () => {
-        const action = actions.hentVirksomhetFeilet();
-        const state = moter({data: []}, action);
-        expect(state).to.deep.equal({
-            data: [],
-            henter: false,
-            hentingFeilet: false,
-            sender: false,
-            sendingFeilet: false,
-        })
-    })
-})
-;
+});

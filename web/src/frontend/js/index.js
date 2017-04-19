@@ -7,15 +7,14 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
-import { ledetekster, hentLedetekster } from 'digisyfo-npm';
+import { ledetekster } from 'digisyfo-npm';
 import moter from './reducers/moter';
 import moterEnhet from './reducers/moterEnhet';
-import veileder from './reducers/veileder';
+import veiledere from './reducers/veiledere';
 import overfor from './reducers/overfor';
 import modiacontext from './reducers/modiacontext';
 import rootSaga from './sagas/index';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
-import { hentVeileder } from './actions/veileder_actions';
 import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
 
@@ -24,7 +23,7 @@ const rootReducer = combineReducers({
     moter,
     overfor,
     ledetekster,
-    veileder,
+    veiledere,
     modiacontext,
     form: formReducer,
     moterEnhet,
@@ -37,7 +36,6 @@ const store = createStore(rootReducer,
 );
 
 sagaMiddleware.run(rootSaga);
-store.dispatch(hentVeileder());
 const config = {
     config: {
         toggles: {

@@ -42,7 +42,7 @@ export default function moter(state = defaultState, action) {
             };
         }
         case 'HENTER_VIRKSOMHET': {
-            return Object.assign({}, defaultState, {
+            return Object.assign({}, state, {
                 data: state.data,
             });
         }
@@ -62,18 +62,18 @@ export default function moter(state = defaultState, action) {
                     });
                     return Object.assign({}, mote, { deltakere });
                 });
-            return Object.assign({}, defaultState, {
+            return Object.assign({}, state, {
                 data,
             });
         }
         case 'HENT_VIRKSOMHET_FEILET': {
-            return Object.assign({}, defaultState, {
+            return Object.assign({}, state, {
                 data: state.data,
             });
         }
 
         case 'HENTER_BRUKER': {
-            return Object.assign({}, defaultState, {
+            return Object.assign({}, state, {
                 data: state.data,
             });
         }
@@ -93,12 +93,12 @@ export default function moter(state = defaultState, action) {
                     });
                     return Object.assign({}, mote, { deltakere });
                 });
-            return Object.assign({}, defaultState, {
+            return Object.assign({}, state, {
                 data,
             });
         }
         case 'HENT_BRUKER_FEILET': {
-            return Object.assign({}, defaultState, {
+            return Object.assign({}, state, {
                 data: state.data,
             });
         }

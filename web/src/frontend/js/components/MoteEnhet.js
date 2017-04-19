@@ -1,19 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-import { getDatoFraZulu, finnNavn } from '../utils/index';
+import { getDatoFraZulu, finnNavn, finnVeilederNavn } from '../utils/index';
 
 class MoteEnhet extends Component {
 
     componentDidMount() {
-        const { moteUuid, bruker, hentBruker } = this.props;
-
-
+        const { moteUuid, bruker, hentBruker, hentVeileder, eier, veileder } = this.props;
         if (!bruker.navn && bruker.fnr) {
             hentBruker(bruker.fnr, moteUuid);
+        }
+        if (!veileder && eier) {
+            hentVeileder({ident: eier});
         }
     }
 
     render() {
-        const { opprettetTidspunkt, eier, bruker, markert, svarStatus, moteUuid, markerMoteForOverforing } = this.props;
+        const { opprettetTidspunkt, bruker, markert, svarStatus, moteUuid, markerMoteForOverforing, veileder } = this.props;
         return (<tr>
             <td>
                 <input type="checkbox" id={moteUuid} className="checkboks"  checked={markert} onChange={ (e) => {
@@ -22,7 +23,7 @@ class MoteEnhet extends Component {
                 <label htmlFor={moteUuid} />
             </td>
             <td>
-                {eier}
+                {finnVeilederNavn(veileder)}
             </td>
             <td>
                 {finnNavn(bruker)}
@@ -45,12 +46,14 @@ class MoteEnhet extends Component {
 MoteEnhet.propTypes = {
     opprettetTidspunkt: PropTypes.string,
     hentBruker: PropTypes.func,
+    hentVeileder: PropTypes.func,
     moteUuid: PropTypes.string,
+    veileder: PropTypes.object,
     bruker: PropTypes.object,
     markerMoteForOverforing: PropTypes.func,
     svarStatus: PropTypes.string,
     markert: PropTypes.bool,
-    eier: PropTypes.string,
+    veiledernavn: PropTypes.string,
 };
 
 export default MoteEnhet;
