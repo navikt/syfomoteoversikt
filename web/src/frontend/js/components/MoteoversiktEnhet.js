@@ -125,14 +125,16 @@ class Moteoversikt extends Component {
                         })[0];
                         const eier = mote.eier;
                         const svarStatus = deltakerSvarStatus(mote);
-                        return <MoteEnhet markerMoteForOverforing={markerMoteForOverforing} hentVeileder={hentVeileder} hentBruker={hentBruker} key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />;
+                        return (<MoteEnhet markerMoteForOverforing={markerMoteForOverforing} hentVeileder={hentVeileder} hentBruker={hentBruker}
+                                key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />);
                     })}
                     </tbody>
                 </table>
                 <div className="knapperad">
-                    <button className="knapp" disabled={overtarMoter || moterMarkertForOverforing.length === 0} onClick={() => { overforMoter({
-                        moteUuidListe: moterMarkertForOverforing,
-                    }); }}>Overta møter</button>
+                    <button className="knapp" disabled={overtarMoter || moterMarkertForOverforing.length === 0} onClick={() => {
+                        overforMoter({
+                            moteUuidListe: moterMarkertForOverforing,
+                        }); }}>Overta møter</button>
                 </div>
             </div>
         </div>);
@@ -144,6 +146,7 @@ Moteoversikt.propTypes = {
     hentVirksomhet: PropTypes.func,
     overforMoter: PropTypes.func,
     hentVeileder: PropTypes.func,
+    overtarMoter: PropTypes.bool,
     markerMoteForOverforing: PropTypes.func,
     moterMarkertForOverforing: PropTypes.array,
     hentBruker: PropTypes.func,

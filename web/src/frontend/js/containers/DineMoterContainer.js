@@ -42,8 +42,8 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return <Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
-                                      harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} />;
+                        return (<Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
+                        harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()

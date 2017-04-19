@@ -9,7 +9,7 @@ class MoteEnhet extends Component {
             hentBruker(bruker.fnr, moteUuid);
         }
         if (!veileder && eier) {
-            hentVeileder({ident: eier});
+            hentVeileder({ ident: eier });
         }
     }
 
@@ -17,7 +17,7 @@ class MoteEnhet extends Component {
         const { opprettetTidspunkt, bruker, markert, svarStatus, moteUuid, markerMoteForOverforing, veileder } = this.props;
         return (<tr>
             <td>
-                <input type="checkbox" id={moteUuid} className="checkboks"  checked={markert} onChange={ (e) => {
+                <input type="checkbox" id={moteUuid} className="checkboks" checked={markert} onChange={ (e) => {
                     markerMoteForOverforing(moteUuid, e.target.checked);
                 } } />
                 <label htmlFor={moteUuid} />
@@ -51,6 +51,7 @@ MoteEnhet.propTypes = {
     veileder: PropTypes.object,
     bruker: PropTypes.object,
     markerMoteForOverforing: PropTypes.func,
+    eier: PropTypes.string,
     svarStatus: PropTypes.string,
     markert: PropTypes.bool,
     veiledernavn: PropTypes.string,
