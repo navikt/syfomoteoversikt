@@ -6,7 +6,8 @@ class Moteoversikt extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: 'alle',
+            filterStatus: 'alle',
+            filterVeileder: 'alle',
         };
     }
 
@@ -17,20 +18,42 @@ class Moteoversikt extends Component {
         return [...new Set(alleStatuser)];
     }
 
+    getVeiledere(moter) {
+        const alleVeiledere = moter.map((mote) => {
+            return mote.eier;
+        });
+        return [...new Set(alleVeiledere)];
+    }
+
     getFiltrerteMoter() {
         const { moter } = this.props;
-        const filter = this.state.filter;
-        if (filter === 'alle') {
+        const filterStatus = this.state.filterStatus;
+        const filterVeileder = this.state.filterVeileder;
+        if (filterStatus === 'alle' && filterVeileder === 'alle') {
             return moter;
         }
         return moter.filter((mote) => {
-            return mote.status === filter;
+            let status = true;
+            let veileder = true;
+            if (filterStatus !== 'alle') {
+                status = mote.status === filterStatus;
+            }
+            if (filterVeileder !== 'alle') {
+                veileder = mote.eier === filterVeileder;
+            }
+            return veileder && status;
         });
     }
 
     setStatus(status) {
         this.setState({
-            filter: status,
+            filterStatus: status,
+        });
+    }
+
+    setVeileder(veileder) {
+        this.setState({
+            filterVeileder: veileder,
         });
     }
 
@@ -41,18 +64,35 @@ class Moteoversikt extends Component {
         return (<div>
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy">
-                    <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
-                    <div className="selectContainer">
-                        <select id="moteoversikt-filtrer" onChange={(e) => {
-                            this.setStatus(e.currentTarget.value);
-                        }}>
-                            <option value="alle">Vis alle</option>
-                            {
-                                this.getStatuser(moter).map((status, index) => {
-                                    return <option key={index} value={status}>{statuser[status]}</option>;
-                                })
-                            }
-                        </select>
+                    <div className="verktoylinje__filter">
+                        <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
+                        <div className="selectContainer">
+                            <select id="moteoversikt-filtrer" onChange={(e) => {
+                                this.setStatus(e.currentTarget.value);
+                            }}>
+                                <option value="alle">Vis alle</option>
+                                {
+                                    this.getStatuser(moter).map((status, index) => {
+                                        return <option key={index} value={status}>{statuser[status]}</option>;
+                                    })
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div className="verktoylinje__filter">
+                        <label htmlFor="moteoversikt-filtrer">Filtrer på veileder</label>
+                        <div className="selectContainer">
+                            <select id="moteoversikt-filtrer" onChange={(e) => {
+                                this.setVeileder(e.currentTarget.value);
+                            }}>
+                                <option value="alle">Vis alle</option>
+                                {
+                                    this.getVeiledere(moter).map((veileder, index) => {
+                                        return <option key={index} value={veileder}>{veileder}</option>;
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
