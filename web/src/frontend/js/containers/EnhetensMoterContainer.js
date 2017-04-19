@@ -16,7 +16,10 @@ export class Moteside extends Component {
         if (props.aktivEnhet !== props.hentetEnhet) {
             props.hentEnhetsMoter(props.aktivEnhet);
         }
-        props.resetOverforing();
+        if (props.harOvertattMoter) {
+            props.resetOverforing();
+            props.hentEnhetsMoter(props.aktivEnhet);
+        }
     }
 
     componentDidUpdate() {
