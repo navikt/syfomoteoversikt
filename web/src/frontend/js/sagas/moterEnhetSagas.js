@@ -1,6 +1,7 @@
 import { call, put, fork } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
-import { get } from '../api/index';
+import { browserHistory } from 'react-router';
+import { get, post } from '../api/index';
 import * as actions from '../actions/moterEnhet_actions';
 
 export function* hentEnhetsMoter(action) {
@@ -14,12 +15,15 @@ export function* hentEnhetsMoter(action) {
 }
 
 export function* overforMoter(action) {
-    yield put(actions.henterEnhetsMoter(action.enhet));
+    yield put(actions.overforerMoter());
     try {
-        const data = yield call(post, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=${action.enhet}`);
-        yield put(actions.enhetsMoterHentet(data));
+        const data = yield call(post, `${window.APP_SETTINGS.REST_ROOT}/actions/moter/overfor`, {
+            moteUuidListe: action.moteUuidListe,
+        });
+        yield put(actions.moterOverfort(data));
+        browserHistory.push('/moteoversikt/dinemoter');
     } catch (e) {
-        yield put(actions.hentEnhetsMoterFeilet());
+        yield put(actions.overforMoterFeilet());
     }
 }
 

@@ -12,13 +12,13 @@ import * as brukerActions from '../actions/bruker_actions';
 export class Moteside extends Component {
     constructor(props) {
         super(props);
-        if (!props.henterMoterBool && !props.hentMoterFeiletBool && props.moter.length === 0) {
+        if (props.harOvertattMoter || (!props.henterMoterBool && !props.hentMoterFeiletBool && props.moter.length === 0)) {
             props.hentMoter();
         }
     }
 
     render() {
-        const { henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker } = this.props;
+        const { henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing } = this.props;
         return (<Side tittel="Møteoversikt">
             <div>
                 <NavigasjonsTopp lenker={[
@@ -42,7 +42,8 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return <Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter} />;
+                        return <Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
+                                      harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} />;
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -56,19 +57,23 @@ Moteside.propTypes = {
     moter: PropTypes.array,
     henterVeilederBool: PropTypes.bool,
     henterMoterBool: PropTypes.bool,
+    harOvertattMoter: PropTypes.bool,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
     hentMoter: PropTypes.func,
+    moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => {
     return {
+        harOvertattMoter: state.overfor.sendt,
         hentingFeilet: state.moter.hentingFeilet,
         henterVeilederBool: state.veileder.henter,
         henterMoterBool: state.moter.henter,
         moter: state.moter.data,
+        moterMarkertForOverforing: state.overfor.data,
         veileder: state.veileder.data,
     };
 };

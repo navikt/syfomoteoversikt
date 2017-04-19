@@ -1,20 +1,27 @@
 import React, { PropTypes } from 'react';
 import MoteoversiktEnhet from './MoteoversiktEnhet';
 import { setMoteStatus } from '../utils/statuser';
+import { Varselstripe, getLedetekst } from 'digisyfo-npm';
 
-const Moter = ({ moter, hentVirksomhet, hentBruker, markerMoteForOverforing }) => {
+const Moter = ({ moter, hentVirksomhet, hentBruker, markerMoteForOverforing, overforMoter, hentMoter,
+    moterMarkertForOverforing, aktivEnhet, overtarMoter, harOvertattMoter, overtaMoterFeilet }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
-
     return (<div>
+        {overtaMoterFeilet && <div className="blokk panel"><Varselstripe type="feil">
+            <p>Det skjedde en feil så du ikke fikk overtatt møtene</p>
+        </Varselstripe></div>}
         {
             moterMedStatus.length === 0 && (<div className="panel">
                 <p>Enheten har ingen aktive møter.</p>
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <MoteoversiktEnhet markerMoteForOverforing={markerMoteForOverforing} hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
+            moterMedStatus.length > 0 && <MoteoversiktEnhet aktivEnhet={aktivEnhet} moterMarkertForOverforing={moterMarkertForOverforing}
+                                                            overforMoter={overforMoter} markerMoteForOverforing={markerMoteForOverforing} hentMoter={hentMoter}
+                                                            overtarMoter={overtarMoter} harOvertattMoter={harOvertattMoter} overtaMoterFeilet={overtaMoterFeilet}
+                                                            hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
         }
     </div>);
 };
@@ -25,6 +32,9 @@ Moter.propTypes = {
     hentBruker: PropTypes.func,
     visMoter: PropTypes.func,
     visMoterEnhet: PropTypes.func,
+    overforMoter: PropTypes.func,
+    markerMoteForOverforing: PropTypes.func,
+    moterMarkertForOverforing: PropTypes.array,
     side: PropTypes.string,
 };
 

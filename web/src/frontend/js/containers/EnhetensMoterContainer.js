@@ -8,6 +8,7 @@ import EnhetensMoter from '../components/EnhetensMoter';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as brukerActions from '../actions/bruker_actions';
 import * as moterEnhetActions from '../actions/moterEnhet_actions';
+import * as moterActions from '../actions/moter_actions';
 
 export class Moteside extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export class Moteside extends Component {
         if (props.aktivEnhet !== props.hentetEnhet) {
             props.hentEnhetsMoter(props.aktivEnhet);
         }
+        props.resetOverforing();
     }
 
     componentDidUpdate() {
@@ -25,7 +27,8 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, markerMoteForOverforing, aktivEnhet } = this.props;
+        const { aktivEnhet, henterMoterBool, henterVeilederBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker,
+            moterMarkertForOverforing, markerMoteForOverforing, overforMoter, overtaMoterFeilet, harOvertattMoter, overtarMoter, hentMoter } = this.props;
         return (<Side tittel="Møteoversikt">
             <div>
                 <NavigasjonsTopp lenker={[
@@ -52,7 +55,10 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return <EnhetensMoter markerMoteForOverforing={markerMoteForOverforing} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter} />;
+                        return <EnhetensMoter moterMarkertForOverforing={moterMarkertForOverforing} overforMoter={overforMoter}
+                                              markerMoteForOverforing={markerMoteForOverforing} hentVirksomhet={hentVirksomhet}
+                                              hentBruker={hentBruker} veileder={veileder} moter={moter} hentMoter={hentMoter}
+                                              overtarMoter={overtarMoter} harOvertattMoter={harOvertattMoter} overtaMoterFeilet={overtaMoterFeilet} />;
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -64,30 +70,49 @@ export class Moteside extends Component {
 
 Moteside.propTypes = {
     moter: PropTypes.array,
-    aktivEnhet: PropTypes.string,
     hentetEnhet: PropTypes.string,
     henterMoterBool: PropTypes.bool,
     henterVeilederBool: PropTypes.bool,
+    overtaMoterFeilet: PropTypes.bool,
+    harOvertattMoter: PropTypes.bool,
+    overtarMoter: PropTypes.bool,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
     hentEnhetsMoter: PropTypes.func,
     markerMoteForOverforing: PropTypes.func,
+    resetOverforing: PropTypes.func,
+    overforMoter: PropTypes.func,
+    hentMoter: PropTypes.func,
+    moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
+    aktivEnhet: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => {
+    const moter = state.moterEnhet.data;
+    const moterMarkertForOverforing = state.overfor.data;
+    moter.map((mote) => {
+        moterMarkertForOverforing.filter((markertMoteUuid) => {
+            return mote.moteUuid === markertMoteUuid;
+        }).length > 0 ? mote.markert = true : mote.markert = false;
+        return mote;
+    });
     return {
+        harOvertattMoter: state.overfor.sendt,
+        overtarMoter: state.overfor.sender,
+        overtaMoterFeilet: state.overfor.sendingFeilet,
+        moterMarkertForOverforing,
         aktivEnhet: state.moterEnhet.aktivEnhet,
         hentetEnhet: state.moterEnhet.hentetEnhet,
         hentMoterFeiletBool: state.moterEnhet.hentingFeilet,
         henterVeilederBool: state.veileder.henter,
-        henterMoterBool: state.moter.henter,
-        moter: state.moterEnhet.data,
+        henterMoterBool: state.moterEnhet.henter,
+        moter,
         veileder: state.veileder.data,
     };
 };
 
-const EnhetensMoteContainer = connect(mapStateToProps, Object.assign({}, virksomhetActions, brukerActions, moterEnhetActions))(Moteside);
+const EnhetensMoteContainer = connect(mapStateToProps, Object.assign({}, virksomhetActions, brukerActions, moterEnhetActions, moterActions))(Moteside);
 
 export default EnhetensMoteContainer;
