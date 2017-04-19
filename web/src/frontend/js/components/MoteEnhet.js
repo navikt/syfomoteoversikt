@@ -16,9 +16,10 @@ class MoteEnhet extends Component {
         const { opprettetTidspunkt, eier, bruker, markert, svarStatus, moteUuid, markerMoteForOverforing } = this.props;
         return (<tr>
             <td>
-                <input type="checkbox" checked={markert} onChange={ (e) => {
+                <input type="checkbox" id={moteUuid} className="checkboks"  checked={markert} onChange={ (e) => {
                     markerMoteForOverforing(moteUuid, e.target.checked);
                 } } />
+                <label htmlFor={moteUuid} />
             </td>
             <td>
                 {eier}
