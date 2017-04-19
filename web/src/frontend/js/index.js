@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
-import { ledetekster } from 'digisyfo-npm';
+import { ledetekster, hentLedetekster } from 'digisyfo-npm';
 import moter from './reducers/moter';
 import moterEnhet from './reducers/moterEnhet';
 import veileder from './reducers/veileder';
@@ -37,7 +37,6 @@ const store = createStore(rootReducer,
 );
 
 sagaMiddleware.run(rootSaga);
-
 store.dispatch(hentVeileder());
 const config = {
     config: {

@@ -36,8 +36,7 @@ class Moteoversikt extends Component {
 
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
-        const { moter, hentBruker, markerMoteForOverforing } = this.props;
-
+        const { moter, hentBruker, markerMoteForOverforing, overforMoter, moterMarkertForOverforing, overtarMoter, hentMoter } = this.props;
 
         return (<div>
             <div className="verktoylinje">
@@ -91,7 +90,9 @@ class Moteoversikt extends Component {
                     </tbody>
                 </table>
                 <div className="knapperad">
-                    <button className="knapp" onClick={() => {  }}>Overta møter</button>
+                    <button className="knapp" disabled={overtarMoter} onClick={() => { overforMoter({
+                        moteUuidListe: moterMarkertForOverforing,
+                    }); }}>Overta møter</button>
                 </div>
             </div>
         </div>);
@@ -101,6 +102,9 @@ class Moteoversikt extends Component {
 Moteoversikt.propTypes = {
     moter: PropTypes.array,
     hentVirksomhet: PropTypes.func,
+    overforMoter: PropTypes.func,
+    markerMoteForOverforing: PropTypes.func,
+    moterMarkertForOverforing: PropTypes.array,
     hentBruker: PropTypes.func,
 };
 

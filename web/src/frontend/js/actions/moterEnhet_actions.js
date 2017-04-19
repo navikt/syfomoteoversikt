@@ -27,9 +27,10 @@ export function markerMoteForOverforing(moteUuid, overta) {
     };
 }
 
-export function overforMoter() {
+export function overforMoter(data) {
     return {
         type: 'OVERFOR_MOTER_FORESPURT',
+        moteUuidListe: data.moteUuidListe,
     };
 }
 
@@ -39,16 +40,21 @@ export function overforerMoter() {
     };
 }
 
-
 export function overforMoterFeilet() {
     return {
-        type: 'OVERFORER_MOTER_FEILET',
+        type: 'OVERFOR_MOTER_FEILET',
     };
 }
 
 export function moterOverfort() {
     return {
         type: 'MOTER_OVERFORT',
+    };
+}
+
+export function resetOverforing() {
+    return {
+        type: 'OVERFOR_MOTER_RESET',
     };
 }
 
