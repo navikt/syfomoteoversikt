@@ -54,6 +54,10 @@
     margin-bottom: 2.5em;
 }
 
+.navigasjonsLenkeListe {
+  padding: 0;
+}
+
 .navigasjon__element {
     display: inline-block;
     padding-top: .25em;
@@ -62,34 +66,22 @@
     margin: 0 2em 0 0;
     .mixin-typo-element();
     text-transform: uppercase;
-
+  a {
+    //fjern important når frontend-core blir bumpet så man ikke har default-styling på lenker lenger.
+      color: black !important;
+  }
 }
 
 .navigasjon__element__inner {
-    display: flex;
     align-items: center;
     cursor: pointer;
     &:hover {
         border-bottom: 4px @lenkeBlaa solid;
     }
-
-  a {
-    color: inherit;
     border-bottom: none;
-  }
-
-    img {
-        width: 1.5em;
-        height: 1.5em;
-        margin-right: .5em;
-    }
 }
 
 .navigasjon__element__inner--active {
-    border-bottom: 4px @lenkeBlaa solid;
-  a {
-    &:visited {
-      color: @lenkeBlaa;
-    }
-  }
+  //fjern important når frontend-core blir bumpet så man ikke har default-styling på lenker lenger.
+    border-bottom: 4px @lenkeBlaa solid !important;
 }
