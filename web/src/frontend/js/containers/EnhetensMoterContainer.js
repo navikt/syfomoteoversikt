@@ -97,9 +97,9 @@ export const mapStateToProps = (state) => {
     const moter = state.moterEnhet.data;
     const moterMarkertForOverforing = state.overfor.data;
     moter.map((mote) => {
-        moterMarkertForOverforing.filter((markertMoteUuid) => {
+        mote.markert = moterMarkertForOverforing.filter((markertMoteUuid) => {
             return mote.moteUuid === markertMoteUuid;
-        }).length > 0 ? mote.markert = true : mote.markert = false;
+        }).length > 0;
         return mote;
     });
 
