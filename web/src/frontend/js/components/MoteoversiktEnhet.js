@@ -126,7 +126,7 @@ class Moteoversikt extends Component {
                         const eier = mote.eier;
                         const svarStatus = deltakerSvarStatus(mote);
                         return (<MoteEnhet markerMoteForOverforing={markerMoteForOverforing} hentVeileder={hentVeileder} hentBruker={hentBruker}
-                                key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />);
+                            key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />);
                     })}
                     </tbody>
                 </table>

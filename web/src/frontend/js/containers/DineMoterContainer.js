@@ -43,7 +43,7 @@ export class Moteside extends Component {
                     }
                     if (moter) {
                         return (<Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
-                        harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} />);
+                            harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
