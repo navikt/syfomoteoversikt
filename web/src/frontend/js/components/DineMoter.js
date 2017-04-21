@@ -12,7 +12,7 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, harOvertattMoter, moterMarke
     return (<div>
         { harOvertattMoter && <div className="blokk panel"><Varselstripe type="suksess">
             <div>
-                <p>{`Du har lagt til ${moterMarkertForOverforing.length} nye møter`}</p>
+                <p className="typo-element">{`Du har lagt til ${moterMarkertForOverforing.length} nye møter`}</p>
                 <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
             </div>
         </Varselstripe></div>}
@@ -20,6 +20,7 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, harOvertattMoter, moterMarke
         {
             moterMedStatus.length === 0 && (<div className="panel">
                 <p>Du har ingen aktive møter.</p>
+
             </div>)
         }
         {

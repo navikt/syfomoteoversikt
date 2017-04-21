@@ -16,6 +16,18 @@
         margin: 0 0 1em 0;
     }
     .selectContainer {
+      &:after {
+        position: absolute;
+        border-color: black;
+        border-width: 1px 0 0 1px;
+        height: 10px;
+        width: 10px;
+        right: 14px;
+        top: 9px;
+        border-style: solid;
+        content: "";
+        transform: rotate(-135deg);
+      }
         flex-grow: 0;
     }
 }

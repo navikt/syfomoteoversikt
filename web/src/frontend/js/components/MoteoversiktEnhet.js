@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { statuser, deltakerSvarStatus } from '../utils/statuser';
+import { finnVeilederNavn } from '../utils/index';
+
 import MoteEnhet from './MoteEnhet';
 
 class Moteoversikt extends Component {
@@ -20,7 +22,7 @@ class Moteoversikt extends Component {
 
     getVeiledere(moter) {
         const alleVeiledere = moter.map((mote) => {
-            return mote.eier;
+            return finnVeilederNavn(mote.veileder);
         });
         return [...new Set(alleVeiledere)];
     }
