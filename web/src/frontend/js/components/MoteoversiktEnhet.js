@@ -41,7 +41,7 @@ class Moteoversikt extends Component {
                 status = mote.status === filterStatus;
             }
             if (filterVeileder !== 'alle') {
-                veileder = mote.eier === filterVeileder;
+                veileder = finnVeilederNavn(mote.veileder) === filterVeileder;
             }
             return veileder && status;
         });
