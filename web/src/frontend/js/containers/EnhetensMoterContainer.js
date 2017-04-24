@@ -32,7 +32,8 @@ export class Moteside extends Component {
 
     render() {
         const { aktivEnhet, henterMoterBool, hentMoterFeiletBool, moter, hentVirksomhet, hentBruker, hentVeileder,
-            moterMarkertForOverforing, markerMoteForOverforing, overforMoter, overtaMoterFeilet, harOvertattMoter, overtarMoter, hentMoter } = this.props;
+            moterMarkertForOverforing, markerMoteForOverforing, overforMoter, overtaMoterFeilet, harOvertattMoter, overtarMoter, hentMoter, ledetekster } = this.props;
+
         return (<Side tittel="Møteoversikt">
             <div>
                 <NavigasjonsTopp lenker={[
@@ -62,7 +63,7 @@ export class Moteside extends Component {
                         return (<EnhetensMoter moterMarkertForOverforing={moterMarkertForOverforing} overforMoter={overforMoter} hentVeileder={hentVeileder}
                             markerMoteForOverforing={markerMoteForOverforing} hentVirksomhet={hentVirksomhet}
                             hentBruker={hentBruker} moter={moter} hentMoter={hentMoter}
-                            overtarMoter={overtarMoter} harOvertattMoter={harOvertattMoter} overtaMoterFeilet={overtaMoterFeilet} />);
+                            overtarMoter={overtarMoter} harOvertattMoter={harOvertattMoter} overtaMoterFeilet={overtaMoterFeilet} ledetekster={ledetekster} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -91,6 +92,7 @@ Moteside.propTypes = {
     moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
     aktivEnhet: PropTypes.string,
+    ledetekster: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => {
@@ -119,9 +121,10 @@ export const mapStateToProps = (state) => {
         moterMarkertForOverforing,
         aktivEnhet: state.moterEnhet.aktivEnhet,
         hentetEnhet: state.moterEnhet.hentetEnhet,
-        hentMoterFeiletBool: state.moterEnhet.hentingFeilet,
-        henterMoterBool: state.moterEnhet.henter,
+        hentMoterFeiletBool: state.moterEnhet.hentingFeilet || state.ledetekster.hentingFeilet,
+        henterMoterBool: state.moterEnhet.henter || state.ledetekster.henter,
         moter,
+        ledetekster: state.ledetekster.data,
     };
 };
 

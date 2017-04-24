@@ -18,7 +18,8 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { henterMoterBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing } = this.props;
+        const { henterMoterBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing, ledetekster } = this.props;
+
         return (<Side tittel="Møteoversikt">
             <div>
                 <NavigasjonsTopp lenker={[
@@ -43,7 +44,7 @@ export class Moteside extends Component {
                     }
                     if (moter) {
                         return (<Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
-                            harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} />);
+                            harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} ledetekster={ledetekster} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -64,15 +65,17 @@ Moteside.propTypes = {
     moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
     veileder: PropTypes.object,
+    ledetekster: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => {
     return {
         harOvertattMoter: state.overfor.sendt,
-        hentingFeilet: state.moter.hentingFeilet,
-        henterMoterBool: state.moter.henter,
+        hentMoterFeiletBool: state.moterEnhet.hentingFeilet || state.ledetekster.hentingFeilet,
+        henterMoterBool: state.moterEnhet.henter || state.ledetekster.henter,
         moter: state.moter.data,
         moterMarkertForOverforing: state.overfor.data,
+        ledetekster: state.ledetekster.data,
     };
 };
 
