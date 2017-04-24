@@ -7,16 +7,18 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
-import { ledetekster } from 'digisyfo-npm';
+import { hasURLParameter } from 'digisyfo-npm';
 import moter from './reducers/moter';
 import moterEnhet from './reducers/moterEnhet';
 import veiledere from './reducers/veiledere';
 import overfor from './reducers/overfor';
 import modiacontext from './reducers/modiacontext';
+import ledetekster from './reducers/ledetekster';
 import rootSaga from './sagas/index';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
 import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
+import { hentLedetekster } from './actions/ledetekster_actions';
 
 const rootReducer = combineReducers({
     history,
@@ -65,6 +67,14 @@ store.dispatch(hentAktivEnhet({
         store.dispatch(setAktivEnhet(aktivEnhet));
     },
 }));
+store.dispatch(hentLedetekster());
+
+if (hasURLParameter('visLedetekster')) {
+    localStorage.setItem('visLedetekster', true);
+} else {
+    localStorage.removeItem('visLedetekster');
+}
+
 render(<Provider store={store}>
         <AppRouter history={history} /></Provider>,
     document.getElementById('maincontent'));

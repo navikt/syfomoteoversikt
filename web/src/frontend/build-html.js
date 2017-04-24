@@ -10,6 +10,7 @@ var dev = {
     timestamp: timestamp,
     buildRoot: 'http://localhost:3050/assets',
     restRoot: 'http://localhost:8196/mote/rest',
+    syforestRoot: 'http://localhost:8182/syforest',
     bundleFileName: 'bundle.js',
     decoratorRoot: 'http://localhost:8186',
     enableLogging: true,
