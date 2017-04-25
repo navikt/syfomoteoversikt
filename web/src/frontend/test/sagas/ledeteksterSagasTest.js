@@ -9,7 +9,7 @@ describe("ledeteksterSagas", () => {
 
     beforeEach(() => {
         window.APP_SETTINGS = {
-            SYFOREST_ROOT: "http://tjenester.nav.no/syforest"
+            SYFOREST_ROOT: "https://modapp.adeo.no/modiasyforest/rest"
         }
     });
 
@@ -21,7 +21,7 @@ describe("ledeteksterSagas", () => {
     });
 
     it("Skal dernest hente ledetekster", () => {
-        const nextCall = call(get, "http://tjenester.nav.no/syforest/informasjon/tekster");
+        const nextCall = call(get, "https://modapp.adeo.no/modiasyforest/rest/informasjon/tekster");
         expect(generator.next().value).to.deep.equal(nextCall);
     });
 
