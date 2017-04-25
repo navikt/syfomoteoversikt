@@ -36,6 +36,7 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer,
     applyMiddleware(sagaMiddleware)
 );
+let harSjekketEnhetContext = false;
 
 sagaMiddleware.run(rootSaga);
 const config = {
@@ -51,20 +52,28 @@ const config = {
         handlePersonsokSubmit: (nyttFnr) => {
             window.location = `/sykefravaer/${nyttFnr}/mote`;
         },
-        handleChangeEnhet: (enhet) => {
-            store.dispatch(setAktivEnhet(enhet));
-            store.dispatch(pushModiaContext({
-                verdi: enhet,
-                eventType: 'NY_AKTIV_ENHET',
-            }));
+        handleChangeEnhet: (data) => {
+            if (config.config.initiellEnhet !== data) {
+                store.dispatch(setAktivEnhet(data));
+                if (harSjekketEnhetContext) {
+                    store.dispatch(pushModiaContext({
+                        verdi: data,
+                        eventType: 'NY_AKTIV_ENHET',
+                    }));
+                }
+                config.config.initiellEnhet = data;
+            }
         },
     },
 };
 store.dispatch(hentAktivEnhet({
     callback: (aktivEnhet) => {
-        config.config.initiellEnhet = aktivEnhet;
-        window.renderDecoratorHead(config);
-        store.dispatch(setAktivEnhet(aktivEnhet));
+        harSjekketEnhetContext = true;
+        if (aktivEnhet && config.config.initiellEnhet !== aktivEnhet) {
+            store.dispatch(setAktivEnhet(aktivEnhet));
+            config.config.initiellEnhet = aktivEnhet;
+            window.renderDecoratorHead(config);
+        }
     },
 }));
 store.dispatch(hentLedetekster());
