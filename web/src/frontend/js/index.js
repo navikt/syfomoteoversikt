@@ -7,19 +7,28 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import history from './history.js';
 import { reducer as formReducer } from 'redux-form';
-import { ledetekster } from 'digisyfo-npm';
+import { hasURLParameter } from 'digisyfo-npm';
 import moter from './reducers/moter';
-import veileder from './reducers/veileder';
+import moterEnhet from './reducers/moterEnhet';
+import veiledere from './reducers/veiledere';
+import overfor from './reducers/overfor';
+import modiacontext from './reducers/modiacontext';
+import ledetekster from './reducers/ledetekster';
 import rootSaga from './sagas/index';
-import { hentMoter } from './actions/moter_actions';
-import { hentVeileder } from './actions/veileder_actions';
+import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
+import { setAktivEnhet } from './actions/moterEnhet_actions';
+import { opprettWebsocketConnection } from './contextHolder';
+import { hentLedetekster } from './actions/ledetekster_actions';
 
 const rootReducer = combineReducers({
     history,
     moter,
+    overfor,
     ledetekster,
-    veileder,
+    veiledere,
+    modiacontext,
     form: formReducer,
+    moterEnhet,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -29,23 +38,66 @@ const store = createStore(rootReducer,
 );
 
 sagaMiddleware.run(rootSaga);
+const config = {
+    config: {
+        toggles: {
+            visEnhetVelger: true,
+            visVeileder: true,
+            visSokefelt: true,
+            overrideenhetersaga: true,
+            overrideveiledersaga: true,
+        },
+        applicationName: 'Oversikt dialogmøter',
+        handlePersonsokSubmit: (nyttFnr) => {
+            window.location = `/sykefravaer/${nyttFnr}/mote`;
+        },
+        handleChangeEnhet: (data) => {
+            if (config.config.initiellEnhet !== data) {
+                store.dispatch(setAktivEnhet(data));
+                store.dispatch(pushModiaContext({
+                    verdi: data,
+                    eventType: 'NY_AKTIV_ENHET',
+                }));
+                config.config.initiellEnhet = data;
+            }
+        },
+    },
+};
+store.dispatch(hentAktivEnhet({
+    callback: (aktivEnhet) => {
+        store.dispatch(setAktivEnhet(aktivEnhet));
+        config.config.initiellEnhet = aktivEnhet;
+        window.renderDecoratorHead(config);
+    },
+}));
+store.dispatch(hentLedetekster());
 
-store.dispatch(hentMoter());
-store.dispatch(hentVeileder());
+if (hasURLParameter('visLedetekster')) {
+    localStorage.setItem('visLedetekster', true);
+} else {
+    localStorage.removeItem('visLedetekster');
+}
 
 render(<Provider store={store}>
         <AppRouter history={history} /></Provider>,
     document.getElementById('maincontent'));
 
 document.addEventListener('DOMContentLoaded', () => {
-    const config = {
-        config: {
-            toggles: {
+    window.renderDecoratorHead(config);
+});
+
+opprettWebsocketConnection((wsCallback) => {
+    if (wsCallback.data === 'NY_AKTIV_ENHET') {
+        store.dispatch(hentAktivEnhet({
+            callback: (aktivEnhet) => {
+                if (config.config.initiellEnhet !== aktivEnhet) {
+                    config.config.initiellEnhet = aktivEnhet;
+                    window.renderDecoratorHead(config);
+                    store.dispatch(setAktivEnhet(aktivEnhet));
+                }
             },
-            applicationName: 'Oversikt dialogmøter',
-        }
-    };
-    renderDecoratorHead(config);
+        }));
+    }
 });
 
 export {

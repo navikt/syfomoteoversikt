@@ -2,6 +2,57 @@ import React from 'react';
 
 const kortManeder = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
 
+export const tallOrdFraTall = (tall) => {
+    switch (tall) {
+        case 0: {
+            return 'null';
+        }
+        case 1: {
+            return 'ett';
+        }
+        case 2: {
+            return 'to';
+        }
+        case 3: {
+            return 'tre';
+        }
+        case 4: {
+            return 'fire';
+        }
+        case 5: {
+            return 'fem';
+        }
+        case 6: {
+            return 'seks';
+        }
+        case 7: {
+            return 'syv';
+        }
+        case 8: {
+            return 'åtte';
+        }
+        case 9: {
+            return 'ni';
+        }
+        case 10: {
+            return 't1';
+        }
+        case 11: {
+            return 'elleve';
+        }
+        case 12: {
+            return 'tolv';
+        }
+        default: {
+            return tall;
+        }
+    }
+};
+
+export const pad = (nr) => {
+    return nr > 9 || nr.length > 1 ? nr : `0${nr}`;
+};
+
 export const visDato = (dato) => {
     const maned = kortManeder[dato.monthValue - 1];
     return `${dato.dayOfMonth}. ${maned} ${dato.year}`;
@@ -32,8 +83,11 @@ export const formaterTid = (input) => {
     return tid;
 };
 
-export const pad = (nr) => {
-    return nr > 9 || nr.length > 1 ? nr : `0${nr}`;
+export const dagensDatoKortFormat = () => {
+    const d = new Date();
+    const dag = pad(d.getDate());
+    const maned = pad(d.getMonth() + 1);
+    return `${dag}.${maned}.${d.getFullYear()}`;
 };
 
 export const getDatoFraZulu = (zulutid) => {
@@ -60,9 +114,19 @@ export const finnVirksomhet = (leder) => {
 
 export const finnNavn = (bruker) => {
     if (bruker && bruker.navn) {
-        return <a href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a>;
+        return <a className="lenke" href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a>;
     } else if (bruker && bruker.fnr) {
         return 'Henter navn...';
     }
     return 'Fant ikke navn';
 };
+
+export const finnVeilederNavn = (veileder) => {
+    if (veileder && veileder.navn) {
+        return veileder.navn;
+    } else if (veileder && veileder.henter) {
+        return 'Henter navn...';
+    }
+    return 'Fant ikke navn';
+};
+

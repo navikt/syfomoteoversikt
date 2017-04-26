@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { hentVeileder } from '../../js/sagas/veilederSagas.js';
-import { get } from '../../js/api';
+import { get } from '../../js/api/index';
 import { put, call } from 'redux-saga/effects';
 
 describe("veilederSagas", () => {
@@ -11,15 +11,17 @@ describe("veilederSagas", () => {
         }
     });
 
-    const generator = hentVeileder();
+    const generator = hentVeileder({data: {ident: 'Z999999'}});
 
     it("Skal dispatche HENTER_VEILEDER", () => {
-        const nextPut = put({type: 'HENTER_VEILEDER'});
+        const nextPut = put({type: 'HENTER_VEILEDER', data: {
+            ident: 'Z999999',
+        }});
         expect(generator.next().value).to.deep.equal(nextPut);
     });
 
     it("Skal dernest hente veileder", () => {
-        const nextCall = call(get, "http://tjenester.nav.no/sykefravaer/veilederinfo");
+        const nextCall = call(get, "http://tjenester.nav.no/sykefravaer/veilederinfo/Z999999");
         expect(generator.next().value).to.deep.equal(nextCall);
     });
 

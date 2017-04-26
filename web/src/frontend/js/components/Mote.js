@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { getDatoFraZulu, finnVirksomhet, finnNavn } from '../utils/index';
-import { statuser } from '../utils/Statuser';
 
 class Mote extends Component {
 
@@ -14,12 +13,13 @@ class Mote extends Component {
             hentBruker(bruker.fnr, moteUuid);
         }
     }
+
     render() {
-        const { status, opprettetTidspunkt, leder, bruker } = this.props;
+        const { opprettetTidspunkt, leder, bruker, svarStatus } = this.props;
 
         return (<tr>
             <td>
-                {bruker && bruker.fnr ? <a href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.fnr}</a> : 'Ukjent fnr'}
+                {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
             </td>
             <td>
                 {finnNavn(bruker)}
@@ -34,9 +34,8 @@ class Mote extends Component {
                 {getDatoFraZulu(opprettetTidspunkt)}
             </td>
             <td>
-                <span className={`motestatus motestatus--${status.toLowerCase()}`}>
-                    <img src={`/moteoversikt/img/svg/status_${status.toLowerCase()}.svg`} alt="" />
-                    <span>{statuser[status]}</span>
+                <span className="Motestatus">
+                    <span>{svarStatus}</span>
                 </span>
             </td>
         </tr>);
@@ -44,13 +43,13 @@ class Mote extends Component {
 }
 
 Mote.propTypes = {
-    status: PropTypes.string,
     opprettetTidspunkt: PropTypes.string,
     leder: PropTypes.object,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
     moteUuid: PropTypes.string,
     bruker: PropTypes.object,
+    svarStatus: PropTypes.string,
 };
 
 export default Mote;

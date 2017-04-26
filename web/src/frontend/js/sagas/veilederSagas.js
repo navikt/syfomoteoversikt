@@ -3,13 +3,14 @@ import { takeEvery } from 'redux-saga';
 import { get } from '../api/index';
 import * as actions from '../actions/veileder_actions';
 
-export function* hentVeileder() {
-    yield put(actions.henterVeileder());
+export function* hentVeileder(action) {
+    yield put(actions.henterVeileder(action.data));
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/veilederinfo`);
+        const optionalPathParameter = action.data.ident ? `/${action.data.ident}` : '';
+        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/veilederinfo${optionalPathParameter}`);
         yield put(actions.veilederHentet(data));
     } catch (e) {
-        yield put(actions.hentVeilederFeilet());
+        yield put(actions.hentVeilederFeilet(action.data));
     }
 }
 

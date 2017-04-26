@@ -2,7 +2,9 @@ import moterSagas from '../sagas/moterSagas';
 import veilederSagas from '../sagas/veilederSagas';
 import virksomhetSagas from '../sagas/virksomhetSagas';
 import brukerSagas from '../sagas/brukerSagas';
-import { ledeteksterSagas } from 'digisyfo-npm';
+import modiacontextSagas from '../sagas/modiacontextSagas';
+import ledeteksterSagas from '../sagas/ledeteksterSagas';
+import moterEnhetSagas from './moterEnhetSagas';
 
 export default function * rootSaga() {
     yield [
@@ -10,6 +12,8 @@ export default function * rootSaga() {
         ledeteksterSagas(),
         veilederSagas(),
         brukerSagas(),
+        modiacontextSagas(),
         virksomhetSagas(),
+        moterEnhetSagas(),
     ];
 }

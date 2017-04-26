@@ -5,7 +5,7 @@
     <parent>
         <artifactId>moteoversiktfssfront</artifactId>
         <groupId>no.nav.sbl</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.0-SNAPSHOT</version>
     </parent>
     <packaging>war</packaging>
 
@@ -19,31 +19,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
+            <groupId>no.nav.dialogarena</groupId>
+            <artifactId>oidc-security</artifactId>
+            <type>test-jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet-core</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <groupId>javax.ws.rs</groupId>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>no.nav.dialogarena</groupId>-->
-            <!--<artifactId>oidc-security</artifactId>-->
-            <!--<type>test-jar</type>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>no.nav.dialogarena</groupId>
             <artifactId>oidc-security</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

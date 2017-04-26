@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { statuser } from '../utils/Statuser';
+import { statuser, deltakerSvarStatus } from '../utils/statuser';
 import Mote from './Mote';
 
 class Moteoversikt extends Component {
@@ -37,21 +37,25 @@ class Moteoversikt extends Component {
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
         const { moter, hentVirksomhet, hentBruker } = this.props;
+
+
         return (<div>
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy">
-                    <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
-                    <div className="selectContainer">
-                        <select id="moteoversikt-filtrer" onChange={(e) => {
-                            this.setStatus(e.currentTarget.value);
-                        }}>
-                            <option value="alle">Vis alle</option>
-                            {
-                                this.getStatuser(moter).map((status, index) => {
-                                    return <option key={index} value={status}>{statuser[status]}</option>;
-                                })
-                            }
-                        </select>
+                    <div className="verktoylinje__filter">
+                        <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
+                        <div className="selectContainer">
+                            <select id="moteoversikt-filtrer" onChange={(e) => {
+                                this.setStatus(e.currentTarget.value);
+                            }}>
+                                <option value="alle">Vis alle</option>
+                                {
+                                    this.getStatuser(moter).map((status, index) => {
+                                        return <option key={index} value={status}>{statuser[status]}</option>;
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +89,8 @@ class Moteoversikt extends Component {
                         const leder = mote.deltakere.filter((deltaker) => {
                             return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
                         })[0];
-                        return <Mote hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} />;
+                        const svarStatus = deltakerSvarStatus(mote);
+                        return <Mote hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
                     })}
                     </tbody>
                 </table>
