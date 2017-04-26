@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mock oversikt</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+<h1>Sett opp mocking av dine data!</h1>
+<p id="statusmelding"></p>
+
+<h2>Brukerprofil:</h2>
+<label for="toggleMockBrukerprofil">Enable mock:</label>
+<input type="checkbox" id="toggleMockBrukerprofil" />
+<label for="brukerprofil">Profil:</label>
+<select id="brukerprofil" name="brukerprofil">
+    <option value="DEFAULT">standard</option>
+    <option value="UVENTET_FEIL">Uventet feil</option>
+    <option value="KODE6">Kode 6</option>
+    <option value="KODE7">Kode 7</option>
+    <option value="SIKKERHETSBEGRENSNING">Sikkerhetsbegrensning</option>
+    <option value="LANGT_NAVN">Langt navn</option>
+</select>
+
+<h2>KRR:</h2>
+<label for="toggleMockDkif">Enable mock:</label>
+<input type="checkbox" id="toggleMockDkif" />
+<label for="dkif">Profil:</label>
+<select id="dkif" name="dkif">
+    <option value="DEFAULT">standard</option>
+    <option value="UVENTET_FEIL">Uventet feil</option>
+    <option value="RESERVERT">Reservert</option>
+    <option value="INGEN_KONTAKTINFORMASJON">Ingen kontaktinformasjon</option>
+    <option value="UTGAATT">Utgått</option>
+</select>
+
+<h2>NORG:</h2>
+<label for="toggleMockNorg">Enable mock:</label>
+<input type="checkbox" id="toggleMockNorg" />
+<label for="norg">Profil:</label>
+<select id="norg" name="norg">
+    <option value="DEFAULT">standard</option>
+    <option value="UVENTET_FEIL">Uventet feil</option>
+</select>
+
+<h2>AKTOER:</h2>
+<label for="toggleMockAktoer">Enable mock:</label>
+<input type="checkbox" id="toggleMockAktoer" />
+<label for="aktoer">Profil:</label>
+<select id="aktoer" name="aktoer">
+    <option value="DEFAULT">standard</option>
+    <option value="UVENTET_FEIL">Uventet feil</option>
+</select>
+
+<h2>EREG:</h2>
+<label for="toggleMockEreg">Enable mock:</label>
+<input type="checkbox" id="toggleMockEreg" />
+<label for="ereg">Profil:</label>
+<select id="ereg" name="ereg">
+    <option value="DEFAULT">standard</option>
+    <option value="UVENTET_FEIL">Uventet feil</option>
+</select>
+
+<h2>Møter:</h2>
+<p>NB! Denne typen mocking vil ikke fungere godt med de andre og burde bare brukes for å se raskt på hvordan GUIet forandrer seg. Ikke interaksjon</p>
+<label for="toggleMockMoter">Enable mock:</label>
+<input type="checkbox" id="toggleMockMoter" />
+<label for="moter">Profil:</label>
+<select id="moter" name="moter">
+    <option value="INGEN_MOTER">Ingen møter</option>
+    <option value="UVENTET_FEIL">Uventet feil</option>
+    <option value="MOTE_UTEN_SVAR">Møte uten svar</option>
+    <option value="MOTE_MED_SVAR_IKKE_BEKREFTET">Møte med svar ikke bekreftet</option>
+    <option value="MOTE_MED_SVAR_BEGGE_SVART_OK">Begge har svart OK</option>
+    <option value="MOTE_MED_SVAR_BEKREFTET">Møte med svar bekreftet</option>
+    <option value="MOTE_MED_RESERVASJON_UTEN_SVAR">Møte med reservasjon uten svar</option>
+    <option value="MOTE_MED_RESERVASJON_OG_SVAR">Møte med reservasjon og svar</option>
+    <option value="MOTE_MED_RESERVASJON_OG_SVAR_OG_BEKREFTET">Møte med reservasjon og svar og bekreftet</option>
+</select>
+
+<br/>
+<button type="button" onclick="setupMocking()">Sett mock-profil</button>
+
+<script>
+    $.ajax({
+        url: moteRestFssUrl(),
+        type: 'GET',
+        contentType: 'application/json',
+        xhrFields: {
+            withCredentials: true,
+        },
+    }).then(function (data) {
+        if (data.TILLATT_MOCK === false) {
+            $('#statusmelding').text('Mocking er ikke skrudd på for dette miljøet!');
+        }
+
+        if (data.brukerprofilMockConfig.enabledForSession) {
+            $('#toggleMockBrukerprofil')[0].checked = true;
+            $('#brukerprofil').val(data.brukerprofilMockConfig.mockProfile);
+        }
+
+        if (data.dkifMockConfig.enabledForSession) {
+            $('#toggleMockDkif')[0].checked = true;
+            $('#dkif').val(data.dkifMockConfig.mockProfile);
+        }
+
+        if (data.norgMockConfig.enabledForSession) {
+            $('#toggleMockNorg')[0].checked = true;
+            $('#norg').val(data.norgMockConfig.mockProfile);
+        }
+
+        if (data.moterRessursMockConfig.enabledForSession) {
+            $('#toggleMockMoter')[0].checked = true;
+            $('#moter').val(data.moterRessursMockConfig.mockProfile);
+        }
+
+    });
+
+    function moteRestFssUrl() {
+        if (window.location.host.indexOf('localhost') > -1) {
+            return 'http://localhost:8196/mote/rest/internal/mocksetup';
+        } else {
+            return '../../mote/rest/internal/mocksetup';
+        }
+    }
+</script>
+
+<script>
+    function setupMocking() {
+        var brukerprofil = $('#brukerprofil').val();
+        var brukerprofilToggle = $('#toggleMockBrukerprofil')[0].checked;
+        var dkif = $('#dkif').val();
+        var dkifToggle = $('#toggleMockDkif')[0].checked;
+        var norg = $('#norg').val();
+        var norgToggle = $('#toggleMockNorg')[0].checked;
+        var moter = $('#moter').val();
+        var toggleMockMoter = $('#toggleMockMoter')[0].checked;
+        var config = {
+            brukerprofilMockConfig: {
+                enabledForSession: brukerprofilToggle,
+                mockProfile: brukerprofil,
+            },
+            dkifMockConfig: {
+                enabledForSession: dkifToggle,
+                mockProfile: dkif,
+            },
+            norgMockConfig: {
+                enabledForSession: norgToggle,
+                mockProfile: norg,
+            },
+            moterRessursMockConfig: {
+                enabledForSession: toggleMockMoter,
+                mockProfile: moter,
+            },
+        };
+        $.ajax({
+            url: moteRestFssUrl(),
+            type: 'POST',
+            contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true,
+            },
+            data: JSON.stringify(config)
+        }).then(function (data) {
+            $('#statusmelding').text('Mockdata satt: ' + new Date());
+        });
+    }
+
+</script>
+
+</body>
+</html>

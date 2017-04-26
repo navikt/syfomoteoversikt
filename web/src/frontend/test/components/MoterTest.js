@@ -2,7 +2,8 @@ import chai from 'chai';
 import React from 'react'
 import {mount, shallow} from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
-import Moter, { setMoteStatus } from '../../js/components/Moter';
+import Moter from '../../js/components/DineMoter';
+import { setMoteStatus } from '../../js/utils/statuser';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;

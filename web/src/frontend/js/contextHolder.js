@@ -1,28 +1,23 @@
-const getPort = () => {
-    if (window.location.port === '') {
-        return '';
-    }
-    return ':8090';
-};
-
 const ContextholderConnection = () => {
-    return new WebSocket(`${window.APP_SETTINGS.WEBSOCKET_PROTOCOL}://${window.location.hostname}${getPort()}/eventdistributer/websocket`);
+    return new WebSocket(`wss://${window.location.hostname}/modiaeventdistribution/websocket`);
 };
 
-const opprettWebsocketConnection = (callback) => {
+export const opprettWebsocketConnection = (callback) => {
+    if (window.location.hostname.indexOf('localhost') !== -1) {
+        return;
+    }
     const connection = new ContextholderConnection();
     connection.onmessage = (e) => {
-        if (e.data === 'OK') {
+        if (e.data === 'Connection Established') {
             return;
         }
         callback(e);
     };
     connection.onerror = () => {
-        callback('onerror');
     };
     connection.onclose = () => {
-        callback('onerror');
+        setTimeout(() => {
+            opprettWebsocketConnection(callback);
+        }, 1000);
     };
 };
-
-export default opprettWebsocketConnection;
