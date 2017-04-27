@@ -19,6 +19,7 @@ import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions
 import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
 import { hentLedetekster } from './actions/ledetekster_actions';
+import { hentMoter } from './actions/moter_actions';
 
 const rootReducer = combineReducers({
     history,
@@ -70,6 +71,7 @@ store.dispatch(hentAktivEnhet({
         window.renderDecoratorHead(config);
     },
 }));
+store.dispatch(hentMoter());
 store.dispatch(hentLedetekster());
 
 if (hasURLParameter('visLedetekster')) {

@@ -71,8 +71,8 @@ Moteside.propTypes = {
 export const mapStateToProps = (state) => {
     return {
         harOvertattMoter: state.overfor.sendt,
-        hentMoterFeiletBool: state.moterEnhet.hentingFeilet || state.ledetekster.hentingFeilet,
-        henterMoterBool: state.moterEnhet.henter || state.ledetekster.henter,
+        hentMoterFeiletBool: state.moter.hentingFeilet || state.ledetekster.hentingFeilet,
+        henterMoterBool: state.moter.henter || state.ledetekster.henter,
         moter: state.moter.data,
         moterMarkertForOverforing: state.overfor.data,
         ledetekster: state.ledetekster.data,
