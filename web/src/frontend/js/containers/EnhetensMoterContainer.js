@@ -8,7 +8,6 @@ import EnhetensMoter from '../components/EnhetensMoter';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as brukerActions from '../actions/bruker_actions';
 import * as moterEnhetActions from '../actions/moterEnhet_actions';
-import * as moterActions from '../actions/moter_actions';
 import * as veilederActions from '../actions/veileder_actions';
 
 export class Moteside extends Component {
@@ -128,6 +127,6 @@ export const mapStateToProps = (state) => {
     };
 };
 
-const EnhetensMoteContainer = connect(mapStateToProps, Object.assign({}, virksomhetActions, brukerActions, moterEnhetActions, moterActions, veilederActions))(Moteside);
+const EnhetensMoteContainer = connect(mapStateToProps, Object.assign({}, virksomhetActions, brukerActions, moterEnhetActions, veilederActions))(Moteside);
 
 export default EnhetensMoteContainer;
