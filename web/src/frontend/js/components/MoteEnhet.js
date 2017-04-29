@@ -4,9 +4,12 @@ import { getDatoFraZulu, finnNavn, finnVeilederNavn } from '../utils/index';
 class MoteEnhet extends Component {
 
     componentDidMount() {
-        const { moteUuid, bruker, hentBruker, hentVeileder, eier, veileder } = this.props;
-        if (!bruker.navn && bruker.fnr) {
-            hentBruker(bruker.fnr, moteUuid);
+        const { moteUuid, bruker, hentBruker, hentFnr, hentVeileder, eier, veileder, aktorId } = this.props;
+        if (!bruker.navn && aktorId) {
+            hentBruker(aktorId, moteUuid);
+        }
+        if (!bruker.fnr && aktorId) {
+            hentFnr(aktorId, moteUuid);
         }
         if (!veileder && eier) {
             hentVeileder({ ident: eier });
@@ -29,7 +32,7 @@ class MoteEnhet extends Component {
                 {finnNavn(bruker)}
             </td>
             <td>
-                {bruker && bruker.fnr ? bruker.fnr : 'Ukjent fnr'}
+                {bruker && bruker.fnr}
             </td>
             <td>
                 {getDatoFraZulu(opprettetTidspunkt)}

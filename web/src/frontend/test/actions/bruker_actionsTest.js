@@ -11,7 +11,7 @@ describe("bruker_actions", () => {
         const action = actions.hentBruker('fnr', 'moteUuid');
         expect(action).to.deep.equal({
             type: 'HENT_BRUKER_FORESPURT',
-            fnr: 'fnr',
+            ident: 'fnr',
             moteUuid: 'moteUuid',
         })
     });

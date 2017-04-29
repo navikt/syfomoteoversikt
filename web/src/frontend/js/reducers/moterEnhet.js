@@ -35,6 +35,26 @@ export default function moterEnhet(state = defaultState, action) {
                 hentingFeilet: true,
             });
         }
+        case 'FNR_HENTET': {
+            const data = state.data
+                .map((mote) => {
+                    if (mote.moteUuid !== action.moteUuid) {
+                        return mote;
+                    }
+                    const deltakere = mote.deltakere.map((deltaker) => {
+                        if (deltaker.type !== 'Bruker') {
+                            return deltaker;
+                        }
+                        return Object.assign({}, deltaker, {
+                            fnr: action.data,
+                        });
+                    });
+                    return Object.assign({}, mote, { deltakere });
+                });
+            return Object.assign({}, state, {
+                data,
+            });
+        }
         case 'BRUKER_HENTET': {
             const data = state.data
                 .map((mote) => {

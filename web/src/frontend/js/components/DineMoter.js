@@ -12,7 +12,7 @@ const hentTallordTekst = (tall) => {
     return `${tallord} nye møter`;
 };
 
-const Moter = ({ moter, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing }) => {
+const Moter = ({ hentFnr, moter, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
@@ -32,7 +32,7 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, harOvertattMoter, moterMarke
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
+            moterMedStatus.length > 0 && <Moteoversikt hentFnr={hentFnr} hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
         }
     </div>);
 };
@@ -41,6 +41,7 @@ Moter.propTypes = {
     moter: PropTypes.array,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
+    hentFnr: PropTypes.func,
     visMoter: PropTypes.func,
     visMoterEnhet: PropTypes.func,
     harOvertattMoter: PropTypes.bool,

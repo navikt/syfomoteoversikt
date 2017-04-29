@@ -1,7 +1,7 @@
-export function hentBruker(fnr, moteUuid) {
+export function hentBruker(ident, moteUuid) {
     return {
         type: 'HENT_BRUKER_FORESPURT',
-        fnr,
+        ident,
         moteUuid,
     };
 }

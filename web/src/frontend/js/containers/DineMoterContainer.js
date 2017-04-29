@@ -8,6 +8,7 @@ import NavigasjonsTopp from '../components/NavigasjonsTopp';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as moterActions from '../actions/moter_actions';
 import * as brukerActions from '../actions/bruker_actions';
+import * as fnrActions from '../actions/fnr_actions';
 
 export class Moteside extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { henterMoterBool, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing, ledetekster } = this.props;
+        const { henterMoterBool, hentFnr, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing, ledetekster } = this.props;
 
         return (<Side tittel="Møteoversikt">
             <div>
@@ -43,7 +44,7 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return (<Moter hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
+                        return (<Moter hentFnr={hentFnr} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
                             harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} ledetekster={ledetekster} />);
                     }
                     return <p>Bruker har ingen møter</p>;
@@ -61,6 +62,7 @@ Moteside.propTypes = {
     harOvertattMoter: PropTypes.bool,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
+    hentFnr: PropTypes.func,
     hentMoter: PropTypes.func,
     moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
@@ -79,6 +81,6 @@ export const mapStateToProps = (state) => {
     };
 };
 
-const EnhetensMoteContainer = connect(mapStateToProps, Object.assign({}, virksomhetActions, brukerActions, moterActions))(Moteside);
+const EnhetensMoteContainer = connect(mapStateToProps, Object.assign({}, virksomhetActions, brukerActions, moterActions, fnrActions))(Moteside);
 
 export default EnhetensMoteContainer;

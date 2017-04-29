@@ -61,7 +61,7 @@ class Moteoversikt extends Component {
 
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
-        const { moter, hentBruker, markerMoteForOverforing, overforMoter, moterMarkertForOverforing, overtarMoter, hentVeileder } = this.props;
+        const { moter, hentBruker, hentFnr, markerMoteForOverforing, overforMoter, moterMarkertForOverforing, overtarMoter, hentVeileder } = this.props;
 
         return (<div>
             <div className="verktoylinje">
@@ -127,7 +127,7 @@ class Moteoversikt extends Component {
                         })[0];
                         const eier = mote.eier;
                         const svarStatus = deltakerSvarStatus(mote);
-                        return (<MoteEnhet markerMoteForOverforing={markerMoteForOverforing} hentVeileder={hentVeileder} hentBruker={hentBruker}
+                        return (<MoteEnhet hentFnr={hentFnr} markerMoteForOverforing={markerMoteForOverforing} hentVeileder={hentVeileder} hentBruker={hentBruker}
                             key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />);
                     })}
                     </tbody>
@@ -152,6 +152,7 @@ Moteoversikt.propTypes = {
     markerMoteForOverforing: PropTypes.func,
     moterMarkertForOverforing: PropTypes.array,
     hentBruker: PropTypes.func,
+    hentFnr: PropTypes.func,
 };
 
 export default Moteoversikt;
