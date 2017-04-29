@@ -12,7 +12,7 @@ describe("brukerSagas", () => {
     });
 
     const generator = hentBruker({
-        fnr: "55",
+        ident: "55",
         moteUuid: "moteUuid"
     });
 

@@ -102,7 +102,26 @@ export default function moter(state = defaultState, action) {
                 data: state.data,
             });
         }
-
+        case 'FNR_HENTET': {
+            const data = state.data
+                .map((mote) => {
+                    if (mote.moteUuid !== action.moteUuid) {
+                        return mote;
+                    }
+                    const deltakere = mote.deltakere.map((deltaker) => {
+                        if (deltaker.type !== 'Bruker') {
+                            return deltaker;
+                        }
+                        return Object.assign({}, deltaker, {
+                            fnr: action.data,
+                        });
+                    });
+                    return Object.assign({}, mote, { deltakere });
+                });
+            return Object.assign({}, state, {
+                data,
+            });
+        }
         default: {
             return state;
         }

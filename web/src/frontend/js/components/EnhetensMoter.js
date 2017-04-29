@@ -3,7 +3,7 @@ import MoteoversiktEnhet from './MoteoversiktEnhet';
 import { setMoteStatus } from '../utils/statuser';
 import { Varselstripe } from 'digisyfo-npm';
 
-const Moter = ({ moter, hentVirksomhet, hentBruker, markerMoteForOverforing, overforMoter, hentMoter, hentVeileder,
+const Moter = ({ moter, hentVirksomhet, hentFnr, hentBruker, markerMoteForOverforing, overforMoter, hentMoter, hentVeileder,
     moterMarkertForOverforing, aktivEnhet, overtarMoter, harOvertattMoter, overtaMoterFeilet }) => {
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
@@ -21,7 +21,7 @@ const Moter = ({ moter, hentVirksomhet, hentBruker, markerMoteForOverforing, ove
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <MoteoversiktEnhet aktivEnhet={aktivEnhet} moterMarkertForOverforing={moterMarkertForOverforing} hentVeileder={hentVeileder}
+            moterMedStatus.length > 0 && <MoteoversiktEnhet hentFnr={hentFnr} aktivEnhet={aktivEnhet} moterMarkertForOverforing={moterMarkertForOverforing} hentVeileder={hentVeileder}
                 overforMoter={overforMoter} markerMoteForOverforing={markerMoteForOverforing} hentMoter={hentMoter}
                 overtarMoter={overtarMoter} harOvertattMoter={harOvertattMoter} overtaMoterFeilet={overtaMoterFeilet}
                 hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />

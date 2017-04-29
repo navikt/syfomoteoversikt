@@ -36,7 +36,7 @@ class Moteoversikt extends Component {
 
     render() {
         const filtrerteMoter = this.getFiltrerteMoter();
-        const { moter, hentVirksomhet, hentBruker } = this.props;
+        const { moter, hentVirksomhet, hentBruker, hentFnr } = this.props;
 
 
         return (<div>
@@ -90,7 +90,7 @@ class Moteoversikt extends Component {
                             return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
                         })[0];
                         const svarStatus = deltakerSvarStatus(mote);
-                        return <Mote hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
+                        return <Mote hentFnr={hentFnr} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
                     })}
                     </tbody>
                 </table>
@@ -103,6 +103,7 @@ Moteoversikt.propTypes = {
     moter: PropTypes.array,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
+    hentFnr: PropTypes.func,
 };
 
 export default Moteoversikt;
