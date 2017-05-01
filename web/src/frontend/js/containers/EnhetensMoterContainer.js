@@ -31,8 +31,7 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { aktivEnhet, hentFnr, henterMoterBool, hentMoterFeiletBool, moter, hentVirksomhet, hentBruker, hentVeileder,
-            moterMarkertForOverforing, markerMoteForOverforing, overforMoter, overtaMoterFeilet, harOvertattMoter, overtarMoter, hentMoter, ledetekster } = this.props;
+        const { aktivEnhet, henterMoterBool, hentMoterFeiletBool, moter } = this.props;
 
         return (<Side tittel="Møteoversikt">
             <div>
@@ -60,10 +59,7 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return (<EnhetensMoter moterMarkertForOverforing={moterMarkertForOverforing} overforMoter={overforMoter} hentVeileder={hentVeileder}
-                            markerMoteForOverforing={markerMoteForOverforing} hentVirksomhet={hentVirksomhet}
-                            hentFnr={hentFnr} hentBruker={hentBruker} moter={moter} hentMoter={hentMoter}
-                            overtarMoter={overtarMoter} harOvertattMoter={harOvertattMoter} overtaMoterFeilet={overtaMoterFeilet} ledetekster={ledetekster} />);
+                        return (<EnhetensMoter props={this.props} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -77,23 +73,11 @@ Moteside.propTypes = {
     moter: PropTypes.array,
     hentetEnhet: PropTypes.string,
     henterMoterBool: PropTypes.bool,
-    henterVeilederBool: PropTypes.bool,
-    overtaMoterFeilet: PropTypes.bool,
     harOvertattMoter: PropTypes.bool,
-    overtarMoter: PropTypes.bool,
-    hentVirksomhet: PropTypes.func,
-    hentBruker: PropTypes.func,
-    hentFnr: PropTypes.func,
     hentEnhetsMoter: PropTypes.func,
-    markerMoteForOverforing: PropTypes.func,
     resetOverforing: PropTypes.func,
-    overforMoter: PropTypes.func,
-    hentMoter: PropTypes.func,
-    hentVeileder: PropTypes.func,
-    moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
     aktivEnhet: PropTypes.string,
-    ledetekster: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => {

@@ -19,7 +19,7 @@ export class Moteside extends Component {
     }
 
     render() {
-        const { henterMoterBool, hentFnr, hentMoterFeiletBool, moter, veileder, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing, ledetekster } = this.props;
+        const { henterMoterBool, hentMoterFeiletBool, moter } = this.props;
 
         return (<Side tittel="Møteoversikt">
             <div>
@@ -44,8 +44,7 @@ export class Moteside extends Component {
                         return <Feilmelding />;
                     }
                     if (moter) {
-                        return (<Moter hentFnr={hentFnr} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} veileder={veileder} moter={moter}
-                            harOvertattMoter={harOvertattMoter} moterMarkertForOverforing={moterMarkertForOverforing} ledetekster={ledetekster} />);
+                        return (<Moter props={this.props} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
@@ -57,17 +56,10 @@ export class Moteside extends Component {
 
 Moteside.propTypes = {
     moter: PropTypes.array,
-    henterVeilederBool: PropTypes.bool,
+    hentMoter: PropTypes.func,
     henterMoterBool: PropTypes.bool,
     harOvertattMoter: PropTypes.bool,
-    hentVirksomhet: PropTypes.func,
-    hentBruker: PropTypes.func,
-    hentFnr: PropTypes.func,
-    hentMoter: PropTypes.func,
-    moterMarkertForOverforing: PropTypes.array,
     hentMoterFeiletBool: PropTypes.bool,
-    veileder: PropTypes.object,
-    ledetekster: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => {
