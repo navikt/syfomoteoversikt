@@ -48,6 +48,8 @@ class MoteEnhet extends Component {
 
 MoteEnhet.propTypes = {
     opprettetTidspunkt: PropTypes.string,
+    aktorId: PropTypes.string,
+    hentFnr: PropTypes.func,
     hentBruker: PropTypes.func,
     hentVeileder: PropTypes.func,
     moteUuid: PropTypes.string,

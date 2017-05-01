@@ -12,11 +12,12 @@ const hentTallordTekst = (tall) => {
     return `${tallord} nye møter`;
 };
 
-const Moter = ({ hentFnr, moter, hentVirksomhet, hentBruker, harOvertattMoter, moterMarkertForOverforing }) => {
+const Moter = ({ props }) => {
+    const { moter, harOvertattMoter, moterMarkertForOverforing } = props;
+
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
-
     return (<div>
         { harOvertattMoter && <div className="blokk panel"><Varselstripe type="suksess">
             <div>
@@ -32,21 +33,16 @@ const Moter = ({ hentFnr, moter, hentVirksomhet, hentBruker, harOvertattMoter, m
             </div>)
         }
         {
-            moterMedStatus.length > 0 && <Moteoversikt hentFnr={hentFnr} hentBruker={hentBruker} hentVirksomhet={hentVirksomhet} moter={moterMedStatus} />
+            moterMedStatus.length > 0 && <Moteoversikt {...props} />
         }
     </div>);
 };
 
 Moter.propTypes = {
+    props: PropTypes.object,
     moter: PropTypes.array,
-    hentVirksomhet: PropTypes.func,
-    hentBruker: PropTypes.func,
-    hentFnr: PropTypes.func,
-    visMoter: PropTypes.func,
-    visMoterEnhet: PropTypes.func,
-    harOvertattMoter: PropTypes.bool,
     moterMarkertForOverforing: PropTypes.array,
-    side: PropTypes.string,
+    harOvertattMoter: PropTypes.bool,
 };
 
 export default Moter;
