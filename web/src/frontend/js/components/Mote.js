@@ -18,7 +18,7 @@ class Mote extends Component {
     }
 
     render() {
-        const { opprettetTidspunkt, leder, bruker, svarStatus } = this.props;
+        const { leder, bruker, svarStatus, sistEndret } = this.props;
         return (<tr>
             <td>
                 {bruker && bruker.fnr}
@@ -33,7 +33,7 @@ class Mote extends Component {
                 {finnVirksomhet(leder)}
             </td>
             <td>
-                {getDatoFraZulu(opprettetTidspunkt)}
+                {getDatoFraZulu(sistEndret)}
             </td>
             <td>
                 <span className="Motestatus">
@@ -45,7 +45,6 @@ class Mote extends Component {
 }
 
 Mote.propTypes = {
-    opprettetTidspunkt: PropTypes.string,
     leder: PropTypes.object,
     hentVirksomhet: PropTypes.func,
     hentBruker: PropTypes.func,
@@ -54,6 +53,7 @@ Mote.propTypes = {
     moteUuid: PropTypes.string,
     bruker: PropTypes.object,
     svarStatus: PropTypes.string,
+    sistEndret: PropTypes.string,
 };
 
 export default Mote;

@@ -108,7 +108,7 @@ class Moteoversikt extends Component {
                         <th scope="col">Veileder</th>
                         <th scope="col">Sykmeldt</th>
                         <th scope="col">F.nr</th>
-                        <th scope="col">Sendt dato</th>
+                        <th scope="col">Sist endret</th>
                         <th scope="col">Status</th>
                     </tr>
                     </thead>

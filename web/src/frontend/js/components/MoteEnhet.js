@@ -17,7 +17,7 @@ class MoteEnhet extends Component {
     }
 
     render() {
-        const { opprettetTidspunkt, bruker, markert, svarStatus, moteUuid, markerMoteForOverforing, veileder } = this.props;
+        const { bruker, markert, svarStatus, moteUuid, markerMoteForOverforing, veileder, sistEndret } = this.props;
         return (<tr>
             <td>
                 <input type="checkbox" id={moteUuid} className="checkboks" checked={markert} onChange={ (e) => {
@@ -35,7 +35,7 @@ class MoteEnhet extends Component {
                 {bruker && bruker.fnr}
             </td>
             <td>
-                {getDatoFraZulu(opprettetTidspunkt)}
+                {getDatoFraZulu(sistEndret)}
             </td>
             <td>
                 <span className="Motestatus">
@@ -47,7 +47,6 @@ class MoteEnhet extends Component {
 }
 
 MoteEnhet.propTypes = {
-    opprettetTidspunkt: PropTypes.string,
     aktorId: PropTypes.string,
     hentFnr: PropTypes.func,
     hentBruker: PropTypes.func,
@@ -60,6 +59,7 @@ MoteEnhet.propTypes = {
     svarStatus: PropTypes.string,
     markert: PropTypes.bool,
     veiledernavn: PropTypes.string,
+    sistEndret: PropTypes.string,
 };
 
 export default MoteEnhet;

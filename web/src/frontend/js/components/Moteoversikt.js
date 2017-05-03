@@ -69,7 +69,7 @@ class Moteoversikt extends Component {
                         <th scope="col">Navn</th>
                         <th scope="col">Nærmeste leder</th>
                         <th scope="col">Virksomhet</th>
-                        <th scope="col">Sendt dato</th>
+                        <th scope="col">Sist endret</th>
                         <th scope="col">Status</th>
                     </tr>
                     </thead>
