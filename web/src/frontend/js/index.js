@@ -47,6 +47,7 @@ const config = {
             visSokefelt: true,
             overrideenhetersaga: true,
             overrideveiledersaga: true,
+            toggleSendEventVedEnEnhet: true,
         },
         applicationName: 'Oversikt dialogmøter',
         handlePersonsokSubmit: (nyttFnr) => {
