@@ -22,7 +22,7 @@
     <properties>
         <modig.security.version>1.0.24</modig.security.version>
         <spring.version>4.3.2.RELEASE</spring.version>
-        <oidc-security.version>2.2.26</oidc-security.version>
+        <oidc-security.version>3.68.18</oidc-security.version>
     </properties>
 
     <dependencyManagement>
