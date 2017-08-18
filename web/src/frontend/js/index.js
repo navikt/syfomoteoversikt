@@ -20,6 +20,7 @@ import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
 import { hentLedetekster } from './actions/ledetekster_actions';
 import { hentMoter } from './actions/moter_actions';
+import { finnMiljoStreng } from './utils/index';
 
 const rootReducer = combineReducers({
     history,
@@ -45,9 +46,11 @@ const config = {
             visEnhetVelger: true,
             visVeileder: true,
             visSokefelt: true,
-            overrideenhetersaga: true,
-            overrideveiledersaga: true,
             toggleSendEventVedEnEnhet: true,
+        },
+        dataSources: {
+            veileder: `https://modapp${finnMiljoStreng()}.adeo.no/mote/rest/veilederinfo`,
+            enheter: `https://modapp${finnMiljoStreng()}.adeo.no/mote/rest/enheter`,
         },
         applicationName: 'Oversikt dialogmøter',
         handlePersonsokSubmit: (nyttFnr) => {
