@@ -1,4 +1,4 @@
-import { log } from 'digisyfo-npm';
+import { log, getCookie } from 'digisyfo-npm';
 
 export function get(url) {
     return fetch(url, {
@@ -27,6 +27,7 @@ export function post(url, body) {
         body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
+            'NAV_CSRF_PROTECTION': getCookie('NAV_CSRF_PROTECTION'),
         },
     })
     .then((res) => {
