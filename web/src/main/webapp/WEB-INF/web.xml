@@ -87,15 +87,6 @@
         <url-pattern>/internal/selftest</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>selftestjson</servlet-name>
-        <servlet-class>moteoversiktfssfront.selftest.SelftestJsonServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>selftestjson</servlet-name>
-        <url-pattern>/internal/selftest.json</url-pattern>
-    </servlet-mapping>
-
     <error-page>
         <error-code>404</error-code>
         <location>/moteoversiktfssfront.html</location>

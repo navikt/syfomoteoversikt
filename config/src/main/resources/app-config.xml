@@ -23,7 +23,7 @@
         <baseUrl alias="isso-host"/>
         <baseUrl alias="isso-jwks"/>
         <baseUrl alias="isso-issuer"/>
-        <credential alias="OpenIdConnectAgent" mapToProperty="isso-rp-user" />
+        <credential alias="OpenIdConnectAgent"/>
     </resources>
 
     <loadBalancer isAlive="/moteoversikt/internal/isAlive" />
