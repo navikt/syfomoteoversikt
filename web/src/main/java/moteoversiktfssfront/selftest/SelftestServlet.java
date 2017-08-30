@@ -29,18 +29,19 @@ public class SelftestServlet extends SelfTestBaseServlet{
     }
 
     private Pingable pingUrl(final String name, final String url) {
+        Pingable.Ping.PingMetadata pingMetadata = new Pingable.Ping.PingMetadata(url, name, true);
         return () -> {
             HttpURLConnection connection;
             try {
                 connection = (HttpURLConnection) new URL(url).openConnection();
                 connection.setConnectTimeout(10000);
                 if (connection.getResponseCode() == HTTP_OK) {
-                    return lyktes(name);
+                    return lyktes(pingMetadata);
                 } else {
-                    return feilet(name, new RuntimeException(connection.getResponseCode() + " " + connection.getResponseMessage()));
+                    return feilet(pingMetadata, new RuntimeException(connection.getResponseCode() + " " + connection.getResponseMessage()));
                 }
             } catch (Exception e) {
-                return feilet(name, e);
+                return feilet(pingMetadata, e);
             }
         };
     }
