@@ -4,7 +4,12 @@
     <title>Møteoversikt</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="{{{decoratorRoot}}}/internarbeidsflatedecorator/js/head.min.js"></script>
+    <script>
+    var decoratorUrl = "{{{decoratorRoot}}}/internarbeidsflatedecorator/js/head.min.js?rev=" + Date.now().toString();
+    var script = document.createElement('script');
+    script.src = decoratorUrl;
+    document.head.appendChild(script);
+    </script>
 </head>
 <body>
     <div id="header"></div>
