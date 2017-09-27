@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script>
-    var decoratorUrl = "{{{decoratorRoot}}}/internarbeidsflatedecorator/js/head.min.js?rev=" + Date.now().toString();
-    var script = document.createElement('script');
-    script.src = decoratorUrl;
-    document.head.appendChild(script);
+        const script = document.createElement('script');
+        script.src = "{{{decoratorRoot}}}/internarbeidsflatedecorator/js/head.min.js?rev=" + Date.now().toString();
+        script.onload = () => {
+            const DOMContentLoaded_event = document.createEvent("Event");
+            DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+            window.document.dispatchEvent(DOMContentLoaded_event);
+        };
+        document.head.appendChild(script);
     </script>
+
 </head>
 <body>
     <div id="header"></div>
