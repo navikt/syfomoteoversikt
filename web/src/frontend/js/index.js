@@ -89,7 +89,7 @@ render(<Provider store={store}>
     document.getElementById('maincontent'));
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.renderDecoratorHead(config);
+    window.renderDecoratorHead && window.renderDecoratorHead(config);
 });
 
 opprettWebsocketConnection((wsCallback) => {

@@ -12,7 +12,7 @@ var dev = {
     restRoot: 'http://localhost:8196/mote/rest',
     syforestRoot: 'http://localhost:8084/modiasyforest/rest',
     bundleFileName: 'bundle.js',
-    decoratorRoot: 'http://localhost:8186',
+    decoratorRoot: 'https://modapp-t6.adeo.no',
     enableLogging: true,
 };
 
