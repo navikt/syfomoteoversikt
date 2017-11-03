@@ -49,8 +49,8 @@ const config = {
             toggleSendEventVedEnEnhet: true,
         },
         dataSources: {
-            veileder: `https://modapp${finnMiljoStreng()}.adeo.no/mote/rest/veilederinfo`,
-            enheter: `https://modapp${finnMiljoStreng()}.adeo.no/mote/rest/enheter`,
+            veileder: `${window.location.origin}/mote/rest/veilederinfo`,
+            enheter: `${window.location.origin}/mote/rest/enheter`,
         },
         applicationName: 'Oversikt dialogmøter',
         handlePersonsokSubmit: (nyttFnr) => {
