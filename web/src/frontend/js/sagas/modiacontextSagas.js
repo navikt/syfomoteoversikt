@@ -3,12 +3,11 @@ import { takeEvery } from 'redux-saga';
 import { get, post } from '../api/index';
 import * as actions from '../actions/modiacontext_actions';
 import { PUSH_MODIACONTEXT_FORESPURT, HENT_AKTIVENHET_FORESPURT } from '../actions/actiontyper';
-import { finnMiljoStreng } from './util';
 
 export function* pushModiacontextSaga(action) {
     yield put(actions.pusherModiaContext());
     try {
-        yield call(post, `https://modapp${finnMiljoStreng()}.adeo.no/modiacontextholder/api/context`, {
+        yield call(post, `${window.location.origin}/modiacontextholder/api/context`, {
             verdi: action.data.verdi,
             eventType: action.data.eventType,
         });
@@ -21,7 +20,7 @@ export function* pushModiacontextSaga(action) {
 export function* aktivEnhetSaga(action) {
     yield put(actions.henterAktivEnhet());
     try {
-        const data = yield call(get, `https://modapp${finnMiljoStreng()}.adeo.no/modiacontextholder/api/context/aktivenhet`);
+        const data = yield call(get, `${window.location.origin}/modiacontextholder/api/context/aktivenhet`);
         action.data.callback(data.aktivEnhet);
     } catch (e) {
         yield put(actions.hentAktivEnhetFeilet());
