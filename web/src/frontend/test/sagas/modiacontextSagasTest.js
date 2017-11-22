@@ -10,13 +10,14 @@ describe("modiacontextSagas", () => {
 
     const generator = aktivEnhetSaga();
 
+
         it("Skal dispatche HENTER_AKTIVENHET", () => {
             const nextPut = put({type: HENTER_AKTIVENHET});
             expect(generator.next().value).to.deep.equal(nextPut);
         });
 
         it("Skal dernest hente aktiv enhet", () => {
-            const nextCall = call(get, "https://modapp.adeo.no/modiacontextholder/api/context/aktivenhet");
+            const nextCall = call(get, "null/modiacontextholder/api/context/aktivenhet");
             expect(generator.next().value).to.deep.equal(nextCall);
         });
     });
@@ -36,7 +37,7 @@ describe("modiacontextSagas", () => {
         });
 
         it("Skal dernest pushe context", () => {
-            const nextCall = call(post, "https://modapp.adeo.no/modiacontextholder/api/context", {
+            const nextCall = call(post, "null/modiacontextholder/api/context", {
                 verdi: "fnr",
                 eventType: "event1"
             });
