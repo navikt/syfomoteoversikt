@@ -52,7 +52,7 @@ const config = {
             veileder: `${window.location.origin}/mote/rest/veilederinfo`,
             enheter: `${window.location.origin}/mote/rest/enheter`,
         },
-        applicationName: 'Oversikt dialogmøter',
+        applicationName: 'Møteoversikt',
         handlePersonsokSubmit: (nyttFnr) => {
             window.location = `/sykefravaer/${nyttFnr}/mote`;
         },
