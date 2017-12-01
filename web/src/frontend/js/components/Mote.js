@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getDatoFraZulu, finnVirksomhet, finnNavn } from '../utils/index';
 
 class Mote extends Component {

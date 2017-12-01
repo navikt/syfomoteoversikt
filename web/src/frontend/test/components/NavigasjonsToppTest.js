@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { expect } from 'chai';
+import chai from 'chai';
+import chaiEnzyme from 'chai-enzyme';
 import { mount, shallow } from 'enzyme';
 import NavigasjonsTopp from '../../js/components/NavigasjonsTopp';
+
+chai.use(chaiEnzyme());
+
+const expect = chai.expect;
 
 describe("NavigasjonsTopp", () => {
     it("Viser tre stk lenker dersom man sender inn 3 lenker", () => {

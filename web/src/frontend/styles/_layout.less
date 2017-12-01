@@ -1,15 +1,6 @@
-.container {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 60em;
-}
-
 .panel {
     padding: 1em 1em 1.25em 1em;
-    background-color: #fff;
-    margin-bottom: 2em;
-
-    @media (min-width: 30em) {
+    @media(min-width: @screen-sm-min) {
         padding: 2em 2em 2.25em 2em;
     }
 }
@@ -19,15 +10,15 @@
 }
 
 .panel--ramme {
-    border: 1px solid @ikonGraa;
+    border: 1px solid @navGra40;
 }
 
 .rad--adskilt {
-    border-bottom: 1px solid @ikonGraa;
+    border-bottom: 1px solid @navGra40;
     padding-bottom: 1em;
     padding-top: 1em;
 }
 
 .rad--adskilt:first-of-type {
-    border-top: 1px solid @ikonGraa;
+    border-top: 1px solid @navGra40;
 }

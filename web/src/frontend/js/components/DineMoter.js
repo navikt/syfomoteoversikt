@@ -1,8 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Panel } from 'nav-frontend-paneler';
+import Alertstripe from 'nav-frontend-alertstriper';
 import Moteoversikt from './Moteoversikt';
 import { setMoteStatus } from '../utils/statuser';
 import { dagensDatoKortFormat, tallOrdFraTall } from '../utils/index';
-import { Varselstripe } from 'digisyfo-npm';
 
 const hentTallordTekst = (tall) => {
     const tallord = tallOrdFraTall(tall);
@@ -19,18 +21,15 @@ const Moter = ({ props }) => {
         return mote.status !== 'AVBRUTT';
     });
     return (<div>
-        { harOvertattMoter && <div className="blokk panel"><Varselstripe type="suksess">
-            <div>
-                <p className="typo-element">{`Du har lagt til ${hentTallordTekst(moterMarkertForOverforing.length)}`}</p>
-                <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
-            </div>
-        </Varselstripe></div>}
-
+        { harOvertattMoter && <Alertstripe className="blokk" type="suksess">
+            <p className="typo-element">{`Du har lagt til ${hentTallordTekst(moterMarkertForOverforing.length)}`}</p>
+            <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
+        </Alertstripe>
+        }
         {
-            moterMedStatus.length === 0 && (<div className="panel">
+            moterMedStatus.length === 0 && (<Panel>
                 <p>Du har ingen aktive møter.</p>
-
-            </div>)
+            </Panel>)
         }
         {
             moterMedStatus.length > 0 && <Moteoversikt {...props} />

@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Checkbox } from 'nav-frontend-skjema';
 import { getDatoFraZulu, finnNavn, finnVeilederNavn } from '../utils/index';
 
 class MoteEnhet extends Component {
@@ -20,9 +22,13 @@ class MoteEnhet extends Component {
         const { bruker, markert, svarStatus, moteUuid, markerMoteForOverforing, veileder, sistEndret } = this.props;
         return (<tr>
             <td>
-                <input type="checkbox" id={moteUuid} className="checkboks" checked={markert} onChange={ (e) => {
-                    markerMoteForOverforing(moteUuid, e.target.checked);
-                } } />
+                <Checkbox
+                    id={moteUuid}
+                    checked={markert}
+                    onChange={(e) => {
+                        markerMoteForOverforing(moteUuid, e.target.checked);
+                    }}
+                />
                 <label htmlFor={moteUuid} />
             </td>
             <td>
