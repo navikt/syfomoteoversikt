@@ -1,20 +1,20 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import AlertStripe from 'nav-frontend-alertstriper';
 import MoteoversiktEnhet from './MoteoversiktEnhet';
 import { setMoteStatus } from '../utils/statuser';
-import { Varselstripe } from 'digisyfo-npm';
 
 const Moter = ({ props }) => {
     const { moter, overtaMoterFeilet } = props;
+
     const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
         return mote.status !== 'AVBRUTT';
     });
     return (<div>
-        {overtaMoterFeilet && <div className="blokk panel"><Varselstripe type="feil">
-            <div>
-            <p>Det skjedde en feil så du ikke fikk overtatt møtene</p>
-            <label>Prøv igjen senere</label>
-            </div>
-        </Varselstripe></div>}
+        { overtaMoterFeilet && <AlertStripe className="blokk" type="advarsel">
+            Det skjedde en feil så du ikke fikk overtatt møtene<br />Prøv igjen senere
+        </AlertStripe>
+        }
         {
             moterMedStatus.length === 0 && (<div className="panel">
                 <p>Enheten har ingen aktive møter.</p>

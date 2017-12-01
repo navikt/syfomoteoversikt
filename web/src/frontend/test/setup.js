@@ -1,8 +1,12 @@
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
+
 require("babel-core/register");
 //disable
-var jsdom = require('jsdom');
-var document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-var window = document.defaultView;
+const jsdom = require('jsdom');
+const document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+const window = document.defaultView;
 
 global.document = document;
 global.window = window;

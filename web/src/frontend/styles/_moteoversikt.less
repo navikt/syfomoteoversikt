@@ -1,5 +1,5 @@
 .moteoversikt {
-    border-top: 1px solid @ikonGraa;
+    border-top: 1px solid @navGra40;
     padding-top: 1em;
 }
 
@@ -8,21 +8,23 @@
     border-collapse: collapse;
 
     th, td {
-        border-bottom: 1em solid @bakgrunnGraa;
+      border-bottom: 1em solid #efefef;
     }
 
     th {
-        color: @hvit;
-        background: @navTekst;
-        text-align: left;
-        padding: 1em;
-        .mixin-typo-etikettLiten();
+      color: @white;
+      background: @navMorkGra;
+      text-align: left;
+      padding: 1em;
+      .typo-etikett-liten-mixin()
     }
 
     td {
-        padding: 1.5em 1em;
-        background: @hvit;
-        .mixin-typo-normal();
+      padding: 1.5em 1em;
+      background: @white;
+      .checkboks + .skjemaelement__label:before {
+        margin-top: -.6em;
+      }
     }
 
     td, th {
@@ -50,7 +52,7 @@
 
 .motestatus--svar_mottatt, 
 .motestatus--bekreftet {
-    color: @suksessGroenn;
+    color: @navGronn;
 }
 
 .navigasjon {
@@ -61,22 +63,19 @@
   padding: 0;
 }
 
-a {
-  &:visited {
-    color: @lenkeBlaa;
-  }
-}
 .navigasjon__element {
     display: inline-block;
     padding-top: .25em;
     padding-bottom: .5em;
     padding-right: .5em;
     margin: 0 2em 0 0;
-    .mixin-typo-element();
+
     text-transform: uppercase;
   a {
-    //fjern important når frontend-core blir bumpet så man ikke har default-styling på lenker lenger.
-      color: black !important;
+    .typo-element-mixin();
+    text-decoration: none;
+    color: black;
+    font-size: 1.125em;
   }
 }
 
@@ -84,12 +83,10 @@ a {
     align-items: center;
     cursor: pointer;
     &:hover {
-        border-bottom: 4px @lenkeBlaa solid;
+        border-bottom: 4px @navBla solid;
     }
-    border-bottom: none;
 }
 
 .navigasjon__element__inner--active {
-  //fjern important når frontend-core blir bumpet så man ikke har default-styling på lenker lenger.
-    border-bottom: 4px @lenkeBlaa solid !important;
+  border-bottom: 4px @navBla solid;
 }

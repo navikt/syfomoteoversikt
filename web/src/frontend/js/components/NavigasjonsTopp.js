@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 const NavigasjonsTopp = ({ lenker }) => {
@@ -7,7 +8,9 @@ const NavigasjonsTopp = ({ lenker }) => {
         {
             lenker.map((lenke) => {
                 return (<li className="navigasjon__element" key={lenke.url}>
-                    <Link className={`navigasjon__element__inner${lenke.aktiv ? '--active' : ''}`} to={lenke.url} >{lenke.tittel}</Link>
+                    <Link className={`navigasjon__element__inner${lenke.aktiv ? '--active' : ''}`} to={lenke.url} >
+                        {lenke.tittel}
+                    </Link>
                 </li>);
             })
 

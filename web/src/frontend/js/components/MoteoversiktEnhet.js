@@ -1,4 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Select } from 'nav-frontend-skjema';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { statuser, deltakerSvarStatus } from '../utils/statuser';
 import { finnVeilederNavn } from '../utils/index';
 
@@ -67,34 +70,34 @@ class Moteoversikt extends Component {
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy">
                     <div className="verktoylinje__filter">
-                        <label htmlFor="moteoversikt-filtrer">Filtrer på status</label>
-                        <div className="selectContainer">
-                            <select id="moteoversikt-filtrer" onChange={(e) => {
+                        <Select
+                            id="moteoversikt-filtrer"
+                            label="Filtrer på status"
+                            onChange={(e) => {
                                 this.setStatus(e.currentTarget.value);
                             }}>
-                                <option value="alle">Vis alle</option>
-                                {
-                                    this.getStatuser(moter).map((status, index) => {
-                                        return <option key={index} value={status}>{statuser[status]}</option>;
-                                    })
-                                }
-                            </select>
-                        </div>
+                            <option value="alle">Vis alle</option>
+                            {
+                                this.getStatuser(moter).map((status, index) => {
+                                    return <option key={index} value={status}>{statuser[status]}</option>;
+                                })
+                            }
+                        </Select>
                     </div>
                     <div className="verktoylinje__filter">
-                        <label htmlFor="moteoversikt-filtrer">Filtrer på veileder</label>
-                        <div className="selectContainer">
-                            <select id="moteoversikt-filtrer" onChange={(e) => {
+                        <Select
+                            id="moteoversikt-filtrer"
+                            label="Filtrer på veileder"
+                            onChange={(e) => {
                                 this.setVeileder(e.currentTarget.value);
                             }}>
-                                <option value="alle">Vis alle</option>
-                                {
-                                    this.getVeiledere(moter).map((veileder, index) => {
-                                        return <option key={index} value={veileder}>{veileder}</option>;
-                                    })
-                                }
-                            </select>
-                        </div>
+                            <option value="alle">Vis alle</option>
+                            {
+                                this.getVeiledere(moter).map((veileder, index) => {
+                                    return <option key={index} value={veileder}>{veileder}</option>;
+                                })
+                            }
+                        </Select>
                     </div>
                 </div>
             </div>
@@ -133,10 +136,10 @@ class Moteoversikt extends Component {
                     </tbody>
                 </table>
                 <div className="knapperad">
-                    <button className="knapp" disabled={overtarMoter || moterMarkertForOverforing.length === 0} onClick={() => {
+                    <Hovedknapp disabled={overtarMoter || moterMarkertForOverforing.length === 0} onClick={() => {
                         overforMoter({
                             moteUuidListe: moterMarkertForOverforing,
-                        }); }}>Overta møter</button>
+                        }); }}>Overta møter</Hovedknapp>
                 </div>
             </div>
         </div>);

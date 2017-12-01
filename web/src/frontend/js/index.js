@@ -20,7 +20,6 @@ import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
 import { hentLedetekster } from './actions/ledetekster_actions';
 import { hentMoter } from './actions/moter_actions';
-import { finnMiljoStreng } from './utils/index';
 
 const rootReducer = combineReducers({
     history,

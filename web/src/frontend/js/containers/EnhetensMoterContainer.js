@@ -1,9 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Row, Column } from 'nav-frontend-grid';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 import Side from '../sider/Side';
 import Feilmelding from '../components/Feilmelding';
 import NavigasjonsTopp from '../components/NavigasjonsTopp';
-import AppSpinner from '../components/AppSpinner';
 import EnhetensMoter from '../components/EnhetensMoter';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as brukerActions from '../actions/bruker_actions';
@@ -34,7 +36,7 @@ export class Moteside extends Component {
         const { aktivEnhet, henterMoterBool, hentMoterFeiletBool, moter } = this.props;
 
         return (<Side tittel="Møteoversikt">
-            <div>
+            <Column className="col-xs-10 col-xs-offset-1">
                 <NavigasjonsTopp lenker={[
                     {
                         tittel: 'Dine møter',
@@ -51,20 +53,19 @@ export class Moteside extends Component {
                 (() => {
                     if (!aktivEnhet) {
                         return <Feilmelding tittel={"Ingen aktiv enhet"} melding={"Du må velge enhet i enhetsvelgeren i toppen av siden."} />;
-                    }
-                    if (henterMoterBool) {
-                        return <AppSpinner />;
-                    }
-                    if (hentMoterFeiletBool) {
+                    } else if (henterMoterBool) {
+                        return (<Row className="row-centered">
+                            <NavFrontendSpinner type="XL" />
+                        </Row>);
+                    } else if (hentMoterFeiletBool) {
                         return <Feilmelding />;
-                    }
-                    if (moter) {
+                    } else if (moter) {
                         return (<EnhetensMoter props={this.props} />);
                     }
                     return <p>Bruker har ingen møter</p>;
                 })()
             }
-            </div>
+            </Column>
         </Side>);
     }
 }

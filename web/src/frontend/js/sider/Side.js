@@ -1,11 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container, Row } from 'nav-frontend-grid';
 const DocumentTitle = require('react-document-title');
 
 const Side = ({ tittel = '', children }) => {
     return (<DocumentTitle title={tittel}>
-        <div className="container">
-            {children}
-        </div>
+        <Container>
+            <Row>
+                {children}
+            </Row>
+        </Container>
     </DocumentTitle>);
 };
 
