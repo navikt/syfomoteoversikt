@@ -43,7 +43,7 @@ export class Moteside extends Component {
                         return (<Row className="row-centered">
                             <NavFrontendSpinner type="XL" />
                         </Row>);
-                    } else if (!hentMoterFeiletBool) {
+                    } else if (hentMoterFeiletBool) {
                         return <Feilmelding />;
                     } else if (moter) {
                         return (<Moter props={this.props} />);
