@@ -36,7 +36,7 @@ export class Moteside extends Component {
         const { aktivEnhet, henterMoterBool, hentMoterFeiletBool, moter } = this.props;
 
         return (<Side tittel="Møteoversikt">
-            <Column className="col-xs-10 col-xs-offset-1">
+            <Column className="col-xs-12">
                 <NavigasjonsTopp lenker={[
                     {
                         tittel: 'Dine møter',
