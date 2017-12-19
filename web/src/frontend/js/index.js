@@ -51,7 +51,7 @@ const config = {
             veileder: `${window.location.origin}/mote/rest/veilederinfo`,
             enheter: `${window.location.origin}/mote/rest/enheter`,
         },
-        applicationName: 'Møteoversikt',
+        applicationName: 'Sykefraværsoppfølging',
         handlePersonsokSubmit: (nyttFnr) => {
             window.location = `/sykefravaer/${nyttFnr}/mote`;
         },
