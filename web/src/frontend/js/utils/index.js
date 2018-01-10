@@ -113,9 +113,9 @@ export const finnVirksomhet = (leder) => {
 };
 
 export const finnNavn = (bruker) => {
-    if (bruker && bruker.navn) {
+    if (bruker && bruker.navn && bruker.fnr) {
         return <a className="lenke" href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a>;
-    } else if (bruker && bruker.fnr) {
+    } else if (bruker && (!bruker.fnr || !bruker.navn)) {
         return 'Henter navn...';
     }
     return 'Fant ikke navn';
