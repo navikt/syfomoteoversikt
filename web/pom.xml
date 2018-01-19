@@ -107,10 +107,6 @@
             <artifactId>jetty-jaas</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.geronimo.components</groupId>
-            <artifactId>geronimo-jaspi</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
