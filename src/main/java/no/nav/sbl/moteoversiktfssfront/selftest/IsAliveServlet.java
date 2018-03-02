@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class IsAliveServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getWriter().write("{status : \"ok\", message: \"Moteoversiktfssfront fungerer\"}");
+        response.setContentType("text/html");
+        response.getWriter().write("Application: UP");
     }
 }
