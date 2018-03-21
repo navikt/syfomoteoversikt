@@ -18,7 +18,6 @@ public class MainTest {
         Jetty jetty = usingWar()
                 .at("moteoversikt")
                 .port(8290)
-                .overrideWebXml()
                 .disableAnnotationScanning()
                 .buildJetty();
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
