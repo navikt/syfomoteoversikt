@@ -107,10 +107,9 @@ export const mapStateToProps = (state) => {
         moterMarkertForOverforing,
         aktivEnhet: state.moterEnhet.aktivEnhet,
         hentetEnhet: state.moterEnhet.hentetEnhet,
-        hentMoterFeiletBool: state.moterEnhet.hentingFeilet || state.ledetekster.hentingFeilet,
-        henterMoterBool: state.moterEnhet.henter || state.ledetekster.henter,
+        hentMoterFeiletBool: state.moterEnhet.hentingFeilet,
+        henterMoterBool: state.moterEnhet.henter,
         moter,
-        ledetekster: state.ledetekster.data,
     };
 };
 
