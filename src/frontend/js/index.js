@@ -13,19 +13,16 @@ import moterEnhet from './reducers/moterEnhet';
 import veiledere from './reducers/veiledere';
 import overfor from './reducers/overfor';
 import modiacontext from './reducers/modiacontext';
-import ledetekster from './reducers/ledetekster';
 import rootSaga from './sagas/index';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
 import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { opprettWebsocketConnection } from './contextHolder';
-import { hentLedetekster } from './actions/ledetekster_actions';
 import { hentMoter } from './actions/moter_actions';
 
 const rootReducer = combineReducers({
     history,
     moter,
     overfor,
-    ledetekster,
     veiledere,
     modiacontext,
     form: formReducer,
@@ -75,13 +72,6 @@ store.dispatch(hentAktivEnhet({
     },
 }));
 store.dispatch(hentMoter());
-store.dispatch(hentLedetekster());
-
-if (hasURLParameter('visLedetekster')) {
-    localStorage.setItem('visLedetekster', true);
-} else {
-    localStorage.removeItem('visLedetekster');
-}
 
 render(<Provider store={store}>
         <AppRouter history={history} /></Provider>,
