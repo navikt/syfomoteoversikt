@@ -2,6 +2,7 @@
     "extends": "airbnb",
     "globals": {
         "$": false,
+        "config": true,
         "window": true,
         "document": true,
         "localStorage": true,
