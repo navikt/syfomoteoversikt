@@ -5,6 +5,7 @@ import fnrSagas from './fnrSagas';
 import brukerSagas from '../sagas/brukerSagas';
 import modiacontextSagas from '../sagas/modiacontextSagas';
 import moterEnhetSagas from './moterEnhetSagas';
+import veilederinfoSagas from './veilederinfoSagas';
 
 export default function* rootSaga() {
     yield [
@@ -15,5 +16,6 @@ export default function* rootSaga() {
         modiacontextSagas(),
         virksomhetSagas(),
         moterEnhetSagas(),
+        veilederinfoSagas(),
     ];
 }

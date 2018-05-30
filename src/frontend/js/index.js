@@ -12,10 +12,10 @@ import moterEnhet from './reducers/moterEnhet';
 import veiledere from './reducers/veiledere';
 import overfor from './reducers/overfor';
 import modiacontext from './reducers/modiacontext';
+import veilederinfo from './reducers/veilederinfo';
 import rootSaga from './sagas/index';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
 import { setAktivEnhet } from './actions/moterEnhet_actions';
-import { opprettWebsocketConnection } from './contextHolder';
 import { hentMoter } from './actions/moter_actions';
 
 const rootReducer = combineReducers({
@@ -26,6 +26,7 @@ const rootReducer = combineReducers({
     modiacontext,
     form: formReducer,
     moterEnhet,
+    veilederinfo,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -78,20 +79,6 @@ render(<Provider store={store}>
 
 document.addEventListener('DOMContentLoaded', () => {
     window.renderDecoratorHead && window.renderDecoratorHead(config);
-});
-
-opprettWebsocketConnection((wsCallback) => {
-    if (wsCallback.data === 'NY_AKTIV_ENHET') {
-        store.dispatch(hentAktivEnhet({
-            callback: (aktivEnhet) => {
-                if (config.config.initiellEnhet !== aktivEnhet) {
-                    config.config.initiellEnhet = aktivEnhet;
-                    window.renderDecoratorHead(config);
-                    store.dispatch(setAktivEnhet(aktivEnhet));
-                }
-            },
-        }));
-    }
 });
 
 export {
