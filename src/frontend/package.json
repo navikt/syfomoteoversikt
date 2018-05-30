@@ -44,7 +44,7 @@
     "chokidar": "git+https://github.com/paulmillr/chokidar.git#1.4.2",
     "classnames": "2.2.5",
     "deep-freeze": "0.0.1",
-    "digisyfo-npm": "1.6.4",
+    "digisyfo-npm": "8.1.1",
     "express": "4.13.4",
     "fetch": "1.0.1",
     "http-proxy": "1.13.2",
