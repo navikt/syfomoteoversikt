@@ -66,34 +66,34 @@ class Moteoversikt extends Component {
                     Viser {filtrerteMoter.length} {filtrerteMoter.length === 1 ? 'møte' : 'møter'}</h3>
                 <table className="motetabell">
                     <thead>
-                    <tr>
-                        <th scope="col">F.nr</th>
-                        <th scope="col">Navn</th>
-                        <th scope="col">Nærmeste leder</th>
-                        <th scope="col">Virksomhet</th>
-                        <th scope="col">Sist endret</th>
-                        <th scope="col">Status</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">F.nr</th>
+                            <th scope="col">Navn</th>
+                            <th scope="col">Nærmeste leder</th>
+                            <th scope="col">Virksomhet</th>
+                            <th scope="col">Sist endret</th>
+                            <th scope="col">Status</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {filtrerteMoter.sort((a, b) => {
-                        if (a.opprettetTidspunkt > b.opprettetTidspunkt) {
-                            return -1;
-                        }
-                        if (a.opprettetTidspunkt < b.opprettetTidspunkt) {
-                            return 1;
-                        }
-                        return 0;
-                    }).map((mote, index) => {
-                        const bruker = mote.deltakere.filter((deltaker) => {
-                            return deltaker.type.toUpperCase() === 'BRUKER';
-                        })[0];
-                        const leder = mote.deltakere.filter((deltaker) => {
-                            return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
-                        })[0];
-                        const svarStatus = deltakerSvarStatus(mote);
-                        return <Mote hentFnr={hentFnr} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
-                    })}
+                        {filtrerteMoter.sort((a, b) => {
+                            if (a.opprettetTidspunkt > b.opprettetTidspunkt) {
+                                return -1;
+                            }
+                            if (a.opprettetTidspunkt < b.opprettetTidspunkt) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((mote, index) => {
+                            const bruker = mote.deltakere.filter((deltaker) => {
+                                return deltaker.type.toUpperCase() === 'BRUKER';
+                            })[0];
+                            const leder = mote.deltakere.filter((deltaker) => {
+                                return deltaker.type.toUpperCase() === 'ARBEIDSGIVER';
+                            })[0];
+                            const svarStatus = deltakerSvarStatus(mote);
+                            return <Mote hentFnr={hentFnr} hentVirksomhet={hentVirksomhet} hentBruker={hentBruker} key={index} {...mote} leder={leder} bruker={bruker} svarStatus={svarStatus} />;
+                        })}
                     </tbody>
                 </table>
             </div>

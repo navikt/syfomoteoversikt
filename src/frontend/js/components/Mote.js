@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { getDatoFraZulu, finnVirksomhet, finnNavn } from '../utils/index';
 
 class Mote extends Component {
-
     componentDidMount() {
         const { leder, hentVirksomhet, hentFnr, moteUuid, bruker, hentBruker, aktorId } = this.props;
         if (!leder.virksomhet && leder.orgnummer) {

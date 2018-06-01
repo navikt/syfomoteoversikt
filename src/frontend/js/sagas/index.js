@@ -6,7 +6,7 @@ import brukerSagas from '../sagas/brukerSagas';
 import modiacontextSagas from '../sagas/modiacontextSagas';
 import moterEnhetSagas from './moterEnhetSagas';
 
-export default function * rootSaga() {
+export default function* rootSaga() {
     yield [
         fnrSagas(),
         moterSagas(),

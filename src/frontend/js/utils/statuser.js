@@ -17,8 +17,8 @@ export const deltakerSvarStatus = (mote) => {
     } else {
         let antallSvar = 0;
         mote.deltakere.forEach((deltaker) => {
-            if (deltaker.svar.some((svar) => {return svar.valgt;})) {
-                antallSvar++;
+            if (deltaker.svar.some((svar) => { return svar.valgt; })) {
+                antallSvar += 1;
             }
         });
         svarStatus = `${antallSvar}/${mote.deltakere.length} Svar`;
