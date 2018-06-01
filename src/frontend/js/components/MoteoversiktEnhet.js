@@ -106,40 +106,54 @@ class Moteoversikt extends Component {
                     Viser {filtrerteMoter.length} {filtrerteMoter.length === 1 ? 'møte' : 'møter'}</h3>
                 <table className="motetabell">
                     <thead>
-                    <tr>
-                        <th scope="col">Velg</th>
-                        <th scope="col">Veileder</th>
-                        <th scope="col">Sykmeldt</th>
-                        <th scope="col">F.nr</th>
-                        <th scope="col">Sist endret</th>
-                        <th scope="col">Status</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Velg</th>
+                            <th scope="col">Veileder</th>
+                            <th scope="col">Sykmeldt</th>
+                            <th scope="col">F.nr</th>
+                            <th scope="col">Sist endret</th>
+                            <th scope="col">Status</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {filtrerteMoter.sort((a, b) => {
-                        if (a.opprettetTidspunkt > b.opprettetTidspunkt) {
-                            return -1;
-                        }
-                        if (a.opprettetTidspunkt < b.opprettetTidspunkt) {
-                            return 1;
-                        }
-                        return 0;
-                    }).map((mote, index) => {
-                        const bruker = mote.deltakere.filter((deltaker) => {
-                            return deltaker.type.toUpperCase() === 'BRUKER';
-                        })[0];
-                        const eier = mote.eier;
-                        const svarStatus = deltakerSvarStatus(mote);
-                        return (<MoteEnhet hentFnr={hentFnr} markerMoteForOverforing={markerMoteForOverforing} hentVeileder={hentVeileder} hentBruker={hentBruker}
-                            key={index} {...mote} eier={eier} bruker={bruker} svarStatus={svarStatus} />);
-                    })}
+                        {filtrerteMoter.sort((a, b) => {
+                            if (a.opprettetTidspunkt > b.opprettetTidspunkt) {
+                                return -1;
+                            }
+                            if (a.opprettetTidspunkt < b.opprettetTidspunkt) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((mote, index) => {
+                            const bruker = mote.deltakere.filter((deltaker) => {
+                                return deltaker.type.toUpperCase() === 'BRUKER';
+                            })[0];
+                            const eier = mote.eier;
+                            const svarStatus = deltakerSvarStatus(mote);
+                            return (<MoteEnhet
+                                hentFnr={hentFnr}
+                                markerMoteForOverforing={markerMoteForOverforing}
+                                hentVeileder={hentVeileder}
+                                hentBruker={hentBruker}
+                                key={index}
+                                {...mote}
+                                eier={eier}
+                                bruker={bruker}
+                                svarStatus={svarStatus}
+                            />);
+                        })}
                     </tbody>
                 </table>
                 <div className="knapperad">
-                    <Hovedknapp disabled={overtarMoter || moterMarkertForOverforing.length === 0} onClick={() => {
-                        overforMoter({
+                    <Hovedknapp
+                        disabled={overtarMoter || moterMarkertForOverforing.length === 0}
+                        onClick={() => {
+                            overforMoter({
                             moteUuidListe: moterMarkertForOverforing,
-                        }); }}>Overta møter</Hovedknapp>
+                            });
+                        }}>
+                        Overta møter
+                    </Hovedknapp>
                 </div>
             </div>
         </div>);

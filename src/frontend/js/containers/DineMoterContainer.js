@@ -37,20 +37,20 @@ export class Moteside extends Component {
                         aktiv: false,
                     },
                 ]} />
-            {
-                (() => {
-                    if (henterMoterBool) {
-                        return (<Row className="row-centered">
-                            <NavFrontendSpinner type="XL" />
-                        </Row>);
-                    } else if (hentMoterFeiletBool) {
-                        return <Feilmelding />;
-                    } else if (moter) {
-                        return (<Moter props={this.props} />);
-                    }
-                    return <p>Bruker har ingen møter</p>;
-                })()
-            }
+                {
+                    (() => {
+                        if (henterMoterBool) {
+                            return (<Row className="row-centered">
+                                <NavFrontendSpinner type="XL" />
+                            </Row>);
+                        } else if (hentMoterFeiletBool) {
+                            return <Feilmelding />;
+                        } else if (moter) {
+                            return (<Moter props={this.props} />);
+                        }
+                        return <p>Bruker har ingen møter</p>;
+                    })()
+                }
             </Column>
         </Side>);
     }

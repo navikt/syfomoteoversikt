@@ -4,7 +4,6 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { getDatoFraZulu, finnNavn, finnVeilederNavn } from '../utils/index';
 
 class MoteEnhet extends Component {
-
     componentDidMount() {
         const { moteUuid, bruker, hentBruker, hentFnr, hentVeileder, eier, veileder, aktorId } = this.props;
         if (!bruker.navn && aktorId) {
@@ -64,7 +63,6 @@ MoteEnhet.propTypes = {
     eier: PropTypes.string,
     svarStatus: PropTypes.string,
     markert: PropTypes.bool,
-    veiledernavn: PropTypes.string,
     sistEndret: PropTypes.string,
 };
 

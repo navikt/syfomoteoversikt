@@ -49,22 +49,25 @@ export class Moteside extends Component {
                         aktiv: true,
                     },
                 ]} />
-            {
-                (() => {
-                    if (!aktivEnhet) {
-                        return <Feilmelding tittel={"Ingen aktiv enhet"} melding={"Du må velge enhet i enhetsvelgeren i toppen av siden."} />;
-                    } else if (henterMoterBool) {
-                        return (<Row className="row-centered">
-                            <NavFrontendSpinner type="XL" />
-                        </Row>);
-                    } else if (hentMoterFeiletBool) {
-                        return <Feilmelding />;
-                    } else if (moter) {
-                        return (<EnhetensMoter props={this.props} />);
-                    }
-                    return <p>Bruker har ingen møter</p>;
-                })()
-            }
+                {
+                    (() => {
+                        if (!aktivEnhet) {
+                            return <Feilmelding
+                                tittel={'Ingen aktiv enhet'}
+                                melding={'Du må velge enhet i enhetsvelgeren i toppen av siden.'}
+                            />;
+                        } else if (henterMoterBool) {
+                            return (<Row className="row-centered">
+                                <NavFrontendSpinner type="XL" />
+                            </Row>);
+                        } else if (hentMoterFeiletBool) {
+                            return <Feilmelding />;
+                        } else if (moter) {
+                            return (<EnhetensMoter props={this.props} />);
+                        }
+                        return <p>Bruker har ingen møter</p>;
+                    })()
+                }
             </Column>
         </Side>);
     }

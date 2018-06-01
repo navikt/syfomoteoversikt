@@ -5,8 +5,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 const Feilmelding = ({ tittel = 'Beklager, det oppstod en feil', melding = 'Vennligst prøv igjen litt senere.' }) => {
     return (<Panel className="feilmelding">
-            <Undertittel>{tittel}</Undertittel>
-            <p>{melding}</p>
+        <Undertittel>{tittel}</Undertittel>
+        <p>{melding}</p>
     </Panel>);
 };
 
