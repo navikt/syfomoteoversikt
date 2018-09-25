@@ -13,6 +13,9 @@ healthcheck:
   readiness:
     path: moteoversikt/internal/isAlive
     initialDelay: 20
+prometheus:
+  enabled: true
+  path: /actuator/metrics
 resources:
   limits:
     cpu: 500m
