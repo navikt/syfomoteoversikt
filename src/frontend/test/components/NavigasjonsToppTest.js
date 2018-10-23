@@ -9,8 +9,8 @@ chai.use(chaiEnzyme());
 
 const expect = chai.expect;
 
-describe("NavigasjonsTopp", () => {
-    it("Viser tre stk lenker dersom man sender inn 3 lenker", () => {
+describe('NavigasjonsTopp', () => {
+    it('Viser tre stk lenker dersom man sender inn 3 lenker', () => {
         const lenker = [
             {
             tittel: 'tittel1',
@@ -32,7 +32,7 @@ describe("NavigasjonsTopp", () => {
         expect(combo.find(Link)).to.have.length(3);
     });
 
-    it("Viser lenke som aktiv", () => {
+    it('Viser lenke som aktiv', () => {
         const lenker = [
             {
                 tittel: 'tittel1',
@@ -41,10 +41,10 @@ describe("NavigasjonsTopp", () => {
             },
         ];
         const combo = shallow(<NavigasjonsTopp lenker={lenker} />);
-        expect(combo.find(".navigasjon__element__inner--active")).to.have.length(1);
+        expect(combo.find('.navigasjon__element__inner--active')).to.have.length(1);
     });
 
-    it("Viser lenke som ikke aktiv", () => {
+    it('Viser lenke som ikke aktiv', () => {
         const lenker = [
             {
                 tittel: 'tittel1',
@@ -53,6 +53,6 @@ describe("NavigasjonsTopp", () => {
             },
         ];
         const combo = shallow(<NavigasjonsTopp lenker={lenker} />);
-        expect(combo.find(".navigasjon__element__inner--active")).to.have.length(0);
+        expect(combo.find('.navigasjon__element__inner--active')).to.have.length(0);
     });
 });
