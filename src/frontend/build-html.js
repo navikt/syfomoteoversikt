@@ -9,7 +9,7 @@ var timestamp = Date.now().toString();
 var dev = {
     timestamp: timestamp,
     buildRoot: 'http://localhost:3050/assets',
-    restRoot: 'http://localhost:8196/mote/rest',
+    restRoot: 'http://localhost:8801/syfomoteadmin/api',
     syforestRoot: 'http://localhost:8084/modiasyforest/rest',
     veilederoppgaverRestRoot: 'http://localhost:8999/syfoveilederoppgaver/api',
     bundleFileName: 'bundle.js',
@@ -20,7 +20,7 @@ var dev = {
 var prod = {
     timestamp: timestamp,
     buildRoot: '/moteoversikt/js',
-    restRoot: '/mote/rest',
+    restRoot: '/syfomoteadmin/api',
     syforestRoot: '/modiasyforest/rest',
     veilederoppgaverRestRoot: '/syfoveilederoppgaver/api',
     bundleFileName: 'bundle-prod.js',
