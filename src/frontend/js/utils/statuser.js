@@ -10,6 +10,10 @@ export const svarStatuser = {
     BEKREFTET: 'Bekreftet',
 };
 
+const harDeltakerSvart = (mote, deltaker) => {
+    return deltaker.svartidspunkt && new Date(deltaker.svartidspunkt) >= new Date(mote.sistEndret);
+};
+
 export const deltakerSvarStatus = (mote) => {
     let svarStatus;
     if (mote.status === 'BEKREFTET' || mote.status === 'AVBRUTT') {
@@ -17,7 +21,7 @@ export const deltakerSvarStatus = (mote) => {
     } else {
         let antallSvar = 0;
         mote.deltakere.forEach((deltaker) => {
-            if (deltaker.svar.some((svar) => { return svar.valgt; })) {
+            if (harDeltakerSvart(mote, deltaker)) {
                 antallSvar += 1;
             }
         });
