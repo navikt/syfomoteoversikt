@@ -9,7 +9,6 @@
     "build": "npm-run-all images static:build scripts:build",
     "test:watch": "cross-env NODE_ENV=test nyc mocha --watch -G --require ignore-styles --compilers js:babel-core/register --require babel-polyfill ./test/setup.js --recursive test",
     "test": "cross-env NODE_ENV=test mocha -G --require ignore-styles --compilers js:babel-core/register --require babel-polyfill ./test/setup.js --recursive test",
-    "posttest": "nyc report --reporter=html --reporter=lcov",
     "static:build:local": "node build-html.js html/moteoversiktfssfront.mustache local",
     "static:build": "node build-html.js html/moteoversiktfssfront.mustache prod",
     "scripts:build": "set NODE_ENV=production&&node deploy.js",
