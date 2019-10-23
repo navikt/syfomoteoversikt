@@ -19,7 +19,7 @@ describe("moter", () => {
 
     it("Setter virksomhetens navn på arbeidsgiver", () => {
         const action = actions.virksomhetHentet({
-            navn: "X-Files",
+            navn: "X-Files AS",
         }, 'moteUuid1');
         const state = moter({
             data: [{
@@ -36,7 +36,7 @@ describe("moter", () => {
                 moteUuid: 'moteUuid1',
                 deltakere: [{
                     type: 'arbeidsgiver',
-                    virksomhet: 'X-Files'
+                    virksomhet: 'X-Files AS'
                 }, {
                     type: 'Bruker'
                 }]
@@ -46,7 +46,7 @@ describe("moter", () => {
 
     it("Setter ikke virksomhetens navn på arbeidsgiver dersom uuid ikke matcher", () => {
         const action = actions.virksomhetHentet({
-            navn: "X-Files",
+            navn: "X-Files AS",
         }, 'moteUuid2');
         const state = moter({
             data: [{
