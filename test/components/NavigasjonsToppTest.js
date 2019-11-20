@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { mount, shallow } from 'enzyme';
-import NavigasjonsTopp from '../../js/components/NavigasjonsTopp';
+import NavigasjonsTopp from '../../src/js/components/NavigasjonsTopp';
 
 chai.use(chaiEnzyme());
 

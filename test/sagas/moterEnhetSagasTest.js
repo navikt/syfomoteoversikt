@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {hentEnhetsMoter} from '../../js/sagas/moterEnhetSagas';
-import {get} from '../../js/api';
+import {hentEnhetsMoter} from '../../src/js/sagas/moterEnhetSagas';
+import {get} from '../../src/js/api';
 import {put, call} from 'redux-saga/effects';
 
 describe("enhetMoterSagas", () => {

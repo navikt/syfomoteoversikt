@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {hentBruker} from '../../js/sagas/brukerSagas';
-import {get} from '../../js/api';
+import {hentBruker} from '../../src/js/sagas/brukerSagas';
+import {get} from '../../src/js/api';
 import {put, call} from 'redux-saga/effects';
 
 describe("brukerSagas", () => {

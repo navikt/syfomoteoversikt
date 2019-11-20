@@ -1,8 +1,8 @@
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import moter from '../../js/reducers/moter';
-import * as actions from '../../js/actions/virksomhet_actions';
-import * as brukeractions from '../../js/actions/bruker_actions';
+import moter from '../../src/js/reducers/moter';
+import * as actions from '../../src/js/actions/virksomhet_actions';
+import * as brukeractions from '../../src/js/actions/bruker_actions';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;

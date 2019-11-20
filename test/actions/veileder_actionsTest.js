@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import * as actions from '../../js/actions/veileder_actions';
+import * as actions from '../../src/js/actions/veileder_actions';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -27,7 +27,7 @@ describe("veileder_actions", () => {
             }
         })
     });
-    
+
     it("har en veilederHentet-funksjon som returnerer riktig action", () => {
         const action = actions.veilederHentet({
             navn: "Berit",
@@ -61,5 +61,5 @@ describe("veileder_actions", () => {
             },
         })
     });
-    
+
 })

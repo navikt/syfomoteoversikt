@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { hentVeileder } from '../../js/sagas/veilederSagas.js';
-import { get } from '../../js/api/index';
+import { hentVeileder } from '../../src/js/sagas/veilederSagas.js';
+import { get } from '../../src/js/api';
 import { put, call } from 'redux-saga/effects';
 
 describe("veilederSagas", () => {

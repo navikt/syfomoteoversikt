@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import veiledere from '../../js/reducers/veiledere';
-import * as actions from '../../js/actions/veileder_actions';
+import veiledere from '../../src/js/reducers/veiledere';
+import * as actions from '../../src/js/actions/veileder_actions';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { aktivEnhetSaga, pushModiacontextSaga } from '../../js/sagas/modiacontextSagas';
-import { HENTER_AKTIVENHET, PUSHER_MODIACONTEXT } from '../../js/actions/actiontyper';
-import { get, post } from '../../js/api/index';
+import { aktivEnhetSaga, pushModiacontextSaga } from '../../src/js/sagas/modiacontextSagas';
+import { HENTER_AKTIVENHET, PUSHER_MODIACONTEXT } from '../../src/js/actions/actiontyper';
+import { get, post } from '../../src/js/api';
 import { put, call } from 'redux-saga/effects';
 
 describe("modiacontextSagas", () => {

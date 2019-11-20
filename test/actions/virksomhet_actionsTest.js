@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import * as actions from '../../js/actions/virksomhet_actions';
+import * as actions from '../../src/js/actions/virksomhet_actions';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;

@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {hentVirksomhet} from '../../js/sagas/virksomhetSagas';
-import {get} from '../../js/api';
+import {hentVirksomhet} from '../../src/js/sagas/virksomhetSagas';
+import {get} from '../../src/js/api';
 import {put, call} from 'redux-saga/effects';
 
 describe("virksomhetSagas", () => {
