@@ -1,2 +1,9 @@
 .git/
-src/frontend/node_modules/
+src/node_modules/
+.babelrc
+.eslintignore
+.gitignore
+.babelrc
+.nais.yaml
+Dockerfile
+build-html.js
