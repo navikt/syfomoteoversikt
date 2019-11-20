@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Moteoversikt</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://internarbeidsflatedecorator.nais.adeo.no/internarbeidsflatedecorator/js/head.min.js"></script>
+    {{#isProd}}
+    <link href="/moteoversikt/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet" id="sykefravaer-styles" />
+    {{/isProd}}
+</head>
+<body>
+
+<div id="header"></div>
+
+<div id="maincontent" class="app app--laster" tabindex="-1">
+    <div class="app-spinner" aria-label="Vent litt mens siden laster"></div>
+</div>
+
+<div id="feilmelding" style="display: none;">
+    <div class="scriptFeilmelding">
+        <div class="scriptFeilmelding__panel">
+            <h2 class="scriptFeilmelding__tittel">Utvikling i syfomoteoversikt</h2>
+            <p>Kjør appen lokalt med mockede rest-endepunkter ved å kjøre <code>npm run start-local</code>.</p>
+            <p>Kjør <code>npm run dev</code> for å kjøre opp en webpack-dev-server som bygger JS og CSS for deg.</p>
+            <p>Syfomoteoversikt blir da tilgjengelig under <a href="http://localhost:8190/moteoversikt">http://localhost:8190/moteoversikt</a></p>
+            <p>Happy coding!</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .scriptFeilmelding {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-top: 2em;
+    }
+
+    .scriptFeilmelding__panel {
+        max-width: 40em;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.5em;
+        background: #fff;
+        border-radius: .25em;
+    }
+
+    .scriptFeilmelding__tittel {
+        font-size: 1.7em;
+        margin: .5em 0 .5em 0;
+    }
+
+    .scriptFeilmelding__panel p {
+        font-size: 1.15em;
+        margin-top: 0;
+        margin-bottom: 1em;
+        line-height: 1.35;
+    }
+
+    .scriptFeilmelding__panel p:last-child {
+        margin-bottom: 0;
+    }
+
+    .scriptFeilmelding a {
+        color: #0067c5;
+        text-decoration: none;
+        border-bottom: 1px solid #B7B1A9
+    }
+
+    .scriptFeilmelding a:hover {
+        border-bottom-color: #0067c5;
+    }
+
+    .scriptFeilmelding a:focus {
+        background-color: #ffbd66;
+    }
+
+    .scriptFeilmelding code {
+        color: #ba3a26;
+        background-color: #e9e7e7;
+        border: 1px solid #B7B1A9;
+        border-radius: 1px;
+    }
+</style>
+
+<script>
+    (function() {
+        var visFeilmelding = function() {
+            var el = document.getElementById("maincontent");
+            var feilmelding = document.getElementById("feilmelding");
+            el.innerHTML = feilmelding.innerHTML;
+        };
+
+        var script = document.createElement("script");
+
+        {{#isProd}}
+        script.src = "/sykefravaer/resources/bundle-prod.js?ts={{timestamp}}";
+        {{/isProd}}
+            {{^isProd}}
+            script.src = "http://localhost:9090/assets/bundle.js";
+            {{/isProd}}
+                script.onerror = visFeilmelding;
+                document.body.appendChild(script);
+            })();
+</script>
+</body>
+</html>
