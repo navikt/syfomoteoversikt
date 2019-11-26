@@ -7,7 +7,7 @@ import { PUSH_MODIACONTEXT_FORESPURT, HENT_AKTIVENHET_FORESPURT } from '../actio
 export function* pushModiacontextSaga(action) {
     yield put(actions.pusherModiaContext());
     try {
-        yield call(post, `${window.location.origin}/modiacontextholder/api/context`, {
+        yield call(post, `${process.env.SYFOMODIACONTEXTHOLDER_ROOT}/context`, {
             verdi: action.data.verdi,
             eventType: action.data.eventType,
         });
@@ -20,7 +20,7 @@ export function* pushModiacontextSaga(action) {
 export function* aktivEnhetSaga(action) {
     yield put(actions.henterAktivEnhet());
     try {
-        const data = yield call(get, `${window.location.origin}/modiacontextholder/api/context/aktivenhet`);
+        const data = yield call(get, `${process.env.SYFOMODIACONTEXTHOLDER_ROOT}/context/aktivenhet`);
         action.data.callback(data.aktivEnhet);
     } catch (e) {
         yield put(actions.hentAktivEnhetFeilet());

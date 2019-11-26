@@ -7,7 +7,7 @@ import * as actions from '../actions/moterEnhet_actions';
 export function* hentEnhetsMoter(action) {
     yield put(actions.henterEnhetsMoter(action.enhet));
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=${action.enhet}`);
+        const data = yield call(get, `${process.env.SYFOMOTEADMIN_REST_ROOT}/moter?navenhet=${action.enhet}`);
         yield put(actions.enhetsMoterHentet(data));
     } catch (e) {
         yield put(actions.hentEnhetsMoterFeilet());
@@ -17,7 +17,7 @@ export function* hentEnhetsMoter(action) {
 export function* overforMoter(action) {
     yield put(actions.overforerMoter());
     try {
-        const data = yield call(post, `${window.APP_SETTINGS.REST_ROOT}/actions/moter/overfor`, {
+        const data = yield call(post, `${process.env.SYFOMOTEADMIN_REST_ROOT}/actions/moter/overfor`, {
             moteUuidListe: action.moteUuidListe,
         });
         yield put(actions.moterOverfort(data));

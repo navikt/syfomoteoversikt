@@ -21,7 +21,7 @@ describe("enhetMoterSagas", () => {
     });
 
     it("Skal dernest hente enhets moter", () => {
-        const nextCall = call(get, `${window.APP_SETTINGS.REST_ROOT}/moter?navenhet=0001`);
+        const nextCall = call(get, `${process.env.SYFOMOTEADMIN_REST_ROOT}/moter?navenhet=0001`);
         expect(generator.next().value).to.deep.equal(nextCall);
     });
 

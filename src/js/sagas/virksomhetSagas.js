@@ -6,7 +6,7 @@ import * as actions from '../actions/virksomhet_actions';
 export function* hentVirksomhet(action) {
     yield put(actions.henterVirksomhet());
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/virksomhet/${action.orgnummer}`);
+        const data = yield call(get, `${process.env.SYFOMOTEADMIN_REST_ROOT}/virksomhet/${action.orgnummer}`);
         yield put(actions.virksomhetHentet(data, action.moteUuid));
     } catch (e) {
         yield put(actions.hentVirksomhetFeilet());

@@ -6,7 +6,7 @@ import * as actions from '../actions/fnr_actions';
 export function* hentFnr(action) {
     yield put(actions.henterFnr());
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/aktor/${action.ident}`);
+        const data = yield call(get, `${process.env.SYFOMOTEADMIN_REST_ROOT}/aktor/${action.ident}`);
         yield put(actions.fnrHentet(data.fnr, action.moteUuid));
     } catch (e) {
         yield put(actions.hentFnrFeilet());

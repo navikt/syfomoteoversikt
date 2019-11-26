@@ -6,7 +6,7 @@ import * as actions from '../actions/bruker_actions';
 export function* hentBruker(action) {
     yield put(actions.henterBruker());
     try {
-        const data = yield call(get, `${window.APP_SETTINGS.REST_ROOT}/brukerinfo/${action.ident}`);
+        const data = yield call(get, `${process.env.SYFOMOTEADMIN_REST_ROOT}/brukerinfo/${action.ident}`);
         yield put(actions.brukerHentet(data, action.moteUuid));
     } catch (e) {
         yield put(actions.hentBrukerFeilet());
