@@ -1,9 +1,7 @@
 const mockUtils = require('./mockUtils.js');
 
-const generatedPersons = mockUtils.generatePersons(50);
-const personInfo = [...mockUtils.personInfo, ...generatedPersons];
-
 function mockForLokal(server) {
+
     server.get('/syfomoteadmin/api/virksomhet/:orgnr', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.virksomhetsInfo));
@@ -31,7 +29,7 @@ function mockForLokal(server) {
 
     server.get('/syfomoteadmin/api/aktor/:ident', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(fnrInfo));
+        res.send(JSON.stringify(mockUtils.fnrInfo));
     });
 
     server.get('/syfomoteadmin/api/moter?/navenhet=:enhetId', (req, res) => {
