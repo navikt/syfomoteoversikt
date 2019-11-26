@@ -88,30 +88,40 @@ const startServer = (html) => {
         res.sendStatus(200);
     });
 
-    if (env === 'local') {
+    if (env === 'local' || env === 'opplaering') {
         console.log('Setter opp lokale mock-endepunkter');
-        require('./mock/mockEndepunkter')(server, env === 'local');
+        require('./mock/mockEndepunkter').mockForLokal(server);
     } else {
-        server.use('/syfo-tilgangskontroll/api', proxy('syfo-tilgangskontroll.default',  {
+        server.use('/syfomoteadmin/api', proxy('syfomoteadmin.default',  {
             https: false,
             proxyReqPathResolver: function(req) {
-                return `/syfo-tilgangskontroll/api${req.url}`
+                return `/syfomoteadmin/api${req.url}`
             },
             proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for tilgang", err);
+                console.error("Error in proxy for syfomoteadmin", err);
                 next(err);
             },
         }));
-        server.use('/modiasyforest/api', proxy('modiasyforest.default',  {
+        server.use('/syfoveilederoppgaver/api', proxy('syfoveilederoppgaver.default',  {
             https: false,
             proxyReqPathResolver: function(req) {
-                return `/modiasyforest/api${req.url}`
+                return `/syfoveilederoppgaver/api${req.url}`
             },
             proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for modiasyforest", err);
+                console.error("Error in proxy for syfoveilederoppgaver", err);
                 next(err);
             },
         }));
+        server.use('/modicontextholder/api', proxy('modicontextholder.default',  {
+            https: false,
+            proxyReqPathResolver: function(req) {
+                return `/api${req.url}`
+            },
+            proxyErrorHandler: function(err, res, next) {
+                console.error("Error in proxy for modicontextholder", err);
+                next(err);
+            },
+        }))
     }
 
     const port = process.env.PORT || 8199;
