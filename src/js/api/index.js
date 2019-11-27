@@ -1,4 +1,4 @@
-import { log, getCookie } from 'digisyfo-npm';
+import { log, getCookie } from '@navikt/digisyfo-npm';
 
 export function get(url) {
     return fetch(url, {

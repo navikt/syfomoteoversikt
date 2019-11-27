@@ -1,44 +1,70 @@
-var path = require("path");
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var stylesPath = path.resolve(__dirname, 'styles', 'styles.less');
-var mainPath = path.resolve(__dirname, 'js', 'index.js');
+var path = require('path');
+var mainPath = path.resolve(__dirname, './src/js', 'index.js');
+var stylesPath = path.resolve(__dirname, 'src/styles', 'styles.less');
+var autoprefixer = require('autoprefixer');
+var Dotenv = require('dotenv-webpack');
 
 module.exports = {
-    entry: [mainPath, stylesPath],
+    entry: ['babel-polyfill', mainPath, stylesPath],
     output: {
-        path: path.resolve(__dirname, "build"),
-        publicPath: "http://localhost:3050/assets/",
-        filename: "bundle.js"
+        path: path.resolve(__dirname, 'build'),
+        publicPath: 'http://localhost:3050/assets/',
+        filename: 'bundle.js',
+    },
+    mode: 'development',
+    resolve: {
+        alias: {
+            react: path.join(__dirname, 'node_modules', 'react'),
+        },
     },
     module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                loader: 'babel',
-                query: {
-                    presets: ["react", "es2015"]
-                },
-                exclude: [nodeModulesPath]
-            },
+        rules: [
             {
                 test: /\.less$/,
-                loaders: ['style-loader', 'css-loader', 'less-loader?{"globalVars":{"nodeModulesPath":"\'~\'", "coreModulePath":"\'~\'"}}']
+                use: [{
+                    loader: 'style-loader',
+                }, {
+                    loader: 'css-loader',
+                }, {
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: function() {
+                            return [autoprefixer];
+                        },
+                    },
+                }, {
+                    loader: 'less-loader',
+                    options: {
+                        globalVars: {
+                            nodeModulesPath: '~',
+                            coreModulePath: '~',
+                        },
+                    },
+                }],
             },
             {
-                test: /\.json$/, 
-                loader: 'json' 
+                test: /\.jsx?$/,
+                exclude: [/node_modules/],
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-react', '@babel/preset-env'],
+                    },
+                }],
             },
-            { 
-                test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/, 
-                loader: 'url?limit=10000' 
+            {
+                test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
+                use: [{
+                    loader: 'svg-url-loader',
+                }],
             },
-            {  
-                test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
-                loader: 'file' 
-            }
-        ]
+        ],
     },
     devServer: {
         stats: 'errors-only',
+        disableHostCheck: true,
     },
+    plugins: [
+        new Dotenv(),
+    ],
 };

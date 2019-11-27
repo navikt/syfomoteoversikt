@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="https://internarbeidsflatedecorator.nais.adeo.no/internarbeidsflatedecorator/js/head.min.js"></script>
     {{#isProd}}
-    <link href="/moteoversikt/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet" id="sykefravaer-styles" />
+    <link href="/syfomoteoversikt/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet" id="sykefravaer-styles" />
     {{/isProd}}
 </head>
 <body>
@@ -24,7 +24,7 @@
             <h2 class="scriptFeilmelding__tittel">Utvikling i syfomoteoversikt</h2>
             <p>Kjør appen lokalt med mockede rest-endepunkter ved å kjøre <code>npm run start-local</code>.</p>
             <p>Kjør <code>npm run dev</code> for å kjøre opp en webpack-dev-server som bygger JS og CSS for deg.</p>
-            <p>Syfomoteoversikt blir da tilgjengelig under <a href="http://localhost:8190/moteoversikt">http://localhost:8190/moteoversikt</a></p>
+            <p>Syfomoteoversikt blir da tilgjengelig under <a href="http://localhost:8080/syfomoteoversikt">http://localhost:8080/syfomoteoversikt</a></p>
             <p>Happy coding!</p>
         </div>
     </div>
@@ -96,10 +96,10 @@
         var script = document.createElement("script");
 
         {{#isProd}}
-        script.src = "/sykefravaer/resources/bundle-prod.js?ts={{timestamp}}";
+        script.src = "/syfomoteovesikt/resources/bundle-prod.js?ts={{timestamp}}";
         {{/isProd}}
             {{^isProd}}
-            script.src = "http://localhost:9090/assets/bundle.js";
+            script.src = "http://localhost:3050/assets/bundle.js";
             {{/isProd}}
                 script.onerror = visFeilmelding;
                 document.body.appendChild(script);

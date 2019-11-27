@@ -55,17 +55,17 @@ function nocache(req, res, next) {
 
 const startServer = (html) => {
     server.use(
-        '/moteoversikt/resources',
+        '/syfomoteoversikt/resources',
         express.static(path.resolve(__dirname, 'dist/resources')),
     );
 
     server.use(
-        '/moteoversikt/img',
+        '/syfomoteoversikt/img',
         express.static(path.resolve(__dirname, 'dist/resources/img')),
     );
 
     server.get(
-        ['/', '/moteoversikt/?', /^\/moteoversikt\/(?!(resources|img)).*$/],
+        ['/', '/syfomoteoversikt/?', /^\/syfomoteoversikt\/(?!(resources|img)).*$/],
         nocache,
         (req, res) => {
             res.send(html);
