@@ -1,0 +1,71 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "nav-frontend-grafikk@1.0.2",
+        "scope": null,
+        "escapedName": "nav-frontend-grafikk",
+        "name": "nav-frontend-grafikk",
+        "rawSpec": "1.0.2",
+        "spec": "1.0.2",
+        "type": "version"
+      },
+      "C:\\projects\\moteoversiktfssfront\\web\\src\\frontend"
+    ]
+  ],
+  "_from": "nav-frontend-grafikk@1.0.2",
+  "_id": "nav-frontend-grafikk@1.0.2",
+  "_inCache": true,
+  "_location": "/nav-frontend-grafikk",
+  "_nodeVersion": "5.11.0",
+  "_npmUser": {
+    "name": "deployment",
+    "email": "jenkins@nav.no"
+  },
+  "_npmVersion": "3.8.6",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "nav-frontend-grafikk@1.0.2",
+    "scope": null,
+    "escapedName": "nav-frontend-grafikk",
+    "name": "nav-frontend-grafikk",
+    "rawSpec": "1.0.2",
+    "spec": "1.0.2",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-grafikk/-/nav-frontend-grafikk-1.0.2.tgz",
+  "_shasum": "f75506e9bcaf2b9eb69a5c78b4af2b678a4a4978",
+  "_shrinkwrap": null,
+  "_spec": "nav-frontend-grafikk@1.0.2",
+  "_where": "C:\\projects\\moteoversiktfssfront\\web\\src\\frontend",
+  "author": "",
+  "dependencies": {},
+  "devDependencies": {},
+  "dist": {
+    "shasum": "f75506e9bcaf2b9eb69a5c78b4af2b678a4a4978",
+    "tarball": "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-grafikk/-/nav-frontend-grafikk-1.0.2.tgz"
+  },
+  "gitHead": "268a92b619f000514c87365e7b5aced698dd0302",
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "deployment",
+      "email": "jenkins@nav.no"
+    }
+  ],
+  "name": "nav-frontend-grafikk",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@stash.devillo.no:7999/navfront/nav-frontend-grafikk.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.2"
+}
