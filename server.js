@@ -112,7 +112,7 @@ const startServer = (html) => {
                 next(err);
             },
         }));
-        server.use('/modicontextholder/api', proxy('modicontextholder.default',  {
+        server.use('/modicontextholder/api', proxy('modiacontextholder.default',  {
             https: false,
             proxyReqPathResolver: function(req) {
                 return `/api${req.url}`
