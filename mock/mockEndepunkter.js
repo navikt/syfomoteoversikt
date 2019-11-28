@@ -27,24 +27,33 @@ function mockForLokal(server) {
         res.send(JSON.stringify(mockUtils.veiledere));
     });
 
-    server.get('/syfomoteadmin/api/aktor/:ident', (req, res) => {
+    server.get('/syfomoteadmin/api/aktor/:aktorId', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.fnrInfo));
-    });
-
-    server.get('/syfomoteadmin/api/moter?/navenhet=:enhetId', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockUtils.moter));
     });
 
     server.post('/syfomoteadmin/api/actions/moter/overfor', (req, res) => {
         res.send();
     });
 
-    server.get('/syfomoteadmin/api/moter?veiledersmoter=true', (req, res) => {
+    server.get('/syfomoteadmin/api/moter', (req, res) => {
+        if (req.query.veiledersmoter) {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(mockUtils.moter));
+        } else if (req.query.navenhet) {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(mockUtils.moter));
+        }
+        else{
+            res.send()
+        }
+    });
+
+    server.get('/syfomoteadmin/api/moter?navenhet=enhetId', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.moter));
     });
+
 
     server.post('/modiacontextholder/api/context', (req, res) => {
         res.send();
