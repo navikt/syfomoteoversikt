@@ -22,6 +22,7 @@ const server = express();
 
 const env = process.argv[2];
 const settings = env === 'local' ? {isProd: false} : require('./settings.json');
+const modiacontextholderUrl =  env === 'local' ? 'modiacontextholder.q1' : 'modiacontextholder.default';
 
 server.set('views', `${__dirname}/dist`);
 server.set('view engine', 'mustache');
@@ -112,7 +113,7 @@ const startServer = (html) => {
                 next(err);
             },
         }));
-        server.use('/modicontextholder/api', proxy('modiacontextholder.default',  {
+        server.use('/modiacontextholder/api', proxy(modiacontextholderUrl,  {
             https: false,
             proxyReqPathResolver: function(req) {
                 return `/api${req.url}`
