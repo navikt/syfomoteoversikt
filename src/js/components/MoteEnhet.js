@@ -22,6 +22,7 @@ class MoteEnhet extends Component {
         return (<tr>
             <td>
                 <Checkbox
+                    label={''}
                     id={moteUuid}
                     checked={markert}
                     onChange={(e) => {
