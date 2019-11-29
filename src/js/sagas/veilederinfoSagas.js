@@ -7,7 +7,7 @@ import { HENT_VEILEDERINFO_FORESPURT } from '../actions/actiontyper';
 export function* hentVeilederinfoSaga() {
     yield put(actions.henterVeilederinfo());
     try {
-        const data = yield call(get, `${process.env.VEILEDEROPPGAVER_REST_ROOT}/veilederinfo`);
+        const data = yield call(get, `${process.env.SYFOMOTEADMIN_REST_ROOT}/veilederinfo`);
         yield put(actions.veilederinfoHentet(data));
     } catch (e) {
         yield put(actions.hentVeilederinfoFeilet());

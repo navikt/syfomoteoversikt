@@ -7,36 +7,31 @@ function mockForLokal(server) {
         res.send(JSON.stringify(mockUtils.virksomhetsInfo));
     });
 
-    server.get('/syfomoteadmin/api/brukerinfo/:ident', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/brukerinfo/:ident', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.brukerInfo));
     });
 
-    server.get('/syfomoteadmin/api/veilederinfo/:ident', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/veilederinfo/:ident', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.veilederInfo));
     });
 
-    server.get('/syfomoteadmin/api/veilederinfo', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/veilederinfo', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.veilederInfo));
     });
 
-    server.get('/syfoveilederoppgaver/api/veilederinfo', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockUtils.veiledere));
-    });
-
-    server.get('/syfomoteadmin/api/aktor/:aktorId', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/aktor/:aktorId', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.fnrInfo));
     });
 
-    server.post('/syfomoteadmin/api/actions/moter/overfor', (req, res) => {
+    server.post('/syfomoteadmin/api/internad/actions/moter/overfor', (req, res) => {
         res.send();
     });
 
-    server.get('/syfomoteadmin/api/moter', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/moter', (req, res) => {
         if (req.query.veiledersmoter) {
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(mockUtils.moter));
@@ -49,7 +44,7 @@ function mockForLokal(server) {
         }
     });
 
-    server.get('/syfomoteadmin/api/moter?navenhet=enhetId', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/moter?navenhet=enhetId', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.moter));
     });
