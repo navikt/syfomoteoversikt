@@ -38,7 +38,7 @@
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "7.7.4",
     "babel-loader": "8.0.6",
-    "babel-plugin-named-asset-import": "^0.2.3",
+    "babel-plugin-named-asset-import": "0.2.3",
     "babel-polyfill": "6.26.0",
     "babel-preset-react-app": "9.0.2",
     "babel-preset-react-native": "4.0.1",

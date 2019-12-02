@@ -149,7 +149,7 @@ class Moteoversikt extends Component {
                         disabled={overtarMoter || moterMarkertForOverforing.length === 0}
                         onClick={() => {
                             overforMoter({
-                            moteUuidListe: moterMarkertForOverforing,
+                                moteUuidListe: moterMarkertForOverforing,
                             });
                         }}>
                         Overta møter

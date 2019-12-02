@@ -48,14 +48,15 @@ export class Moteside extends Component {
                         url: '/moteoversikt/enhetensmoter',
                         aktiv: true,
                     },
-                ]} />
+                ]}
+                />
                 {
                     (() => {
                         if (!aktivEnhet) {
-                            return <Feilmelding
+                            return (<Feilmelding
                                 tittel={'Ingen aktiv enhet'}
                                 melding={'Du må velge enhet i enhetsvelgeren i toppen av siden.'}
-                            />;
+                            />);
                         } else if (henterMoterBool) {
                             return (<Row className="row-centered">
                                 <NavFrontendSpinner type="XL" />
@@ -88,19 +89,27 @@ export const mapStateToProps = (state) => {
     const moter = state.moterEnhet.data;
     const moterMarkertForOverforing = state.overfor.data;
     moter.map((mote) => {
-        mote.markert = moterMarkertForOverforing.filter((markertMoteUuid) => {
-            return mote.moteUuid === markertMoteUuid;
-        }).length > 0;
-        return mote;
+        const markertMote = {
+            ...mote,
+            markert: moterMarkertForOverforing.filter((markertMoteUuid) => {
+                return mote.moteUuid === markertMoteUuid;
+            }).length > 0,
+        };
+        return markertMote;
     });
 
     const veiledere = state.veiledere.data;
     moter.map((mote) => {
-        veiledere.forEach((veileder) => {
-            if (mote.eier === veileder.ident) {
-                mote.veileder = veileder;
-            }
-        });
+        const moteVeileder = veiledere.filter((veileder) => {
+            return mote.eier === veileder.ident;
+        })[0];
+
+        if (moteVeileder) {
+            return {
+                ...mote,
+                veileder: moteVeileder,
+            };
+        }
         return mote;
     });
     return {

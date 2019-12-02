@@ -36,6 +36,7 @@ export class Context extends Component {
             actions.hentVeilederinfo();
         }
     }
+
     componentWillReceiveProps(nextProps) {
         const {
             actions,
@@ -52,11 +53,8 @@ export class Context extends Component {
             veilederinfo,
         } = this.props;
 
-        return (<div className="contextContainer">
-            { veilederinfo.hentingFeilet &&
-            <AlertStripe
-                className="contextContainer__alertstripe"
-                type="advarsel">
+        return (<div className="contextContainer"> { veilederinfo.hentingFeilet &&
+            <AlertStripe className="contextContainer__alertstripe" type="advarsel">
                 <div dangerouslySetInnerHTML={{ __html: '<p>Det skjedde en feil: Vi fant ikke din ident</p>' }} />
             </AlertStripe>
             }
