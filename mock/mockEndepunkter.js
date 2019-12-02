@@ -2,7 +2,7 @@ const mockUtils = require('./mockUtils.js');
 
 function mockForLokal(server) {
 
-    server.get('/syfomoteadmin/api/virksomhet/:orgnr', (req, res) => {
+    server.get('/syfomoteadmin/api/internad/virksomhet/:orgnr', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(mockUtils.virksomhetsInfo));
     });
