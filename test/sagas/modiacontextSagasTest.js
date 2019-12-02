@@ -17,7 +17,7 @@ describe("modiacontextSagas", () => {
         });
 
         it("Skal dernest hente aktiv enhet", () => {
-            const nextCall = call(get, "null/modiacontextholder/api/context/aktivenhet");
+            const nextCall = call(get, "/modiacontextholder/api/context/aktivenhet");
             expect(generator.next().value).to.deep.equal(nextCall);
         });
     });
@@ -37,7 +37,7 @@ describe("modiacontextSagas", () => {
         });
 
         it("Skal dernest pushe context", () => {
-            const nextCall = call(post, "null/modiacontextholder/api/context", {
+            const nextCall = call(post, "/modiacontextholder/api/context", {
                 verdi: "fnr",
                 eventType: "event1"
             });

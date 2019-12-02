@@ -7,7 +7,7 @@ describe("enhetMoterSagas", () => {
 
     beforeEach(() => {
         window.APP_SETTINGS = {
-            REST_ROOT: "http://tjenester.nav.no/sykefravaer"
+            REST_ROOT: "/syfomoteadmin/api/internad"
         }
     });
 

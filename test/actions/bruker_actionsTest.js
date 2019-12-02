@@ -1,4 +1,4 @@
-import chai from 'chai';
+const chai = require ('chai');
 import chaiEnzyme from 'chai-enzyme';
 import * as actions from '../../src/js/actions/bruker_actions';
 

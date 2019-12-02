@@ -7,7 +7,7 @@ describe("veilederSagas", () => {
 
     beforeEach(() => {
         window.APP_SETTINGS = {
-            REST_ROOT: "http://tjenester.nav.no/sykefravaer"
+            REST_ROOT: "/syfomoteadmin/api/internad"
         }
     });
 
@@ -21,7 +21,7 @@ describe("veilederSagas", () => {
     });
 
     it("Skal dernest hente veileder", () => {
-        const nextCall = call(get, "http://tjenester.nav.no/sykefravaer/veilederinfo/Z999999");
+        const nextCall = call(get, "/syfomoteadmin/api/internad/veilederinfo/Z999999");
         expect(generator.next().value).to.deep.equal(nextCall);
     });
 

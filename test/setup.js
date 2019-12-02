@@ -10,7 +10,7 @@ require('dotenv').config({
 
 Enzyme.configure({ adapter: new Adapter() });
 
-require("babel-core/register");
+require("@babel/register");
 //disable
 const jsdom = require('jsdom');
 
