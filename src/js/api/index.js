@@ -1,4 +1,6 @@
 import { log, getCookie } from '@navikt/digisyfo-npm';
+import { Error403 } from './errors';
+import { erProd } from '../utils/miljoUtil';
 
 export const hentLoginUrl = () => {
     if (erProd()) {
