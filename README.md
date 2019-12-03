@@ -9,7 +9,7 @@ React-app for administrasjon av dialogmøter for veileder
     - `$ npm install`
     - `$ npm run dev`
     - I et annet vindu `$ npm run start-local`
-    - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
+    - Eventuelt kan kommandoene kjøres fra `package.json` i intellij.
 * Kjør tester med `npm test`
 * Kjør prettier og lint med `npm run prettier-lint`, de kan også kjøres hver for seg
 
