@@ -1,12 +1,12 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: syfomodiaperson
+  name: syfomoteoversikt
   namespace: default
   labels:
     team: teamsykefravr
 spec:
-  image: "docker.pkg.github.com/navikt/modiasyfofront:{{tag}}"
+  image: "docker.pkg.github.com/navikt/syfomoteoversikt:{{tag}}"
   replicas:
     min: 1
     max: 2
