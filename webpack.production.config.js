@@ -23,6 +23,7 @@ var config = function () {
         },
         mode: 'production',
         resolve: {
+            extensions: ['.js', '.json', '.jsx'],
             alias: {
                 react: path.join(__dirname, 'node_modules', 'react'),
             },
@@ -33,8 +34,6 @@ var config = function () {
                     test: /\.less$/,
                     use: [{
                         loader: MiniCssExtractPlugin.loader,
-                    }, {
-                        loader: 'style-loader',
                     }, {
                         loader: 'css-loader',
                     }, {
