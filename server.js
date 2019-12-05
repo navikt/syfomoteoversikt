@@ -22,7 +22,7 @@ const server = express();
 
 const env = process.argv[2];
 const settings = env === 'local' ? {isProd: false} : require('./settings.json');
-const modiacontextholderUrl =  env === 'local' ? 'modiacontextholder.q1' : 'modiacontextholder.default';
+const modiacontextholderUrl =  process.env.NAIS_CONTEXT === 'preprod' ? 'modiacontextholder.q1' : 'modiacontextholder.default';
 
 server.set('views', `${__dirname}/dist`);
 server.set('view engine', 'mustache');
@@ -59,7 +59,6 @@ const startServer = (html) => {
         '/syfomoteoversikt/resources',
         express.static(path.resolve(__dirname, 'dist/resources')),
     );
-
     server.use(
         '/syfomoteoversikt/img',
         express.static(path.resolve(__dirname, 'dist/resources/img')),

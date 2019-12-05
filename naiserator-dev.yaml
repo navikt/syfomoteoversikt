@@ -36,3 +36,6 @@ spec:
   webproxy: false
   ingresses:
     - "https://syfomoteoversikt.nais.preprod.local"
+  env:
+    - name: NAIS_CONTEXT
+      value: 'preprod'
