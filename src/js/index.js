@@ -43,8 +43,8 @@ const config = {
             toggleSendEventVedEnEnhet: true,
         },
         dataSources: {
-            veileder: `${window.location.origin}/syfomoteadmin/api/veilederinfo`,
-            enheter: `${window.location.origin}/syfomoteadmin/api/enheter`,
+            veileder: `${window.location.origin}/syfomoteadmin/api/internad/veilederinfo`,
+            enheter: `${window.location.origin}/syfomoteadmin/api/internad/enheter`,
         },
         applicationName: 'Sykefraværsoppfølging',
         handlePersonsokSubmit: (nyttFnr) => {
