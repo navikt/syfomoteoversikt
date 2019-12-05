@@ -102,16 +102,6 @@ const startServer = (html) => {
                 next(err);
             },
         }));
-        server.use('/syfoveilederoppgaver/api', proxy('syfoveilederoppgaver.default',  {
-            https: false,
-            proxyReqPathResolver: function(req) {
-                return `/syfoveilederoppgaver/api${req.url}`
-            },
-            proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for syfoveilederoppgaver", err);
-                next(err);
-            },
-        }));
         server.use('/modiacontextholder/api', proxy(modiacontextholderUrl,  {
             https: false,
             proxyReqPathResolver: function(req) {
@@ -119,7 +109,7 @@ const startServer = (html) => {
                 return `/modiacontextholder/api${req.url}`
             },
             proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for modicontextholder", err);
+                console.error("Error in proxy for modiacontextholder", err);
                 next(err);
             },
         }))
