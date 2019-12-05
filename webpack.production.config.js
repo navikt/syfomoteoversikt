@@ -16,7 +16,7 @@ var config = function () {
 
     return {
         devtool: 'source-map',
-        entry: ['babel-polyfill', mainPath, stylesPath],
+        entry: [mainPath, stylesPath],
         output: {
             path: buildPath,
             filename: 'bundle-prod.js',
