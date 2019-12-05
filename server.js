@@ -115,7 +115,8 @@ const startServer = (html) => {
         server.use('/modiacontextholder/api', proxy(modiacontextholderUrl,  {
             https: false,
             proxyReqPathResolver: function(req) {
-                return `/api${req.url}`
+                console.log(req.url)
+                return `/modiacontextholder/api${req.url}`
             },
             proxyErrorHandler: function(err, res, next) {
                 console.error("Error in proxy for modicontextholder", err);
