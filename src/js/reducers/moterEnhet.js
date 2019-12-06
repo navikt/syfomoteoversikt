@@ -93,7 +93,7 @@ export default function moterEnhet(state = defaultState, action) {
                         return mote;
                     }
                     return Object.assign({}, mote, {
-                        veiledernavn: action.data.navn,
+                        veileder: { ...action.data },
                     });
                 });
             return Object.assign({}, state, {
