@@ -6,9 +6,9 @@ import EnhetensMoterContainer from '../containers/EnhetensMoterContainer';
 
 const AppRouter = ({ history }) => {
     return (<Router history={history}>
-        <Route path="/moteoversikt" component={DineMoterContainer} />
-        <Route path="/moteoversikt/dinemoter" component={DineMoterContainer} />
-        <Route path="/moteoversikt/enhetensmoter" component={EnhetensMoterContainer} />
+        <Route path="/syfomoteoversikt" component={DineMoterContainer} />
+        <Route path="/syfomoteoversikt/dinemoter" component={DineMoterContainer} />
+        <Route path="/syfomoteoversikt/enhetensmoter" component={EnhetensMoterContainer} />
         <Route path="/" component={DineMoterContainer} />
     </Router>);
 };

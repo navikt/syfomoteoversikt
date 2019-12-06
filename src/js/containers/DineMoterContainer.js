@@ -28,12 +28,12 @@ export class Moteside extends Component {
                 <NavigasjonsTopp lenker={[
                     {
                         tittel: 'Dine møter',
-                        url: '/moteoversikt/dinemoter',
+                        url: '/syfomoteoversikt/dinemoter',
                         aktiv: true,
                     },
                     {
                         tittel: 'Enhetens møter',
-                        url: '/moteoversikt/enhetensmoter',
+                        url: '/syfomoteoversikt/enhetensmoter',
                         aktiv: false,
                     },
                 ]} />
