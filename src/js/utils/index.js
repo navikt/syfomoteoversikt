@@ -1,4 +1,5 @@
 import React from 'react';
+import { syfomodiapersonMoterUrl } from './lenkeUtil';
 
 const kortManeder = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
 
@@ -114,7 +115,7 @@ export const finnVirksomhet = (leder) => {
 
 export const finnNavn = (bruker) => {
     if (bruker && bruker.navn && bruker.fnr) {
-        return <a className="lenke" href={`/sykefravaer/${bruker.fnr}/mote`}>{bruker.navn}</a>;
+        return <a className="lenke" href={syfomodiapersonMoterUrl(bruker.fnr)}>{bruker.navn}</a>;
     } else if (bruker && (!bruker.fnr || !bruker.navn)) {
         return 'Henter navn...';
     }
