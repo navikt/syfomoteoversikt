@@ -44,7 +44,7 @@ const config = {
         },
         dataSources: {
             veileder: `${window.location.origin}/syfomoteadmin/api/internad/veilederinfo`,
-            enheter: `${window.location.origin}/syfomoteadmin/api/internad/enheter`,
+            enheter: `${window.location.origin}/syfomoteadmin/api/internad/veilederinfo/enheter`,
         },
         applicationName: 'Sykefraværsoppfølging',
         handlePersonsokSubmit: (nyttFnr) => {
