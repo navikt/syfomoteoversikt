@@ -65,6 +65,11 @@ export function post(url, body) {
         },
     })
         .then((res) => {
+            if (res.status === 401) {
+                log(res, 'Redirect til login');
+                lagreRedirectUrlILocalStorage(window.location.href);
+                window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
+            }
             if (res.status > 400) {
                 log(res);
                 throw new Error('Forespørsel feilet');
