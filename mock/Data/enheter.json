@@ -1,0 +1,12 @@
+{
+  "enhetliste": [
+    {
+      "enhetId": "0316",
+      "navn": "Oslo"
+    },
+    {
+      "enhetId": "1100",
+      "navn": "Akershus"
+    }
+  ]
+}

@@ -1,13 +1,10 @@
-FROM docker.adeo.no:5000/bekkci/npm-builder:digisyfo-test as npm-build
-ADD /src/frontend /source
-ADD /src/main /main
-RUN build
+FROM node
 
-FROM docker.adeo.no:5000/pus/maven as builder
-ADD / /source
-COPY --from=npm-build /main/webapp /source/src/main/webapp
-WORKDIR /source
-RUN mvn package -DskipTests
+WORKDIR /usr/src/app
+COPY . .
 
-FROM docker.adeo.no:5000/bekkci/nais-java-app
-COPY --from=builder /source/target/moteoversiktfront /app
+RUN npm install express path mustache-express promise prom-client dotenv jsdom request
+
+EXPOSE 8080
+
+CMD ["npm", "start"]

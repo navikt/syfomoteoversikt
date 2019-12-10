@@ -3,12 +3,9 @@
 target
 node_modules
 *.log
+/build
+/dist
 npm-debug.log*
-**/webapp/styles/**/*
-**/webapp/img/**/*
-**/webapp/js/**/*
-**/webapp/vendor/**/*
-**/webapp/*.html
 web/src/frontend/img/modig-frontend/**/*
 web/src/frontend/img/nav-frontend-grafikk/**/*
 web/src/frontend/coverage
