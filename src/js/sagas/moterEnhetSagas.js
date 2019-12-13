@@ -21,7 +21,7 @@ export function* overforMoter(action) {
             moteUuidListe: action.moteUuidListe,
         });
         yield put(actions.moterOverfort(data));
-        browserHistory.push('/moteoversikt/dinemoter');
+        browserHistory.push('/syfomoteoversikt/dinemoter');
     } catch (e) {
         yield put(actions.overforMoterFeilet());
     }
