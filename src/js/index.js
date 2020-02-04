@@ -17,6 +17,7 @@ import rootSaga from './sagas/index';
 import { hentAktivEnhet, pushModiaContext } from './actions/modiacontext_actions';
 import { setAktivEnhet } from './actions/moterEnhet_actions';
 import { hentMoter } from './actions/moter_actions';
+import { finnMiljoStreng } from './utils/miljoUtil';
 
 const rootReducer = combineReducers({
     history,
@@ -48,7 +49,7 @@ const config = {
         },
         applicationName: 'Sykefraværsoppfølging',
         handlePersonsokSubmit: (nyttFnr) => {
-            window.location = `/sykefravaer/${nyttFnr}/mote`;
+            window.location = `https://app${finnMiljoStreng()}.adeo.no/sykefravaer/${nyttFnr}/mote`;
         },
         handleChangeEnhet: (data) => {
             if (config.config.initiellEnhet !== data) {
