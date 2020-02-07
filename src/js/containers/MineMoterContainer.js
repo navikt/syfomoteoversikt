@@ -5,7 +5,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import Side from '../sider/Side';
 import Feilmelding from '../components/Feilmelding';
-import Moter from '../components/DineMoter';
+import Moter from '../components/MineMoter';
 import NavigasjonsTopp from '../components/NavigasjonsTopp';
 import * as virksomhetActions from '../actions/virksomhet_actions';
 import * as moterActions from '../actions/moter_actions';
@@ -27,8 +27,8 @@ export class Moteside extends Component {
             <Column className="col-xs-12">
                 <NavigasjonsTopp lenker={[
                     {
-                        tittel: 'Dine møter',
-                        url: '/syfomoteoversikt/dinemoter',
+                        tittel: 'Mine møter',
+                        url: '/syfomoteoversikt/minemoter',
                         aktiv: true,
                     },
                     {
