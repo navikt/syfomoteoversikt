@@ -39,8 +39,8 @@ export class Moteside extends Component {
             <Column className="col-xs-12">
                 <NavigasjonsTopp lenker={[
                     {
-                        tittel: 'Dine møter',
-                        url: '/syfomoteoversikt/dinemoter',
+                        tittel: 'Mine møter',
+                        url: '/syfomoteoversikt/minemoter',
                         aktiv: false,
                     },
                     {
