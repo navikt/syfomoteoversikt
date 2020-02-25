@@ -1,7 +1,6 @@
-import { fullAppAdeoUrl } from './miljoUtil';
+import { fullNaisUrlDefault } from './miljoUtil';
 
 export const syfomodiapersonMoterUrl = (fnr) => {
     const path = `/sykefravaer/${fnr}/mote`;
-    return fullAppAdeoUrl(path);
-    // return fullNaisUrlDefault('syfomodiaperson', path);
+    return fullNaisUrlDefault('syfomodiaperson', path);
 };
