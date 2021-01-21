@@ -1,62 +1,65 @@
 .moteoversikt {
-    border-top: 1px solid @navGra40;
-    padding-top: 1em;
+  border-top: 1px solid @navGra40;
+  padding-top: 1em;
 }
 
 .motetabell {
-    width: 100%; 
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 
-    th, td {
-      border-bottom: 1em solid #efefef;
+  th,
+  td {
+    border-bottom: 1em solid #efefef;
+  }
+
+  th {
+    color: @white;
+    background: @navMorkGra;
+    text-align: left;
+    padding: 1em;
+    .typo-etikett-liten-mixin();
+  }
+
+  td {
+    padding: 1.5em 1em;
+    background: @white;
+    .checkboks + .skjemaelement__label:before {
+      margin-top: -0.6em;
+    }
+  }
+
+  td,
+  th {
+    //width: 20%;
+    &:nth-child(1) {
+      width: 4%;
     }
 
-    th {
-      color: @white;
-      background: @navMorkGra;
-      text-align: left;
-      padding: 1em;
-      .typo-etikett-liten-mixin()
+    &:nth-child(4),
+    &:nth-child(5) {
+      width: 15%;
     }
-
-    td {
-      padding: 1.5em 1em;
-      background: @white;
-      .checkboks + .skjemaelement__label:before {
-        margin-top: -.6em;
-      }
-    }
-
-    td, th {
-        //width: 20%;
-      &:nth-child(1) {
-        width: 4%
-      }
-
-        &:nth-child(4), &:nth-child(5) {
-            width: 15%
-        }
-    }
+  }
 }
 
 .motestatus {
-    display: flex;
-    background-repeat: no-repeat;
-    background-size: 1em 1em;
-    align-items: center;
+  display: flex;
+  background-repeat: no-repeat;
+  background-size: 1em 1em;
+  align-items: center;
 
-    img {
-        margin-right: .5em;
-    }
+  img {
+    margin-right: 0.5em;
+  }
 }
 
-.motestatus--svar_mottatt, 
+.motestatus--svar_mottatt,
 .motestatus--bekreftet {
-    color: @navGronn;
+  color: @navGronn;
 }
 
 .navigasjon {
-    margin-bottom: 2.5em;
+  margin-bottom: 2.5em;
 }
 
 .navigasjonsLenkeListe {
@@ -64,13 +67,13 @@
 }
 
 .navigasjon__element {
-    display: inline-block;
-    padding-top: .25em;
-    padding-bottom: .5em;
-    padding-right: .5em;
-    margin: 0 2em 0 0;
+  display: inline-block;
+  padding-top: 0.25em;
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
+  margin: 0 2em 0 0;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
   a {
     .typo-element-mixin();
     text-decoration: none;
@@ -80,11 +83,11 @@
 }
 
 .navigasjon__element__inner {
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-        border-bottom: 4px @navBla solid;
-    }
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    border-bottom: 4px @navBla solid;
+  }
 }
 
 .navigasjon__element__inner--active {
