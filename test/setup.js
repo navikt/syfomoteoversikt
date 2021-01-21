@@ -1,50 +1,48 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import path from 'path';
-
-const dotEnvPath = path.resolve('.env');
-
-require('dotenv').config({
-    path: dotEnvPath,
-});
+import Enzyme from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import path from "path";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-require("@babel/register");
-//disable
-const jsdom = require('jsdom');
+const dotEnvPath = path.resolve(".env");
 
-const document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-const window = document.defaultView;
+require("dotenv").config({
+  path: dotEnvPath,
+});
 
-global.document = document;
-global.window = window;
-global.window.APP_SETTINGS = {
-    APP_ROOT: '/moteoversikt',
-};
+const { JSDOM } = require("jsdom");
+
+const jsdom = new JSDOM("<!doctype html><html><body></body></html>");
+const { window } = jsdom;
+
+function copyProps(src, target) {
+  const props = Object.getOwnPropertyNames(src)
+    .filter((prop) => {
+      return typeof target[prop] === "undefined";
+    })
+    .map((prop) => {
+      return Object.getOwnPropertyDescriptor(src, prop);
+    });
+  Object.defineProperties(target, props);
+}
+
 let temp = null;
 const localS = {
-    getItem: function(key) {
-        return temp;
-    },
-    setItem: function(key, value) {
-        temp = value;
-    }
+  getItem() {
+    return temp;
+  },
+  setItem(key, value) {
+    temp = value;
+  },
 };
 
+global.HTMLElement = window.HTMLElement;
 global.localStorage = localS;
+global.XMLHttpRequest = window.XMLHttpRequest;
 
-propagateToGlobal(window);
-
-function propagateToGlobal (window) {
-    for(let key in window) {
-        if(!window.hasOwnProperty(key)) {
-            continue;
-        }
-
-        if(key in global) {
-            continue;
-        }
-        global[key] = window[key];
-    }
-}
+global.window = window;
+global.document = window.document;
+global.navigator = {
+  userAgent: "node.js",
+};
+copyProps(window, global);
