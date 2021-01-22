@@ -85,10 +85,14 @@ server.use(
   express.static(path.resolve(__dirname, "img"))
 );
 
-server.get("/syfomoteoversikt/*", nocache, (req, res) => {
-  res.sendFile(HTML_FILE);
-  httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
-});
+server.get(
+  ["/", "/syfomoteoversikt/*", /^\/syfomoteoversikt\/(?!(resources|img)).*$/],
+  nocache,
+  (req, res) => {
+    res.sendFile(HTML_FILE);
+    httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
+  }
+);
 
 server.use("/static", express.static(DIST_DIR));
 
