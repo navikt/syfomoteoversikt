@@ -86,7 +86,12 @@ server.use(
 );
 
 server.get(
-  ["/", "/syfomoteoversikt", "/syfomoteoversikt/*", /^\/syfomoteoversikt\/(?!(resources|img)).*$/],
+  [
+    "/",
+    "/syfomoteoversikt",
+    "/syfomoteoversikt/*",
+    /^\/syfomoteoversikt\/(?!(resources|img)).*$/,
+  ],
   nocache,
   (req, res) => {
     res.sendFile(HTML_FILE);
