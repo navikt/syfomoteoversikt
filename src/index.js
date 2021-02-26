@@ -3,8 +3,9 @@ import React from "react";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
+import { connectRouter, routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
 import AppRouter from "./routers/AppRouter.js";
-import history from "./history.js";
 import "./utils/globals";
 import "./styles/styles.less";
 import moter from "./data/moter/moter";
@@ -22,8 +23,10 @@ import { setAktivEnhet } from "./data/moter/moterEnhet_actions";
 import { hentMoter } from "./data/moter/moter_actions";
 import { fullNaisUrlDefault } from "./utils/miljoUtil";
 
+const history = createBrowserHistory();
+
 const rootReducer = combineReducers({
-  history,
+  router: connectRouter(history),
   moter,
   overfor,
   veiledere,
@@ -34,7 +37,10 @@ const rootReducer = combineReducers({
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+const store = createStore(
+  rootReducer,
+  applyMiddleware(routerMiddleware(history), sagaMiddleware)
+);
 
 sagaMiddleware.run(rootSaga);
 
@@ -83,7 +89,7 @@ store.dispatch(hentMoter());
 
 render(
   <Provider store={store}>
-    <AppRouter history={history} />
+    <AppRouter />
   </Provider>,
   document.getElementById("maincontent")
 );
