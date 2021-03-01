@@ -5,7 +5,7 @@ import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
 
 const AppRouter = () => {
   return (
-    <Router history={history}>
+    <Router>
       <Switch>
         <Route
           exact
