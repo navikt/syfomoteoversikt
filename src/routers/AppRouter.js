@@ -1,28 +1,27 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Router, Route } from "react-router";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MineMoterContainer from "../containers/MineMoterContainer";
 import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
 
-const AppRouter = ({ history }) => {
+const AppRouter = () => {
   return (
     <Router history={history}>
-      <Route path="/syfomoteoversikt" component={MineMoterContainer} />
-      <Route
-        path="/syfomoteoversikt/minemoter"
-        component={MineMoterContainer}
-      />
-      <Route
-        path="/syfomoteoversikt/enhetensmoter"
-        component={EnhetensMoterContainer}
-      />
-      <Route path="/" component={MineMoterContainer} />
+      <Switch>
+        <Route
+          exact
+          path="/syfomoteoversikt/minemoter"
+          component={MineMoterContainer}
+        />
+        <Route
+          exact
+          path="/syfomoteoversikt/enhetensmoter"
+          component={EnhetensMoterContainer}
+        />
+        <Route path="/syfomoteoversikt" component={MineMoterContainer} />
+        <Route path="/" component={MineMoterContainer} />
+      </Switch>
     </Router>
   );
-};
-
-AppRouter.propTypes = {
-  history: PropTypes.object.isRequired,
 };
 
 export default AppRouter;

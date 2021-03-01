@@ -1,5 +1,4 @@
 import { all, call, put, fork, takeEvery } from "redux-saga/effects";
-import { browserHistory } from "react-router";
 import { get, post } from "../../api";
 import * as actions from "./moterEnhet_actions";
 
@@ -27,7 +26,7 @@ export function* overforMoter(action) {
       }
     );
     yield put(actions.moterOverfort(data));
-    browserHistory.push("/syfomoteoversikt/minemoter");
+    window.location = "/syfomoteoversikt/minemoter";
   } catch (e) {
     yield put(actions.overforMoterFeilet());
   }
