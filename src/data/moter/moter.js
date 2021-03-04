@@ -4,6 +4,11 @@ import {
   HENT_BRUKER_FEILET,
   HENTER_BRUKER,
 } from "../bruker/bruker_actions";
+import {
+  HENT_VIRKSOMHET_FEILET,
+  HENTER_VIRKSOMHET,
+  VIRKSOMHET_HENTET,
+} from "../virksomhet/virksomhet_actions";
 
 const defaultState = {
   data: [],
@@ -48,12 +53,12 @@ export default function moter(state = defaultState, action) {
         avbrytFeilet: false,
       };
     }
-    case "HENTER_VIRKSOMHET": {
+    case HENTER_VIRKSOMHET: {
       return Object.assign({}, state, {
         data: state.data,
       });
     }
-    case "VIRKSOMHET_HENTET": {
+    case VIRKSOMHET_HENTET: {
       const data = state.data.map((mote) => {
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
@@ -72,7 +77,7 @@ export default function moter(state = defaultState, action) {
         data,
       });
     }
-    case "HENT_VIRKSOMHET_FEILET": {
+    case HENT_VIRKSOMHET_FEILET: {
       return Object.assign({}, state, {
         data: state.data,
       });

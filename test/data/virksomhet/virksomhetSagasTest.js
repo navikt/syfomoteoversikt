@@ -2,6 +2,10 @@ import { expect } from "chai";
 import { hentVirksomhet } from "../../../src/data/virksomhet/virksomhetSagas";
 import { get } from "../../../src/api";
 import { put, call } from "redux-saga/effects";
+import {
+  HENTER_VIRKSOMHET,
+  VIRKSOMHET_HENTET,
+} from "../../../src/data/virksomhet/virksomhet_actions";
 
 describe("virksomhetSagas", () => {
   beforeEach(() => {
@@ -15,8 +19,8 @@ describe("virksomhetSagas", () => {
     moteUuid: "moteUuid",
   });
 
-  it("Skal dispatche HENTER_VIRKSOMHET", () => {
-    const nextPut = put({ type: "HENTER_VIRKSOMHET" });
+  it(`Skal dispatche ${HENTER_VIRKSOMHET}`, () => {
+    const nextPut = put({ type: HENTER_VIRKSOMHET });
     expect(generator.next().value).to.deep.equal(nextPut);
   });
 
@@ -25,9 +29,9 @@ describe("virksomhetSagas", () => {
     expect(generator.next().value).to.deep.equal(nextCall);
   });
 
-  it("Skal dernest dispatche VIRKSOMHET_HENTET", () => {
+  it(`Skal dernest dispatche ${VIRKSOMHET_HENTET}`, () => {
     const nextPut = put({
-      type: "VIRKSOMHET_HENTET",
+      type: VIRKSOMHET_HENTET,
       moteUuid: "moteUuid",
       data: {
         navn: "Berit",
