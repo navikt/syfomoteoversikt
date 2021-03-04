@@ -1,3 +1,10 @@
+import {
+  BRUKER_HENTET,
+  HENT_BRUKER_FEILET,
+  HENT_BRUKER_FORESPURT,
+  HENTER_BRUKER,
+} from "../../../src/data/bruker/bruker_actions";
+
 const chai = require("chai");
 import chaiEnzyme from "chai-enzyme";
 import * as actions from "../../../src/data/bruker/bruker_actions";
@@ -9,7 +16,7 @@ describe("bruker_actions", () => {
   it("har en hentBruker-funksjon som returnerer riktig action", () => {
     const action = actions.hentBruker("fnr", "moteUuid");
     expect(action).to.deep.equal({
-      type: "HENT_BRUKER_FORESPURT",
+      type: HENT_BRUKER_FORESPURT,
       ident: "fnr",
       moteUuid: "moteUuid",
     });
@@ -18,14 +25,14 @@ describe("bruker_actions", () => {
   it("har en henterBruker-funksjon som returnerer riktig action", () => {
     const action = actions.henterBruker();
     expect(action).to.deep.equal({
-      type: "HENTER_BRUKER",
+      type: HENTER_BRUKER,
     });
   });
 
   it("har en brukerHentet-funksjon som returnerer riktig action", () => {
-    const action = actions.brukerHentet({ navn: "Berit" }, "moteUuid", "fnr");
+    const action = actions.brukerHentet({ navn: "Berit" }, "moteUuid");
     expect(action).to.deep.equal({
-      type: "BRUKER_HENTET",
+      type: BRUKER_HENTET,
       data: {
         navn: "Berit",
       },
@@ -36,7 +43,7 @@ describe("bruker_actions", () => {
   it("har en hentBrukerFeilet-funksjon som returnerer riktig action", () => {
     const action = actions.hentBrukerFeilet();
     expect(action).to.deep.equal({
-      type: "HENT_BRUKER_FEILET",
+      type: HENT_BRUKER_FEILET,
     });
   });
 });

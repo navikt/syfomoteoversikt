@@ -1,4 +1,9 @@
 import { FNR_HENTET } from "../fnr/fnr_actions";
+import {
+  BRUKER_HENTET,
+  HENT_BRUKER_FEILET,
+  HENTER_BRUKER,
+} from "../bruker/bruker_actions";
 
 const defaultState = {
   data: [],
@@ -73,12 +78,12 @@ export default function moter(state = defaultState, action) {
       });
     }
 
-    case "HENTER_BRUKER": {
+    case HENTER_BRUKER: {
       return Object.assign({}, state, {
         data: state.data,
       });
     }
-    case "BRUKER_HENTET": {
+    case BRUKER_HENTET: {
       const data = state.data.map((mote) => {
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
@@ -97,7 +102,7 @@ export default function moter(state = defaultState, action) {
         data,
       });
     }
-    case "HENT_BRUKER_FEILET": {
+    case HENT_BRUKER_FEILET: {
       return Object.assign({}, state, {
         data: state.data,
       });

@@ -2,6 +2,10 @@ import { expect } from "chai";
 import { hentBruker } from "../../../src/data/bruker/brukerSagas";
 import { get } from "../../../src/api";
 import { put, call } from "redux-saga/effects";
+import {
+  BRUKER_HENTET,
+  HENTER_BRUKER,
+} from "../../../src/data/bruker/bruker_actions";
 
 describe("brukerSagas", () => {
   beforeEach(() => {
@@ -15,8 +19,8 @@ describe("brukerSagas", () => {
     moteUuid: "moteUuid",
   });
 
-  it("Skal dispatche HENTER_BRUKER", () => {
-    const nextPut = put({ type: "HENTER_BRUKER" });
+  it(`Skal dispatche ${HENTER_BRUKER}`, () => {
+    const nextPut = put({ type: HENTER_BRUKER });
     expect(generator.next().value).to.deep.equal(nextPut);
   });
 
@@ -25,9 +29,9 @@ describe("brukerSagas", () => {
     expect(generator.next().value).to.deep.equal(nextCall);
   });
 
-  it("Skal dernest dispatche BRUKER_HENTET", () => {
+  it(`Skal dernest dispatche ${BRUKER_HENTET}`, () => {
     const nextPut = put({
-      type: "BRUKER_HENTET",
+      type: BRUKER_HENTET,
       moteUuid: "moteUuid",
       data: {
         navn: "Berit",

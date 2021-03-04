@@ -1,3 +1,5 @@
+import { BRUKER_HENTET, HENT_BRUKER_FEILET } from "../bruker/bruker_actions";
+
 const defaultState = {
   data: [],
   henter: false,
@@ -54,7 +56,7 @@ export default function moterEnhet(state = defaultState, action) {
         data,
       });
     }
-    case "BRUKER_HENTET": {
+    case BRUKER_HENTET: {
       const data = state.data.map((mote) => {
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
@@ -73,7 +75,7 @@ export default function moterEnhet(state = defaultState, action) {
         data,
       });
     }
-    case "HENT_BRUKER_FEILET": {
+    case HENT_BRUKER_FEILET: {
       return Object.assign({}, state, {
         data: state.data,
       });
