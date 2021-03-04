@@ -1,11 +1,12 @@
-import { all, call, put, fork, takeEvery } from "redux-saga/effects";
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
 import * as actions from "./fnr_actions";
+import { AktorDTO } from "./AktorDTO";
 
-export function* hentFnr(action) {
+export function* hentFnr(action: ReturnType<typeof actions.hentFnr>) {
   yield put(actions.henterFnr());
   try {
-    const data = yield call(
+    const data: AktorDTO = yield call(
       get,
       `${process.env.SYFOMOTEADMIN_REST_ROOT}/aktor/${action.ident}`
     );
@@ -16,7 +17,7 @@ export function* hentFnr(action) {
 }
 
 function* watchHentFnr() {
-  yield takeEvery("HENT_FNR_FORESPURT", hentFnr);
+  yield takeEvery(actions.HENT_FNR_FORESPURT, hentFnr);
 }
 
 export default function* fnrSagas() {

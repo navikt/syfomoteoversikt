@@ -1,3 +1,5 @@
+import { FNR_HENTET } from "../fnr/fnr_actions";
+
 const defaultState = {
   data: [],
   henter: false,
@@ -100,7 +102,7 @@ export default function moter(state = defaultState, action) {
         data: state.data,
       });
     }
-    case "FNR_HENTET": {
+    case FNR_HENTET: {
       const data = state.data.map((mote) => {
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
