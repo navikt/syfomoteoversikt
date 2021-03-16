@@ -12,23 +12,32 @@ import * as brukerActions from "../data/bruker/bruker_actions";
 import * as moterEnhetActions from "../data/moter/moterEnhet_actions";
 import * as veilederActions from "../data/veiledere/veileder_actions";
 import * as fnrActions from "../data/fnr/fnr_actions";
+import * as dialogmoteActions from "../data/dialogmoter/dialogmoter_actions";
 
 export class Moteside extends Component {
   constructor(props) {
     super(props);
     if (props.aktivEnhet !== props.hentetEnhet) {
       props.hentEnhetsMoter(props.aktivEnhet);
+      props.hentDialogmoter(props.aktivEnhet);
     }
     if (props.harOvertattMoter) {
       props.resetOverforing();
       props.hentEnhetsMoter(props.aktivEnhet);
+      props.hentDialogmoter(props.aktivEnhet);
     }
   }
 
   componentDidUpdate() {
-    const { aktivEnhet, hentEnhetsMoter, hentetEnhet } = this.props;
+    const {
+      aktivEnhet,
+      hentEnhetsMoter,
+      hentetEnhet,
+      hentDialogmoter,
+    } = this.props;
     if (hentetEnhet !== aktivEnhet) {
       hentEnhetsMoter(aktivEnhet);
+      hentDialogmoter(aktivEnhet);
     }
   }
 
@@ -95,6 +104,7 @@ Moteside.propTypes = {
   resetOverforing: PropTypes.func,
   hentMoterFeiletBool: PropTypes.bool,
   aktivEnhet: PropTypes.string,
+  hentDialogmoter: PropTypes.func,
 };
 
 export const mapStateToProps = (state) => {
@@ -146,7 +156,8 @@ const EnhetensMoteContainer = connect(
     brukerActions,
     fnrActions,
     moterEnhetActions,
-    veilederActions
+    veilederActions,
+    dialogmoteActions
   )
 )(Moteside);
 

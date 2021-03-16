@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const prometheus = require("prom-client");
 const proxy = require("express-http-proxy");
+const cookieParser = require("cookie-parser");
+const axios = require("axios");
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -57,6 +59,36 @@ server.use(
       next(err);
     },
   })
+);
+
+const isdialogmoteUrl =
+  process.env.NAIS_CONTEXT === "preprod"
+    ? "isdialogmote.dev.intern.nav.no"
+    : "isdialogmote.intern.nav.no";
+
+server.use(
+  "/isdialogmote/api/v1/dialogmote/enhet/",
+  cookieParser(),
+  (req, res) => {
+    const token = req.cookies["isso-idtoken"];
+    const enhetNr = req.url;
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const url = `https://${isdialogmoteUrl}/api/v1/dialogmote/enhet/${enhetNr}`;
+    axios
+      .get(url, options)
+      .then((response) => {
+        res.send(response.data);
+      })
+      .catch((err) => {
+        console.error("Error in proxy for isdialogmote", err.message);
+        res.status(err.status).send(err.message);
+      });
+  }
 );
 
 server.get("/actuator/metrics", (req, res) => {
