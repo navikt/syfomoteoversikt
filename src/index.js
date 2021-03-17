@@ -14,6 +14,7 @@ import veiledere from "./data/veiledere/veiledere";
 import overfor from "./data/moter/overfor";
 import modiacontext from "./data/modiacontext/modiacontext";
 import veilederinfo from "./data/veilederinfo/veilederinfo";
+import dialogmoter from "./data/dialogmoter/dialogmoter";
 import rootSaga from "./sagas/index";
 import {
   hentAktivEnhet,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   modiacontext,
   moterEnhet,
   veilederinfo,
+  dialogmoter,
 });
 
 const sagaMiddleware = createSagaMiddleware();
