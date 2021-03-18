@@ -1,5 +1,6 @@
 const mockUtils = require("./mockUtils.js");
 const mockDialogmoter = require("./mockDialogmoter");
+const mockModiacontextholder = require("./mockModiacontextholder");
 
 const enheter = {
   enhetliste: [
@@ -72,24 +73,12 @@ function mockEndepunkter(server) {
     }
   );
 
-  server.post("/modiacontextholder/api/context", (req, res) => {
-    res.send();
-  });
-
-  server.get("/modiacontextholder/api/context/aktivenhet", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(mockUtils.aktivEnhet));
-  });
-
-  server.get("/modiacontextholder/api/aktivenhet", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(mockUtils.aktivEnhet));
-  });
-
   server.get("/isdialogmote/api/v1/dialogmote/enhet", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify([mockDialogmoter.getDefaultDialogmote()]));
   });
+
+  mockModiacontextholder(server);
 }
 
 module.exports = mockEndepunkter;
