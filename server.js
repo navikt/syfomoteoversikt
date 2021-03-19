@@ -23,7 +23,7 @@ server.use(express.json());
 
 const modiacontextholderUrl =
   process.env.NAIS_CONTEXT === "preprod"
-    ? "modiacontextholder.q1"
+    ? "modiacontextholder.q0"
     : "modiacontextholder.default";
 
 function nocache(req, res, next) {

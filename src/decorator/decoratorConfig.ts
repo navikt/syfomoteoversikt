@@ -12,6 +12,7 @@ const decoratorConfig = (
       initialValue: RESET_VALUE,
       display: FnrDisplay.SOKEFELT,
       ignoreWsEvents: true,
+      skipModal: true,
       onChange: (value) => {
         if (value) {
           setFnr(value);
