@@ -7,16 +7,14 @@ import { hentBruker } from "../data/bruker/bruker_actions";
 import { hentFnr } from "../data/fnr/fnr_actions";
 import { hentVeileder } from "../data/veiledere/veileder_actions";
 import { markerMoteForOverforing } from "../data/moter/moterEnhet_actions";
-import { deltakerSvarStatus } from "../utils/statuser";
+import { getBruker, deltakerSvarStatus } from "../utils/moterUtil";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 
 const MoteEnhet = ({ mote }) => {
-  const { moterMarkertForOverforing } = useOverforMoter();
   const dispatch = useDispatch();
+  const { moterMarkertForOverforing } = useOverforMoter();
 
-  const bruker = mote.deltakere.find(
-    (deltaker) => deltaker.type.toUpperCase() === "BRUKER"
-  );
+  const bruker = getBruker(mote);
   const svarStatus = deltakerSvarStatus(mote);
   const markert = moterMarkertForOverforing.some(
     (markertMoteUuid) => mote.moteUuid === markertMoteUuid

@@ -1,59 +1,50 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { getDatoFraZulu, finnVirksomhet, finnNavn } from "../utils";
+import { useDispatch } from "react-redux";
+import { hentVirksomhet } from "../data/virksomhet/virksomhet_actions";
+import { hentBruker } from "../data/bruker/bruker_actions";
+import { hentFnr } from "../data/fnr/fnr_actions";
+import { getBruker, deltakerSvarStatus, getLeder } from "../utils/moterUtil";
 
-class Mote extends Component {
-  componentDidMount() {
-    const {
-      leder,
-      hentVirksomhet,
-      hentFnr,
-      moteUuid,
-      bruker,
-      hentBruker,
-      aktorId,
-    } = this.props;
+const Mote = ({ mote }) => {
+  const dispatch = useDispatch();
+
+  const bruker = getBruker(mote);
+  const leder = getLeder(mote);
+  const svarStatus = deltakerSvarStatus(mote);
+
+  useEffect(() => {
     if (!leder.virksomhet && leder.orgnummer) {
-      hentVirksomhet(leder.orgnummer, moteUuid);
+      dispatch(hentVirksomhet(leder.orgnummer, mote.moteUuid));
     }
-    if (!bruker.navn && aktorId) {
-      hentBruker(aktorId, moteUuid);
+    if (!bruker.navn && mote.aktorId) {
+      dispatch(hentBruker(mote.aktorId, mote.moteUuid));
     }
 
-    if (!bruker.fnr && aktorId) {
-      hentFnr(aktorId, moteUuid);
+    if (!bruker.fnr && mote.aktorId) {
+      dispatch(hentFnr(mote.aktorId, mote.moteUuid));
     }
-  }
+  }, []);
 
-  render() {
-    const { leder, bruker, svarStatus, sistEndret } = this.props;
-    return (
-      <tr>
-        <td>{bruker && bruker.fnr}</td>
-        <td>{finnNavn(bruker)}</td>
-        <td>{leder && leder.navn ? leder.navn : "Ukjent"}</td>
-        <td>{finnVirksomhet(leder)}</td>
-        <td>{getDatoFraZulu(sistEndret)}</td>
-        <td>
-          <span className="Motestatus">
-            <span>{svarStatus}</span>
-          </span>
-        </td>
-      </tr>
-    );
-  }
-}
+  return (
+    <tr>
+      <td>{bruker?.fnr}</td>
+      <td>{finnNavn(bruker)}</td>
+      <td>{leder?.navn ?? "Ukjent"}</td>
+      <td>{finnVirksomhet(leder)}</td>
+      <td>{getDatoFraZulu(mote.sistEndret)}</td>
+      <td>
+        <span className="Motestatus">
+          <span>{svarStatus}</span>
+        </span>
+      </td>
+    </tr>
+  );
+};
 
 Mote.propTypes = {
-  leder: PropTypes.object,
-  hentVirksomhet: PropTypes.func,
-  hentBruker: PropTypes.func,
-  hentFnr: PropTypes.func,
-  aktorId: PropTypes.string,
-  moteUuid: PropTypes.string,
-  bruker: PropTypes.object,
-  svarStatus: PropTypes.string,
-  sistEndret: PropTypes.string,
+  mote: PropTypes.object,
 };
 
 export default Mote;

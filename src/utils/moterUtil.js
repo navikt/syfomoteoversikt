@@ -62,3 +62,25 @@ export const setMoteStatus = (mote) => {
 };
 
 export const ikkeAvbrutt = () => (mote) => mote.status !== "AVBRUTT";
+
+export const getBruker = (mote) =>
+  mote.deltakere.find((deltaker) => deltaker.type.toUpperCase() === "BRUKER");
+
+export const getLeder = (mote) =>
+  mote.deltakere.find(
+    (deltaker) => deltaker.type.toUpperCase() === "ARBEIDSGIVER"
+  );
+
+export const getStatuser = (moterMedStatus) => [
+  ...new Set(moterMedStatus.map((mote) => mote.status)),
+];
+
+export const opprettetTidspunktDescCompareFn = () => (moteA, moteB) => {
+  if (moteA.opprettetTidspunkt > moteB.opprettetTidspunkt) {
+    return -1;
+  }
+  if (moteA.opprettetTidspunkt < moteB.opprettetTidspunkt) {
+    return 1;
+  }
+  return 0;
+};
