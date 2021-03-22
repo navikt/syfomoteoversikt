@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import { ikkeAvbrutt, setMoteStatus } from "../utils/statuser";
+import { getStatuser, ikkeAvbrutt, setMoteStatus } from "../utils/moterUtil";
+import { finnVeilederNavn } from "../utils";
 
 export const useMoterEnhet = () => {
   const {
@@ -22,6 +23,14 @@ export const useMoterEnhet = () => {
     moter,
     harAktiveMoter: aktiveMoterMedStatus.length > 0,
     aktiveMoterMedStatusOgVeileder,
+    getStatuser: () => getStatuser(aktiveMoterMedStatus),
+    getVeiledere: () => [
+      ...new Set(
+        aktiveMoterMedStatusOgVeileder.map((mote) =>
+          finnVeilederNavn(mote.veileder)
+        )
+      ),
+    ],
     henterMoter,
     hentMoterFeilet,
   };

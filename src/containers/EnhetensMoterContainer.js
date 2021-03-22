@@ -15,9 +15,9 @@ import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
 
 const EnhetensMoterContainer = () => {
-  const dispatch = useDispatch();
   const { harOvertattMoter } = useOverforMoter();
   const { aktivEnhet, henterMoter, hentMoterFeilet, moter } = useMoterEnhet();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(hentEnhetsMoter(aktivEnhet));
@@ -65,7 +65,7 @@ const EnhetensMoterContainer = () => {
           } else if (moter) {
             return <EnhetensMoter />;
           }
-          return <p>Bruker har ingen møter</p>;
+          return <p>Enheten har ingen møter</p>;
         })()}
       </Column>
     </Side>

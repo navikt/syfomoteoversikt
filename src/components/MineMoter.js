@@ -1,10 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Panel from "nav-frontend-paneler";
 import Alertstripe from "nav-frontend-alertstriper";
 import Moteoversikt from "./Moteoversikt";
-import { setMoteStatus } from "../utils/statuser";
 import { dagensDatoKortFormat, tallOrdFraTall } from "../utils";
+import { useOverforMoter } from "../hooks/useOverforMoter";
+import { useMoter } from "../hooks/useMoter";
 
 const hentTallordTekst = (tall) => {
   const tallord = tallOrdFraTall(tall);
@@ -14,12 +14,10 @@ const hentTallordTekst = (tall) => {
   return `${tallord} nye møter`;
 };
 
-const Moter = ({ props }) => {
-  const { moter, harOvertattMoter, moterMarkertForOverforing } = props;
+const Moter = () => {
+  const { harOvertattMoter, moterMarkertForOverforing } = useOverforMoter();
+  const { harAktiveMoter } = useMoter();
 
-  const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
-    return mote.status !== "AVBRUTT";
-  });
   return (
     <div>
       {harOvertattMoter && (
@@ -30,21 +28,14 @@ const Moter = ({ props }) => {
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
         </Alertstripe>
       )}
-      {moterMedStatus.length === 0 && (
+      {!harAktiveMoter && (
         <Panel>
           <p>Du har ingen aktive møter.</p>
         </Panel>
       )}
-      {moterMedStatus.length > 0 && <Moteoversikt {...props} />}
+      {harAktiveMoter && <Moteoversikt />}
     </div>
   );
-};
-
-Moter.propTypes = {
-  props: PropTypes.object,
-  moter: PropTypes.array,
-  moterMarkertForOverforing: PropTypes.array,
-  harOvertattMoter: PropTypes.bool,
 };
 
 export default Moter;
