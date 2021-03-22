@@ -1,164 +1,75 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Row, Column } from "nav-frontend-grid";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Column, Row } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
+import {
+  hentEnhetsMoter,
+  resetOverforing,
+} from "../data/moter/moterEnhet_actions";
+import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
+import { useOverforMoter } from "../hooks/useOverforMoter";
+import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
-import * as virksomhetActions from "../data/virksomhet/virksomhet_actions";
-import * as brukerActions from "../data/bruker/bruker_actions";
-import * as moterEnhetActions from "../data/moter/moterEnhet_actions";
-import * as veilederActions from "../data/veiledere/veileder_actions";
-import * as fnrActions from "../data/fnr/fnr_actions";
-import * as dialogmoteActions from "../data/dialogmoter/dialogmoter_actions";
 
-export class Moteside extends Component {
-  constructor(props) {
-    super(props);
-    if (props.aktivEnhet !== props.hentetEnhet) {
-      props.hentEnhetsMoter(props.aktivEnhet);
-      props.hentDialogmoter(props.aktivEnhet);
+const EnhetensMoterContainer = () => {
+  const dispatch = useDispatch();
+  const { harOvertattMoter } = useOverforMoter();
+  const { aktivEnhet, henterMoter, hentMoterFeilet, moter } = useMoterEnhet();
+
+  useEffect(() => {
+    dispatch(hentEnhetsMoter(aktivEnhet));
+    dispatch(hentDialogmoter(aktivEnhet));
+    if (harOvertattMoter) {
+      dispatch(resetOverforing());
     }
-    if (props.harOvertattMoter) {
-      props.resetOverforing();
-      props.hentEnhetsMoter(props.aktivEnhet);
-      props.hentDialogmoter(props.aktivEnhet);
-    }
-  }
+  }, [aktivEnhet, harOvertattMoter]);
 
-  componentDidUpdate() {
-    const {
-      aktivEnhet,
-      hentEnhetsMoter,
-      hentetEnhet,
-      hentDialogmoter,
-    } = this.props;
-    if (hentetEnhet !== aktivEnhet) {
-      hentEnhetsMoter(aktivEnhet);
-      hentDialogmoter(aktivEnhet);
-    }
-  }
-
-  render() {
-    const {
-      aktivEnhet,
-      henterMoterBool,
-      hentMoterFeiletBool,
-      moter,
-    } = this.props;
-
-    return (
-      <Side tittel="Møteoversikt">
-        <Column className="col-xs-12">
-          <NavigasjonsTopp
-            lenker={[
-              {
-                tittel: "Mine møter",
-                url: "/syfomoteoversikt/minemoter",
-                aktiv: false,
-              },
-              {
-                tittel: "Enhetens møter",
-                url: "/syfomoteoversikt/enhetensmoter",
-                aktiv: true,
-              },
-            ]}
-          />
-          {(() => {
-            if (!aktivEnhet) {
-              return (
-                <Feilmelding
-                  tittel={"Ingen aktiv enhet"}
-                  melding={
-                    "Du må velge enhet i enhetsvelgeren i toppen av siden."
-                  }
-                />
-              );
-            } else if (henterMoterBool) {
-              return (
-                <Row className="row-centered">
-                  <NavFrontendSpinner type="XL" />
-                </Row>
-              );
-            } else if (hentMoterFeiletBool) {
-              return <Feilmelding />;
-            } else if (moter) {
-              return <EnhetensMoter props={this.props} />;
-            }
-            return <p>Bruker har ingen møter</p>;
-          })()}
-        </Column>
-      </Side>
-    );
-  }
-}
-
-Moteside.propTypes = {
-  moter: PropTypes.array,
-  hentetEnhet: PropTypes.string,
-  henterMoterBool: PropTypes.bool,
-  harOvertattMoter: PropTypes.bool,
-  hentEnhetsMoter: PropTypes.func,
-  resetOverforing: PropTypes.func,
-  hentMoterFeiletBool: PropTypes.bool,
-  aktivEnhet: PropTypes.string,
-  hentDialogmoter: PropTypes.func,
+  return (
+    <Side tittel="Møteoversikt">
+      <Column className="col-xs-12">
+        <NavigasjonsTopp
+          lenker={[
+            {
+              tittel: "Mine møter",
+              url: "/syfomoteoversikt/minemoter",
+              aktiv: false,
+            },
+            {
+              tittel: "Enhetens møter",
+              url: "/syfomoteoversikt/enhetensmoter",
+              aktiv: true,
+            },
+          ]}
+        />
+        {(() => {
+          if (!aktivEnhet) {
+            return (
+              <Feilmelding
+                tittel={"Ingen aktiv enhet"}
+                melding={
+                  "Du må velge enhet i enhetsvelgeren i toppen av siden."
+                }
+              />
+            );
+          } else if (henterMoter) {
+            return (
+              <Row className="row-centered">
+                <NavFrontendSpinner type="XL" />
+              </Row>
+            );
+          } else if (hentMoterFeilet) {
+            return <Feilmelding />;
+          } else if (moter) {
+            return <EnhetensMoter />;
+          }
+          return <p>Bruker har ingen møter</p>;
+        })()}
+      </Column>
+    </Side>
+  );
 };
 
-export const mapStateToProps = (state) => {
-  const moter = state.moterEnhet.data;
-  const moterMarkertForOverforing = state.overfor.data;
-  moter.map((mote) => {
-    const markertMote = {
-      ...mote,
-      markert:
-        moterMarkertForOverforing.filter((markertMoteUuid) => {
-          return mote.moteUuid === markertMoteUuid;
-        }).length > 0,
-    };
-    return markertMote;
-  });
-
-  const veiledere = state.veiledere.data;
-  moter.map((mote) => {
-    const moteVeileder = veiledere.filter((veileder) => {
-      return mote.eier === veileder.ident;
-    })[0];
-
-    if (moteVeileder) {
-      return {
-        ...mote,
-        veileder: moteVeileder,
-      };
-    }
-    return mote;
-  });
-  return {
-    harOvertattMoter: state.overfor.sendt,
-    overtarMoter: state.overfor.sender,
-    overtaMoterFeilet: state.overfor.sendingFeilet,
-    moterMarkertForOverforing,
-    aktivEnhet: state.moterEnhet.aktivEnhet,
-    hentetEnhet: state.moterEnhet.hentetEnhet,
-    hentMoterFeiletBool: state.moterEnhet.hentingFeilet,
-    henterMoterBool: state.moterEnhet.henter,
-    moter,
-  };
-};
-
-const EnhetensMoteContainer = connect(
-  mapStateToProps,
-  Object.assign(
-    {},
-    virksomhetActions,
-    brukerActions,
-    fnrActions,
-    moterEnhetActions,
-    veilederActions,
-    dialogmoteActions
-  )
-)(Moteside);
-
-export default EnhetensMoteContainer;
+export default EnhetensMoterContainer;

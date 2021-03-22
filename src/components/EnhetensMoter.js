@@ -1,15 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AlertStripe from "nav-frontend-alertstriper";
 import MoteoversiktEnhet from "./MoteoversiktEnhet";
-import { setMoteStatus } from "../utils/statuser";
+import { useOverforMoter } from "../hooks/useOverforMoter";
+import { useMoterEnhet } from "../hooks/useMoterEnhet";
 
-const Moter = ({ props }) => {
-  const { moter, overtaMoterFeilet } = props;
+const EnhetensMoter = () => {
+  const { overtaMoterFeilet } = useOverforMoter();
+  const { harAktiveMoter } = useMoterEnhet();
 
-  const moterMedStatus = moter.map(setMoteStatus).filter((mote) => {
-    return mote.status !== "AVBRUTT";
-  });
   return (
     <div>
       {overtaMoterFeilet && (
@@ -19,22 +17,14 @@ const Moter = ({ props }) => {
           Prøv igjen senere
         </AlertStripe>
       )}
-      {moterMedStatus.length === 0 && (
+      {!harAktiveMoter && (
         <div className="panel">
           <p>Enheten har ingen aktive møter.</p>
         </div>
       )}
-      {moterMedStatus.length > 0 && (
-        <MoteoversiktEnhet {...props} moter={moterMedStatus} />
-      )}
+      {harAktiveMoter && <MoteoversiktEnhet />}
     </div>
   );
 };
 
-Moter.propTypes = {
-  props: PropTypes.object,
-  moter: PropTypes.array,
-  overtaMoterFeilet: PropTypes.bool,
-};
-
-export default Moter;
+export default EnhetensMoter;

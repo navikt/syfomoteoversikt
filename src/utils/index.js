@@ -1,21 +1,6 @@
 import React from "react";
 import { syfomodiapersonMoterUrl } from "./lenkeUtil";
 
-const kortManeder = [
-  "jan",
-  "feb",
-  "mar",
-  "apr",
-  "mai",
-  "jun",
-  "jul",
-  "aug",
-  "sep",
-  "okt",
-  "nov",
-  "des",
-];
-
 export const tallOrdFraTall = (tall) => {
   switch (tall) {
     case 0: {
@@ -67,36 +52,6 @@ export const pad = (nr) => {
   return nr > 9 || nr.length > 1 ? nr : `0${nr}`;
 };
 
-export const visDato = (dato) => {
-  const maned = kortManeder[dato.monthValue - 1];
-  return `${dato.dayOfMonth}. ${maned} ${dato.year}`;
-};
-
-export const lagNummer = (streng) => {
-  return streng.replace(/[^\d.-]/g, "").replace(/-/g, "");
-};
-
-export const formaterDato = (input) => {
-  const grupper = lagNummer(input).split(".");
-  let dato = grupper.join("");
-  if (dato.length > 2 || grupper.length > 1) {
-    dato = dato.replace(/(.{2})/, "$1.");
-    if (dato.length >= 6 || grupper.length > 2) {
-      dato = dato.replace(/(.{5})/, "$1.");
-    }
-  }
-  return dato;
-};
-
-export const formaterTid = (input) => {
-  const grupper = lagNummer(input).split(".");
-  const tid = grupper.join("");
-  if (tid.length > 2 || grupper.length > 1) {
-    return tid.replace(/(.{2})/, "$1.");
-  }
-  return tid;
-};
-
 export const dagensDatoKortFormat = () => {
   const d = new Date();
   const dag = pad(d.getDate());
@@ -119,31 +74,31 @@ export const getTidFraZulu = (zulutid) => {
 };
 
 export const finnVirksomhet = (leder) => {
-  if (leder && leder.virksomhet) {
+  if (leder?.virksomhet) {
     return leder.virksomhet;
-  } else if (leder && leder.orgnummer) {
+  } else if (leder?.orgnummer) {
     return "Henter virksomhet...";
   }
   return "Fant ikke virksomheten";
 };
 
 export const finnNavn = (bruker) => {
-  if (bruker && bruker.navn && bruker.fnr) {
+  if (bruker?.navn && bruker.fnr) {
     return (
       <a className="lenke" href={syfomodiapersonMoterUrl(bruker.fnr)}>
         {bruker.navn}
       </a>
     );
-  } else if (bruker && (!bruker.fnr || !bruker.navn)) {
+  } else if (!bruker?.fnr || !bruker?.navn) {
     return "Henter navn...";
   }
   return "Fant ikke navn";
 };
 
 export const finnVeilederNavn = (veileder) => {
-  if (veileder && veileder.navn) {
+  if (veileder?.navn) {
     return veileder.navn;
-  } else if (veileder && veileder.henter) {
+  } else if (veileder?.henter) {
     return "Henter navn...";
   }
   return "Fant ikke navn";

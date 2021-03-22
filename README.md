@@ -13,3 +13,5 @@ React-app for administrasjon av dialogmøter for veileder.
   - `$ npm run start`
   - Eventuelt kan kommandoene kjøres fra `package.json` i Intellij.
 - Kjør tester med `npm test`.
+
+Appen finner du [her](http://localhost:8080/syfomoteoversikt)

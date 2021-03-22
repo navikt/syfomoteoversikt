@@ -60,3 +60,5 @@ export const setMoteStatus = (mote) => {
   }
   return mote;
 };
+
+export const ikkeAvbrutt = () => (mote) => mote.status !== "AVBRUTT";
