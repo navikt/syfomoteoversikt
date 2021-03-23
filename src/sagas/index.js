@@ -5,7 +5,6 @@ import virksomhetSagas from "../data/virksomhet/virksomhetSagas";
 import fnrSagas from "../data/fnr/fnrSagas";
 import brukerSagas from "../data/bruker/brukerSagas";
 import moterEnhetSagas from "../data/moter/moterEnhetSagas";
-import veilederinfoSagas from "../data/veilederinfo/veilederinfoSagas";
 import dialogmoterSagas from "../data/dialogmoter/dialogmoterSagas";
 
 export default function* rootSaga() {
@@ -16,7 +15,6 @@ export default function* rootSaga() {
     brukerSagas(),
     virksomhetSagas(),
     moterEnhetSagas(),
-    veilederinfoSagas(),
     dialogmoterSagas(),
   ]);
 }

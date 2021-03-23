@@ -12,7 +12,6 @@ import moter from "./data/moter/moter";
 import moterEnhet from "./data/moter/moterEnhet";
 import veiledere from "./data/veiledere/veiledere";
 import overfor from "./data/moter/overfor";
-import veilederinfo from "./data/veilederinfo/veilederinfo";
 import dialogmoter from "./data/dialogmoter/dialogmoter";
 import rootSaga from "./sagas/index";
 import { hentMoter } from "./data/moter/moter_actions";
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
   overfor,
   veiledere,
   moterEnhet,
-  veilederinfo,
   dialogmoter,
 });
 
