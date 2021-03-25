@@ -16,13 +16,8 @@ const MineMoterContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (
-      harOvertattMoter ||
-      (!henterMoter && !hentMoterFeilet && moter.length === 0)
-    ) {
-      dispatch(hentMoter());
-    }
-  }, [harOvertattMoter, moter, henterMoter, hentMoterFeilet]);
+    dispatch(hentMoter());
+  }, []);
 
   return (
     <Side tittel="Møteoversikt">
