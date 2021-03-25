@@ -6,8 +6,13 @@ import { hentVirksomhet } from "../data/virksomhet/virksomhet_actions";
 import { hentBruker } from "../data/bruker/bruker_actions";
 import { hentFnr } from "../data/fnr/fnr_actions";
 import { getBruker, deltakerSvarStatus, getLeder } from "../utils/moterUtil";
+import { MoteDTO } from "../data/moter/moterTypes";
 
-const Mote = ({ mote }) => {
+interface MoteProps {
+  mote: MoteDTO;
+}
+
+const Mote = ({ mote }: MoteProps) => {
   const dispatch = useDispatch();
 
   const bruker = getBruker(mote);
@@ -15,14 +20,14 @@ const Mote = ({ mote }) => {
   const svarStatus = deltakerSvarStatus(mote);
 
   useEffect(() => {
-    if (!leder.virksomhet && leder.orgnummer) {
+    if (!leder?.virksomhet && leder?.orgnummer) {
       dispatch(hentVirksomhet(leder.orgnummer, mote.moteUuid));
     }
-    if (!bruker.navn && mote.aktorId) {
+    if (!bruker?.navn && mote.aktorId) {
       dispatch(hentBruker(mote.aktorId, mote.moteUuid));
     }
 
-    if (!bruker.fnr && mote.aktorId) {
+    if (!bruker?.fnr && mote.aktorId) {
       dispatch(hentFnr(mote.aktorId, mote.moteUuid));
     }
   }, []);

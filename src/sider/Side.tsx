@@ -1,11 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Container, Row } from "nav-frontend-grid";
 import Decorator from "../decorator/Decorator";
 
 const DocumentTitle = require("react-document-title");
 
-const Side = ({ tittel = "", children }) => {
+interface SideProps {
+  tittel?: string;
+  children: React.ReactNode;
+}
+
+const Side = ({ tittel = "", children }: SideProps) => {
   return (
     <>
       <Decorator />
@@ -17,11 +21,6 @@ const Side = ({ tittel = "", children }) => {
       </DocumentTitle>
     </>
   );
-};
-
-Side.propTypes = {
-  children: PropTypes.object,
-  tittel: PropTypes.string,
 };
 
 export default Side;

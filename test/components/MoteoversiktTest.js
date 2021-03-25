@@ -140,7 +140,6 @@ const getMoteMedEttSvar = (mote) => {
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:50:28.538",
           svartTidspunkt: "2017-04-03T11:50:28.538",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -168,7 +167,6 @@ const getMoteMedEttSvar = (mote) => {
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:50:28.538",
           svartTidspunkt: "2017-04-05T11:50:28.538",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -228,7 +226,6 @@ const getMoteMedBeggeSvar = (mote) => {
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:43:41.533",
           svartTidspunkt: "2017-04-03T11:43:41.533",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -256,7 +253,6 @@ const getMoteMedBeggeSvar = (mote) => {
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:43:41.533",
           svartTidspunkt: "2017-04-05T11:43:41.533",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -316,7 +312,6 @@ const getMoteMedBeggeSvarBeggeAlternativer = (mote) => {
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:43:41.533",
           svartTidspunkt: "2017-04-03T11:43:41.533",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -344,7 +339,6 @@ const getMoteMedBeggeSvarBeggeAlternativer = (mote) => {
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:43:41.533",
           svartTidspunkt: "2017-04-05T11:43:41.533",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -404,7 +398,6 @@ const getMoteBekreftet = (mote) => {
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:35:51.912",
           svartTidspunkt: "2017-04-03T11:35:51.912",
-          avvik: [],
           svar: [
             {
               id: 1,
@@ -432,7 +425,6 @@ const getMoteBekreftet = (mote) => {
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:35:51.912",
           svartTidspunkt: "2017-04-05T11:35:51.912",
-          avvik: [],
           svar: [
             {
               id: 1,

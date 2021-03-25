@@ -1,16 +1,34 @@
-import { FNR_HENTET } from "../fnr/fnr_actions";
-import {
-  BRUKER_HENTET,
-  HENT_BRUKER_FEILET,
-  HENTER_BRUKER,
-} from "../bruker/bruker_actions";
 import {
   HENT_VIRKSOMHET_FEILET,
   HENTER_VIRKSOMHET,
   VIRKSOMHET_HENTET,
+  VirksomhetActions,
 } from "../virksomhet/virksomhet_actions";
+import { MoteDTO } from "./moterTypes";
+import { Reducer } from "redux";
+import {
+  HENT_MOTER_FEILET,
+  HENT_MOTER_HENTER,
+  HENT_MOTER_HENTET,
+  MoterActions,
+} from "./moter_actions";
+import {
+  BRUKER_HENTET,
+  BrukerActions,
+  HENT_BRUKER_FEILET,
+  HENTER_BRUKER,
+} from "../bruker/bruker_actions";
+import { FNR_HENTET, FnrActions } from "../fnr/fnr_actions";
 
-const defaultState = {
+interface MoterState {
+  henter: boolean;
+  hentingFeilet: boolean;
+  sender: boolean;
+  sendingFeilet: boolean;
+  data: MoteDTO[];
+}
+
+const defaultState: MoterState = {
   data: [],
   henter: false,
   hentingFeilet: false,
@@ -18,9 +36,18 @@ const defaultState = {
   sendingFeilet: false,
 };
 
-export default function moter(state = defaultState, action) {
+type MoterReducerAction =
+  | MoterActions
+  | BrukerActions
+  | VirksomhetActions
+  | FnrActions;
+
+const moter: Reducer<MoterState> = (
+  state = defaultState,
+  action: MoterReducerAction
+) => {
   switch (action.type) {
-    case "HENTER_MOTER": {
+    case HENT_MOTER_HENTER: {
       return {
         data: [],
         sender: false,
@@ -31,7 +58,7 @@ export default function moter(state = defaultState, action) {
         avbrytFeilet: false,
       };
     }
-    case "MOTER_HENTET": {
+    case HENT_MOTER_HENTET: {
       return {
         data: action.data,
         sender: false,
@@ -42,7 +69,7 @@ export default function moter(state = defaultState, action) {
         avbrytFeilet: false,
       };
     }
-    case "HENT_MOTER_FEILET": {
+    case HENT_MOTER_FEILET: {
       return {
         data: [],
         sender: false,
@@ -54,9 +81,10 @@ export default function moter(state = defaultState, action) {
       };
     }
     case HENTER_VIRKSOMHET: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data: state.data,
-      });
+      };
     }
     case VIRKSOMHET_HENTET: {
       const data = state.data.map((mote) => {
@@ -67,26 +95,27 @@ export default function moter(state = defaultState, action) {
           if (deltaker.type !== "arbeidsgiver") {
             return deltaker;
           }
-          return Object.assign({}, deltaker, {
-            virksomhet: action.data.navn,
-          });
+          return { ...deltaker, virksomhet: action.data.navn };
         });
-        return Object.assign({}, mote, { deltakere });
+        return { ...mote, deltakere };
       });
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data,
-      });
+      };
     }
     case HENT_VIRKSOMHET_FEILET: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data: state.data,
-      });
+      };
     }
 
     case HENTER_BRUKER: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data: state.data,
-      });
+      };
     }
     case BRUKER_HENTET: {
       const data = state.data.map((mote) => {
@@ -97,20 +126,23 @@ export default function moter(state = defaultState, action) {
           if (deltaker.type !== "Bruker") {
             return deltaker;
           }
-          return Object.assign({}, deltaker, {
+          return {
+            ...deltaker,
             navn: action.data.navn,
-          });
+          };
         });
-        return Object.assign({}, mote, { deltakere });
+        return { ...mote, deltakere };
       });
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data,
-      });
+      };
     }
     case HENT_BRUKER_FEILET: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data: state.data,
-      });
+      };
     }
     case FNR_HENTET: {
       const data = state.data.map((mote) => {
@@ -121,18 +153,22 @@ export default function moter(state = defaultState, action) {
           if (deltaker.type !== "Bruker") {
             return deltaker;
           }
-          return Object.assign({}, deltaker, {
+          return {
+            ...deltaker,
             fnr: action.data,
-          });
+          };
         });
-        return Object.assign({}, mote, { deltakere });
+        return { ...mote, deltakere };
       });
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data,
-      });
+      };
     }
     default: {
       return state;
     }
   }
-}
+};
+
+export default moter;

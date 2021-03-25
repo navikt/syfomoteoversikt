@@ -6,12 +6,9 @@ import { dagensDatoKortFormat, tallOrdFraTall } from "../utils";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoter } from "../hooks/useMoter";
 
-const hentTallordTekst = (tall) => {
+const hentTallordTekst = (tall: number) => {
   const tallord = tallOrdFraTall(tall);
-  if (tall === 1) {
-    return `${tallord} nytt møte`;
-  }
-  return `${tallord} nye møter`;
+  return tall === 1 ? `${tallord} nytt møte` : `${tallord} nye møter`;
 };
 
 const Moter = () => {

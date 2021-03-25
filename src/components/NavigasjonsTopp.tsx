@@ -1,8 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const NavigasjonsTopp = ({ lenker }) => {
+interface Lenke {
+  tittel: string;
+  url: string;
+  aktiv: boolean;
+}
+
+interface NavigasjonsToppProps {
+  lenker: Lenke[];
+}
+
+const NavigasjonsTopp = ({ lenker }: NavigasjonsToppProps) => {
   return (
     <header className="navigasjon">
       <ul role="navigation" className="navigasjonsLenkeListe">
@@ -23,10 +32,6 @@ const NavigasjonsTopp = ({ lenker }) => {
       </ul>
     </header>
   );
-};
-
-NavigasjonsTopp.propTypes = {
-  lenker: PropTypes.array,
 };
 
 export default NavigasjonsTopp;

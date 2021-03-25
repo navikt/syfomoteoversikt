@@ -1,3 +1,5 @@
+import { MoteDeltakerDTO, MoteDTO } from "../data/moter/moterTypes";
+
 export const statuser = {
   AVBRUTT: "Avbrutt",
   BEKREFTET: "Møtetidspunkt bekreftet",
@@ -10,14 +12,14 @@ export const svarStatuser = {
   BEKREFTET: "Bekreftet",
 };
 
-const harDeltakerSvart = (mote, deltaker) => {
+const harDeltakerSvart = (mote: MoteDTO, deltaker: MoteDeltakerDTO) => {
   return (
     deltaker.svartidspunkt &&
     new Date(deltaker.svartidspunkt) >= new Date(mote.sistEndret)
   );
 };
 
-export const deltakerSvarStatus = (mote) => {
+export const deltakerSvarStatus = (mote: MoteDTO) => {
   let svarStatus;
   if (mote.status === "BEKREFTET" || mote.status === "AVBRUTT") {
     svarStatus = svarStatuser[mote.status];
@@ -33,22 +35,10 @@ export const deltakerSvarStatus = (mote) => {
   return svarStatus;
 };
 
-export const erSvarMottatt = (mote) => {
-  let svar = mote.deltakere.map((deltaker) => {
-    return deltaker.svar;
-  });
-  svar = [].concat.apply([], svar);
-  const mottatteSvar = svar.filter((s) => {
-    return s.valgt;
-  });
-  let mottatteAvvik = mote.deltakere.map((deltaker) => {
-    return deltaker.avvik;
-  });
-  mottatteAvvik = [].concat.apply([], mottatteAvvik);
-  return mottatteSvar.length > 0 || mottatteAvvik.length > 0;
-};
+export const erSvarMottatt = (mote: MoteDTO) =>
+  mote.deltakere.some((deltaker) => deltaker.svar.some((svar) => svar.valgt));
 
-export const setMoteStatus = (mote) => {
+export const setMoteStatus = (mote: MoteDTO) => {
   if (mote.status === "BEKREFTET" || mote.status === "AVBRUTT") {
     return mote;
   }
@@ -61,25 +51,28 @@ export const setMoteStatus = (mote) => {
   return mote;
 };
 
-export const ikkeAvbrutt = () => (mote) => mote.status !== "AVBRUTT";
+export const ikkeAvbrutt = () => (mote: MoteDTO) => mote.status !== "AVBRUTT";
 
-export const getBruker = (mote) =>
+export const getBruker = (mote: MoteDTO) =>
   mote.deltakere.find((deltaker) => deltaker.type.toUpperCase() === "BRUKER");
 
-export const getLeder = (mote) =>
+export const getLeder = (mote: MoteDTO) =>
   mote.deltakere.find(
     (deltaker) => deltaker.type.toUpperCase() === "ARBEIDSGIVER"
   );
 
-export const getStatuser = (moterMedStatus) => [
+export const getStatuser = (moterMedStatus: MoteDTO[]) => [
   ...new Set(moterMedStatus.map((mote) => mote.status)),
 ];
 
-export const opprettetTidspunktDescCompareFn = () => (moteA, moteB) => {
-  if (moteA.opprettetTidspunkt > moteB.opprettetTidspunkt) {
+export const compareByOpprettetTidspunktDesc = () => (
+  a: MoteDTO,
+  b: MoteDTO
+) => {
+  if (a.opprettetTidspunkt > b.opprettetTidspunkt) {
     return -1;
   }
-  if (moteA.opprettetTidspunkt < moteB.opprettetTidspunkt) {
+  if (a.opprettetTidspunkt < b.opprettetTidspunkt) {
     return 1;
   }
   return 0;

@@ -5,14 +5,12 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import {
-  hentEnhetsMoter,
-  resetOverforing,
-} from "../data/moter/moterEnhet_actions";
+import { hentEnhetsMoter } from "../data/moter/moterEnhet_actions";
 import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
+import { resetOverforing } from "../data/moter/overfor_actions";
 
 const EnhetensMoterContainer = () => {
   const { harOvertattMoter } = useOverforMoter();

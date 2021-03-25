@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Select } from "nav-frontend-skjema";
 import { Hovedknapp } from "nav-frontend-knapper";
-import { opprettetTidspunktDescCompareFn } from "../utils/moterUtil";
 import { finnVeilederNavn } from "../utils";
 
 import MoteEnhet from "./MoteEnhet";
 import { useDispatch } from "react-redux";
-import { overforMoter } from "../data/moter/moterEnhet_actions";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteStatusFilter } from "./MoteStatusFilter";
+import { overforMoter } from "../data/moter/overfor_actions";
+import { compareByOpprettetTidspunktDesc } from "../utils/moterUtil";
 
 const MoteoversiktEnhet = () => {
   const [filterStatus, setFilterStatus] = useState("alle");
@@ -47,7 +47,9 @@ const MoteoversiktEnhet = () => {
           <div className="verktoylinje__filter">
             <MoteStatusFilter
               moteStatuser={getStatuser()}
-              onFilterChange={(changedFilter) => setFilterStatus(changedFilter)}
+              onFilterChange={(changedFilter: string) =>
+                setFilterStatus(changedFilter)
+              }
             />
           </div>
           <div className="verktoylinje__filter">
@@ -69,7 +71,7 @@ const MoteoversiktEnhet = () => {
         </div>
       </div>
       <div className="moteoversikt">
-        <MoteOversiktHeading moter={filtrerteMoter} />
+        <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
         <table className="motetabell">
           <thead>
             <tr>
@@ -83,7 +85,7 @@ const MoteoversiktEnhet = () => {
           </thead>
           <tbody>
             {filtrerteMoter
-              .sort(opprettetTidspunktDescCompareFn)
+              .sort(compareByOpprettetTidspunktDesc())
               .map((mote, index) => (
                 <MoteEnhet key={index} mote={mote} />
               ))}

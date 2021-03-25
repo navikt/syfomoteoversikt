@@ -2,10 +2,12 @@ import { all, call, put, fork, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
 import * as actions from "./virksomhet_actions";
 import { VirksomhetDTO } from "./VirksomhetDTO";
+import {
+  HENT_VIRKSOMHET_FORESPURT,
+  HentVirksomhetAction,
+} from "./virksomhet_actions";
 
-export function* hentVirksomhet(
-  action: ReturnType<typeof actions.hentVirksomhet>
-) {
+export function* hentVirksomhet(action: HentVirksomhetAction) {
   yield put(actions.henterVirksomhet());
   try {
     const data: VirksomhetDTO = yield call(
@@ -19,7 +21,7 @@ export function* hentVirksomhet(
 }
 
 function* watchHentVirksomhet() {
-  yield takeEvery(actions.HENT_VIRKSOMHET_FORESPURT, hentVirksomhet);
+  yield takeEvery(HENT_VIRKSOMHET_FORESPURT, hentVirksomhet);
 }
 
 export default function* virksomhetSagas() {
