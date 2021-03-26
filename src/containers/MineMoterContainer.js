@@ -1,22 +1,22 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Row, Column } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoter } from "../hooks/useMoter";
 import { hentMoter } from "../data/moter/moter_actions";
+import { useDispatch } from "react-redux";
 
 const MineMoterContainer = () => {
-  const { harOvertattMoter } = useOverforMoter();
   const { moter, henterMoter, hentMoterFeilet } = useMoter();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(hentMoter());
+    if (!henterMoter && !hentMoterFeilet && moter.length === 0) {
+      dispatch(hentMoter());
+    }
   }, []);
 
   return (

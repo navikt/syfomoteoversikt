@@ -16,16 +16,27 @@ import EnhetensMoter from "../components/EnhetensMoter";
 
 const EnhetensMoterContainer = () => {
   const { harOvertattMoter } = useOverforMoter();
-  const { aktivEnhet, henterMoter, hentMoterFeilet, moter } = useMoterEnhet();
+  const {
+    aktivEnhet,
+    henterMoter,
+    hentMoterFeilet,
+    moter,
+    hentetEnhet,
+  } = useMoterEnhet();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(hentEnhetsMoter(aktivEnhet));
-    dispatch(hentDialogmoter(aktivEnhet));
     if (harOvertattMoter) {
       dispatch(resetOverforing());
     }
-  }, [aktivEnhet, harOvertattMoter]);
+  }, [harOvertattMoter]);
+
+  useEffect(() => {
+    if (aktivEnhet !== hentetEnhet) {
+      dispatch(hentEnhetsMoter(aktivEnhet));
+      dispatch(hentDialogmoter(aktivEnhet));
+    }
+  }, [aktivEnhet, hentetEnhet]);
 
   return (
     <Side tittel="Møteoversikt">
