@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { hentVeileder } from "../../../src/data/veiledere/veilederSagas.js";
+import { hentVeileder } from "../../../src/data/veiledere/veilederSagas.ts";
 import { get } from "../../../src/api";
 import { put, call } from "redux-saga/effects";
 

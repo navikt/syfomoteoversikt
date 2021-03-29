@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "./hooks";
 
 export const useOverforMoter = () => {
   const {
@@ -6,7 +6,7 @@ export const useOverforMoter = () => {
     sender: overtarMoter,
     sendingFeilet: overtaMoterFeilet,
     sendt: harOvertattMoter,
-  } = useSelector((state) => state.overfor);
+  } = useAppSelector((state) => state.overfor);
 
   return {
     moterMarkertForOverforing,

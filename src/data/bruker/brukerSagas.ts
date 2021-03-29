@@ -2,8 +2,9 @@ import { all, call, put, fork, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
 import * as actions from "./bruker_actions";
 import { BrukerinfoDTO } from "./BrukerinfoDTO";
+import { HentBrukerAction } from "./bruker_actions";
 
-export function* hentBruker(action: ReturnType<typeof actions.hentBruker>) {
+export function* hentBruker(action: HentBrukerAction) {
   yield put(actions.henterBruker());
   try {
     const data: BrukerinfoDTO = yield call(

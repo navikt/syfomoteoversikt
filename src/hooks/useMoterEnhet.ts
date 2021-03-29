@@ -1,6 +1,12 @@
-import { useSelector } from "react-redux";
 import { getStatuser, ikkeAvbrutt, setMoteStatus } from "../utils/moterUtil";
 import { finnVeilederNavn } from "../utils";
+import { useAppSelector } from "./hooks";
+import { MoteDTO } from "../data/moter/moterTypes";
+import { VeilederDto } from "../data/veiledere/veilederTypes";
+
+interface MoteMedVeileder extends MoteDTO {
+  veileder?: VeilederDto;
+}
 
 export const useMoterEnhet = () => {
   const {
@@ -9,13 +15,15 @@ export const useMoterEnhet = () => {
     hentingFeilet: hentMoterFeilet,
     henter: henterMoter,
     data: moter,
-  } = useSelector((state) => state.moterEnhet);
-  const veiledere = useSelector((state) => state.veiledere.data);
+  } = useAppSelector((state) => state.moterEnhet);
+  const veiledere = useAppSelector((state) => state.veiledere.data);
   const aktiveMoterMedStatus = moter.map(setMoteStatus).filter(ikkeAvbrutt);
-  const aktiveMoterMedStatusOgVeileder = aktiveMoterMedStatus.map((mote) => ({
-    ...mote,
-    veileder: veiledere.find((veileder) => mote.eier === veileder.ident),
-  }));
+  const aktiveMoterMedStatusOgVeileder: MoteMedVeileder[] = aktiveMoterMedStatus.map(
+    (mote) => ({
+      ...mote,
+      veileder: veiledere.find((veileder) => mote.eier === veileder.ident),
+    })
+  );
 
   return {
     aktivEnhet,

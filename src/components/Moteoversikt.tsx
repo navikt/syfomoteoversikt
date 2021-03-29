@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { opprettetTidspunktDescCompareFn } from "../utils/moterUtil";
 import Mote from "./Mote";
 import { useMoter } from "../hooks/useMoter";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteStatusFilter } from "./MoteStatusFilter";
+import { compareByOpprettetTidspunktDesc } from "../utils/moterUtil";
 
 const Moteoversikt = () => {
   const [filter, setFilter] = useState("alle");
@@ -21,13 +21,15 @@ const Moteoversikt = () => {
           <div className="verktoylinje__filter">
             <MoteStatusFilter
               moteStatuser={getStatuser()}
-              onFilterChange={(changedFilter) => setFilter(changedFilter)}
+              onFilterChange={(changedFilter: string) =>
+                setFilter(changedFilter)
+              }
             />
           </div>
         </div>
       </div>
       <div className="moteoversikt">
-        <MoteOversiktHeading moter={filtrerteMoter} />
+        <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
         <table className="motetabell">
           <thead>
             <tr>
@@ -41,7 +43,7 @@ const Moteoversikt = () => {
           </thead>
           <tbody>
             {filtrerteMoter
-              .sort(opprettetTidspunktDescCompareFn)
+              .sort(compareByOpprettetTidspunktDesc())
               .map((mote, index) => (
                 <Mote key={index} mote={mote} />
               ))}

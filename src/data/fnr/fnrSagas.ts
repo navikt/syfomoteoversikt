@@ -2,8 +2,9 @@ import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
 import * as actions from "./fnr_actions";
 import { AktorDTO } from "./AktorDTO";
+import { HentFnrAction } from "./fnr_actions";
 
-export function* hentFnr(action: ReturnType<typeof actions.hentFnr>) {
+export function* hentFnr(action: HentFnrAction) {
   yield put(actions.henterFnr());
   try {
     const data: AktorDTO = yield call(

@@ -7,13 +7,6 @@ chai.use(chaiEnzyme());
 const expect = chai.expect;
 
 describe("veileder", () => {
-  it("Har en default state", () => {
-    const state = veiledere();
-    expect(state).to.deep.equal({
-      data: [],
-    });
-  });
-
   describe("henterVeileder", () => {
     it("Legger til nytt element dersom veiledern ikke finnes", () => {
       const action = actions.henterVeileder({ ident: "Z999999" });
