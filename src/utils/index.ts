@@ -1,7 +1,7 @@
-import React from "react";
-import { syfomodiapersonMoterUrl } from "./lenkeUtil";
+import { VeilederDto } from "../data/veiledere/veilederTypes";
+import { MoteDeltakerDTO } from "../data/moter/moterTypes";
 
-export const tallOrdFraTall = (tall) => {
+export const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
     case 0: {
       return "null";
@@ -48,32 +48,32 @@ export const tallOrdFraTall = (tall) => {
   }
 };
 
-export const pad = (nr) => {
-  return nr > 9 || nr.length > 1 ? nr : `0${nr}`;
+export const pad = (nr: number): number | string => {
+  return nr > 9 || nr.toString().length > 1 ? nr : `0${nr}`;
 };
 
-export const dagensDatoKortFormat = () => {
+export const dagensDatoKortFormat = (): string => {
   const d = new Date();
   const dag = pad(d.getDate());
   const maned = pad(d.getMonth() + 1);
   return `${dag}.${maned}.${d.getFullYear()}`;
 };
 
-export const getDatoFraZulu = (zulutid) => {
+export const getDatoFraZulu = (zulutid: Date): string => {
   const d = new Date(zulutid);
   const dag = pad(d.getDate());
   const maned = pad(d.getMonth() + 1);
   return `${dag}.${maned}.${d.getFullYear()}`;
 };
 
-export const getTidFraZulu = (zulutid) => {
+export const getTidFraZulu = (zulutid: Date): string => {
   const d = new Date(zulutid);
   return `${getDatoFraZulu(zulutid)} kl. ${pad(d.getHours())}.${pad(
     d.getMinutes()
   )}`;
 };
 
-export const finnVirksomhet = (leder) => {
+export const finnVirksomhet = (leder?: MoteDeltakerDTO): string => {
   if (leder?.virksomhet) {
     return leder.virksomhet;
   } else if (leder?.orgnummer) {
@@ -82,20 +82,7 @@ export const finnVirksomhet = (leder) => {
   return "Fant ikke virksomheten";
 };
 
-export const finnNavn = (bruker) => {
-  if (bruker?.navn && bruker.fnr) {
-    return (
-      <a className="lenke" href={syfomodiapersonMoterUrl(bruker.fnr)}>
-        {bruker.navn}
-      </a>
-    );
-  } else if (!bruker?.fnr || !bruker?.navn) {
-    return "Henter navn...";
-  }
-  return "Fant ikke navn";
-};
-
-export const finnVeilederNavn = (veileder) => {
+export const finnVeilederNavn = (veileder?: VeilederDto): string => {
   if (veileder?.navn) {
     return veileder.navn;
   } else if (veileder?.henter) {
@@ -104,7 +91,7 @@ export const finnVeilederNavn = (veileder) => {
   return "Fant ikke navn";
 };
 
-export const finnMiljoStreng = () => {
+export const finnMiljoStreng = (): string => {
   const host = window.location.host;
   const bindestrekIndex = host.indexOf("-");
   if (bindestrekIndex === -1) {

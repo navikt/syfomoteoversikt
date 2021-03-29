@@ -1,33 +1,40 @@
 import { Error403 } from "./errors";
 import { erProd } from "../utils/miljoUtil";
 
-const log = () => {};
+const log = (message?: unknown, ...optionalParams: unknown[]) => {
+  if (
+    window.location.search.indexOf("log=true") > -1 ||
+    process.env.NODE_ENV === "development"
+  ) {
+    console.log(message, optionalParams);
+  }
+};
 
-export const getCookie = (name) => {
+export const getCookie = (name: string): string => {
   const re = new RegExp(`${name}=([^;]+)`);
   const match = re.exec(document.cookie);
   return match !== null ? match[1] : "";
 };
 
-export const hentLoginUrl = () => {
+export const hentLoginUrl = (): string => {
   if (erProd()) {
     return "https://loginservice.nais.adeo.no/login";
   }
   return "https://loginservice.nais.preprod.local/login";
 };
 
-export const hentRedirectBaseUrl = () => {
+export const hentRedirectBaseUrl = (): string => {
   if (erProd()) {
     return "https://syfomoteoversikt.nais.adeo.no";
   }
   return "https://syfomoteoversikt.nais.preprod.local";
 };
 
-export const lagreRedirectUrlILocalStorage = (href) => {
+export const lagreRedirectUrlILocalStorage = (href: string): void => {
   localStorage.setItem("redirecturl", href);
 };
 
-export function get(url) {
+export function get<T>(url: string): Promise<T> {
   return fetch(url, {
     credentials: "include",
   })
@@ -46,13 +53,9 @@ export function get(url) {
       }
       return res.json().then((data) => {
         if (res.status === 403) {
-          const tilgang = {
-            harTilgang: data.harTilgang,
-            begrunnelse: data.begrunnelse,
-          };
-          throw new Error403("403", 403, tilgang);
+          throw new Error403("403", data.harTilgang, data.begrunnelse);
         }
-        return data;
+        return data as T;
       });
     })
     .catch((err) => {
@@ -61,7 +64,7 @@ export function get(url) {
     });
 }
 
-export function post(url, body) {
+export function post<T>(url: string, body: T): Promise<unknown> {
   return fetch(url, {
     credentials: "include",
     method: "POST",

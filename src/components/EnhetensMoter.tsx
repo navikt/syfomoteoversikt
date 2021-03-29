@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import AlertStripe from "nav-frontend-alertstriper";
 import MoteoversiktEnhet from "./MoteoversiktEnhet";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 
-const EnhetensMoter = () => {
+const EnhetensMoter = (): ReactElement => {
   const { overtaMoterFeilet } = useOverforMoter();
   const { harAktiveMoter } = useMoterEnhet();
 

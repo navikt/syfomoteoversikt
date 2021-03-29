@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import PropTypes from "prop-types";
-import { getDatoFraZulu, finnVirksomhet, finnNavn } from "../utils";
+import { getDatoFraZulu, finnVirksomhet } from "../utils";
 import { useDispatch } from "react-redux";
 import { hentVirksomhet } from "../data/virksomhet/virksomhet_actions";
 import { hentBruker } from "../data/bruker/bruker_actions";
 import { hentFnr } from "../data/fnr/fnr_actions";
 import { getBruker, deltakerSvarStatus, getLeder } from "../utils/moterUtil";
 import { MoteDTO } from "../data/moter/moterTypes";
+import { BrukersNavn } from "./BrukersNavn";
 
 interface MoteProps {
   mote: MoteDTO;
 }
 
-const Mote = ({ mote }: MoteProps) => {
+const Mote = ({ mote }: MoteProps): ReactElement => {
   const dispatch = useDispatch();
 
   const bruker = getBruker(mote);
@@ -35,7 +36,9 @@ const Mote = ({ mote }: MoteProps) => {
   return (
     <tr>
       <td>{bruker?.fnr}</td>
-      <td>{finnNavn(bruker)}</td>
+      <td>
+        <BrukersNavn bruker={bruker} />
+      </td>
       <td>{leder?.navn ?? "Ukjent"}</td>
       <td>{finnVirksomhet(leder)}</td>
       <td>{getDatoFraZulu(mote.sistEndret)}</td>

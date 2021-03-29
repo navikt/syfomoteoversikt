@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MineMoterContainer from "../containers/MineMoterContainer";
 import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
 
-const AppRouter = () => {
+const AppRouter = (): ReactElement => {
   return (
     <Router>
       <Switch>

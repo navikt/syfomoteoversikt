@@ -1,6 +1,11 @@
 import { useAppSelector } from "./hooks";
 
-export const useOverforMoter = () => {
+export const useOverforMoter: () => {
+  moterMarkertForOverforing: string[];
+  overtaMoterFeilet: boolean;
+  harOvertattMoter: boolean;
+  overtarMoter: boolean;
+} = () => {
   const {
     data: moterMarkertForOverforing,
     sender: overtarMoter,

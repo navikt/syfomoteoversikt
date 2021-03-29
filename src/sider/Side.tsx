@@ -1,15 +1,14 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Container, Row } from "nav-frontend-grid";
 import Decorator from "../decorator/Decorator";
-
-const DocumentTitle = require("react-document-title");
+import DocumentTitle from "react-document-title";
 
 interface SideProps {
   tittel?: string;
   children: React.ReactNode;
 }
 
-const Side = ({ tittel = "", children }: SideProps) => {
+const Side = ({ tittel = "", children }: SideProps): ReactElement => {
   return (
     <>
       <Decorator />

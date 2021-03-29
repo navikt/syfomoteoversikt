@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import Mote from "./Mote";
 import { useMoter } from "../hooks/useMoter";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteStatusFilter } from "./MoteStatusFilter";
 import { compareByOpprettetTidspunktDesc } from "../utils/moterUtil";
 
-const Moteoversikt = () => {
+const Moteoversikt = (): ReactElement => {
   const [filter, setFilter] = useState("alle");
   const { aktiveMoterMedStatus: moter, getStatuser } = useMoter();
 

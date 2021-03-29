@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 interface MoteOversiktHeadingProps {
   antallMoter: number;
@@ -6,7 +6,7 @@ interface MoteOversiktHeadingProps {
 
 export const MoteOversiktHeading = ({
   antallMoter,
-}: MoteOversiktHeadingProps) => (
+}: MoteOversiktHeadingProps): ReactElement => (
   <h3 className="moteoversikt__meta">
     Viser {antallMoter} {antallMoter === 1 ? "møte" : "møter"}
   </h3>

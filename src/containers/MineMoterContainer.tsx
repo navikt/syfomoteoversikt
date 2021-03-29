@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { Row, Column } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
@@ -9,7 +9,7 @@ import { useMoter } from "../hooks/useMoter";
 import { hentMoter } from "../data/moter/moter_actions";
 import { useDispatch } from "react-redux";
 
-const MineMoterContainer = () => {
+const MineMoterContainer = (): ReactElement => {
   const { moter, henterMoter, hentMoterFeilet } = useMoter();
   const dispatch = useDispatch();
 
