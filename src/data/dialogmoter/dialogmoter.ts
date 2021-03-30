@@ -1,8 +1,10 @@
 import {
+  DialogmoterActions,
   HENT_DIALOGMOTER_FEILET,
   HENT_DIALOGMOTER_HENTER,
   HENT_DIALOGMOTER_HENTET,
 } from "./dialogmoter_actions";
+import { Reducer } from "redux";
 
 interface DialogmotedeltakerArbeidstakerVarselDTO {
   uuid: string;
@@ -40,10 +42,10 @@ export interface DialogmoterDTO {
   updatedAt: string;
   planlagtMoteUuid: string | null;
   planlagtMoteBekreftetTidspunkt: string | null;
-  status: String;
-  opprettetAv: String;
-  tildeltVeilederIdent: String;
-  tildeltEnhet: String;
+  status: string;
+  opprettetAv: string;
+  tildeltVeilederIdent: string;
+  tildeltEnhet: string;
   arbeidstaker: DialogmotedeltakerArbeidstakerDTO;
   arbeidsgiver: DialogmotedeltakerArbeidsgiverDTO;
   tidStedList: DialogmoteTidStedDTO[];
@@ -67,7 +69,10 @@ export const initialState: DialogmoterState = {
   data: [],
 };
 
-const dialogmoter = (state = initialState, action = { type: "", data: [] }) => {
+const dialogmoter: Reducer<DialogmoterState, DialogmoterActions> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case HENT_DIALOGMOTER_HENTER: {
       return {

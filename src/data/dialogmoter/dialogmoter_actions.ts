@@ -5,23 +5,48 @@ export const HENT_DIALOGMOTER_HENTER = "HENT_DIALOGMOTER_HENTER";
 export const HENT_DIALOGMOTER_FORESPURT = "HENT_DIALOGMOTER_FORESPURT";
 export const HENT_DIALOGMOTER_HENTET = "HENT_DIALOGMOTER_HENTET";
 
-export interface HentDialogmoterReturnType {
-  type: string;
+export interface HentDialogmoterFeiletAction {
+  type: typeof HENT_DIALOGMOTER_FEILET;
+}
+
+export interface HentDialogmoterHenterAction {
+  type: typeof HENT_DIALOGMOTER_HENTER;
+}
+
+export interface HentDialogmoterHentetAction {
+  type: typeof HENT_DIALOGMOTER_HENTET;
+  data: DialogmoterDTO[];
+  enhet: string;
+}
+
+export interface HentDialogmoterAction {
+  type: typeof HENT_DIALOGMOTER_FORESPURT;
   enhetNr: string;
 }
 
-export const hentDialogmoterFeilet = () => ({ type: HENT_DIALOGMOTER_FEILET });
+export type DialogmoterActions =
+  | HentDialogmoterAction
+  | HentDialogmoterHenterAction
+  | HentDialogmoterFeiletAction
+  | HentDialogmoterHentetAction;
 
-export const hentDialogmoterHenter = () => ({ type: HENT_DIALOGMOTER_HENTER });
+export const hentDialogmoterFeilet = (): HentDialogmoterFeiletAction => ({
+  type: HENT_DIALOGMOTER_FEILET,
+});
 
-export const hentDialogmoter = (
-  enhetNr: string
-): HentDialogmoterReturnType => ({
+export const hentDialogmoterHenter = (): HentDialogmoterHenterAction => ({
+  type: HENT_DIALOGMOTER_HENTER,
+});
+
+export const hentDialogmoter = (enhetNr: string): HentDialogmoterAction => ({
   type: HENT_DIALOGMOTER_FORESPURT,
   enhetNr,
 });
 
-export const hentDialogmoterHentet = (data: DialogmoterDTO, enhet: string) => ({
+export const hentDialogmoterHentet = (
+  data: DialogmoterDTO[],
+  enhet: string
+): HentDialogmoterHentetAction => ({
   type: HENT_DIALOGMOTER_HENTET,
   data,
   enhet,

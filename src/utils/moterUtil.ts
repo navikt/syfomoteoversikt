@@ -19,7 +19,7 @@ const harDeltakerSvart = (mote: MoteDTO, deltaker: MoteDeltakerDTO) => {
   );
 };
 
-export const deltakerSvarStatus = (mote: MoteDTO) => {
+export const deltakerSvarStatus = (mote: MoteDTO): string => {
   let svarStatus;
   if (mote.status === "BEKREFTET" || mote.status === "AVBRUTT") {
     svarStatus = svarStatuser[mote.status];
@@ -35,10 +35,10 @@ export const deltakerSvarStatus = (mote: MoteDTO) => {
   return svarStatus;
 };
 
-export const erSvarMottatt = (mote: MoteDTO) =>
+export const erSvarMottatt = (mote: MoteDTO): boolean =>
   mote.deltakere.some((deltaker) => deltaker.svar.some((svar) => svar.valgt));
 
-export const setMoteStatus = (mote: MoteDTO) => {
+export const setMoteStatus = (mote: MoteDTO): MoteDTO => {
   if (mote.status === "BEKREFTET" || mote.status === "AVBRUTT") {
     return mote;
   }
@@ -51,24 +51,26 @@ export const setMoteStatus = (mote: MoteDTO) => {
   return mote;
 };
 
-export const ikkeAvbrutt = () => (mote: MoteDTO) => mote.status !== "AVBRUTT";
+export const ikkeAvbrutt = (): ((mote: MoteDTO) => boolean) => (
+  mote: MoteDTO
+) => mote.status !== "AVBRUTT";
 
-export const getBruker = (mote: MoteDTO) =>
+export const getBruker = (mote: MoteDTO): MoteDeltakerDTO | undefined =>
   mote.deltakere.find((deltaker) => deltaker.type.toUpperCase() === "BRUKER");
 
-export const getLeder = (mote: MoteDTO) =>
+export const getLeder = (mote: MoteDTO): MoteDeltakerDTO | undefined =>
   mote.deltakere.find(
     (deltaker) => deltaker.type.toUpperCase() === "ARBEIDSGIVER"
   );
 
-export const getStatuser = (moterMedStatus: MoteDTO[]) => [
+export const getStatuser = (moterMedStatus: MoteDTO[]): string[] => [
   ...new Set(moterMedStatus.map((mote) => mote.status)),
 ];
 
-export const compareByOpprettetTidspunktDesc = () => (
+export const compareByOpprettetTidspunktDesc = (): ((
   a: MoteDTO,
   b: MoteDTO
-) => {
+) => number) => (a: MoteDTO, b: MoteDTO) => {
   if (a.opprettetTidspunkt > b.opprettetTidspunkt) {
     return -1;
   }

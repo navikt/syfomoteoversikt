@@ -8,7 +8,17 @@ interface MoteMedVeileder extends MoteDTO {
   veileder?: VeilederDto;
 }
 
-export const useMoterEnhet = () => {
+export const useMoterEnhet: () => {
+  hentetEnhet: string;
+  getStatuser: () => string[];
+  getVeiledere: () => string[];
+  aktivEnhet: string;
+  hentMoterFeilet: boolean;
+  moter: MoteDTO[];
+  aktiveMoterMedStatusOgVeileder: MoteMedVeileder[];
+  harAktiveMoter: boolean;
+  henterMoter: boolean;
+} = () => {
   const {
     aktivEnhet,
     hentetEnhet,

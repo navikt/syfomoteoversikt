@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import NAVSPA from "@navikt/navspa";
 import { DecoratorProps } from "./decoratorProps";
@@ -10,7 +10,7 @@ const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
   "internarbeidsflatefs"
 );
 
-const Decorator = () => {
+const Decorator = (): ReactElement => {
   const dispatch = useDispatch();
 
   const handlePersonsokSubmit = (nyttFnr: string) => {

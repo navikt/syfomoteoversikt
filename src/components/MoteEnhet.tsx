@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { Checkbox } from "nav-frontend-skjema";
-import { finnNavn, finnVeilederNavn, getDatoFraZulu } from "../utils";
+import { finnVeilederNavn, getDatoFraZulu } from "../utils";
 import { useDispatch } from "react-redux";
 import { hentBruker } from "../data/bruker/bruker_actions";
 import { hentFnr } from "../data/fnr/fnr_actions";
@@ -9,12 +9,13 @@ import { getBruker, deltakerSvarStatus } from "../utils/moterUtil";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { MoteMedVeilederDTO } from "../data/moter/moterTypes";
 import { markerMoteForOverforing } from "../data/moter/overfor_actions";
+import { BrukersNavn } from "./BrukersNavn";
 
 interface MoteEnhetProps {
   mote: MoteMedVeilederDTO;
 }
 
-const MoteEnhet = ({ mote }: MoteEnhetProps) => {
+const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
   const dispatch = useDispatch();
   const { moterMarkertForOverforing } = useOverforMoter();
 
@@ -50,7 +51,9 @@ const MoteEnhet = ({ mote }: MoteEnhetProps) => {
         <label htmlFor={mote.moteUuid} />
       </td>
       <td>{finnVeilederNavn(mote.veileder)}</td>
-      <td>{finnNavn(bruker)}</td>
+      <td>
+        <BrukersNavn bruker={bruker} />
+      </td>
       <td>{bruker?.fnr}</td>
       <td>{getDatoFraZulu(mote.sistEndret)}</td>
       <td>

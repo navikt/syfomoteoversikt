@@ -1,5 +1,5 @@
 import { Select } from "nav-frontend-skjema";
-import React from "react";
+import React, { ReactElement } from "react";
 import { statuser } from "../utils/moterUtil";
 
 interface MoteStatusFilterProps {
@@ -10,7 +10,7 @@ interface MoteStatusFilterProps {
 export const MoteStatusFilter = ({
   moteStatuser,
   onFilterChange,
-}: MoteStatusFilterProps) => (
+}: MoteStatusFilterProps): ReactElement => (
   <Select
     id="moteoversikt-filtrer"
     label="Filtrer på status"

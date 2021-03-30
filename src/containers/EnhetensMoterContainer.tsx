@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Column, Row } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -12,7 +12,7 @@ import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
 import { resetOverforing } from "../data/moter/overfor_actions";
 
-const EnhetensMoterContainer = () => {
+const EnhetensMoterContainer = (): ReactElement => {
   const { harOvertattMoter } = useOverforMoter();
   const {
     aktivEnhet,

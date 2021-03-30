@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Select } from "nav-frontend-skjema";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { finnVeilederNavn } from "../utils";
@@ -12,7 +12,7 @@ import { MoteStatusFilter } from "./MoteStatusFilter";
 import { overforMoter } from "../data/moter/overfor_actions";
 import { compareByOpprettetTidspunktDesc } from "../utils/moterUtil";
 
-const MoteoversiktEnhet = () => {
+const MoteoversiktEnhet = (): ReactElement => {
   const [filterStatus, setFilterStatus] = useState("alle");
   const [filterVeileder, setFilterVeileder] = useState("alle");
   const dispatch = useDispatch();

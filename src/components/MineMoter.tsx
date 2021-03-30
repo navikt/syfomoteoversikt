@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Panel from "nav-frontend-paneler";
 import Alertstripe from "nav-frontend-alertstriper";
 import Moteoversikt from "./Moteoversikt";
@@ -11,7 +11,7 @@ const hentTallordTekst = (tall: number) => {
   return tall === 1 ? `${tallord} nytt møte` : `${tallord} nye møter`;
 };
 
-const Moter = () => {
+const Moter = (): ReactElement => {
   const { harOvertattMoter, moterMarkertForOverforing } = useOverforMoter();
   const { harAktiveMoter } = useMoter();
 

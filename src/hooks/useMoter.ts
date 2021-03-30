@@ -1,7 +1,15 @@
 import { getStatuser, ikkeAvbrutt, setMoteStatus } from "../utils/moterUtil";
 import { useAppSelector } from "./hooks";
+import { MoteDTO } from "../data/moter/moterTypes";
 
-export const useMoter = () => {
+export const useMoter: () => {
+  aktiveMoterMedStatus: MoteDTO[];
+  getStatuser: () => string[];
+  hentMoterFeilet: boolean;
+  moter: MoteDTO[];
+  henterMoter: boolean;
+  harAktiveMoter: boolean;
+} = () => {
   const {
     hentingFeilet: hentMoterFeilet,
     henter: henterMoter,
