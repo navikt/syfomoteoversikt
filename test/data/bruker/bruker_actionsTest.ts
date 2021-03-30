@@ -1,3 +1,6 @@
+import { expect } from "chai";
+import chai from "chai";
+import chaiEnzyme from "chai-enzyme";
 import {
   BRUKER_HENTET,
   HENT_BRUKER_FEILET,
@@ -5,12 +8,9 @@ import {
   HENTER_BRUKER,
 } from "../../../src/data/bruker/bruker_actions";
 
-const chai = require("chai");
-import chaiEnzyme from "chai-enzyme";
 import * as actions from "../../../src/data/bruker/bruker_actions";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("bruker_actions", () => {
   it("har en hentBruker-funksjon som returnerer riktig action", () => {

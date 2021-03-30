@@ -1,10 +1,10 @@
+import { expect } from "chai";
 import chai from "chai";
 import chaiEnzyme from "chai-enzyme";
 import veiledere from "../../../src/data/veiledere/veiledere";
 import * as actions from "../../../src/data/veiledere/veileder_actions";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("veileder", () => {
   describe("henterVeileder", () => {

@@ -1,45 +1,44 @@
 import chai from "chai";
-import React from "react";
-import { mount, shallow } from "enzyme";
+import { expect } from "chai";
 import chaiEnzyme from "chai-enzyme";
 import { svarStatuser, deltakerSvarStatus } from "../../src/utils/moterUtil";
+import { MoteDTO } from "../../src/data/moter/moterTypes";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("Moteovertsikt deltakerSvarStatus", () => {
   it("skal vise 0 svar", () => {
     const mote = getMote();
-    const svarStatus = deltakerSvarStatus(mote);
+    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal("0/2 Svar");
   });
 
   it("skal vise 1 svar", () => {
     const mote = getMoteMedEttSvar();
-    const svarStatus = deltakerSvarStatus(mote);
+    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal("1/2 Svar");
   });
 
   it("skal vise 2 svar når begge har svart på et alternativ", () => {
     const mote = getMoteMedBeggeSvar();
-    const svarStatus = deltakerSvarStatus(mote);
+    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal("2/2 Svar");
   });
 
   it("skal vise 2 svar når begge har svart på alle alternativer", () => {
     const mote = getMoteMedBeggeSvarBeggeAlternativer();
-    const svarStatus = deltakerSvarStatus(mote);
+    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal("2/2 Svar");
   });
 
   it("skal vise bekreftet mote", () => {
     const mote = getMoteBekreftet();
-    const svarStatus = deltakerSvarStatus(mote);
+    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal(svarStatuser.BEKREFTET);
   });
 });
 
-const getMote = (mote) => {
+const getMote = () => {
   return Object.assign(
     {},
     {
@@ -115,12 +114,11 @@ const getMote = (mote) => {
           valgt: false,
         },
       ],
-    },
-    mote
+    }
   );
 };
 
-const getMoteMedEttSvar = (mote) => {
+const getMoteMedEttSvar = () => {
   return Object.assign(
     {},
     {
@@ -201,12 +199,11 @@ const getMoteMedEttSvar = (mote) => {
           valgt: false,
         },
       ],
-    },
-    mote
+    }
   );
 };
 
-const getMoteMedBeggeSvar = (mote) => {
+const getMoteMedBeggeSvar = () => {
   return Object.assign(
     {},
     {
@@ -287,12 +284,11 @@ const getMoteMedBeggeSvar = (mote) => {
           valgt: false,
         },
       ],
-    },
-    mote
+    }
   );
 };
 
-const getMoteMedBeggeSvarBeggeAlternativer = (mote) => {
+const getMoteMedBeggeSvarBeggeAlternativer = () => {
   return Object.assign(
     {},
     {
@@ -373,12 +369,11 @@ const getMoteMedBeggeSvarBeggeAlternativer = (mote) => {
           valgt: false,
         },
       ],
-    },
-    mote
+    }
   );
 };
 
-const getMoteBekreftet = (mote) => {
+const getMoteBekreftet = () => {
   return Object.assign(
     {},
     {
@@ -473,7 +468,6 @@ const getMoteBekreftet = (mote) => {
           valgt: false,
         },
       ],
-    },
-    mote
+    }
   );
 };

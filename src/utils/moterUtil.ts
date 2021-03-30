@@ -1,4 +1,5 @@
 import { MoteDeltakerDTO, MoteDTO } from "../data/moter/moterTypes";
+import { BrukerinfoDTO } from "../data/bruker/BrukerinfoDTO";
 
 export const statuser = {
   AVBRUTT: "Avbrutt",
@@ -50,6 +51,28 @@ export const setMoteStatus = (mote: MoteDTO): MoteDTO => {
   }
   return mote;
 };
+
+export const getDeltagereMedNavn = (mote: MoteDTO, bruker: BrukerinfoDTO) =>
+  mote.deltakere.map((deltaker) => {
+    if (deltaker.type !== "Bruker") {
+      return deltaker;
+    }
+    return {
+      ...deltaker,
+      navn: bruker.navn,
+    };
+  });
+
+export const getDeltagereMedFnr = (mote: MoteDTO, fnr: string) =>
+  mote.deltakere.map((deltaker) => {
+    if (deltaker.type !== "Bruker") {
+      return deltaker;
+    }
+    return {
+      ...deltaker,
+      fnr,
+    };
+  });
 
 export const ikkeAvbrutt = (): ((mote: MoteDTO) => boolean) => (
   mote: MoteDTO

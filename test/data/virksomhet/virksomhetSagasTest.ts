@@ -8,14 +8,9 @@ import {
 } from "../../../src/data/virksomhet/virksomhet_actions";
 
 describe("virksomhetSagas", () => {
-  beforeEach(() => {
-    window.APP_SETTINGS = {
-      REST_ROOT: "/syfomoteadmin/api/internad",
-    };
-  });
-
   const generator = hentVirksomhet({
     orgnummer: "55",
+    type: "HENT_VIRKSOMHET_FORESPURT",
     moteUuid: "moteUuid",
   });
 

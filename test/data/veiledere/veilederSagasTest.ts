@@ -1,16 +1,13 @@
 import { expect } from "chai";
-import { hentVeileder } from "../../../src/data/veiledere/veilederSagas.ts";
 import { get } from "../../../src/api";
 import { put, call } from "redux-saga/effects";
+import { hentVeileder } from "../../../src/data/veiledere/veilederSagas";
 
 describe("veilederSagas", () => {
-  beforeEach(() => {
-    window.APP_SETTINGS = {
-      REST_ROOT: "/syfomoteadmin/api/internad",
-    };
+  const generator = hentVeileder({
+    type: "HENTER_VEILEDER",
+    data: { ident: "Z999999" },
   });
-
-  const generator = hentVeileder({ data: { ident: "Z999999" } });
 
   it("Skal dispatche HENTER_VEILEDER", () => {
     const nextPut = put({

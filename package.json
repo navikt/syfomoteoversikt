@@ -5,7 +5,7 @@
   "main": "index.js",
   "test": "npm run test",
   "scripts": {
-    "test": "mocha -r ./test/babel-register.js -r @babel/polyfill -r jsdom-global/register -r ignore-styles --recursive",
+    "test": "mocha -r ./test/babel-register.js -r @babel/polyfill -r jsdom-global/register -r ignore-styles --recursive --extension ts,js,jsx,tsx",
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "sec-audit": "npm audit --audit-level=moderate",
@@ -85,6 +85,9 @@
     "@babel/preset-react": "7.10.1",
     "@babel/preset-typescript": "7.10.1",
     "@babel/register": "7.10.1",
+    "@types/chai": "4.2.15",
+    "@types/chai-enzyme": "0.6.8",
+    "@types/mocha": "8.2.2",
     "@types/react-document-title": "2.0.4",
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",

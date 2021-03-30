@@ -19,8 +19,9 @@ import {
   HENTER_BRUKER,
 } from "../bruker/bruker_actions";
 import { FNR_HENTET, FnrActions } from "../fnr/fnr_actions";
+import { getDeltagereMedFnr, getDeltagereMedNavn } from "../../utils/moterUtil";
 
-interface MoterState {
+export interface MoterState {
   henter: boolean;
   hentingFeilet: boolean;
   sender: boolean;
@@ -122,15 +123,7 @@ const moter: Reducer<MoterState> = (
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
         }
-        const deltakere = mote.deltakere.map((deltaker) => {
-          if (deltaker.type !== "Bruker") {
-            return deltaker;
-          }
-          return {
-            ...deltaker,
-            navn: action.data.navn,
-          };
-        });
+        const deltakere = getDeltagereMedNavn(mote, action.data);
         return { ...mote, deltakere };
       });
       return {
@@ -149,15 +142,7 @@ const moter: Reducer<MoterState> = (
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
         }
-        const deltakere = mote.deltakere.map((deltaker) => {
-          if (deltaker.type !== "Bruker") {
-            return deltaker;
-          }
-          return {
-            ...deltaker,
-            fnr: action.data,
-          };
-        });
+        const deltakere = getDeltagereMedFnr(mote, action.data);
         return { ...mote, deltakere };
       });
       return {
