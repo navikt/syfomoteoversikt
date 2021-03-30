@@ -1,3 +1,4 @@
+import { expect } from "chai";
 import chai from "chai";
 import chaiEnzyme from "chai-enzyme";
 import * as actions from "../../../src/data/virksomhet/virksomhet_actions";
@@ -9,7 +10,6 @@ import {
 } from "../../../src/data/virksomhet/virksomhet_actions";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("virksomhet_actions", () => {
   it("har en hentVirksomhet-funksjon som returnerer riktig action", () => {

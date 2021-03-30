@@ -2,19 +2,6 @@ const mockUtils = require("./mockUtils.js");
 const mockDialogmoter = require("./mockDialogmoter");
 const mockModiacontextholder = require("./mockModiacontextholder");
 
-const enheter = {
-  enhetliste: [
-    {
-      enhetId: "0315",
-      navn: "NAV Grünerløkka",
-    },
-    {
-      enhetId: "0316",
-      navn: "NAV Gamle Oslo",
-    },
-  ],
-};
-
 function mockEndepunkter(server) {
   server.get("/syfomoteadmin/api/internad/virksomhet/:orgnr", (req, res) => {
     res.setHeader("Content-Type", "application/json");

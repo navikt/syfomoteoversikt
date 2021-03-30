@@ -1,9 +1,9 @@
+import { expect } from "chai";
 import chai from "chai";
 import chaiEnzyme from "chai-enzyme";
 import * as actions from "../../../src/data/veiledere/veileder_actions";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("veileder_actions", () => {
   it("har en hentVeileder-funksjon som returnerer riktig action", () => {

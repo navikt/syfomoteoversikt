@@ -8,13 +8,8 @@ import {
 } from "../../../src/data/bruker/bruker_actions";
 
 describe("brukerSagas", () => {
-  beforeEach(() => {
-    window.APP_SETTINGS = {
-      REST_ROOT: "/syfomoteadmin/api/internad",
-    };
-  });
-
   const generator = hentBruker({
+    type: "HENT_BRUKER_FORESPURT",
     ident: "55",
     moteUuid: "moteUuid",
   });

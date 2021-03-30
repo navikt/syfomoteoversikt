@@ -4,13 +4,8 @@ import { get } from "../../../src/api";
 import { put, call } from "redux-saga/effects";
 
 describe("enhetMoterSagas", () => {
-  beforeEach(() => {
-    window.APP_SETTINGS = {
-      REST_ROOT: "/syfomoteadmin/api/internad",
-    };
-  });
-
   const generator = hentEnhetsMoter({
+    type: "HENT_ENHETSMOTER",
     enhet: "0001",
   });
 

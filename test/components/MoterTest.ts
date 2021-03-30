@@ -1,11 +1,10 @@
 import chai from "chai";
-import React from "react";
-import { mount, shallow } from "enzyme";
+import { expect } from "chai";
 import chaiEnzyme from "chai-enzyme";
 import { setMoteStatus } from "../../src/utils/moterUtil";
+import { MoteDTO } from "../../src/data/moter/moterTypes";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("Moter", () => {
   describe("setMoteStatus", () => {
@@ -23,7 +22,7 @@ describe("Moter", () => {
             navn: "Fox Mulder",
             epost: "fox.mulder@fbi.no",
             type: "arbeidsgiver",
-            svartTidspunkt: "2016-11-22T14:34:43.231Z",
+            svartidspunkt: "2016-11-22T14:34:43.231Z",
             svar: [
               {
                 id: 349,
@@ -40,7 +39,6 @@ describe("Moter", () => {
             ],
           },
         ],
-        valgtAlternativ: null,
         alternativer: [
           {
             id: 349,
@@ -56,7 +54,7 @@ describe("Moter", () => {
           },
         ],
       };
-      const mote = setMoteStatus(_mote);
+      const mote = setMoteStatus((_mote as unknown) as MoteDTO);
       expect(mote.status).to.deep.equal("OPPRETTET");
     });
 
@@ -74,7 +72,7 @@ describe("Moter", () => {
             navn: "Fox Mulder",
             epost: "fox.mulder@fbi.no",
             type: "arbeidsgiver",
-            svartTidspunkt: "2016-11-22T14:34:43.231Z",
+            svartidspunkt: "2016-11-22T14:34:43.231Z",
             svar: [
               {
                 id: 349,
@@ -91,7 +89,6 @@ describe("Moter", () => {
             ],
           },
         ],
-        valgtAlternativ: null,
         alternativer: [
           {
             id: 349,
@@ -107,7 +104,7 @@ describe("Moter", () => {
           },
         ],
       };
-      const mote = setMoteStatus(_mote);
+      const mote = setMoteStatus((_mote as unknown) as MoteDTO);
       expect(mote.status).to.deep.equal("SVAR_MOTTATT");
     });
 
@@ -125,7 +122,7 @@ describe("Moter", () => {
             navn: "Fox Mulder",
             epost: "fox.mulder@fbi.no",
             type: "arbeidsgiver",
-            svartTidspunkt: "2016-11-22T14:34:43.231Z",
+            svarttidspunkt: "2016-11-22T14:34:43.231Z",
             svar: [
               {
                 id: 349,
@@ -142,7 +139,6 @@ describe("Moter", () => {
             ],
           },
         ],
-        valgtAlternativ: null,
         alternativer: [
           {
             id: 349,
@@ -158,7 +154,7 @@ describe("Moter", () => {
           },
         ],
       };
-      const mote = setMoteStatus(_mote);
+      const mote = setMoteStatus((_mote as unknown) as MoteDTO);
       expect(mote.status).to.deep.equal("BEKREFTET");
     });
 
@@ -176,7 +172,7 @@ describe("Moter", () => {
             navn: "Fox Mulder",
             epost: "fox.mulder@fbi.no",
             type: "arbeidsgiver",
-            svartTidspunkt: "2016-11-22T14:34:43.231Z",
+            svarttidspunkt: "2016-11-22T14:34:43.231Z",
             svar: [
               {
                 id: 349,
@@ -193,7 +189,6 @@ describe("Moter", () => {
             ],
           },
         ],
-        valgtAlternativ: null,
         alternativer: [
           {
             id: 349,
@@ -209,7 +204,7 @@ describe("Moter", () => {
           },
         ],
       };
-      const mote = setMoteStatus(_mote);
+      const mote = setMoteStatus((_mote as unknown) as MoteDTO);
       expect(mote.status).to.deep.equal("BEKREFTET");
     });
 
@@ -227,7 +222,7 @@ describe("Moter", () => {
             navn: "Fox Mulder",
             epost: "fox.mulder@fbi.no",
             type: "arbeidsgiver",
-            svartTidspunkt: "2016-11-22T14:34:43.231Z",
+            svarttidspunkt: "2016-11-22T14:34:43.231Z",
             svar: [
               {
                 id: 349,
@@ -244,7 +239,6 @@ describe("Moter", () => {
             ],
           },
         ],
-        valgtAlternativ: null,
         alternativer: [
           {
             id: 349,
@@ -260,7 +254,7 @@ describe("Moter", () => {
           },
         ],
       };
-      const mote = setMoteStatus(_mote);
+      const mote = setMoteStatus((_mote as unknown) as MoteDTO);
       expect(mote.status).to.deep.equal("AVBRUTT");
     });
 
@@ -278,7 +272,7 @@ describe("Moter", () => {
             navn: "Fox Mulder",
             epost: "fox.mulder@fbi.no",
             type: "arbeidsgiver",
-            svartTidspunkt: "2016-11-22T14:34:43.231Z",
+            svarttidspunkt: "2016-11-22T14:34:43.231Z",
             svar: [
               {
                 id: 349,
@@ -295,7 +289,6 @@ describe("Moter", () => {
             ],
           },
         ],
-        valgtAlternativ: null,
         alternativer: [
           {
             id: 349,
@@ -311,7 +304,7 @@ describe("Moter", () => {
           },
         ],
       };
-      const mote = setMoteStatus(_mote);
+      const mote = setMoteStatus((_mote as unknown) as MoteDTO);
       expect(mote.status).to.deep.equal("AVBRUTT");
     });
   });

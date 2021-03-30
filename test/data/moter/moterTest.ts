@@ -1,16 +1,24 @@
+import { expect } from "chai";
 import chai from "chai";
 import chaiEnzyme from "chai-enzyme";
-import moter from "../../../src/data/moter/moter";
+import moter, { MoterState } from "../../../src/data/moter/moter";
 import * as actions from "../../../src/data/virksomhet/virksomhet_actions";
 import * as brukeractions from "../../../src/data/bruker/bruker_actions";
+import { MoteDeltakerDTO, MoteDTO } from "../../../src/data/moter/moterTypes";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
+const arbeidsgiverDeltager = {
+  type: "arbeidsgiver",
+} as MoteDeltakerDTO;
+const brukerDeltager = {
+  type: "Bruker",
+} as MoteDeltakerDTO;
+const emptyMoter: MoteDTO[] = [];
 
 describe("moter", () => {
   it("Håndterer henterVirksomheter", () => {
     const action = actions.henterVirksomhet();
-    const state = moter({ data: [] }, action);
+    const state = moter({ data: emptyMoter } as MoterState, action);
     expect(state).to.deep.equal({
       data: [],
     });
@@ -28,17 +36,10 @@ describe("moter", () => {
         data: [
           {
             moteUuid: "moteUuid1",
-            deltakere: [
-              {
-                type: "arbeidsgiver",
-              },
-              {
-                type: "Bruker",
-              },
-            ],
+            deltakere: [arbeidsgiverDeltager, brukerDeltager],
           },
         ],
-      },
+      } as MoterState,
       action
     );
     expect(state).to.deep.equal({
@@ -71,17 +72,10 @@ describe("moter", () => {
         data: [
           {
             moteUuid: "moteUuid1",
-            deltakere: [
-              {
-                type: "arbeidsgiver",
-              },
-              {
-                type: "Bruker",
-              },
-            ],
+            deltakere: [arbeidsgiverDeltager, brukerDeltager],
           },
         ],
-      },
+      } as MoterState,
       action
     );
     expect(state).to.deep.equal({
@@ -113,17 +107,10 @@ describe("moter", () => {
         data: [
           {
             moteUuid: "moteUuid1",
-            deltakere: [
-              {
-                type: "arbeidsgiver",
-              },
-              {
-                type: "Bruker",
-              },
-            ],
+            deltakere: [arbeidsgiverDeltager, brukerDeltager],
           },
         ],
-      },
+      } as MoterState,
       action
     );
     expect(state).to.deep.equal({
@@ -156,17 +143,10 @@ describe("moter", () => {
         data: [
           {
             moteUuid: "moteUuid1",
-            deltakere: [
-              {
-                type: "arbeidsgiver",
-              },
-              {
-                type: "Bruker",
-              },
-            ],
+            deltakere: [arbeidsgiverDeltager, brukerDeltager],
           },
         ],
-      },
+      } as MoterState,
       action
     );
     expect(state).to.deep.equal({

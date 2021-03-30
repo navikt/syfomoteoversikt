@@ -1,9 +1,9 @@
+import { expect } from "chai";
 import chai from "chai";
 import chaiEnzyme from "chai-enzyme";
 import * as actions from "../../../src/data/moter/moterEnhet_actions";
 
 chai.use(chaiEnzyme());
-const expect = chai.expect;
 
 describe("moterEnhet_actions", () => {
   it("har en hentEnhetsMoter-funksjon som returnerer riktig action", () => {
