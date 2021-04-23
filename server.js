@@ -5,6 +5,20 @@ const proxy = require("express-http-proxy");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
 
+const envVar = ({ name }) => {
+  const fromEnv = process.env[name];
+  if (fromEnv) {
+    return fromEnv;
+  }
+  throw new Error(`Missing required environment variable ${name}`);
+};
+
+const hosts = {
+  isdialogmote: envVar({ name: "ISDIALOGMOTE_HOST" }),
+  modiacontextholder: envVar({ name: "MODIACONTEXTHOLDER_HOST" }),
+  syfomoteadmin: envVar({ name: "SYFOMOTEADMIN_HOST" }),
+};
+
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
@@ -21,11 +35,6 @@ const server = express();
 
 server.use(express.json());
 
-const modiacontextholderUrl =
-  process.env.NAIS_CONTEXT === "preprod"
-    ? "modiacontextholder.q0"
-    : "modiacontextholder.default";
-
 function nocache(req, res, next) {
   res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
   res.header("Expires", "-1");
@@ -35,8 +44,8 @@ function nocache(req, res, next) {
 
 server.use(
   "/syfomoteadmin/api",
-  proxy("syfomoteadmin.default", {
-    https: false,
+  proxy(hosts.syfomoteadmin, {
+    https: true,
     proxyReqPathResolver: function (req) {
       return `/syfomoteadmin/api${req.url}`;
     },
@@ -48,8 +57,8 @@ server.use(
 );
 server.use(
   "/modiacontextholder/api",
-  proxy(modiacontextholderUrl, {
-    https: false,
+  proxy(hosts.modiacontextholder, {
+    https: true,
     proxyReqPathResolver: function (req) {
       console.log(req.url);
       return `/modiacontextholder/api${req.url}`;
@@ -60,11 +69,6 @@ server.use(
     },
   })
 );
-
-const isdialogmoteUrl =
-  process.env.NAIS_CONTEXT === "preprod"
-    ? "isdialogmote.dev.intern.nav.no"
-    : "isdialogmote.intern.nav.no";
 
 server.use(
   "/isdialogmote/api/v1/dialogmote/enhet/",
@@ -78,7 +82,7 @@ server.use(
       },
     };
 
-    const url = `https://${isdialogmoteUrl}/api/v1/dialogmote/enhet/${enhetNr}`;
+    const url = `https://${hosts.isdialogmote}/api/v1/dialogmote/enhet/${enhetNr}`;
     axios
       .get(url, options)
       .then((response) => {
