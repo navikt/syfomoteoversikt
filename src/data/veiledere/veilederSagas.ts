@@ -9,10 +9,10 @@ export function* hentVeileder(action: HenterVeilederAction) {
   try {
     const optionalPathParameter = action.data.ident
       ? `/${action.data.ident}`
-      : "";
+      : "/self";
     const data: VeilederDto = yield call(
       get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/veilederinfo${optionalPathParameter}`
+      `${process.env.SYFOVEILEDER_ROOT}/v1/veileder${optionalPathParameter}`
     );
     yield put(actions.veilederHentet(data));
   } catch (e) {

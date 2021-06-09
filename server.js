@@ -17,6 +17,7 @@ const hosts = {
   isdialogmote: envVar({ name: "ISDIALOGMOTE_HOST" }),
   modiacontextholder: envVar({ name: "MODIACONTEXTHOLDER_HOST" }),
   syfomoteadmin: envVar({ name: "SYFOMOTEADMIN_HOST" }),
+  syfoveileder: envVar({ name: "SYFOVEILEDER_HOST" }),
 };
 
 // Prometheus metrics
@@ -51,6 +52,19 @@ server.use(
     },
     proxyErrorHandler: function (err, res, next) {
       console.error("Error in proxy for syfomoteadmin", err);
+      next(err);
+    },
+  })
+);
+server.use(
+  "/syfoveileder/api",
+  proxy(hosts.syfoveileder, {
+    https: true,
+    proxyReqPathResolver: function (req) {
+      return `/syfoveileder/api${req.url}`;
+    },
+    proxyErrorHandler: function (err, res, next) {
+      console.error("Error in proxy for syfoveileder", err);
       next(err);
     },
   })
