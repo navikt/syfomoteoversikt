@@ -3,6 +3,16 @@ const mockDialogmoter = require("./mockDialogmoter");
 const mockModiacontextholder = require("./mockModiacontextholder");
 
 function mockEndepunkter(server) {
+  server.get("/syfoveileder/api/v1/veileder/self", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(mockUtils.veilederInfo));
+  });
+
+  server.get("/syfoveileder/api/v1/veileder/:ident", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(mockUtils.veilederInfo));
+  });
+
   server.get("/syfomoteadmin/api/internad/virksomhet/:orgnr", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(mockUtils.virksomhetsInfo));
@@ -11,16 +21,6 @@ function mockEndepunkter(server) {
   server.get("/syfomoteadmin/api/internad/brukerinfo/:ident", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(mockUtils.brukerInfo));
-  });
-
-  server.get("/syfomoteadmin/api/internad/veilederinfo/:ident", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(mockUtils.veilederInfo));
-  });
-
-  server.get("/syfomoteadmin/api/internad/veilederinfo", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(mockUtils.veilederInfo));
   });
 
   server.get("/syfomoteadmin/api/internad/aktor/:aktorId", (req, res) => {
