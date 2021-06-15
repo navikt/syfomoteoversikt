@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { hentEnhetsMoter } from "../../../src/data/moter/moterEnhetSagas";
 import { get } from "../../../src/api";
 import { put, call } from "redux-saga/effects";
+import { SYFOMOTEADMIN_ROOT } from "../../../src/utils/apiUrlUtil";
 
 describe("enhetMoterSagas", () => {
   const generator = hentEnhetsMoter({
@@ -15,10 +16,7 @@ describe("enhetMoterSagas", () => {
   });
 
   it("Skal dernest hente enhets moter", () => {
-    const nextCall = call(
-      get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/moter?navenhet=0001`
-    );
+    const nextCall = call(get, `${SYFOMOTEADMIN_ROOT}/v2/moter?navenhet=0001`);
     expect(generator.next().value).to.deep.equal(nextCall);
   });
 

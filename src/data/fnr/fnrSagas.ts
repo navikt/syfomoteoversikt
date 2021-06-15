@@ -3,13 +3,14 @@ import { get } from "../../api";
 import * as actions from "./fnr_actions";
 import { AktorDTO } from "./AktorDTO";
 import { HentFnrAction } from "./fnr_actions";
+import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentFnr(action: HentFnrAction) {
   yield put(actions.henterFnr());
   try {
     const data: AktorDTO = yield call(
       get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/aktor/${action.ident}`
+      `${SYFOMOTEADMIN_ROOT}/v2/aktor/${action.ident}`
     );
     yield put(actions.fnrHentet(data.fnr, action.moteUuid));
   } catch (e) {

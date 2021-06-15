@@ -5,6 +5,10 @@ const proxy = require("express-http-proxy");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
 
+const Auth = require("./server/auth/index.js");
+
+const setupProxy = require("./server/proxy.js");
+
 const envVar = ({ name }) => {
   const fromEnv = process.env[name];
   if (fromEnv) {
@@ -43,116 +47,124 @@ function nocache(req, res, next) {
   next();
 }
 
-server.use(
-  "/syfomoteadmin/api",
-  proxy(hosts.syfomoteadmin, {
-    https: true,
-    proxyReqPathResolver: function (req) {
-      return `/syfomoteadmin/api${req.url}`;
-    },
-    proxyErrorHandler: function (err, res, next) {
-      console.error("Error in proxy for syfomoteadmin", err);
-      next(err);
-    },
-  })
-);
-server.use(
-  "/syfoveileder/api",
-  proxy(hosts.syfoveileder, {
-    https: true,
-    proxyReqPathResolver: function (req) {
-      return `/syfoveileder/api${req.url}`;
-    },
-    proxyErrorHandler: function (err, res, next) {
-      console.error("Error in proxy for syfoveileder", err);
-      next(err);
-    },
-  })
-);
-server.use(
-  "/modiacontextholder/api",
-  proxy(hosts.modiacontextholder, {
-    https: true,
-    proxyReqPathResolver: function (req) {
-      console.log(req.url);
-      return `/modiacontextholder/api${req.url}`;
-    },
-    proxyErrorHandler: function (err, res, next) {
-      console.error("Error in proxy for modiacontextholder", err);
-      next(err);
-    },
-  })
-);
+const setupServer = async () => {
+  const authClient = await Auth.setupAuth(server);
 
-server.use(
-  "/isdialogmote/api/v1/dialogmote/enhet/",
-  cookieParser(),
-  (req, res) => {
-    const token = req.cookies["isso-idtoken"];
-    const enhetNr = req.url;
-    const options = {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  server.use(setupProxy(authClient));
+
+  server.use(
+    "/syfomoteadmin/api",
+    proxy(hosts.syfomoteadmin, {
+      https: true,
+      proxyReqPathResolver: function (req) {
+        return `/syfomoteadmin/api${req.url}`;
       },
-    };
+      proxyErrorHandler: function (err, res, next) {
+        console.error("Error in proxy for syfomoteadmin", err);
+        next(err);
+      },
+    })
+  );
+  server.use(
+    "/syfoveileder/api",
+    proxy(hosts.syfoveileder, {
+      https: true,
+      proxyReqPathResolver: function (req) {
+        return `/syfoveileder/api${req.url}`;
+      },
+      proxyErrorHandler: function (err, res, next) {
+        console.error("Error in proxy for syfoveileder", err);
+        next(err);
+      },
+    })
+  );
+  server.use(
+    "/modiacontextholder/api",
+    proxy(hosts.modiacontextholder, {
+      https: true,
+      proxyReqPathResolver: function (req) {
+        console.log(req.url);
+        return `/modiacontextholder/api${req.url}`;
+      },
+      proxyErrorHandler: function (err, res, next) {
+        console.error("Error in proxy for modiacontextholder", err);
+        next(err);
+      },
+    })
+  );
 
-    const url = `https://${hosts.isdialogmote}/api/v1/dialogmote/enhet/${enhetNr}`;
-    axios
-      .get(url, options)
-      .then((response) => {
-        res.send(response.data);
-      })
-      .catch((err) => {
-        console.error("Error in proxy for isdialogmote", err.message);
-        res.status(err.status).send(err.message);
-      });
-  }
-);
+  server.use(
+    "/isdialogmote/api/v2/dialogmote/enhet/",
+    cookieParser(),
+    (req, res) => {
+      const token = req.cookies["isso-idtoken"];
+      const enhetNr = req.url;
+      const options = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-server.get("/actuator/metrics", (req, res) => {
-  res.set("Content-Type", prometheus.register.contentType);
-  res.end(prometheus.register.metrics());
-});
+      const url = `https://${hosts.isdialogmote}/api/v2/dialogmote/enhet/${enhetNr}`;
+      axios
+        .get(url, options)
+        .then((response) => {
+          res.send(response.data);
+        })
+        .catch((err) => {
+          console.error("Error in proxy for isdialogmote", err.message);
+          res.status(err.status).send(err.message);
+        });
+    }
+  );
 
-server.get("/health/isAlive", (req, res) => {
-  res.sendStatus(200);
-});
+  server.get("/actuator/metrics", (req, res) => {
+    res.set("Content-Type", prometheus.register.contentType);
+    res.end(prometheus.register.metrics());
+  });
 
-server.get("/health/isReady", (req, res) => {
-  res.sendStatus(200);
-});
+  server.get("/health/isAlive", (req, res) => {
+    res.sendStatus(200);
+  });
 
-const DIST_DIR = path.join(__dirname, "dist");
-const HTML_FILE = path.join(DIST_DIR, "index.html");
+  server.get("/health/isReady", (req, res) => {
+    res.sendStatus(200);
+  });
 
-server.use(
-  "/syfomoteoversikt",
-  express.static(path.join(__dirname, "..", "build"))
-);
+  const DIST_DIR = path.join(__dirname, "dist");
+  const HTML_FILE = path.join(DIST_DIR, "index.html");
 
-server.use(
-  "/syfomoteoversikt/img",
-  express.static(path.resolve(__dirname, "img"))
-);
-
-server.get(
-  [
-    "/",
+  server.use(
     "/syfomoteoversikt",
-    "/syfomoteoversikt/*",
-    /^\/syfomoteoversikt\/(?!(resources|img)).*$/,
-  ],
-  nocache,
-  (req, res) => {
-    res.sendFile(HTML_FILE);
-    httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
-  }
-);
+    express.static(path.join(__dirname, "..", "build"))
+  );
 
-server.use("/static", express.static(DIST_DIR));
+  server.use(
+    "/syfomoteoversikt/img",
+    express.static(path.resolve(__dirname, "img"))
+  );
 
-const port = 8080;
+  server.get(
+    [
+      "/",
+      "/syfomoteoversikt",
+      "/syfomoteoversikt/*",
+      /^\/syfomoteoversikt\/(?!(resources|img)).*$/,
+    ],
+    nocache,
+    (req, res) => {
+      res.sendFile(HTML_FILE);
+      httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
+    }
+  );
 
-server.listen(port, () => {
-  console.log(`App listening on port: ${port}`);
-});
+  server.use("/static", express.static(DIST_DIR));
+
+  const port = 8080;
+
+  server.listen(port, () => {
+    console.log(`App listening on port: ${port}`);
+  });
+};
+
+setupServer();

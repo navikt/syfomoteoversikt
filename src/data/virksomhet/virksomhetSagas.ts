@@ -6,13 +6,14 @@ import {
   HENT_VIRKSOMHET_FORESPURT,
   HentVirksomhetAction,
 } from "./virksomhet_actions";
+import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentVirksomhet(action: HentVirksomhetAction) {
   yield put(actions.henterVirksomhet());
   try {
     const data: VirksomhetDTO = yield call(
       get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/virksomhet/${action.orgnummer}`
+      `${SYFOMOTEADMIN_ROOT}/v2/virksomhet/${action.orgnummer}`
     );
     yield put(actions.virksomhetHentet(data, action.moteUuid));
   } catch (e) {

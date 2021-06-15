@@ -20,7 +20,7 @@ describe("veilederSagas", () => {
   });
 
   it("Skal dernest hente veileder", () => {
-    const nextCall = call(get, "/syfoveileder/api/v1/veileder/Z999999");
+    const nextCall = call(get, "/syfoveileder/api/v2/veileder/Z999999");
     expect(generator.next().value).to.deep.equal(nextCall);
   });
 

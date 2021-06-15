@@ -1,7 +1,8 @@
 FROM node:14-alpine
 WORKDIR /syfomoteoversikt
 
-COPY .env server.js package.json ./
+COPY server.js package.json ./
+COPY server ./server
 
 COPY node_modules ./node_modules
 COPY img ./img
