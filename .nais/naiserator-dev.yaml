@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: syfomoteoversikt
-  namespace: default
+  namespace: teamsykefravr
   labels:
     team: teamsykefravr
 spec:
@@ -33,17 +33,38 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
-  webproxy: false
+  azure:
+    application:
+      enabled: true
+      tenant: trygdeetaten.no
+      replyURLs:
+        - "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
+      claims:
+        extra:
+          - "NAVident"
+  envFrom:
+    - secret: syfomoteoversikt-session-key
+  webproxy: true
   ingresses:
-    - "https://syfomoteoversikt.nais.preprod.local"
+    - "https://syfomoteoversikt.dev.intern.nav.no"
   env:
-    - name: NAIS_CONTEXT
-      value: 'preprod'
+    - name: NODE_ENV
+      value: "production"
+    - name: AUTH_REDIRECT_URI
+      value: "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
+    - name: REDIS_HOST
+      value: "syfomoteoversikt-redis"
     - name: ISDIALOGMOTE_HOST
       value: "isdialogmote.dev.intern.nav.no"
+    - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
+      value: "1705435b-f7e7-49d6-9fae-89375f28d68f"
     - name: MODIACONTEXTHOLDER_HOST
       value: "modiacontextholder-q0.dev.adeo.no"
+    - name: SYFOMOTEADMIN_AAD_APP_CLIENT_ID
+      value: "dd3a6334-20bb-4316-89c7-8035cb42a347"
     - name: SYFOMOTEADMIN_HOST
       value: "syfomoteadmin.dev.intern.nav.no"
+    - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
+      value: "bdde0d4f-4ced-4aa0-9168-9cfe9044ac10"
     - name: SYFOVEILEDER_HOST
       value: "syfoveileder.dev.intern.nav.no"

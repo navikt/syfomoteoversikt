@@ -3,6 +3,7 @@ import { get } from "../../api";
 import * as actions from "./veileder_actions";
 import { HENT_VEILEDER, HenterVeilederAction } from "./veileder_actions";
 import { VeilederDto } from "./veilederTypes";
+import { SYFOVEILEDER_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentVeileder(action: HenterVeilederAction) {
   yield put(actions.henterVeileder(action.data));
@@ -12,7 +13,7 @@ export function* hentVeileder(action: HenterVeilederAction) {
       : "/self";
     const data: VeilederDto = yield call(
       get,
-      `${process.env.SYFOVEILEDER_ROOT}/v1/veileder${optionalPathParameter}`
+      `${SYFOVEILEDER_ROOT}/v2/veileder${optionalPathParameter}`
     );
     yield put(actions.veilederHentet(data));
   } catch (e) {

@@ -15,13 +15,14 @@ import {
   OverforMoterAction,
   overforMoterFeilet,
 } from "./overfor_actions";
+import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentEnhetsMoter(action: HentEnhetsMoterAction) {
   yield put(henterEnhetsMoter(action.enhet));
   try {
     const data: MoteDTO[] = yield call(
       get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/moter?navenhet=${action.enhet}`
+      `${SYFOMOTEADMIN_ROOT}/v2/moter?navenhet=${action.enhet}`
     );
     yield put(enhetsMoterHentet(data));
   } catch (e) {
@@ -32,13 +33,9 @@ export function* hentEnhetsMoter(action: HentEnhetsMoterAction) {
 export function* overforMoter(action: OverforMoterAction) {
   yield put(overforerMoter());
   try {
-    yield call(
-      post,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/actions/moter/overfor`,
-      {
-        moteUuidListe: action.moteUuidListe,
-      }
-    );
+    yield call(post, `${SYFOMOTEADMIN_ROOT}/v2/actions/moter/overfor`, {
+      moteUuidListe: action.moteUuidListe,
+    });
     yield put(moterOverfort());
     window.location.href = "/syfomoteoversikt/minemoter";
   } catch (e) {

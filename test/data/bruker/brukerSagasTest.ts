@@ -20,7 +20,7 @@ describe("brukerSagas", () => {
   });
 
   it("Skal dernest hente bruker", () => {
-    const nextCall = call(get, "/syfomoteadmin/api/internad/brukerinfo/55");
+    const nextCall = call(get, "/syfomoteadmin/api/internad/v2/brukerinfo/55");
     expect(generator.next().value).to.deep.equal(nextCall);
   });
 

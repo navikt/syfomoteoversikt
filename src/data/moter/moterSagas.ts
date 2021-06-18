@@ -3,13 +3,14 @@ import { get } from "../../api";
 import * as actions from "./moter_actions";
 import { MoteDTO } from "./moterTypes";
 import { HENT_MOTER_FORESPURT } from "./moter_actions";
+import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentMoter() {
   yield put(actions.henterMoter());
   try {
     const data: MoteDTO[] = yield call(
       get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/moter?veiledersmoter=true`
+      `${SYFOMOTEADMIN_ROOT}/v2/moter?veiledersmoter=true`
     );
     yield put(actions.moterHentet(data));
   } catch (e) {

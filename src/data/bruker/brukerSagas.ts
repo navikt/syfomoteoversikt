@@ -3,13 +3,14 @@ import { get } from "../../api";
 import * as actions from "./bruker_actions";
 import { BrukerinfoDTO } from "./BrukerinfoDTO";
 import { HentBrukerAction } from "./bruker_actions";
+import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentBruker(action: HentBrukerAction) {
   yield put(actions.henterBruker());
   try {
     const data: BrukerinfoDTO = yield call(
       get,
-      `${process.env.SYFOMOTEADMIN_REST_ROOT}/brukerinfo/${action.ident}`
+      `${SYFOMOTEADMIN_ROOT}/v2/brukerinfo/${action.ident}`
     );
     yield put(actions.brukerHentet(data, action.moteUuid));
   } catch (e) {

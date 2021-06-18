@@ -8,11 +8,12 @@ import {
   hentDialogmoterHentet,
   HENT_DIALOGMOTER_FORESPURT,
 } from "./dialogmoter_actions";
+import { ISDIALOGMOTE_ROOT } from "../../utils/apiUrlUtil";
 
 export function* hentDialogmoter(action: HentDialogmoterAction) {
   yield put(hentDialogmoterHenter());
   try {
-    const path = `${process.env.ISDIALOGMOTE_ROOT}/v1/dialogmote/enhet/${action.enhetNr}`;
+    const path = `${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${action.enhetNr}`;
     const data = yield call(get, path);
 
     if (data && !!data.err) {

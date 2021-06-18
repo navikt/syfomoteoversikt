@@ -1,5 +1,7 @@
+export const NAV_CONSUMER_ID_HEADER = "nav-consumer-id";
+export const NAV_CONSUMER_ID = "syfomoteoversikt";
+
 import { Error403 } from "./errors";
-import { erProd } from "../utils/miljoUtil";
 
 const log = (message?: unknown, ...optionalParams: unknown[]) => {
   if (
@@ -16,33 +18,18 @@ export const getCookie = (name: string): string => {
   return match !== null ? match[1] : "";
 };
 
-export const hentLoginUrl = (): string => {
-  if (erProd()) {
-    return "https://loginservice.nais.adeo.no/login";
-  }
-  return "https://loginservice.nais.preprod.local/login";
-};
-
-export const hentRedirectBaseUrl = (): string => {
-  if (erProd()) {
-    return "https://syfomoteoversikt.nais.adeo.no";
-  }
-  return "https://syfomoteoversikt.nais.preprod.local";
-};
-
-export const lagreRedirectUrlILocalStorage = (href: string): void => {
-  localStorage.setItem("redirecturl", href);
-};
-
 export function get<T>(url: string): Promise<T> {
+  const headers = {
+    [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
+  };
   return fetch(url, {
     credentials: "include",
+    headers,
   })
     .then((res) => {
       if (res.status === 401) {
         log(res, "Redirect til login");
-        lagreRedirectUrlILocalStorage(window.location.href);
-        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
+        window.location.href = `/login?redirectTo=${window.location.pathname}`;
       }
       if (res.status === 404) {
         log(res);
@@ -65,20 +52,21 @@ export function get<T>(url: string): Promise<T> {
 }
 
 export function post<T>(url: string, body: T): Promise<unknown> {
+  const headers = {
+    [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
+    "Content-Type": "application/json",
+    NAV_CSRF_PROTECTION: getCookie("NAV_CSRF_PROTECTION"),
+  };
   return fetch(url, {
     credentials: "include",
     method: "POST",
     body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      NAV_CSRF_PROTECTION: getCookie("NAV_CSRF_PROTECTION"),
-    },
+    headers,
   })
     .then((res) => {
       if (res.status === 401) {
         log(res, "Redirect til login");
-        lagreRedirectUrlILocalStorage(window.location.href);
-        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
+        window.location.href = `/login?redirectTo=${window.location.pathname}`;
       }
       if (res.status > 400) {
         log(res);
