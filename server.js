@@ -1,28 +1,10 @@
 const express = require("express");
 const path = require("path");
 const prometheus = require("prom-client");
-const proxy = require("express-http-proxy");
-const cookieParser = require("cookie-parser");
-const axios = require("axios");
 
 const Auth = require("./server/auth/index.js");
 
 const setupProxy = require("./server/proxy.js");
-
-const envVar = ({ name }) => {
-  const fromEnv = process.env[name];
-  if (fromEnv) {
-    return fromEnv;
-  }
-  throw new Error(`Missing required environment variable ${name}`);
-};
-
-const hosts = {
-  isdialogmote: envVar({ name: "ISDIALOGMOTE_HOST" }),
-  modiacontextholder: envVar({ name: "MODIACONTEXTHOLDER_HOST" }),
-  syfomoteadmin: envVar({ name: "SYFOMOTEADMIN_HOST" }),
-  syfoveileder: envVar({ name: "SYFOVEILEDER_HOST" }),
-};
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -51,72 +33,6 @@ const setupServer = async () => {
   const authClient = await Auth.setupAuth(server);
 
   server.use(setupProxy(authClient));
-
-  server.use(
-    "/syfomoteadmin/api",
-    proxy(hosts.syfomoteadmin, {
-      https: true,
-      proxyReqPathResolver: function (req) {
-        return `/syfomoteadmin/api${req.url}`;
-      },
-      proxyErrorHandler: function (err, res, next) {
-        console.error("Error in proxy for syfomoteadmin", err);
-        next(err);
-      },
-    })
-  );
-  server.use(
-    "/syfoveileder/api",
-    proxy(hosts.syfoveileder, {
-      https: true,
-      proxyReqPathResolver: function (req) {
-        return `/syfoveileder/api${req.url}`;
-      },
-      proxyErrorHandler: function (err, res, next) {
-        console.error("Error in proxy for syfoveileder", err);
-        next(err);
-      },
-    })
-  );
-  server.use(
-    "/modiacontextholder/api",
-    proxy(hosts.modiacontextholder, {
-      https: true,
-      proxyReqPathResolver: function (req) {
-        console.log(req.url);
-        return `/modiacontextholder/api${req.url}`;
-      },
-      proxyErrorHandler: function (err, res, next) {
-        console.error("Error in proxy for modiacontextholder", err);
-        next(err);
-      },
-    })
-  );
-
-  server.use(
-    "/isdialogmote/api/v2/dialogmote/enhet/",
-    cookieParser(),
-    (req, res) => {
-      const token = req.cookies["isso-idtoken"];
-      const enhetNr = req.url;
-      const options = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const url = `https://${hosts.isdialogmote}/api/v2/dialogmote/enhet/${enhetNr}`;
-      axios
-        .get(url, options)
-        .then((response) => {
-          res.send(response.data);
-        })
-        .catch((err) => {
-          console.error("Error in proxy for isdialogmote", err.message);
-          res.status(err.status).send(err.message);
-        });
-    }
-  );
 
   server.get("/actuator/metrics", (req, res) => {
     res.set("Content-Type", prometheus.register.contentType);
