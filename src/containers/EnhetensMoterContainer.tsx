@@ -32,8 +32,7 @@ const EnhetensMoterContainer = (): ReactElement => {
   useEffect(() => {
     if (aktivEnhet !== hentetEnhet) {
       dispatch(hentEnhetsMoter(aktivEnhet));
-      // TODO: Add after implementing V2 of API in ISdialogmote
-      // dispatch(hentDialogmoter(aktivEnhet));
+      dispatch(hentDialogmoter(aktivEnhet));
     }
   }, [aktivEnhet, hentetEnhet]);
 

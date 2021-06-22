@@ -43,6 +43,10 @@ const proxyExternalHost = (host, accessToken, parseReqBody) =>
         (pathFromRequest ? pathFromRequest : "") +
         (queryString ? "?" + queryString : "");
 
+      if (host === Config.auth.isdialogmote.host) {
+        const newPathIsdialogmote = newPath.replace("isdialogmote/", "");
+        return `https://${newPathIsdialogmote}`;
+      }
       return `https://${newPath}`;
     },
     proxyErrorHandler: (err, res, next) => {
