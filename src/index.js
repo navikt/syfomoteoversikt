@@ -13,13 +13,16 @@ import moterEnhet from "./data/moter/moterEnhet";
 import veiledere from "./data/veiledere/veiledere";
 import overfor from "./data/moter/overfor";
 import dialogmoter from "./data/dialogmoter/dialogmoter";
+import enhet from "./data/enhet/enhet";
 import rootSaga from "./sagas/index";
 import { hentMoter } from "./data/moter/moter_actions";
+import { hentVeileder } from "./data/veiledere/veileder_actions";
 
 const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   router: connectRouter(history),
+  enhet,
   moter,
   overfor,
   veiledere,
@@ -37,6 +40,7 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 store.dispatch(hentMoter());
+store.dispatch(hentVeileder({}));
 
 render(
   <Provider store={store}>

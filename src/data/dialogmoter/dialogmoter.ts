@@ -6,6 +6,13 @@ import {
 } from "./dialogmoter_actions";
 import { Reducer } from "redux";
 
+export enum DialogmoteStatus {
+  INNKALT = "INNKALT",
+  AVLYST = "AVLYST",
+  FERDIGSTILT = "FERDIGSTILT",
+  NYTT_TID_STED = "NYTT_TID_STED",
+}
+
 interface DialogmotedeltakerArbeidstakerVarselDTO {
   uuid: string;
   createdAt: string;
@@ -30,33 +37,25 @@ interface DialogmotedeltakerArbeidsgiverDTO {
   type: string;
 }
 
-interface DialogmoteTidStedDTO {
-  uuid: string;
-  sted: string;
-  tid: string;
-}
-
 export interface DialogmoterDTO {
   uuid: string;
   createdAt: string;
   updatedAt: string;
-  planlagtMoteUuid: string | null;
-  planlagtMoteBekreftetTidspunkt: string | null;
-  status: string;
+  status: DialogmoteStatus;
   opprettetAv: string;
   tildeltVeilederIdent: string;
   tildeltEnhet: string;
   arbeidstaker: DialogmotedeltakerArbeidstakerDTO;
   arbeidsgiver: DialogmotedeltakerArbeidsgiverDTO;
-  tidStedList: DialogmoteTidStedDTO[];
+  sted: string;
+  tid: string;
 }
 
 export interface DialogmoterState {
   henter: boolean;
   hentingFeilet: boolean;
   hentet: boolean;
-  hentingForsokt: boolean;
-
+  hentetEnhet: string;
   data: DialogmoterDTO[];
 }
 
@@ -64,8 +63,7 @@ export const initialState: DialogmoterState = {
   henter: false,
   hentingFeilet: false,
   hentet: false,
-  hentingForsokt: false,
-
+  hentetEnhet: "",
   data: [],
 };
 
@@ -80,7 +78,6 @@ const dialogmoter: Reducer<DialogmoterState, DialogmoterActions> = (
         henter: true,
         hentingFeilet: false,
         hentet: false,
-        hentingForsokt: true,
       };
     }
     case HENT_DIALOGMOTER_HENTET: {
@@ -90,7 +87,7 @@ const dialogmoter: Reducer<DialogmoterState, DialogmoterActions> = (
         hentingFeilet: false,
         hentet: true,
         data: action.data,
-        hentingForsokt: true,
+        hentetEnhet: action.enhet,
       };
     }
     case HENT_DIALOGMOTER_FEILET: {
@@ -99,7 +96,6 @@ const dialogmoter: Reducer<DialogmoterState, DialogmoterActions> = (
         henter: false,
         hentingFeilet: true,
         hentet: false,
-        hentingForsokt: true,
       };
     }
     default:

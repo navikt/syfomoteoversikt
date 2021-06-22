@@ -3,8 +3,6 @@ function getDefaultDialogmote() {
     uuid: "85902bc3-86d5-4571-b06a-35e098f86927",
     createdAt: "2021-02-26T12:31:46.126",
     updatedAt: "2021-02-26T12:31:46.126",
-    planlagtMoteUuid: "85902bc3-86d5-4571-b06a-35e098f86927",
-    planlagtMoteBekreftetTidspunkt: "2019-11-26T13:31:46.126",
     status: "INNKALT",
     opprettetAv: "Z990197",
     tildeltVeilederIdent: "Z990197",
@@ -30,14 +28,18 @@ function getDefaultDialogmote() {
       lederNavn: "Korrupt Bolle",
       lederEpost: "korrupt.bolle@nav.no",
       type: "ARBEIDSGIVER",
+      varselList: [
+        {
+          uuid: "85902bc3-86d5-4571-b06a-35e098f86931",
+          createdAt: "2021-02-26T12:31:46.126",
+          varselType: "INNKALT",
+          lestDato: "2021-02-27T13:31:46.126",
+        },
+      ],
     },
-    tidStedList: [
-      {
-        uuid: "85902bc3-86d5-4571-b06a-35e098f86930",
-        sted: "Månen",
-        tid: "2021-03-26T12:31:46.126",
-      },
-    ],
+    sted: "Månen",
+    tid: "2021-03-26T12:31:46.126",
+    videoLink: "https://meet.google.com/xyz",
   };
 }
 

@@ -8,9 +8,14 @@ import NavigasjonsTopp from "../components/NavigasjonsTopp";
 import { useMoter } from "../hooks/useMoter";
 import { hentMoter } from "../data/moter/moter_actions";
 import { useDispatch } from "react-redux";
+import { useAktivEnhet } from "../data/enhet/enhet_hooks";
+import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
+import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const MineMoterContainer = (): ReactElement => {
   const { moter, henterMoter, hentMoterFeilet } = useMoter();
+  const { hentetDialogmoterForEnhet } = useDialogmoter();
+  const aktivEnhet = useAktivEnhet();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,6 +23,12 @@ const MineMoterContainer = (): ReactElement => {
       dispatch(hentMoter());
     }
   }, []);
+
+  useEffect(() => {
+    if (aktivEnhet !== hentetDialogmoterForEnhet) {
+      dispatch(hentDialogmoter(aktivEnhet));
+    }
+  }, [aktivEnhet, hentetDialogmoterForEnhet]);
 
   return (
     <Side tittel="Møteoversikt">

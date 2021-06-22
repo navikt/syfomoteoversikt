@@ -9,18 +9,16 @@ interface MoteMedVeileder extends MoteDTO {
 }
 
 export const useMoterEnhet: () => {
-  hentetEnhet: string;
   getStatuser: () => string[];
   getVeiledere: () => string[];
-  aktivEnhet: string;
   hentMoterFeilet: boolean;
   moter: MoteDTO[];
   aktiveMoterMedStatusOgVeileder: MoteMedVeileder[];
   harAktiveMoter: boolean;
   henterMoter: boolean;
+  hentetMoterForEnhet: string;
 } = () => {
   const {
-    aktivEnhet,
     hentetEnhet,
     hentingFeilet: hentMoterFeilet,
     henter: henterMoter,
@@ -36,8 +34,7 @@ export const useMoterEnhet: () => {
   );
 
   return {
-    aktivEnhet,
-    hentetEnhet,
+    hentetMoterForEnhet: hentetEnhet,
     moter,
     harAktiveMoter: aktiveMoterMedStatus.length > 0,
     aktiveMoterMedStatusOgVeileder,
