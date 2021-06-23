@@ -10,7 +10,6 @@ import {
   HENT_ENHETSMOTER_FEILET,
   HENTER_ENHETSMOTER,
   MoterEnhetActions,
-  SET_AKTIV_ENHET,
 } from "./moterEnhet_actions";
 import { FNR_HENTET, FnrActions } from "../fnr/fnr_actions";
 import {
@@ -24,7 +23,6 @@ import { getDeltagereMedFnr, getDeltagereMedNavn } from "../../utils/moterUtil";
 interface MoterEnhetState {
   henter: boolean;
   hentingFeilet: boolean;
-  aktivEnhet: string;
   hentetEnhet: string;
   data: MoteDTO[];
 }
@@ -33,7 +31,6 @@ const defaultState: MoterEnhetState = {
   data: [],
   henter: false,
   hentingFeilet: false,
-  aktivEnhet: "",
   hentetEnhet: "",
 };
 
@@ -55,12 +52,6 @@ const moterEnhet: Reducer<MoterEnhetState, MoterEnhetReducerAction> = (
         henter: true,
         hentingFeilet: false,
         hentetEnhet: action.enhet,
-      };
-    }
-    case SET_AKTIV_ENHET: {
-      return {
-        ...state,
-        aktivEnhet: action.enhet,
       };
     }
     case ENHETSMOTER_HENTET: {

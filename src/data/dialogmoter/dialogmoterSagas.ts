@@ -1,6 +1,6 @@
-import { all, call, put, select, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
-import { DialogmoterState } from "./dialogmoter";
+import { DialogmoterDTO } from "./dialogmoter";
 import {
   HentDialogmoterAction,
   hentDialogmoterFeilet,
@@ -14,34 +14,13 @@ export function* hentDialogmoter(action: HentDialogmoterAction) {
   yield put(hentDialogmoterHenter());
   try {
     const path = `${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${action.enhetNr}`;
-    const data = yield call(get, path);
-
-    if (data && !!data.err) {
-      yield put(hentDialogmoterFeilet());
-    } else {
-      yield put(hentDialogmoterHentet(data || {}, action.enhetNr));
-    }
+    const data: DialogmoterDTO[] = yield call(get, path);
+    yield put(hentDialogmoterHentet(data || {}, action.enhetNr));
   } catch (e) {
     yield put(hentDialogmoterFeilet());
   }
 }
 
-export const skalHenteDialogmoter = (state: {
-  dialogmoter: DialogmoterState;
-}) => {
-  const reducer = state.dialogmoter;
-  return !reducer.hentingForsokt;
-};
-
-export function* hentDialogmoterHvisIkkeHentet(action: HentDialogmoterAction) {
-  const skalHente = yield select(skalHenteDialogmoter);
-  if (skalHente) {
-    yield hentDialogmoter(action);
-  }
-}
-
 export default function* dialogmoterSagas() {
-  yield all([
-    takeEvery(HENT_DIALOGMOTER_FORESPURT, hentDialogmoterHvisIkkeHentet),
-  ]);
+  yield takeEvery(HENT_DIALOGMOTER_FORESPURT, hentDialogmoter);
 }

@@ -16,6 +16,9 @@ export function* hentVeileder(action: HenterVeilederAction) {
       `${SYFOVEILEDER_ROOT}/v2/veileder${optionalPathParameter}`
     );
     yield put(actions.veilederHentet(data));
+    if (!action.data.ident) {
+      yield put(actions.setAktivVeileder(data.ident || ""));
+    }
   } catch (e) {
     yield put(actions.hentVeilederFeilet(action.data));
   }

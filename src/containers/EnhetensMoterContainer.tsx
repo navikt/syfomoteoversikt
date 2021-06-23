@@ -11,16 +11,19 @@ import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
 import { resetOverforing } from "../data/moter/overfor_actions";
+import { useAktivEnhet } from "../data/enhet/enhet_hooks";
+import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const EnhetensMoterContainer = (): ReactElement => {
   const { harOvertattMoter } = useOverforMoter();
   const {
-    aktivEnhet,
     henterMoter,
     hentMoterFeilet,
     moter,
-    hentetEnhet,
+    hentetMoterForEnhet,
   } = useMoterEnhet();
+  const { hentetDialogmoterForEnhet } = useDialogmoter();
+  const aktivEnhet = useAktivEnhet();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,11 +33,16 @@ const EnhetensMoterContainer = (): ReactElement => {
   }, [harOvertattMoter]);
 
   useEffect(() => {
-    if (aktivEnhet !== hentetEnhet) {
+    if (aktivEnhet !== hentetMoterForEnhet) {
       dispatch(hentEnhetsMoter(aktivEnhet));
+    }
+  }, [aktivEnhet, hentetMoterForEnhet]);
+
+  useEffect(() => {
+    if (aktivEnhet !== hentetDialogmoterForEnhet) {
       dispatch(hentDialogmoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetEnhet]);
+  }, [aktivEnhet, hentetDialogmoterForEnhet]);
 
   return (
     <Side tittel="Møteoversikt">

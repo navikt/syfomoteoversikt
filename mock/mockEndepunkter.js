@@ -84,7 +84,7 @@ function mockEndepunkter(server) {
   );
 
   server.get(
-    "/isdialogmote/api/v2/dialogmote/enhet",
+    "/isdialogmote/api/v2/dialogmote/enhet/:enhetId",
     Auth.ensureAuthenticated(),
     (req, res) => {
       res.setHeader("Content-Type", "application/json");

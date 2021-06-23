@@ -3,16 +3,19 @@ import { Reducer } from "redux";
 import {
   HENT_VEILEDER_FEILET,
   HENTER_VEILEDER,
+  SET_AKTIV_VEILEDER,
   VEILEDER_HENTET,
   VeilederActions,
 } from "./veileder_actions";
 
 interface VeiledereState {
   data: VeilederDto[];
+  aktivVeileder: string;
 }
 
 const defaultState: VeiledereState = {
   data: [],
+  aktivVeileder: "",
 };
 
 const veiledere: Reducer<VeiledereState, VeilederActions> = (
@@ -71,6 +74,12 @@ const veiledere: Reducer<VeiledereState, VeilederActions> = (
       return {
         ...state,
         data,
+      };
+    }
+    case SET_AKTIV_VEILEDER: {
+      return {
+        ...state,
+        aktivVeileder: action.veileder,
       };
     }
     default: {
