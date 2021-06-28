@@ -5,7 +5,7 @@ function getDefaultDialogmote() {
     updatedAt: "2021-02-26T12:31:46.126",
     status: "INNKALT",
     opprettetAv: "Z990197",
-    tildeltVeilederIdent: "Z990197",
+    tildeltVeilederIdent: "S123456",
     tildeltEnhet: "0314",
     arbeidstaker: {
       uuid: "85902bc3-86d5-4571-b06a-35e098f86928",
@@ -17,7 +17,6 @@ function getDefaultDialogmote() {
           createdAt: "2021-02-26T12:31:46.126",
           varselType: "INNKALT",
           digitalt: true,
-          pdf: [],
           lestDato: "2021-02-26T13:31:46.126",
         },
       ],

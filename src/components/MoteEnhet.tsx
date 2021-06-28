@@ -1,66 +1,52 @@
 import React, { ReactElement, useEffect } from "react";
-import { Checkbox } from "nav-frontend-skjema";
-import { finnVeilederNavn, getDatoFraZulu } from "../utils";
-import { useDispatch } from "react-redux";
-import { hentBruker } from "../data/bruker/bruker_actions";
-import { hentFnr } from "../data/fnr/fnr_actions";
+import { getDatoFraZulu } from "../utils";
+import { getMoteDato } from "../utils/moterUtil";
+import { MoteDTO } from "../data/moter/moterTypes";
+import { useMoteVeileder } from "../hooks/useMoteVeileder";
+import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
+import { OverforMote } from "./OverforMote";
 import { hentVeileder } from "../data/veiledere/veileder_actions";
-import { getBruker, deltakerSvarStatus } from "../utils/moterUtil";
-import { useOverforMoter } from "../hooks/useOverforMoter";
-import { MoteMedVeilederDTO } from "../data/moter/moterTypes";
-import { markerMoteForOverforing } from "../data/moter/overfor_actions";
-import { BrukersNavn } from "./BrukersNavn";
+import { useDispatch } from "react-redux";
+import { isDialogmote } from "../utils/dialogmoterUtil";
+import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
+import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 
 interface MoteEnhetProps {
-  mote: MoteMedVeilederDTO;
+  mote: MoteDTO | DialogmoterDTO;
 }
 
 const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
   const dispatch = useDispatch();
-  const { moterMarkertForOverforing } = useOverforMoter();
-
-  const bruker = getBruker(mote);
-  const svarStatus = deltakerSvarStatus(mote);
-  const markert = moterMarkertForOverforing.some(
-    (markertMoteUuid: string) => mote.moteUuid === markertMoteUuid
-  );
+  const { getVeileder } = useMoteVeileder();
+  const moteVeilederIdent = isDialogmote(mote)
+    ? mote.tildeltVeilederIdent
+    : mote.eier;
 
   useEffect(() => {
-    if (!bruker?.navn && mote.aktorId) {
-      dispatch(hentBruker(mote.aktorId, mote.moteUuid));
-    }
-    if (!bruker?.fnr && mote.aktorId) {
-      dispatch(hentFnr(mote.aktorId, mote.moteUuid));
-    }
-    if (!mote.veileder && mote.eier) {
-      dispatch(hentVeileder({ ident: mote.eier }));
+    if (moteVeilederIdent) {
+      dispatch(hentVeileder({ ident: moteVeilederIdent }));
     }
   }, []);
+
+  const veilederNavn = (mote: MoteDTO | DialogmoterDTO) => {
+    const veileder = getVeileder(mote);
+    if (veileder?.navn) {
+      return veileder.navn;
+    } else if (veileder?.henter) {
+      return "Henter navn...";
+    }
+    return "Fant ikke navn";
+  };
 
   return (
     <tr>
       <td>
-        <Checkbox
-          label={""}
-          id={mote.moteUuid}
-          checked={markert}
-          onChange={(e) => {
-            dispatch(markerMoteForOverforing(mote.moteUuid, e.target.checked));
-          }}
-        />
-        <label htmlFor={mote.moteUuid} />
+        <OverforMote mote={mote} />
       </td>
-      <td>{finnVeilederNavn(mote.veileder)}</td>
-      <td>
-        <BrukersNavn bruker={bruker} />
-      </td>
-      <td>{bruker?.fnr}</td>
-      <td>{getDatoFraZulu(mote.sistEndret)}</td>
-      <td>
-        <span className="Motestatus">
-          <span>{svarStatus}</span>
-        </span>
-      </td>
+      <td>{getDatoFraZulu(getMoteDato(mote))}</td>
+      <td>{veilederNavn(mote)}</td>
+      <MoteArbeidstakerColumns mote={mote} />
+      <MoteStatusResponsColumns mote={mote} />
     </tr>
   );
 };

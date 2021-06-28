@@ -1,7 +1,8 @@
-import { VeilederDto } from "../veiledere/veilederTypes";
-
-export interface MoteMedVeilederDTO extends MoteDTO {
-  veileder?: VeilederDto;
+export enum MoteStatus {
+  OPPRETTET = "OPPRETTET",
+  BEKREFTET = "BEKREFTET",
+  AVBRUTT = "AVBRUTT",
+  FLERE_TIDSPUNKT = "FLERE_TIDSPUNKT",
 }
 
 export interface MoteDTO {
@@ -9,7 +10,7 @@ export interface MoteDTO {
   moteUuid: string;
   opprettetAv: string;
   aktorId: string;
-  status: string;
+  status: MoteStatus;
   fnr: string;
   opprettetTidspunkt: Date;
   bekreftetTidspunkt: Date;
@@ -17,7 +18,7 @@ export interface MoteDTO {
   eier: string;
   deltakere: MoteDeltakerDTO[];
   alternativer: MoteTidOgStedDTO[];
-  bekreftetAlternativ: MoteTidOgStedDTO;
+  bekreftetAlternativ?: MoteTidOgStedDTO;
   sistEndret: Date;
   trengerBehandling: boolean;
 }

@@ -2,15 +2,38 @@ import React, { ReactElement, useState } from "react";
 import Mote from "./Mote";
 import { useMoter } from "../hooks/useMoter";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
-import { MoteStatusFilter } from "./MoteStatusFilter";
-import { compareByOpprettetTidspunktDesc } from "../utils/moterUtil";
+import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
+import {
+  compareByMotedato,
+  getMoteRespons,
+  getMoteResponser,
+} from "../utils/moterUtil";
+import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+
+const texts = {
+  motedato: "Møtedato",
+  fnr: "F.nr",
+  navn: "Navn",
+  narmesteLeder: "Nærmeste leder",
+  virksomhet: "Virksomhet",
+  status: "Status",
+  respons: "Respons",
+};
 
 const Moteoversikt = (): ReactElement => {
-  const [filter, setFilter] = useState("alle");
-  const { aktiveMoterMedStatus: moter, getStatuser } = useMoter();
+  const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
+    "alle"
+  );
+  const { aktiveMoter } = useMoter();
+  const { veiledersAktiveDialogmoter } = useDialogmoter();
+  const moter = [...aktiveMoter, ...veiledersAktiveDialogmoter];
 
-  const getFiltrerteMoter = () =>
-    filter === "alle" ? moter : moter.filter((mote) => mote.status === filter);
+  const getFiltrerteMoter = () => {
+    if (responsFilter === "alle") {
+      return moter;
+    }
+    return moter.filter((value) => getMoteRespons(value) === responsFilter);
+  };
 
   const filtrerteMoter = getFiltrerteMoter();
 
@@ -19,10 +42,10 @@ const Moteoversikt = (): ReactElement => {
       <div className="verktoylinje">
         <div className="verktoylinje__verktoy">
           <div className="verktoylinje__filter">
-            <MoteStatusFilter
-              moteStatuser={getStatuser()}
-              onFilterChange={(changedFilter: string) =>
-                setFilter(changedFilter)
+            <MoteResponsFilter
+              moteResponser={getMoteResponser(moter)}
+              onFilterChange={(changedFilter: MoteRespons) =>
+                setResponsFilter(changedFilter)
               }
             />
           </div>
@@ -33,20 +56,19 @@ const Moteoversikt = (): ReactElement => {
         <table className="motetabell">
           <thead>
             <tr>
-              <th scope="col">F.nr</th>
-              <th scope="col">Navn</th>
-              <th scope="col">Nærmeste leder</th>
-              <th scope="col">Virksomhet</th>
-              <th scope="col">Sist endret</th>
-              <th scope="col">Status</th>
+              <th scope="col">{texts.motedato}</th>
+              <th scope="col">{texts.fnr}</th>
+              <th scope="col">{texts.navn}</th>
+              <th scope="col">{texts.narmesteLeder}</th>
+              <th scope="col">{texts.virksomhet}</th>
+              <th scope="col">{texts.status}</th>
+              <th scope="col">{texts.respons}</th>
             </tr>
           </thead>
           <tbody>
-            {filtrerteMoter
-              .sort(compareByOpprettetTidspunktDesc())
-              .map((mote, index) => (
-                <Mote key={index} mote={mote} />
-              ))}
+            {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
+              <Mote key={index} mote={mote} />
+            ))}
           </tbody>
         </table>
       </div>

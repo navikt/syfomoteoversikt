@@ -14,7 +14,12 @@ import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const MineMoterContainer = (): ReactElement => {
   const { moter, henterMoter, hentMoterFeilet } = useMoter();
-  const { hentetDialogmoterForEnhet } = useDialogmoter();
+  const {
+    hentetDialogmoterForEnhet,
+    henterDialogmoter,
+    hentDialogmoterFeilet,
+    dialogmoter,
+  } = useDialogmoter();
   const aktivEnhet = useAktivEnhet();
   const dispatch = useDispatch();
 
@@ -48,15 +53,15 @@ const MineMoterContainer = (): ReactElement => {
           ]}
         />
         {(() => {
-          if (henterMoter) {
+          if (henterMoter || henterDialogmoter) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (hentMoterFeilet) {
+          } else if (hentMoterFeilet && hentDialogmoterFeilet) {
             return <Feilmelding />;
-          } else if (moter) {
+          } else if (moter || dialogmoter) {
             return <Moter />;
           }
           return <p>Bruker har ingen møter</p>;

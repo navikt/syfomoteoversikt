@@ -3,10 +3,13 @@ import AlertStripe from "nav-frontend-alertstriper";
 import MoteoversiktEnhet from "./MoteoversiktEnhet";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
+import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const EnhetensMoter = (): ReactElement => {
   const { overtaMoterFeilet } = useOverforMoter();
   const { harAktiveMoter } = useMoterEnhet();
+  const { harAktiveDialogmoter } = useDialogmoter();
+  const harMoter = harAktiveMoter || harAktiveDialogmoter;
 
   return (
     <div>
@@ -17,12 +20,12 @@ const EnhetensMoter = (): ReactElement => {
           Prøv igjen senere
         </AlertStripe>
       )}
-      {!harAktiveMoter && (
+      {!harMoter && (
         <div className="panel">
           <p>Enheten har ingen aktive møter.</p>
         </div>
       )}
-      {harAktiveMoter && <MoteoversiktEnhet />}
+      {harMoter && <MoteoversiktEnhet />}
     </div>
   );
 };
