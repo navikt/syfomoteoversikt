@@ -26,7 +26,7 @@ const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
     if (moteVeilederIdent) {
       dispatch(hentVeileder({ ident: moteVeilederIdent }));
     }
-  }, []);
+  }, [dispatch, moteVeilederIdent]);
 
   const veilederNavn = (mote: MoteDTO | DialogmoterDTO) => {
     const veileder = getVeileder(mote);

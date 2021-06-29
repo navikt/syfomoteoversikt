@@ -35,19 +35,19 @@ const EnhetensMoterContainer = (): ReactElement => {
     if (harOvertattMoter) {
       dispatch(resetOverforing());
     }
-  }, [harOvertattMoter]);
+  }, [dispatch, harOvertattMoter]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetMoterForEnhet) {
       dispatch(hentEnhetsMoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetMoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetMoterForEnhet]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetDialogmoterForEnhet) {
       dispatch(hentDialogmoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetDialogmoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet]);
 
   return (
     <Side tittel="Møteoversikt">

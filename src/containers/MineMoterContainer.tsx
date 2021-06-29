@@ -13,7 +13,7 @@ import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const MineMoterContainer = (): ReactElement => {
-  const { moter, henterMoter, hentMoterFeilet } = useMoter();
+  const { moter, henterMoter, hentMoterFeilet, hentetMoter } = useMoter();
   const {
     hentetDialogmoterForEnhet,
     henterDialogmoter,
@@ -24,16 +24,16 @@ const MineMoterContainer = (): ReactElement => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!henterMoter && !hentMoterFeilet && moter.length === 0) {
+    if (!henterMoter && !hentMoterFeilet && !hentetMoter) {
       dispatch(hentMoter());
     }
-  }, []);
+  }, [dispatch, hentetMoter, henterMoter, hentMoterFeilet]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetDialogmoterForEnhet) {
       dispatch(hentDialogmoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetDialogmoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet]);
 
   return (
     <Side tittel="Møteoversikt">

@@ -27,6 +27,7 @@ import {
 export interface MoterState {
   henter: boolean;
   hentingFeilet: boolean;
+  hentetMoter: boolean;
   sender: boolean;
   sendingFeilet: boolean;
   data: MoteDTO[];
@@ -36,6 +37,7 @@ const defaultState: MoterState = {
   data: [],
   henter: false,
   hentingFeilet: false,
+  hentetMoter: true,
   sender: false,
   sendingFeilet: false,
 };
@@ -53,35 +55,28 @@ const moter: Reducer<MoterState> = (
   switch (action.type) {
     case HENT_MOTER_HENTER: {
       return {
-        data: [],
-        sender: false,
+        ...state,
         henter: true,
         hentingFeilet: false,
-        sendingFeilet: false,
-        avbryter: false,
-        avbrytFeilet: false,
+        hentetMoter: false,
       };
     }
     case HENT_MOTER_HENTET: {
       return {
+        ...state,
         data: action.data,
-        sender: false,
         henter: false,
         hentingFeilet: false,
-        sendingFeilet: false,
-        avbryter: false,
-        avbrytFeilet: false,
+        hentetMoter: true,
       };
     }
     case HENT_MOTER_FEILET: {
       return {
+        ...state,
         data: [],
-        sender: false,
-        sendingFeilet: false,
         henter: false,
         hentingFeilet: true,
-        avbryter: false,
-        avbrytFeilet: false,
+        hentetMoter: false,
       };
     }
     case HENTER_VIRKSOMHET: {

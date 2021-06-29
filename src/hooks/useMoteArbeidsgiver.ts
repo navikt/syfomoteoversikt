@@ -2,7 +2,7 @@ import { MoteDTO } from "../data/moter/moterTypes";
 import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
 import { useDispatch } from "react-redux";
 import { findDeltakerByType } from "../utils/moterUtil";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { hentVirksomhet } from "../data/virksomhet/virksomhet_actions";
 import { isDialogmote } from "../utils/dialogmoterUtil";
 
@@ -18,19 +18,23 @@ export const useMoteArbeidsgiver = (
   const dispatch = useDispatch();
 
   const moteUuid = isDialogmote(mote) ? mote.uuid : mote.moteUuid;
-  const arbeidsgiver = isDialogmote(mote)
-    ? {
-        virksomhet: mote.arbeidsgiver.virksomhetsnavn,
-        orgnummer: mote.arbeidsgiver.virksomhetsnummer,
-        navn: mote.arbeidsgiver.lederNavn,
-      }
-    : findDeltakerByType(mote, "ARBEIDSGIVER");
+  const arbeidsgiver = useMemo(
+    () =>
+      isDialogmote(mote)
+        ? {
+            virksomhet: mote.arbeidsgiver.virksomhetsnavn,
+            orgnummer: mote.arbeidsgiver.virksomhetsnummer,
+            navn: mote.arbeidsgiver.lederNavn,
+          }
+        : findDeltakerByType(mote, "ARBEIDSGIVER"),
+    [mote]
+  );
 
   useEffect(() => {
     if (!arbeidsgiver?.virksomhet && arbeidsgiver?.orgnummer) {
       dispatch(hentVirksomhet(arbeidsgiver.orgnummer, moteUuid));
     }
-  }, []);
+  }, [dispatch, arbeidsgiver, moteUuid]);
 
   return {
     leder: arbeidsgiver?.navn,
