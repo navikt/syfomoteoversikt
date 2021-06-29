@@ -16,7 +16,7 @@ export const useMoterEnhet: () => {
     henter: henterMoter,
     data: moter,
   } = useAppSelector((state) => state.moterEnhet);
-  const aktiveMoter = moter.filter(ikkeAvbrutt);
+  const aktiveMoter = moter.filter(ikkeAvbrutt());
 
   return {
     hentetMoterForEnhet: hentetEnhet,
