@@ -1,11 +1,11 @@
-import { getStatuser, ikkeAvbrutt, setMoteStatus } from "../utils/moterUtil";
+import { ikkeAvbrutt } from "../utils/moterUtil";
 import { useAppSelector } from "./hooks";
 import { MoteDTO } from "../data/moter/moterTypes";
 
 export const useMoter: () => {
-  aktiveMoterMedStatus: MoteDTO[];
-  getStatuser: () => string[];
+  aktiveMoter: MoteDTO[];
   hentMoterFeilet: boolean;
+  hentetMoter: boolean;
   moter: MoteDTO[];
   henterMoter: boolean;
   harAktiveMoter: boolean;
@@ -14,14 +14,15 @@ export const useMoter: () => {
     hentingFeilet: hentMoterFeilet,
     henter: henterMoter,
     data: moter,
+    hentetMoter,
   } = useAppSelector((state) => state.moter);
-  const aktiveMoterMedStatus = moter.map(setMoteStatus).filter(ikkeAvbrutt);
+  const aktiveMoter = moter.filter(ikkeAvbrutt());
 
   return {
     henterMoter,
-    aktiveMoterMedStatus,
-    harAktiveMoter: aktiveMoterMedStatus.length > 0,
-    getStatuser: () => getStatuser(aktiveMoterMedStatus),
+    hentetMoter,
+    aktiveMoter,
+    harAktiveMoter: aktiveMoter.length > 0,
     moter,
     hentMoterFeilet,
   };

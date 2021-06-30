@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
-import { DialogmoterDTO } from "./dialogmoter";
 import {
   HentDialogmoterAction,
   hentDialogmoterFeilet,
@@ -9,6 +8,7 @@ import {
   HENT_DIALOGMOTER_FORESPURT,
 } from "./dialogmoter_actions";
 import { ISDIALOGMOTE_ROOT } from "../../utils/apiUrlUtil";
+import { DialogmoterDTO } from "./dialogmoterTypes";
 
 export function* hentDialogmoter(action: HentDialogmoterAction) {
   yield put(hentDialogmoterHenter());

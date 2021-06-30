@@ -1,48 +1,177 @@
-import chai from "chai";
+import {
+  antallDeltakerSvarTekst,
+  compareByMotedato,
+  getMoteRespons,
+  moteStatusTekst,
+} from "../../src/utils/moterUtil";
+import { MoteDTO, MoteStatus } from "../../src/data/moter/moterTypes";
 import { expect } from "chai";
-import chaiEnzyme from "chai-enzyme";
-import { svarStatuser, deltakerSvarStatus } from "../../src/utils/moterUtil";
-import { MoteDTO } from "../../src/data/moter/moterTypes";
 
-chai.use(chaiEnzyme());
-
-describe("Moteovertsikt deltakerSvarStatus", () => {
+describe("moterUtil antallDeltakerSvarTekst", () => {
   it("skal vise 0 svar", () => {
-    const mote = getMote();
-    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
-    expect(svarStatus).to.equal("0/2 Svar");
+    const mote = createMote(MoteStatus.OPPRETTET);
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("0/2 svar");
   });
 
   it("skal vise 1 svar", () => {
     const mote = getMoteMedEttSvar();
-    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
-    expect(svarStatus).to.equal("1/2 Svar");
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("1/2 svar");
   });
 
   it("skal vise 2 svar når begge har svart på et alternativ", () => {
     const mote = getMoteMedBeggeSvar();
-    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
-    expect(svarStatus).to.equal("2/2 Svar");
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("2/2 svar");
   });
 
   it("skal vise 2 svar når begge har svart på alle alternativer", () => {
     const mote = getMoteMedBeggeSvarBeggeAlternativer();
-    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
-    expect(svarStatus).to.equal("2/2 Svar");
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("2/2 svar");
   });
 
   it("skal vise bekreftet mote", () => {
-    const mote = getMoteBekreftet();
-    const svarStatus = deltakerSvarStatus((mote as unknown) as MoteDTO);
-    expect(svarStatus).to.equal(svarStatuser.BEKREFTET);
+    const mote = createMote(MoteStatus.BEKREFTET);
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("Bekreftet");
   });
 });
 
-const getMote = () => {
+describe("moterUtil moteStatusTekst", () => {
+  it("Skal returnere riktig status for møte som er opprettet og svar ikke mottatt", () => {
+    const _mote = createMote(MoteStatus.OPPRETTET) as unknown;
+    expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
+      "Planlegger: Forslag sendt"
+    );
+  });
+
+  it("Skal returnere riktig status for møte som er opprettet og svar er mottatt", () => {
+    const _mote = createMote(
+      MoteStatus.OPPRETTET,
+      "2017-04-03T11:50:28.538"
+    ) as unknown;
+    expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
+      "Planlegger: Forslag sendt"
+    );
+  });
+
+  it("Skal returnere riktig status for møte som er BEKREFTET og svar er mottatt", () => {
+    const _mote = createMote(
+      MoteStatus.BEKREFTET,
+      "2017-04-03T11:35:51.912"
+    ) as unknown;
+    expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
+      "Planlegger: Bekreftelse sendt"
+    );
+  });
+
+  it("Skal returnere riktig status for møte som er AVBRUTT og svar er mottatt", () => {
+    const _mote = createMote(
+      MoteStatus.AVBRUTT,
+      "2017-04-03T11:35:51.912"
+    ) as unknown;
+    expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
+      "Planlegger: Avbrutt"
+    );
+  });
+});
+
+describe("moterUtil getMoteRespons", () => {
+  it("Skal returnere riktig respons for møte som er opprettet og svar ikke mottatt", () => {
+    const _mote = createMote(MoteStatus.OPPRETTET) as unknown;
+    expect(getMoteRespons(_mote as MoteDTO)).to.deep.equal("Ingen respons");
+  });
+
+  it("Skal returnere riktig respons for møte som er opprettet og svar er mottatt", () => {
+    const _mote = createMote(
+      MoteStatus.OPPRETTET,
+      "2017-04-03T11:50:28.538"
+    ) as unknown;
+    expect(getMoteRespons(_mote as MoteDTO)).to.deep.equal("Respons mottatt");
+  });
+
+  it("Skal returnere riktig respons for møte som er BEKREFTET og svar er mottatt", () => {
+    const _mote = createMote(
+      MoteStatus.BEKREFTET,
+      "2017-04-03T11:35:51.912"
+    ) as unknown;
+    expect(getMoteRespons(_mote as MoteDTO)).to.deep.equal("Respons mottatt");
+  });
+
+  it("Skal returnere riktig respons for møte som er AVBRUTT og svar er mottatt", () => {
+    const _mote = createMote(
+      MoteStatus.AVBRUTT,
+      "2017-04-03T11:35:51.912"
+    ) as unknown;
+    expect(getMoteRespons(_mote as MoteDTO)).to.deep.equal("Respons mottatt");
+  });
+});
+
+describe("moterUtil compareByMotedato", () => {
+  it("Sorterer møter på møtedato eldste først", () => {
+    const mote1 = {
+      bekreftetAlternativ: {
+        tid: "2021-06-26T11:11:00",
+      },
+      alternativer: [
+        {
+          tid: "2021-06-23T11:11:00",
+        },
+        {
+          tid: "2021-06-26T11:11:00",
+        },
+      ],
+    } as unknown;
+    const mote2 = {
+      alternativer: [
+        {
+          tid: "2021-06-21T11:11:00",
+        },
+        {
+          tid: "2021-06-24T11:11:00",
+        },
+      ],
+    } as unknown;
+    const mote3 = {
+      alternativer: [
+        {
+          tid: "2021-06-28T11:11:00",
+        },
+      ],
+    } as unknown;
+    const mote4 = {
+      bekreftetAlternativ: {
+        tid: "2021-06-22T11:11:00",
+      },
+      alternativer: [
+        {
+          tid: "2021-06-22T11:11:00",
+        },
+      ],
+    } as unknown;
+
+    const moter = [
+      mote1 as MoteDTO,
+      mote2 as MoteDTO,
+      mote3 as MoteDTO,
+      mote4 as MoteDTO,
+    ];
+    const sorterteMoter = moter.sort(compareByMotedato());
+    expect(sorterteMoter.length).to.equal(4);
+    expect(sorterteMoter[0]).to.deep.equal(mote2);
+    expect(sorterteMoter[1]).to.deep.equal(mote4);
+    expect(sorterteMoter[2]).to.deep.equal(mote1);
+    expect(sorterteMoter[3]).to.deep.equal(mote3);
+  });
+});
+
+const createMote = (status: MoteStatus, svarTidspunkt?: string) => {
   return Object.assign(
     {},
     {
-      status: "OPPRETTET",
+      status,
       opprettetTidspunkt: new Date("2017-02-22T15:18:24.323"),
       bekreftetTidspunkt: null,
       deltakere: [
@@ -53,7 +182,7 @@ const getMote = () => {
           orgnummer: "987654321",
           epost: "are.arbeidsgiver@nav.no",
           type: "arbeidsgiver",
-          svartidspunkt: null,
+          svartidspunkt: svarTidspunkt || null,
           svar: [
             {
               id: 1,
@@ -137,7 +266,6 @@ const getMoteMedEttSvar = () => {
           epost: "test@nav.no",
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:50:28.538",
-          svartTidspunkt: "2017-04-03T11:50:28.538",
           svar: [
             {
               id: 1,
@@ -164,7 +292,6 @@ const getMoteMedEttSvar = () => {
           epost: "terje@nav.no",
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:50:28.538",
-          svartTidspunkt: "2017-04-05T11:50:28.538",
           svar: [
             {
               id: 1,
@@ -222,7 +349,6 @@ const getMoteMedBeggeSvar = () => {
           epost: "test@nav.no",
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:43:41.533",
-          svartTidspunkt: "2017-04-03T11:43:41.533",
           svar: [
             {
               id: 1,
@@ -249,7 +375,6 @@ const getMoteMedBeggeSvar = () => {
           epost: "terje@nav.no",
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:43:41.533",
-          svartTidspunkt: "2017-04-05T11:43:41.533",
           svar: [
             {
               id: 1,
@@ -307,7 +432,6 @@ const getMoteMedBeggeSvarBeggeAlternativer = () => {
           epost: "test@nav.no",
           type: "arbeidsgiver",
           svartidspunkt: "2017-04-03T11:43:41.533",
-          svartTidspunkt: "2017-04-03T11:43:41.533",
           svar: [
             {
               id: 1,
@@ -334,7 +458,6 @@ const getMoteMedBeggeSvarBeggeAlternativer = () => {
           epost: "terje@nav.no",
           type: "Bruker",
           svartidspunkt: "2017-04-05T11:43:41.533",
-          svartTidspunkt: "2017-04-05T11:43:41.533",
           svar: [
             {
               id: 1,
@@ -365,105 +488,6 @@ const getMoteMedBeggeSvarBeggeAlternativer = () => {
           id: 2,
           tid: "2017-04-18T11:43:41.533",
           created: "2017-03-31T11:43:41.533",
-          sted: "Sannergata",
-          valgt: false,
-        },
-      ],
-    }
-  );
-};
-
-const getMoteBekreftet = () => {
-  return Object.assign(
-    {},
-    {
-      moteUuid: "moteuuid",
-      opprettetAv: "L122481",
-      status: "BEKREFTET",
-      opprettetTidspunkt: "2017-03-31T11:35:51.912",
-      bekreftetTidspunkt: "2017-04-09T11:35:51.912",
-      navEnhet: "00020",
-      deltakere: [
-        {
-          hendelser: [],
-          deltakerUuid: "uuid1",
-          navn: "Are Arbeidsgiver",
-          orgnummer: "987654321",
-          epost: "test@nav.no",
-          type: "arbeidsgiver",
-          svartidspunkt: "2017-04-03T11:35:51.912",
-          svartTidspunkt: "2017-04-03T11:35:51.912",
-          svar: [
-            {
-              id: 1,
-              tid: "2017-04-16T11:35:51.912",
-              created: "2017-03-31T11:35:51.912",
-              sted: "Sannergata",
-              valgt: false,
-            },
-            {
-              id: 2,
-              tid: "2017-04-18T11:35:51.912",
-              created: "2017-03-31T11:35:51.912",
-              sted: "Sannergata",
-              valgt: true,
-            },
-          ],
-          virksomhet: "Fant ikke navn",
-        },
-        {
-          hendelser: [],
-          deltakerUuid: "uuid2",
-          navn: "Terje Testbruker",
-          fnr: "12345678901",
-          epost: "terje@nav.no",
-          type: "Bruker",
-          svartidspunkt: "2017-04-05T11:35:51.912",
-          svartTidspunkt: "2017-04-05T11:35:51.912",
-          svar: [
-            {
-              id: 1,
-              tid: "2017-04-16T11:35:51.912",
-              created: "2017-03-31T11:35:51.912",
-              sted: "Sannergata",
-              valgt: true,
-            },
-            {
-              id: 2,
-              tid: "2017-04-18T11:35:51.912",
-              created: "2017-03-31T11:35:51.912",
-              sted: "Sannergata",
-              valgt: false,
-            },
-          ],
-        },
-      ],
-      bekreftetAlternativ: {
-        id: 1,
-        tid: "2017-04-16T11:35:51.912",
-        created: "2017-03-31T11:35:51.912",
-        sted: "Sannergata",
-        valgt: true,
-      },
-      valgtAlternativ: {
-        id: 1,
-        tid: "2017-04-16T11:35:51.912",
-        created: "2017-03-31T11:35:51.912",
-        sted: "Sannergata",
-        valgt: true,
-      },
-      alternativer: [
-        {
-          id: 1,
-          tid: "2017-04-16T11:35:51.912",
-          created: "2017-03-31T11:35:51.912",
-          sted: "Sannergata",
-          valgt: false,
-        },
-        {
-          id: 2,
-          tid: "2017-04-18T11:35:51.912",
-          created: "2017-03-31T11:35:51.912",
           sted: "Sannergata",
           valgt: false,
         },

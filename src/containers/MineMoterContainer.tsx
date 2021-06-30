@@ -13,22 +13,27 @@ import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const MineMoterContainer = (): ReactElement => {
-  const { moter, henterMoter, hentMoterFeilet } = useMoter();
-  const { hentetDialogmoterForEnhet } = useDialogmoter();
+  const { moter, henterMoter, hentMoterFeilet, hentetMoter } = useMoter();
+  const {
+    hentetDialogmoterForEnhet,
+    henterDialogmoter,
+    hentDialogmoterFeilet,
+    dialogmoter,
+  } = useDialogmoter();
   const aktivEnhet = useAktivEnhet();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!henterMoter && !hentMoterFeilet && moter.length === 0) {
+    if (!henterMoter && !hentMoterFeilet && !hentetMoter) {
       dispatch(hentMoter());
     }
-  }, []);
+  }, [dispatch, hentetMoter, henterMoter, hentMoterFeilet]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetDialogmoterForEnhet) {
       dispatch(hentDialogmoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetDialogmoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet]);
 
   return (
     <Side tittel="Møteoversikt">
@@ -48,15 +53,15 @@ const MineMoterContainer = (): ReactElement => {
           ]}
         />
         {(() => {
-          if (henterMoter) {
+          if (henterMoter || henterDialogmoter) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (hentMoterFeilet) {
+          } else if (hentMoterFeilet && hentDialogmoterFeilet) {
             return <Feilmelding />;
-          } else if (moter) {
+          } else if (moter || dialogmoter) {
             return <Moter />;
           }
           return <p>Bruker har ingen møter</p>;

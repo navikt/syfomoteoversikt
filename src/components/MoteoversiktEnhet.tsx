@@ -1,39 +1,59 @@
 import React, { ReactElement, useState } from "react";
 import { Select } from "nav-frontend-skjema";
-import { Hovedknapp } from "nav-frontend-knapper";
-import { finnVeilederNavn } from "../utils";
-
 import MoteEnhet from "./MoteEnhet";
-import { useDispatch } from "react-redux";
-import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
-import { MoteStatusFilter } from "./MoteStatusFilter";
-import { overforMoter } from "../data/moter/overfor_actions";
-import { compareByOpprettetTidspunktDesc } from "../utils/moterUtil";
+import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
+import {
+  compareByMotedato,
+  getMoteRespons,
+  getMoteResponser,
+} from "../utils/moterUtil";
+import { useMoteVeileder } from "../hooks/useMoteVeileder";
+import { OverforMoterKnapp } from "./OverforMoterKnapp";
+import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+
+const texts = {
+  velg: "Velg",
+  motedato: "Møtedato",
+  veileder: "Veileder",
+  fnr: "F.nr",
+  sykmeldt: "Sykmeldt",
+  status: "Status",
+  respons: "Respons",
+};
 
 const MoteoversiktEnhet = (): ReactElement => {
-  const [filterStatus, setFilterStatus] = useState("alle");
+  const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
+    "alle"
+  );
   const [filterVeileder, setFilterVeileder] = useState("alle");
-  const dispatch = useDispatch();
 
-  const { moterMarkertForOverforing, overtarMoter } = useOverforMoter();
-  const {
-    aktiveMoterMedStatusOgVeileder: moter,
-    getStatuser,
-    getVeiledere,
-  } = useMoterEnhet();
+  const { aktiveMoter } = useMoterEnhet();
+  const { getVeileder } = useMoteVeileder();
+  const { aktiveDialogmoter } = useDialogmoter();
+  const moter = [...aktiveMoter, ...aktiveDialogmoter];
+
+  const getVeilederNavnForMoter = (): string[] => {
+    return [
+      ...new Set(
+        moter
+          .map((mote) => getVeileder(mote)?.navn)
+          .filter((navn) => navn !== undefined) as string[]
+      ),
+    ];
+  };
 
   const getFiltrerteMoter = () => {
-    if (filterStatus === "alle" && filterVeileder === "alle") {
+    if (responsFilter === "alle" && filterVeileder === "alle") {
       return moter;
     }
 
     return moter.filter((mote) => {
       const veileder =
-        filterVeileder === "alle" ||
-        finnVeilederNavn(mote.veileder) === filterVeileder;
-      const status = filterStatus === "alle" || mote.status === filterStatus;
+        filterVeileder === "alle" || getVeileder(mote)?.navn === filterVeileder;
+      const status =
+        responsFilter === "alle" || getMoteRespons(mote) === responsFilter;
       return veileder && status;
     });
   };
@@ -45,10 +65,10 @@ const MoteoversiktEnhet = (): ReactElement => {
       <div className="verktoylinje">
         <div className="verktoylinje__verktoy">
           <div className="verktoylinje__filter">
-            <MoteStatusFilter
-              moteStatuser={getStatuser()}
-              onFilterChange={(changedFilter: string) =>
-                setFilterStatus(changedFilter)
+            <MoteResponsFilter
+              moteResponser={getMoteResponser(moter)}
+              onFilterChange={(changedFilter: MoteRespons) =>
+                setResponsFilter(changedFilter)
               }
             />
           </div>
@@ -61,7 +81,7 @@ const MoteoversiktEnhet = (): ReactElement => {
               }}
             >
               <option value="alle">Vis alle</option>
-              {getVeiledere().map((veileder, index) => (
+              {getVeilederNavnForMoter().map((veileder, index) => (
                 <option key={index} value={veileder}>
                   {veileder}
                 </option>
@@ -75,36 +95,22 @@ const MoteoversiktEnhet = (): ReactElement => {
         <table className="motetabell">
           <thead>
             <tr>
-              <th scope="col">Velg</th>
-              <th scope="col">Veileder</th>
-              <th scope="col">Sykmeldt</th>
-              <th scope="col">F.nr</th>
-              <th scope="col">Sist endret</th>
-              <th scope="col">Status</th>
+              <th scope="col">{texts.velg}</th>
+              <th scope="col">{texts.motedato}</th>
+              <th scope="col">{texts.veileder}</th>
+              <th scope="col">{texts.fnr}</th>
+              <th scope="col">{texts.sykmeldt}</th>
+              <th scope="col">{texts.status}</th>
+              <th scope="col">{texts.respons}</th>
             </tr>
           </thead>
           <tbody>
-            {filtrerteMoter
-              .sort(compareByOpprettetTidspunktDesc())
-              .map((mote, index) => (
-                <MoteEnhet key={index} mote={mote} />
-              ))}
+            {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
+              <MoteEnhet key={index} mote={mote} />
+            ))}
           </tbody>
         </table>
-        <div className="knapperad">
-          <Hovedknapp
-            disabled={overtarMoter || moterMarkertForOverforing.length === 0}
-            onClick={() => {
-              dispatch(
-                overforMoter({
-                  moteUuidListe: moterMarkertForOverforing,
-                })
-              );
-            }}
-          >
-            Overta møter
-          </Hovedknapp>
-        </div>
+        <OverforMoterKnapp />
       </div>
     </div>
   );

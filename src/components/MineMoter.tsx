@@ -5,6 +5,7 @@ import Moteoversikt from "./Moteoversikt";
 import { dagensDatoKortFormat, tallOrdFraTall } from "../utils";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoter } from "../hooks/useMoter";
+import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 
 const hentTallordTekst = (tall: number) => {
   const tallord = tallOrdFraTall(tall);
@@ -13,7 +14,9 @@ const hentTallordTekst = (tall: number) => {
 
 const Moter = (): ReactElement => {
   const { harOvertattMoter, moterMarkertForOverforing } = useOverforMoter();
+  const { harVeilederAktiveDialogmoter } = useDialogmoter();
   const { harAktiveMoter } = useMoter();
+  const harMoter = harAktiveMoter || harVeilederAktiveDialogmoter;
 
   return (
     <div>
@@ -25,12 +28,12 @@ const Moter = (): ReactElement => {
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
         </Alertstripe>
       )}
-      {!harAktiveMoter && (
+      {!harMoter && (
         <Panel>
           <p>Du har ingen aktive møter.</p>
         </Panel>
       )}
-      {harAktiveMoter && <Moteoversikt />}
+      {harMoter && <Moteoversikt />}
     </div>
   );
 };

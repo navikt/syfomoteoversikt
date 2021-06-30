@@ -18,7 +18,10 @@ import {
   VEILEDER_HENTET,
   VeilederActions,
 } from "../veiledere/veileder_actions";
-import { getDeltagereMedFnr, getDeltagereMedNavn } from "../../utils/moterUtil";
+import {
+  getMoteDeltakereMedFnr,
+  getMoteDeltakereMedNavn,
+} from "../../utils/moterUtil";
 
 interface MoterEnhetState {
   henter: boolean;
@@ -75,7 +78,7 @@ const moterEnhet: Reducer<MoterEnhetState, MoterEnhetReducerAction> = (
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
         }
-        const deltakere = getDeltagereMedFnr(mote, action.data);
+        const deltakere = getMoteDeltakereMedFnr(mote, action.data);
         return { ...mote, deltakere };
       });
       return {
@@ -88,7 +91,7 @@ const moterEnhet: Reducer<MoterEnhetState, MoterEnhetReducerAction> = (
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
         }
-        const deltakere = getDeltagereMedNavn(mote, action.data);
+        const deltakere = getMoteDeltakereMedNavn(mote, action.data);
         return { ...mote, deltakere };
       });
       return {

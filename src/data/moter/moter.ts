@@ -19,11 +19,15 @@ import {
   HENTER_BRUKER,
 } from "../bruker/bruker_actions";
 import { FNR_HENTET, FnrActions } from "../fnr/fnr_actions";
-import { getDeltagereMedFnr, getDeltagereMedNavn } from "../../utils/moterUtil";
+import {
+  getMoteDeltakereMedFnr,
+  getMoteDeltakereMedNavn,
+} from "../../utils/moterUtil";
 
 export interface MoterState {
   henter: boolean;
   hentingFeilet: boolean;
+  hentetMoter: boolean;
   sender: boolean;
   sendingFeilet: boolean;
   data: MoteDTO[];
@@ -33,6 +37,7 @@ const defaultState: MoterState = {
   data: [],
   henter: false,
   hentingFeilet: false,
+  hentetMoter: true,
   sender: false,
   sendingFeilet: false,
 };
@@ -50,35 +55,28 @@ const moter: Reducer<MoterState> = (
   switch (action.type) {
     case HENT_MOTER_HENTER: {
       return {
-        data: [],
-        sender: false,
+        ...state,
         henter: true,
         hentingFeilet: false,
-        sendingFeilet: false,
-        avbryter: false,
-        avbrytFeilet: false,
+        hentetMoter: false,
       };
     }
     case HENT_MOTER_HENTET: {
       return {
+        ...state,
         data: action.data,
-        sender: false,
         henter: false,
         hentingFeilet: false,
-        sendingFeilet: false,
-        avbryter: false,
-        avbrytFeilet: false,
+        hentetMoter: true,
       };
     }
     case HENT_MOTER_FEILET: {
       return {
+        ...state,
         data: [],
-        sender: false,
-        sendingFeilet: false,
         henter: false,
         hentingFeilet: true,
-        avbryter: false,
-        avbrytFeilet: false,
+        hentetMoter: false,
       };
     }
     case HENTER_VIRKSOMHET: {
@@ -123,7 +121,7 @@ const moter: Reducer<MoterState> = (
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
         }
-        const deltakere = getDeltagereMedNavn(mote, action.data);
+        const deltakere = getMoteDeltakereMedNavn(mote, action.data);
         return { ...mote, deltakere };
       });
       return {
@@ -142,7 +140,7 @@ const moter: Reducer<MoterState> = (
         if (mote.moteUuid !== action.moteUuid) {
           return mote;
         }
-        const deltakere = getDeltagereMedFnr(mote, action.data);
+        const deltakere = getMoteDeltakereMedFnr(mote, action.data);
         return { ...mote, deltakere };
       });
       return {

@@ -6,13 +6,13 @@ import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
 import { hentEnhetsMoter } from "../data/moter/moterEnhet_actions";
-import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
 import { resetOverforing } from "../data/moter/overfor_actions";
 import { useAktivEnhet } from "../data/enhet/enhet_hooks";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
 
 const EnhetensMoterContainer = (): ReactElement => {
   const { harOvertattMoter } = useOverforMoter();
@@ -22,7 +22,12 @@ const EnhetensMoterContainer = (): ReactElement => {
     moter,
     hentetMoterForEnhet,
   } = useMoterEnhet();
-  const { hentetDialogmoterForEnhet } = useDialogmoter();
+  const {
+    hentetDialogmoterForEnhet,
+    henterDialogmoter,
+    hentDialogmoterFeilet,
+    dialogmoter,
+  } = useDialogmoter();
   const aktivEnhet = useAktivEnhet();
   const dispatch = useDispatch();
 
@@ -30,19 +35,19 @@ const EnhetensMoterContainer = (): ReactElement => {
     if (harOvertattMoter) {
       dispatch(resetOverforing());
     }
-  }, [harOvertattMoter]);
+  }, [dispatch, harOvertattMoter]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetMoterForEnhet) {
       dispatch(hentEnhetsMoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetMoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetMoterForEnhet]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetDialogmoterForEnhet) {
       dispatch(hentDialogmoter(aktivEnhet));
     }
-  }, [aktivEnhet, hentetDialogmoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet]);
 
   return (
     <Side tittel="Møteoversikt">
@@ -71,15 +76,15 @@ const EnhetensMoterContainer = (): ReactElement => {
                 }
               />
             );
-          } else if (henterMoter) {
+          } else if (henterMoter || henterDialogmoter) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (hentMoterFeilet) {
+          } else if (hentMoterFeilet && hentDialogmoterFeilet) {
             return <Feilmelding />;
-          } else if (moter) {
+          } else if (moter || dialogmoter) {
             return <EnhetensMoter />;
           }
           return <p>Enheten har ingen møter</p>;

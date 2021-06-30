@@ -1,4 +1,4 @@
-import { DialogmoterDTO } from "./dialogmoter";
+import { DialogmoterDTO } from "./dialogmoterTypes";
 
 export const HENT_DIALOGMOTER_FEILET = "HENT_DIALOGMOTER_FEILET";
 export const HENT_DIALOGMOTER_HENTER = "HENT_DIALOGMOTER_HENTER";

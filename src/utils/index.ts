@@ -1,6 +1,3 @@
-import { VeilederDto } from "../data/veiledere/veilederTypes";
-import { MoteDeltakerDTO } from "../data/moter/moterTypes";
-
 export const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
     case 0: {
@@ -71,24 +68,6 @@ export const getTidFraZulu = (zulutid: Date): string => {
   return `${getDatoFraZulu(zulutid)} kl. ${pad(d.getHours())}.${pad(
     d.getMinutes()
   )}`;
-};
-
-export const finnVirksomhet = (leder?: MoteDeltakerDTO): string => {
-  if (leder?.virksomhet) {
-    return leder.virksomhet;
-  } else if (leder?.orgnummer) {
-    return "Henter virksomhet...";
-  }
-  return "Fant ikke virksomheten";
-};
-
-export const finnVeilederNavn = (veileder?: VeilederDto): string => {
-  if (veileder?.navn) {
-    return veileder.navn;
-  } else if (veileder?.henter) {
-    return "Henter navn...";
-  }
-  return "Fant ikke navn";
 };
 
 export const finnMiljoStreng = (): string => {

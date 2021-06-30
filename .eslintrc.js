@@ -14,12 +14,10 @@ module.exports = {
     },
   },
   extends: [
-    "plugin:react/recommended",
-    // Uses the recommended rules from @eslint-plugin-react
-    "plugin:@typescript-eslint/recommended",
-    // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    "prettier",
-    // Make sure this is always the last configuration in the extends array.
+    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "prettier", // Make sure this is always the last configuration in the extends array.
   ],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
