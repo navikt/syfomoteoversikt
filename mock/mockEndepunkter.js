@@ -19,7 +19,11 @@ function mockEndepunkter(server) {
     Auth.ensureAuthenticated(),
     (req, res) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockUtils.veilederInfo));
+      res.send(
+        JSON.stringify(
+          mockUtils.veiledere.find((v) => v.ident === req.params.ident)
+        )
+      );
     }
   );
 
@@ -88,7 +92,7 @@ function mockEndepunkter(server) {
     Auth.ensureAuthenticated(),
     (req, res) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify([mockDialogmoter.getDefaultDialogmote()]));
+      res.send(JSON.stringify(mockDialogmoter.getDialogmoter));
     }
   );
 

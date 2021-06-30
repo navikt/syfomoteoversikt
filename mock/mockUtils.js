@@ -13,11 +13,18 @@ const brukerInfo = readDataFromJsonFile("brukerInfo.json");
 const fnrInfo = readDataFromJsonFile("fnrInfo.json");
 const moter = readDataFromJsonFile("moter.json");
 
+const addDaysToToday = (numDays) => {
+  const nyDato = new Date();
+  nyDato.setDate(nyDato.getDate() + numDays);
+  return new Date(nyDato);
+};
+
 module.exports = {
-  veiledere: veiledere,
-  veilederInfo: veilederInfo,
-  virksomhetsInfo: virksomhetsInfo,
-  brukerInfo: brukerInfo,
-  fnrInfo: fnrInfo,
-  moter: moter,
+  veiledere,
+  veilederInfo,
+  virksomhetsInfo,
+  brukerInfo,
+  fnrInfo,
+  moter,
+  addDaysToToday,
 };

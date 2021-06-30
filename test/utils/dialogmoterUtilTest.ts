@@ -10,8 +10,8 @@ import {
   DialogmoteStatus,
 } from "../../src/data/dialogmoter/dialogmoterTypes";
 import { expect } from "chai";
-import { MoteDTO } from "../../src/data/moter/moterTypes";
 import { compareByMotedato } from "../../src/utils/moterUtil";
+import { daysFromToday } from "../testUtil";
 
 const lestDato = "2031-06-03T11:50:28.538";
 
@@ -56,22 +56,34 @@ describe("dialogmoterUtil antallLesteVarslerTekst", () => {
 
 describe("dialogmoterUtil dialogmoteStatusTekst", () => {
   it("Returnerer riktig tekst for innkalling", () => {
-    const dialogmote = getDialogmote(DialogmoteStatus.INNKALT, imorgen());
+    const dialogmote = getDialogmote(
+      DialogmoteStatus.INNKALT,
+      daysFromToday(1)
+    );
     const statusTekst = dialogmoteStatusTekst(dialogmote);
     expect(statusTekst).to.equal("Innkalling: Sendt");
   });
   it("Returnerer riktig tekst når dato har passert for innkalling", () => {
-    const dialogmote = getDialogmote(DialogmoteStatus.INNKALT, igaar());
+    const dialogmote = getDialogmote(
+      DialogmoteStatus.INNKALT,
+      daysFromToday(-1)
+    );
     const statusTekst = dialogmoteStatusTekst(dialogmote);
     expect(statusTekst).to.equal("Innkalling: Dato passert");
   });
   it("Returnerer riktig tekst for endret tid/sted", () => {
-    const dialogmote = getDialogmote(DialogmoteStatus.NYTT_TID_STED, imorgen());
+    const dialogmote = getDialogmote(
+      DialogmoteStatus.NYTT_TID_STED,
+      daysFromToday(1)
+    );
     const statusTekst = dialogmoteStatusTekst(dialogmote);
     expect(statusTekst).to.equal("Innkalling: Endret tid/sted");
   });
   it("Returnerer riktig tekst når dato har passert for endret tid/sted", () => {
-    const dialogmote = getDialogmote(DialogmoteStatus.NYTT_TID_STED, igaar());
+    const dialogmote = getDialogmote(
+      DialogmoteStatus.NYTT_TID_STED,
+      daysFromToday(-1)
+    );
     const statusTekst = dialogmoteStatusTekst(dialogmote);
     expect(statusTekst).to.equal("Innkalling: Dato passert");
   });
@@ -161,8 +173,8 @@ describe("dialogmoterUtil getDialogmoteRespons", () => {
 
 describe("dialogmoterUtil compareByMotedato", () => {
   it("Sorterer dialogmøter på tid eldste først", () => {
-    const mote1 = getDialogmote(DialogmoteStatus.INNKALT, imorgen());
-    const mote2 = getDialogmote(DialogmoteStatus.INNKALT, igaar());
+    const mote1 = getDialogmote(DialogmoteStatus.INNKALT, daysFromToday(1));
+    const mote2 = getDialogmote(DialogmoteStatus.INNKALT, daysFromToday(-1));
 
     const moter = [mote1, mote2];
     const sorterteMoter = moter.sort(compareByMotedato());
@@ -201,16 +213,4 @@ const getVarsel = (type: DialogmoteDeltakerVarselType, lestDato?: string) => {
     varselType: type,
     lestDato: lestDato || null,
   } as DialogmotedeltakerVarselDTO;
-};
-
-const imorgen = () => {
-  const nyDato = new Date();
-  nyDato.setDate(nyDato.getDate() + 1);
-  return new Date(nyDato);
-};
-
-const igaar = () => {
-  const nyDato = new Date();
-  nyDato.setDate(nyDato.getDate() - 1);
-  return new Date(nyDato);
 };
