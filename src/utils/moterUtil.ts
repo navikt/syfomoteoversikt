@@ -27,17 +27,10 @@ export const moteStatusTekst = (mote: MoteDTO): string => {
 };
 
 export const antallDeltakerSvarTekst = (mote: MoteDTO): string => {
-  if (mote.status === MoteStatus.BEKREFTET) {
-    return "Bekreftet";
-  } else {
-    let antallSvar = 0;
-    mote.deltakere.forEach((deltaker) => {
-      if (harDeltakerSvart(mote, deltaker)) {
-        antallSvar += 1;
-      }
-    });
-    return `${antallSvar}/${mote.deltakere.length} svar`;
-  }
+  const antallSvar = mote.deltakere.filter((deltaker) =>
+    harDeltakerSvart(mote, deltaker)
+  ).length;
+  return `${antallSvar}/${mote.deltakere.length} svar`;
 };
 
 const harDeltakerSvart = (mote: MoteDTO, deltaker: MoteDeltakerDTO) =>

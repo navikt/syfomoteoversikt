@@ -1,11 +1,19 @@
-function getDefaultDialogmote() {
+const { addDaysToToday } = require("./mockUtils");
+const createDialogmote = (
+  status,
+  varselType,
+  veileder,
+  lestArbeidstakerVarsel,
+  lestArbeidsgiverVarsel,
+  dato
+) => {
   return {
     uuid: "85902bc3-86d5-4571-b06a-35e098f86927",
     createdAt: "2021-02-26T12:31:46.126",
     updatedAt: "2021-02-26T12:31:46.126",
-    status: "INNKALT",
+    status,
     opprettetAv: "Z990197",
-    tildeltVeilederIdent: "S123456",
+    tildeltVeilederIdent: veileder,
     tildeltEnhet: "0314",
     arbeidstaker: {
       uuid: "85902bc3-86d5-4571-b06a-35e098f86928",
@@ -15,9 +23,9 @@ function getDefaultDialogmote() {
         {
           uuid: "85902bc3-86d5-4571-b06a-35e098f86931",
           createdAt: "2021-02-26T12:31:46.126",
-          varselType: "INNKALT",
+          varselType,
           digitalt: true,
-          lestDato: "2021-02-26T13:31:46.126",
+          lestDato: lestArbeidstakerVarsel ? "2021-02-26T13:31:46.126" : null,
         },
       ],
     },
@@ -31,17 +39,60 @@ function getDefaultDialogmote() {
         {
           uuid: "85902bc3-86d5-4571-b06a-35e098f86931",
           createdAt: "2021-02-26T12:31:46.126",
-          varselType: "INNKALT",
-          lestDato: "2021-02-27T13:31:46.126",
+          varselType,
+          lestDato: lestArbeidsgiverVarsel ? "2021-02-27T13:31:46.126" : null,
         },
       ],
     },
     sted: "Månen",
-    tid: "2021-03-26T12:31:46.126",
+    tid: dato.toISOString(),
     videoLink: "https://meet.google.com/xyz",
   };
-}
+};
+
+const dialogmoter = [
+  createDialogmote(
+    "INNKALT",
+    "INNKALT",
+    "S123456",
+    true,
+    true,
+    addDaysToToday(2)
+  ),
+  createDialogmote(
+    "NYTT_TID_STED",
+    "NYTT_TID_STED",
+    "S123456",
+    false,
+    false,
+    addDaysToToday(-2)
+  ),
+  createDialogmote(
+    "NYTT_TID_STED",
+    "NYTT_TID_STED",
+    "Z990197",
+    true,
+    false,
+    addDaysToToday(1)
+  ),
+  createDialogmote(
+    "AVLYST",
+    "AVLYST",
+    "S123456",
+    false,
+    false,
+    addDaysToToday(3)
+  ),
+  createDialogmote(
+    "FERDIGSTILT",
+    "REFERAT",
+    "Z990197",
+    false,
+    false,
+    addDaysToToday(2)
+  ),
+];
 
 module.exports = {
-  getDefaultDialogmote,
+  getDialogmoter: dialogmoter,
 };

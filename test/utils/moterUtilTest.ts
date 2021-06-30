@@ -31,12 +31,6 @@ describe("moterUtil antallDeltakerSvarTekst", () => {
     const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal("2/2 svar");
   });
-
-  it("skal vise bekreftet mote", () => {
-    const mote = createMote(MoteStatus.BEKREFTET);
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
-    expect(svarStatus).to.equal("Bekreftet");
-  });
 });
 
 describe("moterUtil moteStatusTekst", () => {

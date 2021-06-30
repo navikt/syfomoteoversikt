@@ -1,12 +1,12 @@
-export const erPreProd = (): boolean => {
+const erPreProd = (): boolean => {
   return window.location.href.indexOf("dev.intern.nav.no") > -1;
 };
 
-export const erLokal = (): boolean => {
+const erLokal = (): boolean => {
   return window.location.host.indexOf("localhost") > -1;
 };
 
-export const finnNaisUrlDefault = (): string => {
+const finnNaisUrlDefault = (): string => {
   return erPreProd() ? ".nais.preprod.local" : ".nais.adeo.no";
 };
 

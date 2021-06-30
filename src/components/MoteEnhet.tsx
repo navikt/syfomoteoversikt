@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect } from "react";
-import { getDatoFraZulu } from "../utils";
 import { getMoteDato } from "../utils/moterUtil";
 import { MoteDTO } from "../data/moter/moterTypes";
 import { useMoteVeileder } from "../hooks/useMoteVeileder";
@@ -10,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { isDialogmote } from "../utils/dialogmoterUtil";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
+import { getDatoFraZulu } from "../utils/dateUtil";
 
 interface MoteEnhetProps {
   mote: MoteDTO | DialogmoterDTO;
