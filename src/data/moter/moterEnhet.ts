@@ -23,7 +23,7 @@ import {
   getMoteDeltakereMedNavn,
 } from "../../utils/moterUtil";
 
-interface MoterEnhetState {
+export interface MoterEnhetState {
   henter: boolean;
   hentingFeilet: boolean;
   hentetEnhet: string;

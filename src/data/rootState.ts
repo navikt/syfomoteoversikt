@@ -1,21 +1,25 @@
 import { combineReducers } from "redux";
-import { connectRouter } from "connected-react-router";
-import enhet from "./enhet/enhet";
-import moter from "./moter/moter";
-import overfor from "./moter/overfor";
-import veiledere from "./veiledere/veiledere";
-import moterEnhet from "./moter/moterEnhet";
-import dialogmoter from "./dialogmoter/dialogmoter";
-import { History, LocationState } from "history";
+import enhet, { EnhetState } from "./enhet/enhet";
+import moter, { MoterState } from "./moter/moter";
+import overfor, { OverforMoterState } from "./moter/overfor";
+import veiledere, { VeiledereState } from "./veiledere/veiledere";
+import moterEnhet, { MoterEnhetState } from "./moter/moterEnhet";
+import dialogmoter, { DialogmoterState } from "./dialogmoter/dialogmoter";
 
-export const createRootReducer = (history: History<LocationState>) => {
-  return combineReducers({
-    router: connectRouter(history),
-    enhet,
-    moter,
-    overfor,
-    veiledere,
-    moterEnhet,
-    dialogmoter,
-  });
-};
+export interface RootState {
+  enhet: EnhetState;
+  moter: MoterState;
+  overfor: OverforMoterState;
+  veiledere: VeiledereState;
+  moterEnhet: MoterEnhetState;
+  dialogmoter: DialogmoterState;
+}
+
+export const rootReducer = combineReducers<RootState>({
+  enhet,
+  moter,
+  overfor,
+  veiledere,
+  moterEnhet,
+  dialogmoter,
+});

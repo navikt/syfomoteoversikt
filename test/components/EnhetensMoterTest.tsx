@@ -3,8 +3,6 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import EnhetensMoter from "../../src/components/EnhetensMoter";
 import React from "react";
-import { createBrowserHistory } from "history";
-import { createRootReducer } from "../../src/data/rootState";
 import { createStore } from "redux";
 import { MoteStatus } from "../../src/data/moter/moterTypes";
 import { DialogmoteStatus } from "../../src/data/dialogmoter/dialogmoterTypes";
@@ -20,6 +18,7 @@ import { expect } from "chai";
 import { MoteOversiktHeading } from "../../src/components/MoteOversiktHeading";
 import MoteEnhet from "../../src/components/MoteEnhet";
 import { getDatoFraZulu } from "../../src/utils/dateUtil";
+import { rootReducer } from "../../src/data/rootState";
 
 const arbeidstaker = {
   fnr: "10108000398",
@@ -35,8 +34,7 @@ const arbeidsgiver = {
   virksomhet: "Skomaker Andersen",
 };
 
-const history = createBrowserHistory();
-const realState = createStore(createRootReducer(history)).getState();
+const realState = createStore(rootReducer).getState();
 const mockStore = configureStore([]);
 const mockState = {
   moterEnhet: {

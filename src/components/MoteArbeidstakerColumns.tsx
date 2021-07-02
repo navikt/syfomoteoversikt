@@ -6,6 +6,7 @@ import {
 import { MoteDTO } from "../data/moter/moterTypes";
 import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
 import { syfomodiapersonMoterUrl } from "../utils/lenkeUtil";
+import { trackOnClick } from "../amplitude/amplitude";
 
 interface Props {
   bruker?: Arbeidstaker;
@@ -14,12 +15,17 @@ interface Props {
 const texts = {
   henter: "Henter navn",
   notFound: "Fant ikke navn",
+  trackGoToSyfoModia: "Lenke til bruker i syfomodiaperson",
 };
 
 const BrukersNavn = ({ bruker }: Props): ReactElement => {
   if (bruker?.navn && bruker?.fnr) {
     return (
-      <a className="lenke" href={syfomodiapersonMoterUrl(bruker.fnr)}>
+      <a
+        className="lenke"
+        onClick={() => trackOnClick(texts.trackGoToSyfoModia)}
+        href={syfomodiapersonMoterUrl(bruker.fnr)}
+      >
         {bruker.navn}
       </a>
     );
