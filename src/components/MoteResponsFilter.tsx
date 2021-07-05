@@ -1,5 +1,6 @@
 import { Select } from "nav-frontend-skjema";
 import React, { ReactElement } from "react";
+import { trackOnClick } from "../amplitude/amplitude";
 
 export enum MoteRespons {
   MOTTATT = "Respons mottatt",
@@ -23,7 +24,10 @@ export const MoteResponsFilter = ({
   <Select
     id="moteoversikt-filtrer"
     label={texts.label}
-    onChange={(e) => onFilterChange(e.currentTarget.value)}
+    onChange={(e) => {
+      trackOnClick(`${texts.label} - ${e.currentTarget.value}`);
+      onFilterChange(e.currentTarget.value);
+    }}
   >
     <option value="alle">{texts.visAlle}</option>
     {moteResponser.map((respons, index) => (

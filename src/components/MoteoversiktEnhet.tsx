@@ -12,6 +12,7 @@ import {
 import { useMoteVeileder } from "../hooks/useMoteVeileder";
 import { OverforMoterKnapp } from "./OverforMoterKnapp";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+import { trackOnClick } from "../amplitude/amplitude";
 
 const texts = {
   velg: "Velg",
@@ -21,6 +22,7 @@ const texts = {
   sykmeldt: "Sykmeldt",
   status: "Status",
   respons: "Respons",
+  filtrer: "Filtrer på veileder",
 };
 
 const MoteoversiktEnhet = (): ReactElement => {
@@ -75,8 +77,9 @@ const MoteoversiktEnhet = (): ReactElement => {
           <div className="verktoylinje__filter">
             <Select
               id="moteoversikt-filtrer"
-              label="Filtrer på veileder"
+              label={texts.filtrer}
               onChange={(e) => {
+                trackOnClick(texts.filtrer);
                 setFilterVeileder(e.currentTarget.value);
               }}
             >

@@ -12,9 +12,8 @@ import {
 import { getDatoFraZulu } from "../../src/utils/dateUtil";
 import React from "react";
 import { Label } from "nav-frontend-skjema";
-import { createBrowserHistory } from "history";
 import { createStore } from "redux";
-import { createRootReducer } from "../../src/data/rootState";
+import { rootReducer } from "../../src/data/rootState";
 import configureStore from "redux-mock-store";
 import MineMoter from "../../src/components/MineMoter";
 import { DialogmoteStatus } from "../../src/data/dialogmoter/dialogmoterTypes";
@@ -39,8 +38,7 @@ const annenVeileder = {
   navn: "Dana Scully",
 };
 
-const history = createBrowserHistory();
-const realState = createStore(createRootReducer(history)).getState();
+const realState = createStore(rootReducer).getState();
 const mockStore = configureStore([]);
 const mockState = {
   moter: {

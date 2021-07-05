@@ -8,7 +8,7 @@ import {
   VeilederActions,
 } from "./veileder_actions";
 
-interface VeiledereState {
+export interface VeiledereState {
   data: VeilederDto[];
   aktivVeileder: string;
 }

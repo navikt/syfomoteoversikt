@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { EnhetActions, SET_AKTIV_ENHET } from "./enhet_actions";
 
-interface EnhetState {
+export interface EnhetState {
   aktivEnhet: string;
 }
 

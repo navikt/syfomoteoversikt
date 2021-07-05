@@ -8,7 +8,7 @@ import {
   OVERFORER_MOTER,
 } from "./overfor_actions";
 
-interface OverforMoterState {
+export interface OverforMoterState {
   data: string[];
   sender: boolean;
   sendt: boolean;
