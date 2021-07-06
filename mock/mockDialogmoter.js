@@ -1,5 +1,6 @@
 const { addDaysToToday } = require("./mockUtils");
 const createDialogmote = (
+  uuid,
   status,
   varselType,
   veileder,
@@ -8,7 +9,7 @@ const createDialogmote = (
   dato
 ) => {
   return {
-    uuid: "85902bc3-86d5-4571-b06a-35e098f86927",
+    uuid,
     createdAt: "2021-02-26T12:31:46.126",
     updatedAt: "2021-02-26T12:31:46.126",
     status,
@@ -52,6 +53,7 @@ const createDialogmote = (
 
 const dialogmoter = [
   createDialogmote(
+    "1",
     "INNKALT",
     "INNKALT",
     "S123456",
@@ -60,6 +62,7 @@ const dialogmoter = [
     addDaysToToday(2)
   ),
   createDialogmote(
+    "2",
     "NYTT_TID_STED",
     "NYTT_TID_STED",
     "S123456",
@@ -68,6 +71,7 @@ const dialogmoter = [
     addDaysToToday(-2)
   ),
   createDialogmote(
+    "3",
     "NYTT_TID_STED",
     "NYTT_TID_STED",
     "Z990197",
@@ -76,6 +80,7 @@ const dialogmoter = [
     addDaysToToday(1)
   ),
   createDialogmote(
+    "4",
     "AVLYST",
     "AVLYST",
     "S123456",
@@ -84,6 +89,7 @@ const dialogmoter = [
     addDaysToToday(3)
   ),
   createDialogmote(
+    "5",
     "FERDIGSTILT",
     "REFERAT",
     "Z990197",

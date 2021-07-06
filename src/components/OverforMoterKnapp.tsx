@@ -1,27 +1,47 @@
-import { overforMoter } from "../data/moter/overfor_actions";
+import {
+  overforDialogmoter,
+  overforMoter,
+} from "../data/overfor/overfor_actions";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useOverforMoter } from "../hooks/useOverforMoter";
 import { TrackedHovedknapp } from "./buttons/TrackedHovedknapp";
 
+const texts = {
+  overta: "Overta møter",
+};
+
 export const OverforMoterKnapp = () => {
   const dispatch = useDispatch();
-  const { moterMarkertForOverforing, overtarMoter } = useOverforMoter();
+  const {
+    moterMarkertForOverforing,
+    dialogmoterMarkertForOverforing,
+    overforerMoter,
+    overforerDialogmoter,
+  } = useOverforMoter();
+  const noMoterMarkert =
+    moterMarkertForOverforing.length === 0 &&
+    dialogmoterMarkertForOverforing.length === 0;
+
+  const handleClick = () => {
+    if (moterMarkertForOverforing.length > 0) {
+      dispatch(overforMoter({ moteUuids: moterMarkertForOverforing }));
+    }
+    if (dialogmoterMarkertForOverforing.length > 0) {
+      dispatch(
+        overforDialogmoter({
+          dialogmoteUuids: dialogmoterMarkertForOverforing,
+        })
+      );
+    }
+  };
 
   return (
-    <div className="knapperad">
-      <TrackedHovedknapp
-        disabled={overtarMoter || moterMarkertForOverforing.length === 0}
-        onClick={() => {
-          dispatch(
-            overforMoter({
-              moteUuidListe: moterMarkertForOverforing,
-            })
-          );
-        }}
-      >
-        Overta møter
-      </TrackedHovedknapp>
-    </div>
+    <TrackedHovedknapp
+      disabled={overforerMoter || overforerDialogmoter || noMoterMarkert}
+      onClick={handleClick}
+    >
+      {texts.overta}
+    </TrackedHovedknapp>
   );
 };

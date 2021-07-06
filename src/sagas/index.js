@@ -6,6 +6,7 @@ import fnrSagas from "../data/fnr/fnrSagas";
 import brukerSagas from "../data/bruker/brukerSagas";
 import moterEnhetSagas from "../data/moter/moterEnhetSagas";
 import dialogmoterSagas from "../data/dialogmoter/dialogmoterSagas";
+import overforSagas from "../data/overfor/overforSagas";
 
 export default function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     virksomhetSagas(),
     moterEnhetSagas(),
     dialogmoterSagas(),
+    overforSagas(),
   ]);
 }
