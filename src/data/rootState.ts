@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import enhet, { EnhetState } from "./enhet/enhet";
 import moter, { MoterState } from "./moter/moter";
-import overfor, { OverforMoterState } from "./moter/overfor";
+import overfor, { OverforMoterState } from "./overfor/overfor";
 import veiledere, { VeiledereState } from "./veiledere/veiledere";
 import moterEnhet, { MoterEnhetState } from "./moter/moterEnhet";
 import dialogmoter, { DialogmoterState } from "./dialogmoter/dialogmoter";

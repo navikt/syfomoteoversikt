@@ -2,21 +2,39 @@ import { useAppSelector } from "./hooks";
 
 export const useOverforMoter: () => {
   moterMarkertForOverforing: string[];
-  overtaMoterFeilet: boolean;
-  harOvertattMoter: boolean;
-  overtarMoter: boolean;
+  dialogmoterMarkertForOverforing: string[];
+  overforMoterFeilet: boolean;
+  overforDialogmoterFeilet: boolean;
+  moterOverfort: boolean;
+  dialogmoterOverfort: boolean;
+  overforerMoter: boolean;
+  overforerDialogmoter: boolean;
+  antallMoterOverfort?: number;
+  antallDialogmoterOverfort?: number;
 } = () => {
   const {
-    data: moterMarkertForOverforing,
-    sender: overtarMoter,
-    sendingFeilet: overtaMoterFeilet,
-    sendt: harOvertattMoter,
+    moter: moterMarkertForOverforing,
+    dialogmoter: dialogmoterMarkertForOverforing,
+    overforerMoter,
+    overforerDialogmoter,
+    overforMoterFeilet,
+    overforDialogmoterFeilet,
+    moterOverfort,
+    dialogmoterOverfort,
+    antallMoterOverfort,
+    antallDialogmoterOverfort,
   } = useAppSelector((state) => state.overfor);
 
   return {
     moterMarkertForOverforing,
-    overtarMoter,
-    overtaMoterFeilet,
-    harOvertattMoter,
+    dialogmoterMarkertForOverforing,
+    overforerMoter,
+    overforerDialogmoter,
+    overforMoterFeilet,
+    overforDialogmoterFeilet,
+    moterOverfort,
+    dialogmoterOverfort,
+    antallMoterOverfort,
+    antallDialogmoterOverfort,
   };
 };

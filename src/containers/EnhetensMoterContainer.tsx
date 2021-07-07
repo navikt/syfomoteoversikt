@@ -6,16 +6,21 @@ import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
 import { hentEnhetsMoter } from "../data/moter/moterEnhet_actions";
-import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoterEnhet } from "../hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
-import { resetOverforing } from "../data/moter/overfor_actions";
 import { useAktivEnhet } from "../data/enhet/enhet_hooks";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
+import {
+  resetAntallDialogmoterOverfort,
+  resetAntallMoterOverfort,
+} from "../data/overfor/overfor_actions";
+
+const texts = {
+  ingenMoter: "Enheten har ingen møter",
+};
 
 const EnhetensMoterContainer = (): ReactElement => {
-  const { harOvertattMoter } = useOverforMoter();
   const {
     henterMoter,
     hentMoterFeilet,
@@ -32,10 +37,9 @@ const EnhetensMoterContainer = (): ReactElement => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (harOvertattMoter) {
-      dispatch(resetOverforing());
-    }
-  }, [dispatch, harOvertattMoter]);
+    dispatch(resetAntallMoterOverfort());
+    dispatch(resetAntallDialogmoterOverfort());
+  }, [dispatch]);
 
   useEffect(() => {
     if (aktivEnhet !== hentetMoterForEnhet) {
@@ -87,7 +91,7 @@ const EnhetensMoterContainer = (): ReactElement => {
           } else if (moter || dialogmoter) {
             return <EnhetensMoter />;
           }
-          return <p>Enheten har ingen møter</p>;
+          return <p>{texts.ingenMoter}</p>;
         })()}
       </Column>
     </Side>

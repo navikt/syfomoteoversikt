@@ -6,6 +6,7 @@ import { useOverforMoter } from "../hooks/useOverforMoter";
 import { useMoter } from "../hooks/useMoter";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 import { dagensDatoKortFormat } from "../utils/dateUtil";
+import { Element } from "nav-frontend-typografi";
 
 const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
@@ -59,25 +60,32 @@ const hentTallordTekst = (tall: number) => {
   return tall === 1 ? `${tallord} nytt møte` : `${tallord} nye møter`;
 };
 
+const texts = {
+  ingenMoter: "Du har ingen aktive møter.",
+};
+
 const Moter = (): ReactElement => {
-  const { harOvertattMoter, moterMarkertForOverforing } = useOverforMoter();
+  const { antallMoterOverfort, antallDialogmoterOverfort } = useOverforMoter();
   const { harVeilederAktiveDialogmoter } = useDialogmoter();
   const { harAktiveMoter } = useMoter();
   const harMoter = harAktiveMoter || harVeilederAktiveDialogmoter;
+  const harOverfortMoter = antallMoterOverfort || antallDialogmoterOverfort;
+  const antallOverfort =
+    (antallMoterOverfort || 0) + (antallDialogmoterOverfort || 0);
 
   return (
     <div>
-      {harOvertattMoter && (
+      {harOverfortMoter && (
         <Alertstripe className="blokk" type="suksess">
-          <p className="typo-element">{`Du har lagt til ${hentTallordTekst(
-            moterMarkertForOverforing.length
-          )}`}</p>
+          <Element>{`Du har lagt til ${hentTallordTekst(
+            antallOverfort
+          )}`}</Element>
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
         </Alertstripe>
       )}
       {!harMoter && (
         <Panel>
-          <p>Du har ingen aktive møter.</p>
+          <p>{texts.ingenMoter}</p>
         </Panel>
       )}
       {harMoter && <Moteoversikt />}

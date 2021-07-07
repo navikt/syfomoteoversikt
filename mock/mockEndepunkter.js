@@ -96,6 +96,14 @@ function mockEndepunkter(server) {
     }
   );
 
+  server.post(
+    "/isdialogmote/api/v2/dialogmote/overta",
+    Auth.ensureAuthenticated(),
+    (req, res) => {
+      res.send();
+    }
+  );
+
   mockModiacontextholder(server);
 }
 

@@ -11,9 +11,16 @@ import { useDispatch } from "react-redux";
 import { useAktivEnhet } from "../data/enhet/enhet_hooks";
 import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+import { useOverforMoter } from "../hooks/useOverforMoter";
+import { hentEnhetsMoter } from "../data/moter/moterEnhet_actions";
+
+const texts = {
+  ingenMoter: "Bruker har ingen møter",
+};
 
 const MineMoterContainer = (): ReactElement => {
   const { moter, henterMoter, hentMoterFeilet, hentetMoter } = useMoter();
+  const { moterOverfort, dialogmoterOverfort } = useOverforMoter();
   const {
     hentetDialogmoterForEnhet,
     henterDialogmoter,
@@ -23,17 +30,25 @@ const MineMoterContainer = (): ReactElement => {
   const aktivEnhet = useAktivEnhet();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!henterMoter && !hentMoterFeilet && !hentetMoter) {
-      dispatch(hentMoter());
-    }
-  }, [dispatch, hentetMoter, henterMoter, hentMoterFeilet]);
+  const maaHenteMoter = !henterMoter && !hentMoterFeilet && !hentetMoter;
 
   useEffect(() => {
-    if (aktivEnhet !== hentetDialogmoterForEnhet) {
+    if (maaHenteMoter || moterOverfort) {
+      dispatch(hentMoter());
+    }
+  }, [dispatch, maaHenteMoter, moterOverfort]);
+
+  useEffect(() => {
+    if (moterOverfort) {
+      dispatch(hentEnhetsMoter(aktivEnhet));
+    }
+  }, [dispatch, aktivEnhet, moterOverfort]);
+
+  useEffect(() => {
+    if (aktivEnhet !== hentetDialogmoterForEnhet || dialogmoterOverfort) {
       dispatch(hentDialogmoter(aktivEnhet));
     }
-  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet]);
+  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet, dialogmoterOverfort]);
 
   return (
     <Side tittel="Møteoversikt">
@@ -64,7 +79,7 @@ const MineMoterContainer = (): ReactElement => {
           } else if (moter || dialogmoter) {
             return <Moter />;
           }
-          return <p>Bruker har ingen møter</p>;
+          return <p>{texts.ingenMoter}</p>;
         })()}
       </Column>
     </Side>
