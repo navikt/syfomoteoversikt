@@ -14,7 +14,6 @@ const texts = {
   motedato: "Møtedato",
   fnr: "F.nr",
   navn: "Navn",
-  narmesteLeder: "Nærmeste leder",
   virksomhet: "Virksomhet",
   status: "Status",
   respons: "Respons",
@@ -59,7 +58,6 @@ const Moteoversikt = (): ReactElement => {
               <th scope="col">{texts.motedato}</th>
               <th scope="col">{texts.fnr}</th>
               <th scope="col">{texts.navn}</th>
-              <th scope="col">{texts.narmesteLeder}</th>
               <th scope="col">{texts.virksomhet}</th>
               <th scope="col">{texts.status}</th>
               <th scope="col">{texts.respons}</th>

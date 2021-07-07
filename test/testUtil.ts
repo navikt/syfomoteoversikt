@@ -13,12 +13,14 @@ export const daysFromToday = (days: number): Date => {
   return new Date(nyDato);
 };
 
-export const assertColumn = (
+export const assertColumns = (
   row: ReactWrapper,
-  index: number,
-  expected: string
+  expectedColumns: string[]
 ): void => {
-  expect(row.find("td").at(index).text()).to.equal(expected);
+  const columns = row.find("td");
+  expectedColumns.forEach((expected, index) => {
+    expect(columns.at(index).text()).to.equal(expected);
+  });
 };
 
 export const assertTableHeaders = (
@@ -34,7 +36,7 @@ export const assertTableHeaders = (
 export const createDialogmote = (
   veileder: { ident: string; navn: string },
   arbeidstaker: { fnr: string; navn: string },
-  arbeidsgiver: { leder: string; orgnummer: string; virksomhet: string },
+  arbeidsgiver: { orgnummer: string; virksomhet: string },
   status: DialogmoteStatus,
   dato: Date,
   arbeidstakerSvar = false,
@@ -46,7 +48,6 @@ export const createDialogmote = (
     arbeidsgiver: {
       virksomhetsnavn: arbeidsgiver.virksomhet,
       virksomhetsnummer: arbeidsgiver.orgnummer,
-      lederNavn: arbeidsgiver.leder,
       varselList: [
         {
           varselType:
