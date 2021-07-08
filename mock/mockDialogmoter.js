@@ -33,8 +33,6 @@ const createDialogmote = (
     arbeidsgiver: {
       uuid: "85902bc3-86d5-4571-b06a-35e098f86929",
       virksomhetsnummer: "974574861",
-      lederNavn: "Korrupt Bolle",
-      lederEpost: "korrupt.bolle@nav.no",
       type: "ARBEIDSGIVER",
       varselList: [
         {

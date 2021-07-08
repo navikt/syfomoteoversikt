@@ -32,8 +32,6 @@ interface DialogmotedeltakerArbeidsgiverDTO {
   uuid: string;
   virksomhetsnummer: string;
   virksomhetsnavn?: string;
-  lederNavn?: string;
-  lederEpost?: string;
   type: string;
   varselList: DialogmotedeltakerVarselDTO[];
 }

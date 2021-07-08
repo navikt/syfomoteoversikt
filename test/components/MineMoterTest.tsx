@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { expect } from "chai";
 import { MoteOversiktHeading } from "../../src/components/MoteOversiktHeading";
 import {
-  assertColumn,
+  assertColumns,
   assertTableHeaders,
   createDialogmote,
   createPlanlagtMote,
@@ -129,27 +129,28 @@ describe("MineMoter", () => {
       "Møtedato",
       "F.nr",
       "Navn",
-      "Nærmeste leder",
       "Virksomhet",
       "Status",
       "Respons",
     ]);
     const dialogmotePassertRow = wrapper.find(Mote).at(0);
-    assertColumn(dialogmotePassertRow, 0, getDatoFraZulu(daysFromToday(-1)));
-    assertColumn(dialogmotePassertRow, 1, arbeidstaker.fnr);
-    assertColumn(dialogmotePassertRow, 2, arbeidstaker.navn);
-    assertColumn(dialogmotePassertRow, 3, "Korrupt Bolle");
-    assertColumn(dialogmotePassertRow, 4, "Skomaker Andersen");
-    assertColumn(dialogmotePassertRow, 5, "Innkalling: Dato passert");
-    assertColumn(dialogmotePassertRow, 6, "1/2 har lest");
+    assertColumns(dialogmotePassertRow, [
+      getDatoFraZulu(daysFromToday(-1)),
+      arbeidstaker.fnr,
+      arbeidstaker.navn,
+      "Skomaker Andersen",
+      "Innkalling: Dato passert",
+      "1/2 har lest",
+    ]);
 
     const planlagtMoteRow = wrapper.find(Mote).at(1);
-    assertColumn(planlagtMoteRow, 0, getDatoFraZulu(daysFromToday(1)));
-    assertColumn(planlagtMoteRow, 1, arbeidstaker.fnr);
-    assertColumn(planlagtMoteRow, 2, arbeidstaker.navn);
-    assertColumn(dialogmotePassertRow, 3, "Korrupt Bolle");
-    assertColumn(dialogmotePassertRow, 4, "Skomaker Andersen");
-    assertColumn(planlagtMoteRow, 5, "Planlegger: Forslag sendt");
-    assertColumn(planlagtMoteRow, 6, "0/2 svar");
+    assertColumns(planlagtMoteRow, [
+      getDatoFraZulu(daysFromToday(1)),
+      arbeidstaker.fnr,
+      arbeidstaker.navn,
+      "Skomaker Andersen",
+      "Planlegger: Forslag sendt",
+      "0/2 svar",
+    ]);
   });
 });

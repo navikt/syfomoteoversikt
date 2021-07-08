@@ -7,7 +7,7 @@ import { createStore } from "redux";
 import { MoteStatus } from "../../src/data/moter/moterTypes";
 import { DialogmoteStatus } from "../../src/data/dialogmoter/dialogmoterTypes";
 import {
-  assertColumn,
+  assertColumns,
   assertTableHeaders,
   createDialogmote,
   createPlanlagtMote,
@@ -141,36 +141,49 @@ describe("EnhetensMoter", () => {
       "Status",
       "Respons",
     ]);
+
     const dialogmotePassertRow = wrapper.find(MoteEnhet).at(0);
-    assertColumn(dialogmotePassertRow, 1, getDatoFraZulu(daysFromToday(-1)));
-    assertColumn(dialogmotePassertRow, 2, veileder.navn);
-    assertColumn(dialogmotePassertRow, 3, arbeidstaker.fnr);
-    assertColumn(dialogmotePassertRow, 4, arbeidstaker.navn);
-    assertColumn(dialogmotePassertRow, 5, "Innkalling: Dato passert");
-    assertColumn(dialogmotePassertRow, 6, "1/2 har lest");
+    assertColumns(dialogmotePassertRow, [
+      "",
+      getDatoFraZulu(daysFromToday(-1)),
+      veileder.navn,
+      arbeidstaker.fnr,
+      arbeidstaker.navn,
+      "Innkalling: Dato passert",
+      "1/2 har lest",
+    ]);
 
     const planlagtMoteRow = wrapper.find(MoteEnhet).at(1);
-    assertColumn(planlagtMoteRow, 1, getDatoFraZulu(daysFromToday(1)));
-    assertColumn(planlagtMoteRow, 2, veileder.navn);
-    assertColumn(planlagtMoteRow, 3, arbeidstaker.fnr);
-    assertColumn(planlagtMoteRow, 4, arbeidstaker.navn);
-    assertColumn(planlagtMoteRow, 5, "Planlegger: Forslag sendt");
-    assertColumn(planlagtMoteRow, 6, "0/2 svar");
+    assertColumns(planlagtMoteRow, [
+      "",
+      getDatoFraZulu(daysFromToday(1)),
+      veileder.navn,
+      arbeidstaker.fnr,
+      arbeidstaker.navn,
+      "Planlegger: Forslag sendt",
+      "0/2 svar",
+    ]);
 
     const planlagtMoteBekreftetRow = wrapper.find(MoteEnhet).at(2);
-    assertColumn(planlagtMoteBekreftetRow, 1, getDatoFraZulu(daysFromToday(2)));
-    assertColumn(planlagtMoteBekreftetRow, 2, veileder.navn);
-    assertColumn(planlagtMoteBekreftetRow, 3, arbeidstaker.fnr);
-    assertColumn(planlagtMoteBekreftetRow, 4, arbeidstaker.navn);
-    assertColumn(planlagtMoteBekreftetRow, 5, "Planlegger: Bekreftelse sendt");
-    assertColumn(planlagtMoteBekreftetRow, 6, "2/2 svar");
+    assertColumns(planlagtMoteBekreftetRow, [
+      "",
+      getDatoFraZulu(daysFromToday(2)),
+      veileder.navn,
+      arbeidstaker.fnr,
+      arbeidstaker.navn,
+      "Planlegger: Bekreftelse sendt",
+      "2/2 svar",
+    ]);
 
     const dialogmoteEndretRow = wrapper.find(MoteEnhet).at(3);
-    assertColumn(dialogmoteEndretRow, 1, getDatoFraZulu(daysFromToday(5)));
-    assertColumn(dialogmoteEndretRow, 2, veileder.navn);
-    assertColumn(dialogmoteEndretRow, 3, arbeidstaker.fnr);
-    assertColumn(dialogmoteEndretRow, 4, arbeidstaker.navn);
-    assertColumn(dialogmoteEndretRow, 5, "Innkalling: Endret tid/sted");
-    assertColumn(dialogmoteEndretRow, 6, "0/2 har lest");
+    assertColumns(dialogmoteEndretRow, [
+      "",
+      getDatoFraZulu(daysFromToday(5)),
+      veileder.navn,
+      arbeidstaker.fnr,
+      arbeidstaker.navn,
+      "Innkalling: Endret tid/sted",
+      "0/2 har lest",
+    ]);
   });
 });

@@ -30,7 +30,6 @@ const Mote = ({ mote }: MoteProps): ReactElement => {
     <tr>
       <td>{getDatoFraZulu(getMoteDato(mote))}</td>
       <MoteArbeidstakerColumns mote={mote} />
-      <td>{arbeidsgiver?.leder ?? "Ukjent"}</td>
       <td>{finnVirksomhet(arbeidsgiver)}</td>
       <MoteStatusResponsColumns mote={mote} />
     </tr>

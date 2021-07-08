@@ -7,7 +7,6 @@ import { hentVirksomhet } from "../data/virksomhet/virksomhet_actions";
 import { isDialogmote } from "../utils/dialogmoterUtil";
 
 export type Arbeidsgiver = {
-  leder?: string;
   virksomhet?: string;
   orgnummer?: string;
 };
@@ -24,7 +23,6 @@ export const useMoteArbeidsgiver = (
         ? {
             virksomhet: mote.arbeidsgiver.virksomhetsnavn,
             orgnummer: mote.arbeidsgiver.virksomhetsnummer,
-            navn: mote.arbeidsgiver.lederNavn,
           }
         : findDeltakerByType(mote, "ARBEIDSGIVER"),
     [mote]
@@ -37,7 +35,6 @@ export const useMoteArbeidsgiver = (
   }, [dispatch, arbeidsgiver, moteUuid]);
 
   return {
-    leder: arbeidsgiver?.navn,
     virksomhet: arbeidsgiver?.virksomhet,
     orgnummer: arbeidsgiver?.orgnummer,
   };
