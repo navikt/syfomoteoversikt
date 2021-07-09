@@ -10,6 +10,11 @@ import { isDialogmote } from "../utils/dialogmoterUtil";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 import { getDatoFraZulu } from "../utils/dateUtil";
+import {
+  MoteDatoColumn,
+  TruncatedTableColumn,
+  VelgMoteColumn,
+} from "./MoteTable";
 
 interface MoteEnhetProps {
   mote: MoteDTO | DialogmoterDTO;
@@ -40,11 +45,11 @@ const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
 
   return (
     <tr>
-      <td>
+      <VelgMoteColumn>
         <OverforMote mote={mote} />
-      </td>
-      <td>{getDatoFraZulu(getMoteDato(mote))}</td>
-      <td>{veilederNavn(mote)}</td>
+      </VelgMoteColumn>
+      <MoteDatoColumn>{getDatoFraZulu(getMoteDato(mote))}</MoteDatoColumn>
+      <TruncatedTableColumn>{veilederNavn(mote)}</TruncatedTableColumn>
       <MoteArbeidstakerColumns mote={mote} />
       <MoteStatusResponsColumns mote={mote} />
     </tr>

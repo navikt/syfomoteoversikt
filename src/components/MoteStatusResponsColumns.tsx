@@ -7,6 +7,7 @@ import {
   isDialogmote,
   antallLesteVarslerTekst,
 } from "../utils/dialogmoterUtil";
+import { ResponsColumn, StatusColumn } from "./MoteTable";
 
 interface MoteStatusResponsColumnsProps {
   mote: MoteDTO | DialogmoterDTO;
@@ -24,8 +25,8 @@ export const MoteStatusResponsColumns = ({
 
   return (
     <>
-      <td>{statusTekst}</td>
-      <td>{responsTekst}</td>
+      <StatusColumn>{statusTekst}</StatusColumn>
+      <ResponsColumn>{responsTekst}</ResponsColumn>
     </>
   );
 };

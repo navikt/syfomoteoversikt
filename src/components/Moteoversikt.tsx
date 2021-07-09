@@ -9,6 +9,12 @@ import {
   getMoteResponser,
 } from "../utils/moterUtil";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+import {
+  FnrHeader,
+  MoteDatoHeader,
+  ResponsHeader,
+  StatusHeader,
+} from "./MoteTable";
 
 const texts = {
   motedato: "Møtedato",
@@ -55,12 +61,12 @@ const Moteoversikt = (): ReactElement => {
         <table className="motetabell">
           <thead>
             <tr>
-              <th scope="col">{texts.motedato}</th>
-              <th scope="col">{texts.fnr}</th>
+              <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
+              <FnrHeader scope="col">{texts.fnr}</FnrHeader>
               <th scope="col">{texts.navn}</th>
               <th scope="col">{texts.virksomhet}</th>
-              <th scope="col">{texts.status}</th>
-              <th scope="col">{texts.respons}</th>
+              <StatusHeader scope="col">{texts.status}</StatusHeader>
+              <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
             </tr>
           </thead>
           <tbody>
