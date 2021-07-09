@@ -9,6 +9,7 @@ import {
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 import { getDatoFraZulu } from "../utils/dateUtil";
+import { MoteDatoColumn, TruncatedTableColumn } from "./MoteTable";
 
 interface MoteProps {
   mote: MoteDTO | DialogmoterDTO;
@@ -28,9 +29,11 @@ const Mote = ({ mote }: MoteProps): ReactElement => {
 
   return (
     <tr>
-      <td>{getDatoFraZulu(getMoteDato(mote))}</td>
+      <MoteDatoColumn>{getDatoFraZulu(getMoteDato(mote))}</MoteDatoColumn>
       <MoteArbeidstakerColumns mote={mote} />
-      <td>{finnVirksomhet(arbeidsgiver)}</td>
+      <TruncatedTableColumn>
+        {finnVirksomhet(arbeidsgiver)}
+      </TruncatedTableColumn>
       <MoteStatusResponsColumns mote={mote} />
     </tr>
   );

@@ -7,6 +7,7 @@ import { MoteDTO } from "../data/moter/moterTypes";
 import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
 import { syfomodiapersonMoterUrl } from "../utils/lenkeUtil";
 import { trackOnClick } from "../amplitude/amplitude";
+import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
 
 interface Props {
   bruker?: Arbeidstaker;
@@ -45,10 +46,10 @@ export const MoteArbeidstakerColumns = ({
   const arbeidstaker = useMoteArbeidstaker(mote);
   return (
     <>
-      <td>{arbeidstaker?.fnr}</td>
-      <td>
+      <FnrColumn>{arbeidstaker?.fnr}</FnrColumn>
+      <TruncatedTableColumn>
         <BrukersNavn bruker={arbeidstaker} />
-      </td>
+      </TruncatedTableColumn>
     </>
   );
 };

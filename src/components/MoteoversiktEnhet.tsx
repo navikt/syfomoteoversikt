@@ -13,6 +13,13 @@ import { useMoteVeileder } from "../hooks/useMoteVeileder";
 import { OverforMoterKnapp } from "./OverforMoterKnapp";
 import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
 import { trackOnClick } from "../amplitude/amplitude";
+import {
+  FnrHeader,
+  MoteDatoHeader,
+  ResponsHeader,
+  StatusHeader,
+  VelgMoteHeader,
+} from "./MoteTable";
 
 const texts = {
   velg: "Velg",
@@ -98,13 +105,13 @@ const MoteoversiktEnhet = (): ReactElement => {
         <table className="motetabell">
           <thead>
             <tr>
-              <th scope="col">{texts.velg}</th>
-              <th scope="col">{texts.motedato}</th>
+              <VelgMoteHeader scope="col">{texts.velg}</VelgMoteHeader>
+              <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
               <th scope="col">{texts.veileder}</th>
-              <th scope="col">{texts.fnr}</th>
+              <FnrHeader scope="col">{texts.fnr}</FnrHeader>
               <th scope="col">{texts.sykmeldt}</th>
-              <th scope="col">{texts.status}</th>
-              <th scope="col">{texts.respons}</th>
+              <StatusHeader scope="col">{texts.status}</StatusHeader>
+              <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
             </tr>
           </thead>
           <tbody>

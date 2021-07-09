@@ -6,6 +6,7 @@
 .motetabell {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 
   th,
   td {
@@ -23,20 +24,9 @@
   td {
     padding: 1.5em 1em;
     background: @white;
+
     .checkboks + .skjemaelement__label:before {
       margin-top: -1em;
-    }
-  }
-
-  td,
-  th {
-    &:nth-child(1) {
-      width: 4%;
-    }
-
-    &:nth-child(3),
-    &:nth-child(4) {
-      width: 15%;
     }
   }
 }
@@ -73,6 +63,7 @@
   margin: 0 2em 0 0;
 
   text-transform: uppercase;
+
   a {
     .typo-element-mixin();
     text-decoration: none;
@@ -84,6 +75,7 @@
 .navigasjon__element__inner {
   align-items: center;
   cursor: pointer;
+
   &:hover {
     border-bottom: 4px @navBla solid;
   }
