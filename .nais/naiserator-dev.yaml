@@ -54,6 +54,8 @@ spec:
       value: "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfomoteoversikt-redis"
+    - name: INTERNARBEIDSFLATEDECORATOR_HOST
+      value: "internarbeidsflatedecorator-q0.dev.intern.nav.no"
     - name: ISDIALOGMOTE_HOST
       value: "isdialogmote.dev.intern.nav.no"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
