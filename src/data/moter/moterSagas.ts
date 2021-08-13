@@ -1,9 +1,9 @@
 import { all, call, put, fork, takeEvery } from "redux-saga/effects";
-import { get } from "../../api";
+import { get } from "@/api";
 import * as actions from "./moter_actions";
 import { MoteDTO } from "./moterTypes";
 import { HENT_MOTER_FORESPURT } from "./moter_actions";
-import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
+import { SYFOMOTEADMIN_ROOT } from "@/utils/apiUrlUtil";
 
 export function* hentMoter() {
   yield put(actions.henterMoter());

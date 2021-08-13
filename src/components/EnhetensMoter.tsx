@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import AlertStripe from "nav-frontend-alertstriper";
 import MoteoversiktEnhet from "./MoteoversiktEnhet";
-import { useOverforMoter } from "../hooks/useOverforMoter";
-import { useMoterEnhet } from "../hooks/useMoterEnhet";
-import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+import { useOverforMoter } from "@/hooks/useOverforMoter";
+import { useMoterEnhet } from "@/hooks/useMoterEnhet";
+import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
 import { Redirect } from "react-router-dom";
 
 const texts = {

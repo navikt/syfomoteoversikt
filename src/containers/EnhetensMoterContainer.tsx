@@ -5,16 +5,16 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import { hentEnhetsMoter } from "../data/moter/moterEnhet_actions";
-import { useMoterEnhet } from "../hooks/useMoterEnhet";
+import { hentEnhetsMoter } from "@/data/moter/moterEnhet_actions";
+import { useMoterEnhet } from "@/hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
-import { useAktivEnhet } from "../data/enhet/enhet_hooks";
-import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
-import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
+import { useAktivEnhet } from "@/data/enhet/enhet_hooks";
+import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
+import { hentDialogmoter } from "@/data/dialogmoter/dialogmoter_actions";
 import {
   resetAntallDialogmoterOverfort,
   resetAntallMoterOverfort,
-} from "../data/overfor/overfor_actions";
+} from "@/data/overfor/overfor_actions";
 
 const texts = {
   ingenMoter: "Enheten har ingen møter",

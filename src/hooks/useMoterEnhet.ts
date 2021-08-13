@@ -1,6 +1,6 @@
-import { ikkeAvbrutt } from "../utils/moterUtil";
+import { ikkeAvbrutt } from "@/utils/moterUtil";
 import { useAppSelector } from "./hooks";
-import { MoteDTO } from "../data/moter/moterTypes";
+import { MoteDTO } from "@/data/moter/moterTypes";
 
 export const useMoterEnhet: () => {
   hentMoterFeilet: boolean;

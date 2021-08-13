@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import { hentVirksomhet } from "../../../src/data/virksomhet/virksomhetSagas";
-import { get } from "../../../src/api";
+import { hentVirksomhet } from "@/data/virksomhet/virksomhetSagas";
+import { get } from "@/api";
 import { put, call } from "redux-saga/effects";
 import {
   HENTER_VIRKSOMHET,
   VIRKSOMHET_HENTET,
-} from "../../../src/data/virksomhet/virksomhet_actions";
+} from "@/data/virksomhet/virksomhet_actions";
 
 describe("virksomhetSagas", () => {
   const generator = hentVirksomhet({

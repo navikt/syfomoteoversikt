@@ -1,10 +1,10 @@
 import {
   overforDialogmoter,
   overforMoter,
-} from "../data/overfor/overfor_actions";
+} from "@/data/overfor/overfor_actions";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useOverforMoter } from "../hooks/useOverforMoter";
+import { useOverforMoter } from "@/hooks/useOverforMoter";
 import { TrackedHovedknapp } from "./buttons/TrackedHovedknapp";
 
 const texts = {

@@ -21,7 +21,7 @@ import {
 import {
   getMoteDeltakereMedFnr,
   getMoteDeltakereMedNavn,
-} from "../../utils/moterUtil";
+} from "@/utils/moterUtil";
 
 export interface MoterEnhetState {
   henter: boolean;

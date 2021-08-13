@@ -1,14 +1,14 @@
-import { MoteDTO } from "../data/moter/moterTypes";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { Checkbox } from "nav-frontend-skjema";
 import {
   markerDialogmoteForOverforing,
   markerMoteForOverforing,
-} from "../data/overfor/overfor_actions";
+} from "@/data/overfor/overfor_actions";
 import React from "react";
-import { useOverforMoter } from "../hooks/useOverforMoter";
+import { useOverforMoter } from "@/hooks/useOverforMoter";
 import { useDispatch } from "react-redux";
-import { isDialogmote } from "../utils/dialogmoterUtil";
+import { isDialogmote } from "@/utils/dialogmoterUtil";
 
 interface OverforMoteProps {
   mote: MoteDTO | DialogmoterDTO;

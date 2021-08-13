@@ -1,15 +1,15 @@
 import React, { ReactElement, useEffect } from "react";
-import { getMoteDato } from "../utils/moterUtil";
-import { MoteDTO } from "../data/moter/moterTypes";
-import { useMoteVeileder } from "../hooks/useMoteVeileder";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
+import { getMoteDato } from "@/utils/moterUtil";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { useMoteVeileder } from "@/hooks/useMoteVeileder";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { OverforMote } from "./OverforMote";
-import { hentVeileder } from "../data/veiledere/veileder_actions";
+import { hentVeileder } from "@/data/veiledere/veileder_actions";
 import { useDispatch } from "react-redux";
-import { isDialogmote } from "../utils/dialogmoterUtil";
+import { isDialogmote } from "@/utils/dialogmoterUtil";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
-import { getDatoFraZulu } from "../utils/dateUtil";
+import { getDatoFraZulu } from "@/utils/dateUtil";
 import {
   MoteDatoColumn,
   TruncatedTableColumn,

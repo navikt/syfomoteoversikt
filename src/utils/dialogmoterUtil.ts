@@ -2,9 +2,9 @@ import {
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
-} from "../data/dialogmoter/dialogmoterTypes";
-import { MoteRespons } from "../components/MoteResponsFilter";
-import { MoteDTO } from "../data/moter/moterTypes";
+} from "@/data/dialogmoter/dialogmoterTypes";
+import { MoteRespons } from "@/components/MoteResponsFilter";
+import { MoteDTO } from "@/data/moter/moterTypes";
 
 export const isDialogmote = (
   mote: MoteDTO | DialogmoterDTO

@@ -1,6 +1,6 @@
-import { getDatoFraZulu } from "../../src/utils/dateUtil";
-import { DialogmoterDTO } from "../../src/data/dialogmoter/dialogmoterTypes";
-import { getDialogmoteDato } from "../../src/utils/dialogmoterUtil";
+import { getDatoFraZulu } from "@/utils/dateUtil";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
+import { getDialogmoteDato } from "@/utils/dialogmoterUtil";
 import { expect } from "chai";
 
 describe("dateUtil getDatoFraZulu", () => {

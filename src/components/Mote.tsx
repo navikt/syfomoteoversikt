@@ -1,14 +1,11 @@
 import React, { ReactElement } from "react";
-import { getMoteDato } from "../utils/moterUtil";
-import { MoteDTO } from "../data/moter/moterTypes";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
-import {
-  Arbeidsgiver,
-  useMoteArbeidsgiver,
-} from "../hooks/useMoteArbeidsgiver";
+import { getMoteDato } from "@/utils/moterUtil";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
+import { Arbeidsgiver, useMoteArbeidsgiver } from "@/hooks/useMoteArbeidsgiver";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
-import { getDatoFraZulu } from "../utils/dateUtil";
+import { getDatoFraZulu } from "@/utils/dateUtil";
 import { MoteDatoColumn, TruncatedTableColumn } from "./MoteTable";
 
 interface MoteProps {

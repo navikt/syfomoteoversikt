@@ -1,11 +1,11 @@
 import { ReactWrapper } from "enzyme";
 import { expect } from "chai";
-import { MoteDTO, MoteStatus } from "../src/data/moter/moterTypes";
+import { MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
 import {
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
-} from "../src/data/dialogmoter/dialogmoterTypes";
+} from "@/data/dialogmoter/dialogmoterTypes";
 
 export const daysFromToday = (days: number): Date => {
   const nyDato = new Date();

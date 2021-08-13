@@ -1,14 +1,8 @@
 import { expect } from "chai";
-import {
-  overforDialogmoter,
-  overforMoter,
-} from "../../../src/data/overfor/overforSagas";
+import { overforDialogmoter, overforMoter } from "@/data/overfor/overforSagas";
 import { call, put } from "redux-saga/effects";
-import { post } from "../../../src/api";
-import {
-  ISDIALOGMOTE_ROOT,
-  SYFOMOTEADMIN_ROOT,
-} from "../../../src/utils/apiUrlUtil";
+import { post } from "@/api";
+import { ISDIALOGMOTE_ROOT, SYFOMOTEADMIN_ROOT } from "@/utils/apiUrlUtil";
 
 describe("overforSagas", () => {
   describe("overforMoter", () => {

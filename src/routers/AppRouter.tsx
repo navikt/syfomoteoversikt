@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MineMoterContainer from "../containers/MineMoterContainer";
 import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
 import { useDispatch } from "react-redux";
-import { setAmplitudeUserProperties } from "../amplitude/amplitude";
-import { useAktivEnhet } from "../data/enhet/enhet_hooks";
+import { setAmplitudeUserProperties } from "@/amplitude/amplitude";
+import { useAktivEnhet } from "@/data/enhet/enhet_hooks";
 
 const AppRouter = (): ReactElement => {
   const dispatch = useDispatch();

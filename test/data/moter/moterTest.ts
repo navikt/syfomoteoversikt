@@ -4,7 +4,7 @@ import chaiEnzyme from "chai-enzyme";
 import moter, { MoterState } from "../../../src/data/moter/moter";
 import * as actions from "../../../src/data/virksomhet/virksomhet_actions";
 import * as brukeractions from "../../../src/data/bruker/bruker_actions";
-import { MoteDeltakerDTO, MoteDTO } from "../../../src/data/moter/moterTypes";
+import { MoteDeltakerDTO, MoteDTO } from "@/data/moter/moterTypes";
 
 chai.use(chaiEnzyme());
 const arbeidsgiverDeltager = {

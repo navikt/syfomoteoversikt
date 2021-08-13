@@ -1,7 +1,7 @@
 import { mount } from "enzyme";
 import { Provider } from "react-redux";
 import { expect } from "chai";
-import { MoteOversiktHeading } from "../../src/components/MoteOversiktHeading";
+import { MoteOversiktHeading } from "@/components/MoteOversiktHeading";
 import {
   assertColumns,
   assertTableHeaders,
@@ -9,15 +9,15 @@ import {
   createPlanlagtMote,
   daysFromToday,
 } from "../testUtil";
-import { getDatoFraZulu } from "../../src/utils/dateUtil";
+import { getDatoFraZulu } from "@/utils/dateUtil";
 import React from "react";
 import { Label } from "nav-frontend-skjema";
 import { createStore } from "redux";
-import { rootReducer } from "../../src/data/rootState";
+import { rootReducer } from "@/data/rootState";
 import configureStore from "redux-mock-store";
 import MineMoter from "../../src/components/MineMoter";
-import { DialogmoteStatus } from "../../src/data/dialogmoter/dialogmoterTypes";
-import { MoteStatus } from "../../src/data/moter/moterTypes";
+import { DialogmoteStatus } from "@/data/dialogmoter/dialogmoterTypes";
+import { MoteStatus } from "@/data/moter/moterTypes";
 import Mote from "../../src/components/Mote";
 
 const arbeidstaker = {

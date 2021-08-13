@@ -4,8 +4,8 @@ import configureStore from "redux-mock-store";
 import EnhetensMoter from "../../src/components/EnhetensMoter";
 import React from "react";
 import { createStore } from "redux";
-import { MoteStatus } from "../../src/data/moter/moterTypes";
-import { DialogmoteStatus } from "../../src/data/dialogmoter/dialogmoterTypes";
+import { MoteStatus } from "@/data/moter/moterTypes";
+import { DialogmoteStatus } from "@/data/dialogmoter/dialogmoterTypes";
 import {
   assertColumns,
   assertTableHeaders,
@@ -15,10 +15,10 @@ import {
 } from "../testUtil";
 import { Label } from "nav-frontend-skjema";
 import { expect } from "chai";
-import { MoteOversiktHeading } from "../../src/components/MoteOversiktHeading";
+import { MoteOversiktHeading } from "@/components/MoteOversiktHeading";
 import MoteEnhet from "../../src/components/MoteEnhet";
-import { getDatoFraZulu } from "../../src/utils/dateUtil";
-import { rootReducer } from "../../src/data/rootState";
+import { getDatoFraZulu } from "@/utils/dateUtil";
+import { rootReducer } from "@/data/rootState";
 
 const arbeidstaker = {
   fnr: "10108000398",

@@ -7,7 +7,7 @@ import {
   HENT_VIRKSOMHET_FORESPURT,
   HENTER_VIRKSOMHET,
   VIRKSOMHET_HENTET,
-} from "../../../src/data/virksomhet/virksomhet_actions";
+} from "@/data/virksomhet/virksomhet_actions";
 
 chai.use(chaiEnzyme());
 

@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppSelector } from "@/hooks/hooks";
 import { useAktivVeileder } from "../veiledere/veileder_hooks";
 import { DialogmoterDTO, DialogmoteStatus } from "./dialogmoterTypes";
 

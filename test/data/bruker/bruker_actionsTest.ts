@@ -6,7 +6,7 @@ import {
   HENT_BRUKER_FEILET,
   HENT_BRUKER_FORESPURT,
   HENTER_BRUKER,
-} from "../../../src/data/bruker/bruker_actions";
+} from "@/data/bruker/bruker_actions";
 
 import * as actions from "../../../src/data/bruker/bruker_actions";
 
