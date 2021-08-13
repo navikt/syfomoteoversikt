@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { get } from "../../../src/api";
+import { get } from "@/api";
 import { put, call } from "redux-saga/effects";
-import { hentVeileder } from "../../../src/data/veiledere/veilederSagas";
+import { hentVeileder } from "@/data/veiledere/veilederSagas";
 
 describe("veilederSagas", () => {
   const generator = hentVeileder({

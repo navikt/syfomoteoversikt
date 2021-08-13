@@ -1,8 +1,8 @@
 import { expect } from "chai";
-import { hentEnhetsMoter } from "../../../src/data/moter/moterEnhetSagas";
-import { get } from "../../../src/api";
+import { hentEnhetsMoter } from "@/data/moter/moterEnhetSagas";
+import { get } from "@/api";
 import { put, call } from "redux-saga/effects";
-import { SYFOMOTEADMIN_ROOT } from "../../../src/utils/apiUrlUtil";
+import { SYFOMOTEADMIN_ROOT } from "@/utils/apiUrlUtil";
 
 describe("enhetMoterSagas", () => {
   const generator = hentEnhetsMoter({

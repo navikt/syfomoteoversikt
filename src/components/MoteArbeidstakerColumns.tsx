@@ -1,12 +1,9 @@
 import React, { ReactElement } from "react";
-import {
-  Arbeidstaker,
-  useMoteArbeidstaker,
-} from "../hooks/useMoteArbeidstaker";
-import { MoteDTO } from "../data/moter/moterTypes";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
-import { syfomodiapersonMoterUrl } from "../utils/lenkeUtil";
-import { trackOnClick } from "../amplitude/amplitude";
+import { Arbeidstaker, useMoteArbeidstaker } from "@/hooks/useMoteArbeidstaker";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
+import { syfomodiapersonMoterUrl } from "@/utils/lenkeUtil";
+import { trackOnClick } from "@/amplitude/amplitude";
 import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
 
 interface Props {

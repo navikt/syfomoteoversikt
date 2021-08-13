@@ -1,10 +1,10 @@
-import { MoteDTO } from "../data/moter/moterTypes";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { useDispatch } from "react-redux";
-import { findDeltakerByType } from "../utils/moterUtil";
+import { findDeltakerByType } from "@/utils/moterUtil";
 import { useEffect, useMemo } from "react";
-import { hentVirksomhet } from "../data/virksomhet/virksomhet_actions";
-import { isDialogmote } from "../utils/dialogmoterUtil";
+import { hentVirksomhet } from "@/data/virksomhet/virksomhet_actions";
+import { isDialogmote } from "@/utils/dialogmoterUtil";
 
 export type Arbeidsgiver = {
   virksomhet?: string;

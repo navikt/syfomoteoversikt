@@ -1,14 +1,14 @@
 import React, { ReactElement, useState } from "react";
 import Mote from "./Mote";
-import { useMoter } from "../hooks/useMoter";
+import { useMoter } from "@/hooks/useMoter";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
 import {
   compareByMotedato,
   getMoteRespons,
   getMoteResponser,
-} from "../utils/moterUtil";
-import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
+} from "@/utils/moterUtil";
+import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
 import {
   FnrHeader,
   MoteDatoHeader,

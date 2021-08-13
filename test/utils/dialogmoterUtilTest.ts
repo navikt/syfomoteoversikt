@@ -2,15 +2,15 @@ import {
   antallLesteVarslerTekst,
   dialogmoteStatusTekst,
   getDialogmoteRespons,
-} from "../../src/utils/dialogmoterUtil";
+} from "@/utils/dialogmoterUtil";
 import {
   DialogmotedeltakerVarselDTO,
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
-} from "../../src/data/dialogmoter/dialogmoterTypes";
+} from "@/data/dialogmoter/dialogmoterTypes";
 import { expect } from "chai";
-import { compareByMotedato } from "../../src/utils/moterUtil";
+import { compareByMotedato } from "@/utils/moterUtil";
 import { daysFromToday } from "../testUtil";
 
 const lestDato = "2031-06-03T11:50:28.538";

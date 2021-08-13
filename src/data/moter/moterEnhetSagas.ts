@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { get } from "../../api";
+import { get } from "@/api";
 import { MoteDTO } from "./moterTypes";
 import {
   enhetsMoterHentet,
@@ -8,7 +8,7 @@ import {
   hentEnhetsMoterFeilet,
   henterEnhetsMoter,
 } from "./moterEnhet_actions";
-import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
+import { SYFOMOTEADMIN_ROOT } from "@/utils/apiUrlUtil";
 
 export function* hentEnhetsMoter(action: HentEnhetsMoterAction) {
   yield put(henterEnhetsMoter(action.enhet));

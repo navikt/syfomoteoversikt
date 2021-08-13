@@ -3,8 +3,8 @@ import {
   compareByMotedato,
   getMoteRespons,
   moteStatusTekst,
-} from "../../src/utils/moterUtil";
-import { MoteDTO, MoteStatus } from "../../src/data/moter/moterTypes";
+} from "@/utils/moterUtil";
+import { MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
 import { expect } from "chai";
 
 describe("moterUtil antallDeltakerSvarTekst", () => {

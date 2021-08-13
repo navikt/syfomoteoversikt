@@ -1,11 +1,8 @@
 import { expect } from "chai";
-import { hentBruker } from "../../../src/data/bruker/brukerSagas";
-import { get } from "../../../src/api";
+import { hentBruker } from "@/data/bruker/brukerSagas";
+import { get } from "@/api";
 import { put, call } from "redux-saga/effects";
-import {
-  BRUKER_HENTET,
-  HENTER_BRUKER,
-} from "../../../src/data/bruker/bruker_actions";
+import { BRUKER_HENTET, HENTER_BRUKER } from "@/data/bruker/bruker_actions";
 
 describe("brukerSagas", () => {
   const generator = hentBruker({

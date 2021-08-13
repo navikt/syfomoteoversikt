@@ -13,8 +13,8 @@ import {
   resetDialogmoteOverforing,
   resetMoteOverforing,
 } from "./overfor_actions";
-import { post } from "../../api";
-import { ISDIALOGMOTE_ROOT, SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
+import { post } from "@/api";
+import { ISDIALOGMOTE_ROOT, SYFOMOTEADMIN_ROOT } from "@/utils/apiUrlUtil";
 
 export function* overforMoter(action: OverforMoterAction) {
   yield put(overforerMoter());

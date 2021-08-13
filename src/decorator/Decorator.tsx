@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import NAVSPA from "@navikt/navspa";
 import { DecoratorProps } from "./decoratorProps";
 import decoratorConfig from "./decoratorConfig";
-import { fullNaisUrlDefault } from "../utils/miljoUtil";
-import { setAktivEnhet } from "../data/enhet/enhet_actions";
+import { fullNaisUrlDefault } from "@/utils/miljoUtil";
+import { setAktivEnhet } from "@/data/enhet/enhet_actions";
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
   "internarbeidsflatefs"

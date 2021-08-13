@@ -1,11 +1,11 @@
-import { MoteDTO } from "../data/moter/moterTypes";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { useDispatch } from "react-redux";
 import { useEffect, useMemo } from "react";
-import { hentBruker } from "../data/bruker/bruker_actions";
-import { hentFnr } from "../data/fnr/fnr_actions";
-import { findDeltakerByType } from "../utils/moterUtil";
-import { isDialogmote } from "../utils/dialogmoterUtil";
+import { hentBruker } from "@/data/bruker/bruker_actions";
+import { hentFnr } from "@/data/fnr/fnr_actions";
+import { findDeltakerByType } from "@/utils/moterUtil";
+import { isDialogmote } from "@/utils/dialogmoterUtil";
 
 export type Arbeidstaker = {
   navn?: string;

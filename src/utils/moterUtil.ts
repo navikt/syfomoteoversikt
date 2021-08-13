@@ -1,12 +1,12 @@
-import { MoteDeltakerDTO, MoteDTO, MoteStatus } from "../data/moter/moterTypes";
-import { BrukerinfoDTO } from "../data/bruker/BrukerinfoDTO";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
+import { MoteDeltakerDTO, MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
+import { BrukerinfoDTO } from "@/data/bruker/BrukerinfoDTO";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import {
   getDialogmoteDato,
   getDialogmoteRespons,
   isDialogmote,
 } from "./dialogmoterUtil";
-import { MoteRespons } from "../components/MoteResponsFilter";
+import { MoteRespons } from "@/components/MoteResponsFilter";
 
 export const moteStatusTekst = (mote: MoteDTO): string => {
   const prefix = "Planlegger:";

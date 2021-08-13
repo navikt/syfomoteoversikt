@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import Panel from "nav-frontend-paneler";
 import Alertstripe from "nav-frontend-alertstriper";
 import Moteoversikt from "./Moteoversikt";
-import { useOverforMoter } from "../hooks/useOverforMoter";
-import { useMoter } from "../hooks/useMoter";
-import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
-import { dagensDatoKortFormat } from "../utils/dateUtil";
+import { useOverforMoter } from "@/hooks/useOverforMoter";
+import { useMoter } from "@/hooks/useMoter";
+import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
+import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { Element } from "nav-frontend-typografi";
 
 const tallOrdFraTall = (tall: number): string | number => {

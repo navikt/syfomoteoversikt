@@ -1,12 +1,12 @@
-import { MoteDTO } from "../data/moter/moterTypes";
-import { DialogmoterDTO } from "../data/dialogmoter/dialogmoterTypes";
-import { antallDeltakerSvarTekst, moteStatusTekst } from "../utils/moterUtil";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
+import { antallDeltakerSvarTekst, moteStatusTekst } from "@/utils/moterUtil";
 import React, { ReactElement } from "react";
 import {
   dialogmoteStatusTekst,
   isDialogmote,
   antallLesteVarslerTekst,
-} from "../utils/dialogmoterUtil";
+} from "@/utils/dialogmoterUtil";
 import { ResponsColumn, StatusColumn } from "./MoteTable";
 
 interface MoteStatusResponsColumnsProps {

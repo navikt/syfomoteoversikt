@@ -1,6 +1,6 @@
 import { Select } from "nav-frontend-skjema";
 import React, { ReactElement } from "react";
-import { trackOnClick } from "../amplitude/amplitude";
+import { trackOnClick } from "@/amplitude/amplitude";
 
 export enum MoteRespons {
   MOTTATT = "Respons mottatt",

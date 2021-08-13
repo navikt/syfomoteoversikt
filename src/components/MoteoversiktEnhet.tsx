@@ -1,18 +1,18 @@
 import React, { ReactElement, useState } from "react";
 import { Select } from "nav-frontend-skjema";
 import MoteEnhet from "./MoteEnhet";
-import { useMoterEnhet } from "../hooks/useMoterEnhet";
+import { useMoterEnhet } from "@/hooks/useMoterEnhet";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
 import {
   compareByMotedato,
   getMoteRespons,
   getMoteResponser,
-} from "../utils/moterUtil";
-import { useMoteVeileder } from "../hooks/useMoteVeileder";
+} from "@/utils/moterUtil";
+import { useMoteVeileder } from "@/hooks/useMoteVeileder";
 import { OverforMoterKnapp } from "./OverforMoterKnapp";
-import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
-import { trackOnClick } from "../amplitude/amplitude";
+import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
+import { trackOnClick } from "@/amplitude/amplitude";
 import {
   FnrHeader,
   MoteDatoHeader,

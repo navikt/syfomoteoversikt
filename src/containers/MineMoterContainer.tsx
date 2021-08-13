@@ -5,14 +5,14 @@ import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import { useMoter } from "../hooks/useMoter";
-import { hentMoter } from "../data/moter/moter_actions";
+import { useMoter } from "@/hooks/useMoter";
+import { hentMoter } from "@/data/moter/moter_actions";
 import { useDispatch } from "react-redux";
-import { useAktivEnhet } from "../data/enhet/enhet_hooks";
-import { hentDialogmoter } from "../data/dialogmoter/dialogmoter_actions";
-import { useDialogmoter } from "../data/dialogmoter/dialogmoter_hooks";
-import { useOverforMoter } from "../hooks/useOverforMoter";
-import { hentEnhetsMoter } from "../data/moter/moterEnhet_actions";
+import { useAktivEnhet } from "@/data/enhet/enhet_hooks";
+import { hentDialogmoter } from "@/data/dialogmoter/dialogmoter_actions";
+import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
+import { useOverforMoter } from "@/hooks/useOverforMoter";
+import { hentEnhetsMoter } from "@/data/moter/moterEnhet_actions";
 
 const texts = {
   ingenMoter: "Bruker har ingen møter",

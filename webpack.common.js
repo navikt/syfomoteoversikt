@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const autoprefixer = require("autoprefixer");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+
+const extensions = [".tsx", ".jsx", ".js", ".ts", ".json"];
 
 module.exports = {
   entry: {
@@ -14,7 +17,12 @@ module.exports = {
     publicPath: "/static",
   },
   resolve: {
-    extensions: [".tsx", ".jsx", ".js", ".ts", ".json"],
+    plugins: [
+      new TsconfigPathsPlugin({
+        extensions,
+      }),
+    ],
+    extensions,
   },
   module: {
     rules: [

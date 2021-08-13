@@ -1,12 +1,12 @@
 import { all, call, put, fork, takeEvery } from "redux-saga/effects";
-import { get } from "../../api";
+import { get } from "@/api";
 import * as actions from "./virksomhet_actions";
 import { VirksomhetDTO } from "./VirksomhetDTO";
 import {
   HENT_VIRKSOMHET_FORESPURT,
   HentVirksomhetAction,
 } from "./virksomhet_actions";
-import { SYFOMOTEADMIN_ROOT } from "../../utils/apiUrlUtil";
+import { SYFOMOTEADMIN_ROOT } from "@/utils/apiUrlUtil";
 
 export function* hentVirksomhet(action: HentVirksomhetAction) {
   yield put(actions.henterVirksomhet());

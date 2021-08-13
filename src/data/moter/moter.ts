@@ -22,7 +22,7 @@ import { FNR_HENTET, FnrActions } from "../fnr/fnr_actions";
 import {
   getMoteDeltakereMedFnr,
   getMoteDeltakereMedNavn,
-} from "../../utils/moterUtil";
+} from "@/utils/moterUtil";
 
 export interface MoterState {
   henter: boolean;
