@@ -59,11 +59,11 @@ spec:
     - name: ISDIALOGMOTE_HOST
       value: "isdialogmote.intern.nav.no"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
-      value: "4898e614-e73d-4067-aafd-5afc2254c6b6"
+      value: "prod-gcp.teamsykefravr.isdialogmote"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder.nais.adeo.no"
+      value: "modiacontextholder.intern.nav.no"
     - name: SYFOMOTEADMIN_AAD_APP_CLIENT_ID
-      value: "df2c236f-d109-4999-b255-206757b2f8b4"
+      value: "prod-fss.teamsykefravr.syfomoteadmin"
     - name: SYFOMOTEADMIN_HOST
       value: "syfomoteadmin.intern.nav.no"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
