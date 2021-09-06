@@ -1,118 +1,82 @@
 import { mount } from "enzyme";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
 import EnhetensMoter from "../../src/components/EnhetensMoter";
 import React from "react";
-import { createStore } from "redux";
 import { MoteStatus } from "@/data/moter/moterTypes";
 import { DialogmoteStatus } from "@/data/dialogmoter/dialogmoterTypes";
-import {
-  assertColumns,
-  assertTableHeaders,
-  createDialogmote,
-  createPlanlagtMote,
-  daysFromToday,
-} from "../testUtil";
+import { assertColumns, assertTableHeaders, daysFromToday } from "../testUtil";
 import { Label } from "nav-frontend-skjema";
 import { expect } from "chai";
 import { MoteOversiktHeading } from "@/components/MoteOversiktHeading";
 import MoteEnhet from "../../src/components/MoteEnhet";
 import { getDatoFraZulu } from "@/utils/dateUtil";
-import { rootReducer } from "@/data/rootState";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
+import {
+  aktivEnhetMock,
+  arbeidstakerMock,
+  createDialogmote,
+  createPlanlagtMote,
+  veilederMock,
+} from "../mocks/data";
+import {
+  mockBrukerQuery,
+  mockDialogmoteQuery,
+  mockFnrQuery,
+  mockMoterEnhetQuery,
+  mockVeilederQuery,
+} from "../mocks/queries";
 
-const arbeidstaker = {
-  fnr: "10108000398",
-  navn: "Arne Arbeidstaker",
-};
-const veileder = {
-  ident: "Z990197",
-  navn: "Vetle Veileder",
-};
-const arbeidsgiver = {
-  leder: "Korrupt Bolle",
-  orgnummer: "974574861",
-  virksomhet: "Skomaker Andersen",
-};
+const dialogmoterData = [
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.INNKALT,
+    daysFromToday(-1),
+    true
+  ),
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.NYTT_TID_STED,
+    daysFromToday(5)
+  ),
+  createDialogmote(veilederMock, DialogmoteStatus.AVLYST, daysFromToday(-2)),
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.FERDIGSTILT,
+    daysFromToday(-3)
+  ),
+];
+const moterData = [
+  createPlanlagtMote(veilederMock, MoteStatus.OPPRETTET, daysFromToday(1)),
+  createPlanlagtMote(
+    veilederMock,
+    MoteStatus.BEKREFTET,
+    daysFromToday(2),
+    true,
+    true
+  ),
+  createPlanlagtMote(veilederMock, MoteStatus.AVBRUTT, daysFromToday(3)),
+];
 
-const realState = createStore(rootReducer).getState();
-const mockStore = configureStore([]);
-const mockState = {
-  moterEnhet: {
-    data: [
-      createPlanlagtMote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        MoteStatus.OPPRETTET,
-        daysFromToday(1)
-      ),
-      createPlanlagtMote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        MoteStatus.BEKREFTET,
-        daysFromToday(2),
-        true,
-        true
-      ),
-      createPlanlagtMote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        MoteStatus.AVBRUTT,
-        daysFromToday(3)
-      ),
-    ],
-  },
-  dialogmoter: {
-    data: [
-      createDialogmote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        DialogmoteStatus.INNKALT,
-        daysFromToday(-1),
-        true
-      ),
-      createDialogmote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        DialogmoteStatus.NYTT_TID_STED,
-        daysFromToday(5)
-      ),
-      createDialogmote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        DialogmoteStatus.AVLYST,
-        daysFromToday(-2)
-      ),
-      createDialogmote(
-        veileder,
-        arbeidstaker,
-        arbeidsgiver,
-        DialogmoteStatus.FERDIGSTILT,
-        daysFromToday(-3)
-      ),
-    ],
-  },
-  veiledere: {
-    data: [
-      {
-        ident: veileder.ident,
-        navn: veileder.navn,
-      },
-    ],
-  },
-};
+const queryClient = new QueryClient();
+mockBrukerQuery(queryClient);
+mockFnrQuery(queryClient);
+mockDialogmoteQuery(queryClient, dialogmoterData);
+mockMoterEnhetQuery(queryClient, moterData);
+mockVeilederQuery(queryClient, veilederMock);
 
 describe("EnhetensMoter", () => {
   it("viser filter på respons og veileder", () => {
     const wrapper = mount(
-      <Provider store={mockStore({ ...realState, ...mockState })}>
-        <EnhetensMoter />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock,
+            setAktivEnhet: () => void 0,
+          }}
+        >
+          <EnhetensMoter />
+        </AktivEnhetContext.Provider>
+      </QueryClientProvider>
     );
     expect(wrapper.find(Label).at(0).text()).to.equal("Filtrer på respons");
     expect(wrapper.find(Label).at(1).text()).to.equal("Filtrer på veileder");
@@ -122,14 +86,21 @@ describe("EnhetensMoter", () => {
     expect(responsOptions.at(1).text()).to.equal("Ingen respons");
     expect(responsOptions.at(2).text()).to.equal("Respons mottatt");
     expect(veilederOptions.at(0).text()).to.equal("Vis alle");
-    expect(veilederOptions.at(1).text()).to.equal(veileder.navn);
+    expect(veilederOptions.at(1).text()).to.equal(veilederMock.navn);
   });
 
   it("viser enhetens aktive planlagte møter og dialogmøte-innkallinger", () => {
     const wrapper = mount(
-      <Provider store={mockStore({ ...realState, ...mockState })}>
-        <EnhetensMoter />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock,
+            setAktivEnhet: () => void 0,
+          }}
+        >
+          <EnhetensMoter />
+        </AktivEnhetContext.Provider>
+      </QueryClientProvider>
     );
     expect(wrapper.find(MoteOversiktHeading).text()).to.equal("Viser 4 møter");
     assertTableHeaders(wrapper, [
@@ -146,9 +117,9 @@ describe("EnhetensMoter", () => {
     assertColumns(dialogmotePassertRow, [
       "",
       getDatoFraZulu(daysFromToday(-1)),
-      veileder.navn,
-      arbeidstaker.fnr,
-      arbeidstaker.navn,
+      veilederMock.navn,
+      arbeidstakerMock.fnr,
+      arbeidstakerMock.navn,
       "Innkalling: Dato passert",
       "1/2 har lest",
     ]);
@@ -157,9 +128,9 @@ describe("EnhetensMoter", () => {
     assertColumns(planlagtMoteRow, [
       "",
       getDatoFraZulu(daysFromToday(1)),
-      veileder.navn,
-      arbeidstaker.fnr,
-      arbeidstaker.navn,
+      veilederMock.navn,
+      arbeidstakerMock.fnr,
+      arbeidstakerMock.navn,
       "Planlegger: Forslag sendt",
       "0/2 svar",
     ]);
@@ -168,9 +139,9 @@ describe("EnhetensMoter", () => {
     assertColumns(planlagtMoteBekreftetRow, [
       "",
       getDatoFraZulu(daysFromToday(2)),
-      veileder.navn,
-      arbeidstaker.fnr,
-      arbeidstaker.navn,
+      veilederMock.navn,
+      arbeidstakerMock.fnr,
+      arbeidstakerMock.navn,
       "Planlegger: Bekreftelse sendt",
       "2/2 svar",
     ]);
@@ -179,9 +150,9 @@ describe("EnhetensMoter", () => {
     assertColumns(dialogmoteEndretRow, [
       "",
       getDatoFraZulu(daysFromToday(5)),
-      veileder.navn,
-      arbeidstaker.fnr,
-      arbeidstaker.navn,
+      veilederMock.navn,
+      arbeidstakerMock.fnr,
+      arbeidstakerMock.navn,
       "Innkalling: Endret tid/sted",
       "0/2 har lest",
     ]);

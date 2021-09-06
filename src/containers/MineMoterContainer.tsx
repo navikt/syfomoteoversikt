@@ -1,54 +1,23 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { Row, Column } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import { useMoter } from "@/hooks/useMoter";
-import { hentMoter } from "@/data/moter/moter_actions";
-import { useDispatch } from "react-redux";
-import { useAktivEnhet } from "@/data/enhet/enhet_hooks";
-import { hentDialogmoter } from "@/data/dialogmoter/dialogmoter_actions";
-import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
-import { useOverforMoter } from "@/hooks/useOverforMoter";
-import { hentEnhetsMoter } from "@/data/moter/moterEnhet_actions";
+import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
 
 const texts = {
   ingenMoter: "Bruker har ingen møter",
 };
 
 const MineMoterContainer = (): ReactElement => {
-  const { moter, henterMoter, hentMoterFeilet, hentetMoter } = useMoter();
-  const { moterOverfort, dialogmoterOverfort } = useOverforMoter();
-  const {
-    hentetDialogmoterForEnhet,
-    henterDialogmoter,
-    hentDialogmoterFeilet,
-    dialogmoter,
-  } = useDialogmoter();
-  const aktivEnhet = useAktivEnhet();
-  const dispatch = useDispatch();
-
-  const maaHenteMoter = !henterMoter && !hentMoterFeilet && !hentetMoter;
-
-  useEffect(() => {
-    if (maaHenteMoter || moterOverfort) {
-      dispatch(hentMoter());
-    }
-  }, [dispatch, maaHenteMoter, moterOverfort]);
-
-  useEffect(() => {
-    if (moterOverfort) {
-      dispatch(hentEnhetsMoter(aktivEnhet));
-    }
-  }, [dispatch, aktivEnhet, moterOverfort]);
-
-  useEffect(() => {
-    if (aktivEnhet !== hentetDialogmoterForEnhet || dialogmoterOverfort) {
-      dispatch(hentDialogmoter(aktivEnhet));
-    }
-  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet, dialogmoterOverfort]);
+  const moterQuery = useVeiledersMoterQuery();
+  const dialogmoterQuery = useDialogmoterQuery();
+  const harMoter =
+    (moterQuery.isSuccess && moterQuery.data.length > 0) ||
+    (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
 
   return (
     <Side tittel="Møteoversikt">
@@ -68,15 +37,15 @@ const MineMoterContainer = (): ReactElement => {
           ]}
         />
         {(() => {
-          if (henterMoter || henterDialogmoter) {
+          if (moterQuery.isLoading || dialogmoterQuery.isLoading) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (hentMoterFeilet && hentDialogmoterFeilet) {
+          } else if (moterQuery.isError && dialogmoterQuery.isError) {
             return <Feilmelding />;
-          } else if (moter || dialogmoter) {
+          } else if (harMoter) {
             return <Moter />;
           }
           return <p>{texts.ingenMoter}</p>;

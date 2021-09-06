@@ -1,17 +1,16 @@
 import React, { ReactElement, useCallback } from "react";
-import { useDispatch } from "react-redux";
 import NAVSPA from "@navikt/navspa";
 import { DecoratorProps } from "./decoratorProps";
 import decoratorConfig from "./decoratorConfig";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
-import { setAktivEnhet } from "@/data/enhet/enhet_actions";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
   "internarbeidsflatefs"
 );
 
 const Decorator = (): ReactElement => {
-  const dispatch = useDispatch();
+  const { setAktivEnhet } = useAktivEnhet();
 
   const handlePersonsokSubmit = (nyttFnr: string) => {
     const host = "syfomodiaperson";
@@ -20,7 +19,7 @@ const Decorator = (): ReactElement => {
   };
 
   const handleChangeEnhet = (nyEnhet: string) => {
-    dispatch(setAktivEnhet(nyEnhet));
+    setAktivEnhet(nyEnhet);
   };
 
   const config = useCallback(decoratorConfig, [

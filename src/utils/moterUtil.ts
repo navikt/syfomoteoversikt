@@ -1,5 +1,4 @@
 import { MoteDeltakerDTO, MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
-import { BrukerinfoDTO } from "@/data/bruker/BrukerinfoDTO";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import {
   getDialogmoteDato,
@@ -51,28 +50,6 @@ const erSvarMottatt = (mote: MoteDTO): boolean =>
 export const getMoteResponser = (
   moter: (MoteDTO | DialogmoterDTO)[]
 ): MoteRespons[] => [...new Set(moter.map((mote) => getMoteRespons(mote)))];
-
-export const getMoteDeltakereMedNavn = (mote: MoteDTO, bruker: BrukerinfoDTO) =>
-  mote.deltakere.map((deltaker) => {
-    if (deltaker.type !== "Bruker") {
-      return deltaker;
-    }
-    return {
-      ...deltaker,
-      navn: bruker.navn,
-    };
-  });
-
-export const getMoteDeltakereMedFnr = (mote: MoteDTO, fnr: string) =>
-  mote.deltakere.map((deltaker) => {
-    if (deltaker.type !== "Bruker") {
-      return deltaker;
-    }
-    return {
-      ...deltaker,
-      fnr,
-    };
-  });
 
 export const ikkeAvbrutt = (): ((mote: MoteDTO) => boolean) => (
   mote: MoteDTO

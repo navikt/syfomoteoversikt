@@ -1,57 +1,32 @@
 import React, { ReactElement, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Column, Row } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import { hentEnhetsMoter } from "@/data/moter/moterEnhet_actions";
-import { useMoterEnhet } from "@/hooks/useMoterEnhet";
 import EnhetensMoter from "../components/EnhetensMoter";
-import { useAktivEnhet } from "@/data/enhet/enhet_hooks";
-import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
-import { hentDialogmoter } from "@/data/dialogmoter/dialogmoter_actions";
-import {
-  resetAntallDialogmoterOverfort,
-  resetAntallMoterOverfort,
-} from "@/data/overfor/overfor_actions";
+
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { useEnhetensMoterQuery } from "@/data/moter/moterQueryHooks";
+import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
+import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
 
 const texts = {
   ingenMoter: "Enheten har ingen møter",
 };
 
 const EnhetensMoterContainer = (): ReactElement => {
-  const {
-    henterMoter,
-    hentMoterFeilet,
-    moter,
-    hentetMoterForEnhet,
-  } = useMoterEnhet();
-  const {
-    hentetDialogmoterForEnhet,
-    henterDialogmoter,
-    hentDialogmoterFeilet,
-    dialogmoter,
-  } = useDialogmoter();
-  const aktivEnhet = useAktivEnhet();
-  const dispatch = useDispatch();
-
+  const { aktivEnhet } = useAktivEnhet();
+  const moterEnhetQuery = useEnhetensMoterQuery();
+  const dialogmoterQuery = useDialogmoterQuery();
+  const { dispatch } = useMoteoverforing();
   useEffect(() => {
-    dispatch(resetAntallMoterOverfort());
-    dispatch(resetAntallDialogmoterOverfort());
+    dispatch({ type: MoteoverforingActionType.ResetAntallOverfort });
   }, [dispatch]);
-
-  useEffect(() => {
-    if (aktivEnhet !== hentetMoterForEnhet) {
-      dispatch(hentEnhetsMoter(aktivEnhet));
-    }
-  }, [dispatch, aktivEnhet, hentetMoterForEnhet]);
-
-  useEffect(() => {
-    if (aktivEnhet !== hentetDialogmoterForEnhet) {
-      dispatch(hentDialogmoter(aktivEnhet));
-    }
-  }, [dispatch, aktivEnhet, hentetDialogmoterForEnhet]);
+  const harMoter =
+    (moterEnhetQuery.isSuccess && moterEnhetQuery.data.length > 0) ||
+    (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
 
   return (
     <Side tittel="Møteoversikt">
@@ -80,15 +55,15 @@ const EnhetensMoterContainer = (): ReactElement => {
                 }
               />
             );
-          } else if (henterMoter || henterDialogmoter) {
+          } else if (moterEnhetQuery.isLoading || dialogmoterQuery.isLoading) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (hentMoterFeilet && hentDialogmoterFeilet) {
+          } else if (moterEnhetQuery.isError && dialogmoterQuery.isError) {
             return <Feilmelding />;
-          } else if (moter || dialogmoter) {
+          } else if (harMoter) {
             return <EnhetensMoter />;
           }
           return <p>{texts.ingenMoter}</p>;
