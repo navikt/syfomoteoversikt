@@ -1,14 +1,13 @@
-import { mount } from "enzyme";
 import EnhetensMoter from "../../src/components/EnhetensMoter";
 import React from "react";
 import { MoteStatus } from "@/data/moter/moterTypes";
 import { DialogmoteStatus } from "@/data/dialogmoter/dialogmoterTypes";
-import { assertColumns, assertTableHeaders, daysFromToday } from "../testUtil";
-import { Label } from "nav-frontend-skjema";
+import {
+  assertTableHeaders,
+  assertTableRows,
+  daysFromToday,
+} from "../testUtil";
 import { expect } from "chai";
-import { MoteOversiktHeading } from "@/components/MoteOversiktHeading";
-import MoteEnhet from "../../src/components/MoteEnhet";
-import { getDatoFraZulu } from "@/utils/dateUtil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import {
@@ -17,14 +16,19 @@ import {
   createDialogmote,
   createPlanlagtMote,
   veilederMock,
+  virksomhetMock,
 } from "../mocks/data";
+import { render } from "@testing-library/react";
+import { getDatoFraZulu } from "@/utils/dateUtil";
+import { apiMock } from "../mocks/stubApi";
+import nock from "nock";
+import { stubBrukerApi, stubFnrApi } from "../mocks/stubBrukerApi";
 import {
-  mockBrukerQuery,
-  mockDialogmoteQuery,
-  mockFnrQuery,
-  mockMoterEnhetQuery,
-  mockVeilederQuery,
-} from "../mocks/queries";
+  stubAktivVeilederApi,
+  stubVeilederApi,
+} from "../mocks/stubVeilederApi";
+import { stubDialogmoterApi } from "../mocks/stubDialogmoterApi";
+import { stubEnhetensMoterApi } from "../mocks/stubMoterApi";
 
 const dialogmoterData = [
   createDialogmote(
@@ -58,39 +62,24 @@ const moterData = [
 ];
 
 const queryClient = new QueryClient();
-mockBrukerQuery(queryClient);
-mockFnrQuery(queryClient);
-mockDialogmoteQuery(queryClient, dialogmoterData);
-mockMoterEnhetQuery(queryClient, moterData);
-mockVeilederQuery(queryClient, veilederMock);
+const scope = apiMock();
 
 describe("EnhetensMoter", () => {
-  it("viser filter på respons og veileder", () => {
-    const wrapper = mount(
-      <QueryClientProvider client={queryClient}>
-        <AktivEnhetContext.Provider
-          value={{
-            aktivEnhet: aktivEnhetMock,
-            setAktivEnhet: () => void 0,
-          }}
-        >
-          <EnhetensMoter />
-        </AktivEnhetContext.Provider>
-      </QueryClientProvider>
-    );
-    expect(wrapper.find(Label).at(0).text()).to.equal("Filtrer på respons");
-    expect(wrapper.find(Label).at(1).text()).to.equal("Filtrer på veileder");
-    const responsOptions = wrapper.find("select").at(0).find("option");
-    const veilederOptions = wrapper.find("select").at(1).find("option");
-    expect(responsOptions.at(0).text()).to.equal("Vis alle");
-    expect(responsOptions.at(1).text()).to.equal("Ingen respons");
-    expect(responsOptions.at(2).text()).to.equal("Respons mottatt");
-    expect(veilederOptions.at(0).text()).to.equal("Vis alle");
-    expect(veilederOptions.at(1).text()).to.equal(veilederMock.navn);
+  beforeEach(() => {
+    stubBrukerApi(scope);
+    stubFnrApi(scope);
+    stubDialogmoterApi(scope, dialogmoterData);
+    stubEnhetensMoterApi(scope, moterData);
+    stubVeilederApi(scope, veilederMock);
+    stubAktivVeilederApi(scope, veilederMock);
   });
 
-  it("viser enhetens aktive planlagte møter og dialogmøte-innkallinger", () => {
-    const wrapper = mount(
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  it("viser filter på respons og veileder", async () => {
+    const wrapper = render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
           value={{
@@ -102,8 +91,40 @@ describe("EnhetensMoter", () => {
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
     );
-    expect(wrapper.find(MoteOversiktHeading).text()).to.equal("Viser 4 møter");
-    assertTableHeaders(wrapper, [
+
+    expect(await wrapper.findByRole("heading", { name: "Viser 4 møter" })).to
+      .exist;
+
+    expect(wrapper.getByText("Filtrer på respons")).to.exist;
+    expect(wrapper.getByText("Filtrer på veileder")).to.exist;
+    expect(wrapper.getAllByRole("option", { name: "Vis alle" })).to.have.length(
+      2
+    );
+    expect(wrapper.getByRole("option", { name: "Ingen respons" })).to.exist;
+    expect(wrapper.getByRole("option", { name: "Respons mottatt" })).to.exist;
+    expect(await wrapper.findByRole("option", { name: veilederMock.navn })).to
+      .exist;
+  });
+
+  it("viser enhetens aktive planlagte møter og dialogmøte-innkallinger", async () => {
+    const wrapper = render(
+      <QueryClientProvider client={queryClient}>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock,
+            setAktivEnhet: () => void 0,
+          }}
+        >
+          <EnhetensMoter />
+        </AktivEnhetContext.Provider>
+      </QueryClientProvider>
+    );
+
+    expect(await wrapper.findByRole("heading", { name: "Viser 4 møter" })).to
+      .exist;
+
+    const headers = wrapper.getAllByRole("columnheader");
+    assertTableHeaders(headers, [
       "Velg",
       "Møtedato",
       "Veileder",
@@ -113,48 +134,20 @@ describe("EnhetensMoter", () => {
       "Respons",
     ]);
 
-    const dialogmotePassertRow = wrapper.find(MoteEnhet).at(0);
-    assertColumns(dialogmotePassertRow, [
-      "",
-      getDatoFraZulu(daysFromToday(-1)),
-      veilederMock.navn,
-      arbeidstakerMock.fnr,
-      arbeidstakerMock.navn,
-      "Innkalling: Dato passert",
-      "1/2 har lest",
-    ]);
-
-    const planlagtMoteRow = wrapper.find(MoteEnhet).at(1);
-    assertColumns(planlagtMoteRow, [
-      "",
-      getDatoFraZulu(daysFromToday(1)),
-      veilederMock.navn,
-      arbeidstakerMock.fnr,
-      arbeidstakerMock.navn,
-      "Planlegger: Forslag sendt",
-      "0/2 svar",
-    ]);
-
-    const planlagtMoteBekreftetRow = wrapper.find(MoteEnhet).at(2);
-    assertColumns(planlagtMoteBekreftetRow, [
-      "",
-      getDatoFraZulu(daysFromToday(2)),
-      veilederMock.navn,
-      arbeidstakerMock.fnr,
-      arbeidstakerMock.navn,
-      "Planlegger: Bekreftelse sendt",
-      "2/2 svar",
-    ]);
-
-    const dialogmoteEndretRow = wrapper.find(MoteEnhet).at(3);
-    assertColumns(dialogmoteEndretRow, [
-      "",
-      getDatoFraZulu(daysFromToday(5)),
-      veilederMock.navn,
-      arbeidstakerMock.fnr,
-      arbeidstakerMock.navn,
-      "Innkalling: Endret tid/sted",
-      "0/2 har lest",
+    const rows = wrapper.getAllByRole("row");
+    assertTableRows(rows, [
+      `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Innkalling: Dato passert1/2 har lest`,
+      `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Planlegger: Forslag sendt0/2 svar`,
+      `${getDatoFraZulu(daysFromToday(21))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Planlegger: Bekreftelse sendt2/2 svar`,
+      `${getDatoFraZulu(daysFromToday(5))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Innkalling: Endret tid/sted0/2 har lest`,
     ]);
   });
 });
