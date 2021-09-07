@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import AlertStripe from "nav-frontend-alertstriper";
 import MoteoversiktEnhet from "./MoteoversiktEnhet";
-import { useOverforMoter } from "@/hooks/useOverforMoter";
-import { useMoterEnhet } from "@/hooks/useMoterEnhet";
-import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
-import { Redirect } from "react-router-dom";
+import { useOverforMoter } from "@/data/moter/useOverforMoter";
+import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
+import { useEnhetensMoterQuery } from "@/data/moter/moterQueryHooks";
+import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
   overtaMoterFeilet:
@@ -28,26 +28,20 @@ const OverforFeilmelding = ({ children }: OverforFeilmeldingProps) => (
 );
 
 const EnhetensMoter = (): ReactElement => {
-  const {
-    overforMoterFeilet,
-    overforDialogmoterFeilet,
-    moterOverfort,
-    dialogmoterOverfort,
-  } = useOverforMoter();
-  const { harAktiveMoter } = useMoterEnhet();
-  const { harAktiveDialogmoter } = useDialogmoter();
-  const harMoter = harAktiveMoter || harAktiveDialogmoter;
-
-  if (moterOverfort || dialogmoterOverfort) {
-    return <Redirect to="/syfomoteoversikt/minemoter" />;
-  }
+  const overforDialogmoter = useOverforDialogmoter();
+  const overforMoter = useOverforMoter();
+  const moterEnhetQuery = useEnhetensMoterQuery();
+  const dialogmoterQuery = useDialogmoterQuery();
+  const harMoter =
+    (moterEnhetQuery.isSuccess && moterEnhetQuery.data.length > 0) ||
+    (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
 
   return (
     <div>
-      {overforMoterFeilet && (
+      {overforMoter.isError && (
         <OverforFeilmelding>{texts.overtaMoterFeilet}</OverforFeilmelding>
       )}
-      {overforDialogmoterFeilet && (
+      {overforDialogmoter.isError && (
         <OverforFeilmelding>{texts.overtaDialogmoterFeilet}</OverforFeilmelding>
       )}
       {!harMoter && (

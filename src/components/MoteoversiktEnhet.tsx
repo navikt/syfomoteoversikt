@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { Select } from "nav-frontend-skjema";
 import MoteEnhet from "./MoteEnhet";
-import { useMoterEnhet } from "@/hooks/useMoterEnhet";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
 import {
@@ -9,9 +8,7 @@ import {
   getMoteRespons,
   getMoteResponser,
 } from "@/utils/moterUtil";
-import { useMoteVeileder } from "@/hooks/useMoteVeileder";
 import { OverforMoterKnapp } from "./OverforMoterKnapp";
-import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
 import { trackOnClick } from "@/amplitude/amplitude";
 import {
   FnrHeader,
@@ -20,6 +17,17 @@ import {
   StatusHeader,
   VelgMoteHeader,
 } from "./MoteTable";
+import { MoteDTO } from "@/data/moter/moterTypes";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
+import { isDialogmote } from "@/utils/dialogmoterUtil";
+import {
+  useEnhetensMoterQuery,
+  useEnhetensMoterVeiledere,
+} from "@/data/moter/moterQueryHooks";
+import {
+  useDialogmoterQuery,
+  useDialogmoterVeiledere,
+} from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
   velg: "Velg",
@@ -38,20 +46,34 @@ const MoteoversiktEnhet = (): ReactElement => {
   );
   const [filterVeileder, setFilterVeileder] = useState("alle");
 
-  const { aktiveMoter } = useMoterEnhet();
-  const { getVeileder } = useMoteVeileder();
-  const { aktiveDialogmoter } = useDialogmoter();
-  const moter = [...aktiveMoter, ...aktiveDialogmoter];
+  const moterEnhetQuery = useEnhetensMoterQuery();
+  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterVeiledere = useDialogmoterVeiledere();
+  const moterVeiledere = useEnhetensMoterVeiledere();
+  const moter = [
+    ...(moterEnhetQuery.data || []),
+    ...(dialogmoterQuery.data || []),
+  ];
+  const veiledere = [...dialogmoterVeiledere, ...moterVeiledere];
 
-  const getVeilederNavnForMoter = (): string[] => {
+  const navnPaaVeiledere = (): string[] => {
     return [
       ...new Set(
-        moter
-          .map((mote) => getVeileder(mote)?.navn)
+        veiledere
+          .map((veileder) => veileder.navn)
           .filter((navn) => navn !== undefined) as string[]
       ),
     ];
   };
+
+  const veilederNavnForMote = (
+    mote: MoteDTO | DialogmoterDTO
+  ): string | undefined =>
+    veiledere.find(({ ident }) =>
+      isDialogmote(mote)
+        ? mote.tildeltVeilederIdent === ident
+        : mote.eier === ident
+    )?.navn;
 
   const getFiltrerteMoter = () => {
     if (responsFilter === "alle" && filterVeileder === "alle") {
@@ -60,7 +82,8 @@ const MoteoversiktEnhet = (): ReactElement => {
 
     return moter.filter((mote) => {
       const veileder =
-        filterVeileder === "alle" || getVeileder(mote)?.navn === filterVeileder;
+        filterVeileder === "alle" ||
+        veilederNavnForMote(mote) === filterVeileder;
       const status =
         responsFilter === "alle" || getMoteRespons(mote) === responsFilter;
       return veileder && status;
@@ -91,7 +114,7 @@ const MoteoversiktEnhet = (): ReactElement => {
               }}
             >
               <option value="alle">Vis alle</option>
-              {getVeilederNavnForMoter().map((veileder, index) => (
+              {navnPaaVeiledere().map((veileder, index) => (
                 <option key={index} value={veileder}>
                   {veileder}
                 </option>

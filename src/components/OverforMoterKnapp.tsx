@@ -1,44 +1,40 @@
-import {
-  overforDialogmoter,
-  overforMoter,
-} from "@/data/overfor/overfor_actions";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useOverforMoter } from "@/hooks/useOverforMoter";
 import { TrackedHovedknapp } from "./buttons/TrackedHovedknapp";
+import { useOverforMoter } from "@/data/moter/useOverforMoter";
+import { Redirect } from "react-router-dom";
+import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
+import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 
 const texts = {
   overta: "Overta møter",
 };
 
 export const OverforMoterKnapp = () => {
-  const dispatch = useDispatch();
-  const {
-    moterMarkertForOverforing,
-    dialogmoterMarkertForOverforing,
-    overforerMoter,
-    overforerDialogmoter,
-  } = useOverforMoter();
-  const noMoterMarkert =
-    moterMarkertForOverforing.length === 0 &&
-    dialogmoterMarkertForOverforing.length === 0;
+  const { moterMarkert, dialogmoterMarkert } = useMoteoverforing();
+  const overforDialogmoter = useOverforDialogmoter();
+  const overforMoter = useOverforMoter();
+  const harMarkertDialogmoter = dialogmoterMarkert.length > 0;
+  const harMarkertMoter = moterMarkert.length > 0;
+  const noMoterMarkert = !harMarkertDialogmoter && !harMarkertMoter;
 
   const handleClick = () => {
-    if (moterMarkertForOverforing.length > 0) {
-      dispatch(overforMoter({ moteUuids: moterMarkertForOverforing }));
+    if (harMarkertMoter) {
+      overforMoter.mutate(moterMarkert);
     }
-    if (dialogmoterMarkertForOverforing.length > 0) {
-      dispatch(
-        overforDialogmoter({
-          dialogmoteUuids: dialogmoterMarkertForOverforing,
-        })
-      );
+    if (harMarkertDialogmoter) {
+      overforDialogmoter.mutate(dialogmoterMarkert);
     }
   };
 
+  if (overforDialogmoter.isSuccess || overforMoter.isSuccess) {
+    return <Redirect to="/syfomoteoversikt/minemoter" />;
+  }
+
   return (
     <TrackedHovedknapp
-      disabled={overforerMoter || overforerDialogmoter || noMoterMarkert}
+      disabled={
+        overforMoter.isLoading || overforDialogmoter.isLoading || noMoterMarkert
+      }
       onClick={handleClick}
     >
       {texts.overta}

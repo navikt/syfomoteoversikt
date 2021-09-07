@@ -1,6 +1,4 @@
 export interface VeilederDto {
-  ident?: string;
+  ident: string;
   navn?: string;
-  henter?: boolean;
-  hentingFeilet?: boolean;
 }

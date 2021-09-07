@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from "react";
 import Mote from "./Mote";
-import { useMoter } from "@/hooks/useMoter";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
 import {
@@ -8,13 +7,15 @@ import {
   getMoteRespons,
   getMoteResponser,
 } from "@/utils/moterUtil";
-import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
 import {
   FnrHeader,
   MoteDatoHeader,
   ResponsHeader,
   StatusHeader,
 } from "./MoteTable";
+import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
+import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
+import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
   motedato: "Møtedato",
@@ -29,9 +30,13 @@ const Moteoversikt = (): ReactElement => {
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
     "alle"
   );
-  const { aktiveMoter } = useMoter();
-  const { veiledersAktiveDialogmoter } = useDialogmoter();
-  const moter = [...aktiveMoter, ...veiledersAktiveDialogmoter];
+  const aktivVeileder = useAktivVeileder();
+  const moterQuery = useVeiledersMoterQuery();
+  const dialogmoterQuery = useDialogmoterQuery();
+  const veiledersDialogmoter = dialogmoterQuery.data?.filter(
+    (mote) => mote.tildeltVeilederIdent === aktivVeileder.data?.ident
+  );
+  const moter = [...(moterQuery.data || []), ...(veiledersDialogmoter || [])];
 
   const getFiltrerteMoter = () => {
     if (responsFilter === "alle") {

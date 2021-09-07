@@ -2,11 +2,12 @@ import React, { ReactElement } from "react";
 import Panel from "nav-frontend-paneler";
 import Alertstripe from "nav-frontend-alertstriper";
 import Moteoversikt from "./Moteoversikt";
-import { useOverforMoter } from "@/hooks/useOverforMoter";
-import { useMoter } from "@/hooks/useMoter";
-import { useDialogmoter } from "@/data/dialogmoter/dialogmoter_hooks";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { Element } from "nav-frontend-typografi";
+import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
+import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
+import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 
 const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
@@ -65,17 +66,19 @@ const texts = {
 };
 
 const Moter = (): ReactElement => {
-  const { antallMoterOverfort, antallDialogmoterOverfort } = useOverforMoter();
-  const { harVeilederAktiveDialogmoter } = useDialogmoter();
-  const { harAktiveMoter } = useMoter();
-  const harMoter = harAktiveMoter || harVeilederAktiveDialogmoter;
-  const harOverfortMoter = antallMoterOverfort || antallDialogmoterOverfort;
-  const antallOverfort =
-    (antallMoterOverfort || 0) + (antallDialogmoterOverfort || 0);
+  const aktivVeilederIdent = useAktivVeileder().data?.ident;
+  const { antallOverfort } = useMoteoverforing();
+  const dialogmoterQuery = useDialogmoterQuery();
+  const moterQuery = useVeiledersMoterQuery();
+  const harVeilederMoter = moterQuery.isSuccess && moterQuery.data.length > 0;
+  const harVeilederDialogmoter = dialogmoterQuery.data?.some(
+    ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeilederIdent
+  );
+  const harMoter = harVeilederMoter || harVeilederDialogmoter;
 
   return (
     <div>
-      {harOverfortMoter && (
+      {antallOverfort && (
         <Alertstripe className="blokk" type="suksess">
           <Element>{`Du har lagt til ${hentTallordTekst(
             antallOverfort
