@@ -1,12 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { expect } from "chai";
-import chai from "chai";
-import chaiEnzyme from "chai-enzyme";
-import { shallow } from "enzyme";
 import NavigasjonsTopp from "../../src/components/NavigasjonsTopp";
-
-chai.use(chaiEnzyme());
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 
 describe("NavigasjonsTopp", () => {
   it("Viser tre stk lenker dersom man sender inn 3 lenker", () => {
@@ -27,8 +23,12 @@ describe("NavigasjonsTopp", () => {
         aktiv: false,
       },
     ];
-    const combo = shallow(<NavigasjonsTopp lenker={lenker} />);
-    expect(combo.find(Link)).to.have.length(3);
+    const wrapper = render(
+      <MemoryRouter>
+        <NavigasjonsTopp lenker={lenker} />
+      </MemoryRouter>
+    );
+    expect(wrapper.getAllByRole("link")).to.have.length(3);
   });
 
   it("Viser lenke som aktiv", () => {
@@ -39,8 +39,14 @@ describe("NavigasjonsTopp", () => {
         aktiv: true,
       },
     ];
-    const combo = shallow(<NavigasjonsTopp lenker={lenker} />);
-    expect(combo.find(".navigasjon__element__inner--active")).to.have.length(1);
+    const wrapper = render(
+      <MemoryRouter>
+        <NavigasjonsTopp lenker={lenker} />
+      </MemoryRouter>
+    );
+    expect(wrapper.getByRole("link").className).to.equal(
+      "navigasjon__element__inner--active"
+    );
   });
 
   it("Viser lenke som ikke aktiv", () => {
@@ -51,7 +57,13 @@ describe("NavigasjonsTopp", () => {
         aktiv: false,
       },
     ];
-    const combo = shallow(<NavigasjonsTopp lenker={lenker} />);
-    expect(combo.find(".navigasjon__element__inner--active")).to.have.length(0);
+    const wrapper = render(
+      <MemoryRouter>
+        <NavigasjonsTopp lenker={lenker} />
+      </MemoryRouter>
+    );
+    expect(wrapper.getByRole("link").className).to.equal(
+      "navigasjon__element__inner"
+    );
   });
 });

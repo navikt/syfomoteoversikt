@@ -1,8 +1,5 @@
-import Enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import path from "path";
-
-Enzyme.configure({ adapter: new Adapter() });
+import MutationObserver from "@sheerun/mutationobserver-shim";
 
 const dotEnvPath = path.resolve(".env");
 
@@ -45,4 +42,6 @@ global.document = window.document;
 global.navigator = {
   userAgent: "node.js",
 };
+window.MutationObserver = MutationObserver;
+
 copyProps(window, global);
