@@ -26,6 +26,13 @@ export const moteStatusTekst = (mote: MoteDTO): string => {
 };
 
 export const antallDeltakerSvarTekst = (mote: MoteDTO): string => {
+  if (
+    mote.status === MoteStatus.BEKREFTET ||
+    mote.status === MoteStatus.AVBRUTT
+  ) {
+    return "";
+  }
+
   const antallSvar = mote.deltakere.filter((deltaker) =>
     harDeltakerSvart(mote, deltaker)
   ).length;

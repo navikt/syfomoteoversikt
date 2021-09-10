@@ -31,6 +31,18 @@ describe("moterUtil antallDeltakerSvarTekst", () => {
     const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
     expect(svarStatus).to.equal("2/2 svar");
   });
+
+  it("skal vise tomt svar når status er BEKREFTET", () => {
+    const mote = createMote(MoteStatus.BEKREFTET);
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("");
+  });
+
+  it("skal vise tomt svar når status er AVBRUTT", () => {
+    const mote = createMote(MoteStatus.AVBRUTT);
+    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    expect(svarStatus).to.equal("");
+  });
 });
 
 describe("moterUtil moteStatusTekst", () => {
