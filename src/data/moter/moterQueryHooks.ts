@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { ikkeAvbrutt } from "@/utils/moterUtil";
 import { useVeiledereQuery } from "@/data/veiledere/veilederQueryHooks";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { minutesToMillis } from "@/utils/timeUtils";
 
 const moterBaseUrl = `${SYFOMOTEADMIN_ROOT}/v2/moter`;
 
@@ -18,6 +19,7 @@ export const useVeiledersMoterQuery = () => {
     get<MoteDTO[]>(`${moterBaseUrl}?veiledersmoter=true`);
   return useQuery(moterQueryKeys.moter, fetchMoterVeileder, {
     select: aktiveMoter,
+    staleTime: minutesToMillis(10),
   });
 };
 
@@ -28,6 +30,7 @@ export const useEnhetensMoterQuery = () => {
   return useQuery(moterQueryKeys.moterEnhet(aktivEnhet), fetchMoterEnhet, {
     enabled: !!aktivEnhet,
     select: aktiveMoter,
+    staleTime: minutesToMillis(10),
   });
 };
 

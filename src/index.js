@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { MoteoverforingProvider } from "@/context/moteoverforing/MoteoverforingContext";
 import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
+import { minutesToMillis } from "@/utils/timeUtils";
 
 initAmplitude();
 
@@ -15,7 +16,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 30000,
+      cacheTime: minutesToMillis(60),
+      staleTime: minutesToMillis(30),
     },
   },
 });

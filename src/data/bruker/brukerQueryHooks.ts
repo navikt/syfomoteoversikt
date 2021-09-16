@@ -12,15 +12,11 @@ export const brukerQueryKeys = {
 export const useBrukerQuery = (ident: string) => {
   const fetchBrukerInfo = () =>
     get<BrukerinfoDTO>(`${SYFOMOTEADMIN_ROOT}/v2/brukerinfo/${ident}`);
-  return useQuery(brukerQueryKeys.brukerinfo(ident), fetchBrukerInfo, {
-    staleTime: 600000,
-  });
+  return useQuery(brukerQueryKeys.brukerinfo(ident), fetchBrukerInfo);
 };
 
 export const useFnrQuery = (ident: string) => {
   const fetchFnr = () =>
     get<AktorDTO>(`${SYFOMOTEADMIN_ROOT}/v2/aktor/${ident}`);
-  return useQuery(brukerQueryKeys.fnr(ident), fetchFnr, {
-    staleTime: 600000,
-  });
+  return useQuery(brukerQueryKeys.fnr(ident), fetchFnr);
 };

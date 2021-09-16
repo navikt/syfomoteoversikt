@@ -14,18 +14,12 @@ const fetchVeilederByIdent = (ident: string) =>
 export const useAktivVeileder = () => {
   const fetchVeileder = () =>
     get<VeilederDto>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
-  return useQuery(veilederQueryKeys.veileder, fetchVeileder, {
-    staleTime: 600000,
-  });
+  return useQuery(veilederQueryKeys.veileder, fetchVeileder);
 };
 
 export const useVeilederQuery = (ident: string) => {
-  return useQuery(
-    veilederQueryKeys.veilederByIdent(ident),
-    () => fetchVeilederByIdent(ident),
-    {
-      staleTime: 600000,
-    }
+  return useQuery(veilederQueryKeys.veilederByIdent(ident), () =>
+    fetchVeilederByIdent(ident)
   );
 };
 
@@ -34,7 +28,6 @@ export const useVeiledereQuery = (identList: string[]) => {
     identList.map((ident) => ({
       queryKey: veilederQueryKeys.veilederByIdent(ident),
       queryFn: () => fetchVeilederByIdent(ident),
-      staleTime: 600000,
     }))
   ) as UseQueryResult<VeilederDto>[];
   return veiledereQueries
