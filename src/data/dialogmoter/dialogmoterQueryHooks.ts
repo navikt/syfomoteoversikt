@@ -7,6 +7,7 @@ import { get } from "@/api";
 import { useQuery } from "react-query";
 import { useVeiledereQuery } from "@/data/veiledere/veilederQueryHooks";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { minutesToMillis } from "@/utils/timeUtils";
 
 export const dialogmoterQueryKeys = {
   dialogmoter: (enhetId?: string) => ["dialogmoter", enhetId],
@@ -24,6 +25,7 @@ export const useDialogmoterQuery = () => {
     {
       enabled: !!aktivEnhet,
       select: aktiveDialogmoter,
+      staleTime: minutesToMillis(10),
     }
   );
 };

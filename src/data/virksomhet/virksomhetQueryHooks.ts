@@ -12,6 +12,5 @@ export const useVirksomhetQuery = (orgnummer: string | undefined) => {
     get<VirksomhetDTO>(`${SYFOMOTEADMIN_ROOT}/v2/virksomhet/${orgnummer}`);
   return useQuery(virksomhetQueryKeys.virksomhet(orgnummer), fetchVirksomhet, {
     enabled: orgnummer !== undefined,
-    staleTime: 600000,
   });
 };
