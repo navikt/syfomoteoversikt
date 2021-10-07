@@ -18,8 +18,10 @@ export const useAktivVeileder = () => {
 };
 
 export const useVeilederQuery = (ident: string) => {
-  return useQuery(veilederQueryKeys.veilederByIdent(ident), () =>
-    fetchVeilederByIdent(ident)
+  return useQuery(
+    veilederQueryKeys.veilederByIdent(ident),
+    () => fetchVeilederByIdent(ident),
+    { enabled: !!ident }
   );
 };
 
