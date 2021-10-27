@@ -12,6 +12,7 @@ import { VeilederDto } from "@/data/veiledere/veilederTypes";
 
 export const aktivEnhetMock = "0316";
 export const brukerFnr = "10108000398";
+export const aktorId = `10${brukerFnr}`;
 export const orgnr = "974574861";
 export const virksomhetNavn = "Skomaker Andersen";
 export const brukerNavn = "Arne Arbeidstaker";
@@ -91,7 +92,7 @@ export const createPlanlagtMote = (
   arbeidsgiverSvar = false
 ): MoteDTO =>
   (({
-    aktorId: arbeidstakerMock.fnr,
+    aktorId: aktorId,
     status,
     sistEndret: daysFromToday(-3),
     deltakere: [
