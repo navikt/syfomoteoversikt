@@ -32,6 +32,6 @@ $ ./start-dev.sh # starter Redis og mock-oauth2-server (se under for mer info)
 ## Redis Cache
 
 Brukes for å cache bruker-sessions.
-Lokalt oppsett ligger i `docker-compose.yml`, mens nais-oppsettet ligger i `redis.yaml`.
+Lokalt oppsett ligger i `docker-compose.yml`, mens nais-oppsettet ligger i `.nais/redis.yaml`.
 Redis pod deployes automatisk ved endringer i workflow eller config i master,
 men kan også deployes manuelt til NAIS ved å kjøre følgdende kommando: `kubectl apply -f .nais/redis.yaml`.
