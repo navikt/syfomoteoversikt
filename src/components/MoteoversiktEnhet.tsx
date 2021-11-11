@@ -7,6 +7,8 @@ import {
   compareByMotedato,
   getMoteRespons,
   getMoteResponser,
+  getMoteType,
+  MoteType,
 } from "@/utils/moterUtil";
 import { OverforMoterKnapp } from "./OverforMoterKnapp";
 import { trackOnClick } from "@/amplitude/amplitude";
@@ -38,13 +40,16 @@ const texts = {
   status: "Status",
   respons: "Respons",
   filtrer: "Filtrer på veileder",
+  filtrerType: "Filtrer på type",
 };
 
 const MoteoversiktEnhet = (): ReactElement => {
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
     "alle"
   );
+
   const [filterVeileder, setFilterVeileder] = useState("alle");
+  const [filterType, setFilterType] = useState("alle");
 
   const moterEnhetQuery = useEnhetensMoterQuery();
   const dialogmoterQuery = useDialogmoterQuery();
@@ -76,7 +81,11 @@ const MoteoversiktEnhet = (): ReactElement => {
     )?.navn;
 
   const getFiltrerteMoter = () => {
-    if (responsFilter === "alle" && filterVeileder === "alle") {
+    if (
+      responsFilter === "alle" &&
+      filterVeileder === "alle" &&
+      filterType === "alle"
+    ) {
       return moter;
     }
 
@@ -86,7 +95,8 @@ const MoteoversiktEnhet = (): ReactElement => {
         veilederNavnForMote(mote) === filterVeileder;
       const status =
         responsFilter === "alle" || getMoteRespons(mote) === responsFilter;
-      return veileder && status;
+      const type = filterType === "alle" || getMoteType(mote) === filterType;
+      return veileder && status && type;
     });
   };
 
@@ -119,6 +129,24 @@ const MoteoversiktEnhet = (): ReactElement => {
                   {veileder}
                 </option>
               ))}
+            </Select>
+          </div>
+          <div className="verktoylinje__filter">
+            <Select
+              label={texts.filtrerType}
+              onChange={(e) => {
+                trackOnClick(`${texts.filtrerType} - ${e.currentTarget.value}`);
+                setFilterType(e.currentTarget.value);
+              }}
+            >
+              <option value="alle">Vis alle</option>
+              {Object.values(MoteType).map(
+                (moteType: string, index: number) => (
+                  <option key={index} value={moteType}>
+                    {moteType}
+                  </option>
+                )
+              )}
             </Select>
           </div>
         </div>

@@ -7,6 +7,11 @@ import {
 } from "./dialogmoterUtil";
 import { MoteRespons } from "@/components/MoteResponsFilter";
 
+export enum MoteType {
+  INNKALLING = "Innkalling",
+  PLANLEGGER = "Planlegger",
+}
+
 export const moteStatusTekst = (mote: MoteDTO): string => {
   const prefix = "Planlegger:";
   switch (mote.status) {
@@ -49,6 +54,13 @@ export const getMoteRespons = (mote: MoteDTO | DialogmoterDTO): MoteRespons => {
   } else {
     return erSvarMottatt(mote) ? MoteRespons.MOTTATT : MoteRespons.IKKE_MOTTATT;
   }
+};
+
+export const getMoteType = (mote: MoteDTO | DialogmoterDTO): MoteType => {
+  if (isDialogmote(mote)) {
+    return MoteType.INNKALLING;
+  }
+  return MoteType.PLANLEGGER;
 };
 
 const erSvarMottatt = (mote: MoteDTO): boolean =>
