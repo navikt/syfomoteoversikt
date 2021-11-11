@@ -78,7 +78,7 @@ describe("EnhetensMoter", () => {
     nock.cleanAll();
   });
 
-  it("viser filter på respons og veileder", async () => {
+  it("viser filter på respons, veileder og type", async () => {
     const wrapper = render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
@@ -97,13 +97,16 @@ describe("EnhetensMoter", () => {
 
     expect(wrapper.getByText("Filtrer på respons")).to.exist;
     expect(wrapper.getByText("Filtrer på veileder")).to.exist;
+    expect(wrapper.getByText("Filtrer på type")).to.exist;
     expect(wrapper.getAllByRole("option", { name: "Vis alle" })).to.have.length(
-      2
+      3
     );
     expect(wrapper.getByRole("option", { name: "Ingen respons" })).to.exist;
     expect(wrapper.getByRole("option", { name: "Respons mottatt" })).to.exist;
     expect(await wrapper.findByRole("option", { name: veilederMock.navn })).to
       .exist;
+    expect(wrapper.getByRole("option", { name: "Innkalling" })).to.exist;
+    expect(wrapper.getByRole("option", { name: "Planlegger" })).to.exist;
   });
 
   it("viser enhetens aktive planlagte møter og dialogmøte-innkallinger", async () => {
