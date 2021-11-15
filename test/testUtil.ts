@@ -16,6 +16,6 @@ export const assertTableHeaders = (
 };
 
 export const assertTableRows = (rows: HTMLElement[], expectedRows: string[]) =>
-  expectedRows.forEach((expectedRow) =>
-    rows.some((row) => row.textContent === expectedRow)
-  );
+  expectedRows.forEach((expectedRow, index) => {
+    expect(rows[index].textContent).to.equal(expectedRow);
+  });

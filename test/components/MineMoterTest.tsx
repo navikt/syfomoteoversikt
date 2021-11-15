@@ -121,12 +121,13 @@ describe("MineMoter", () => {
 
     const rows = wrapper.getAllByRole("row");
     assertTableRows(rows, [
-      `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }${virksomhetMock.navn}Innkalling: Dato passert1/2 har lest`,
+      "MøtedatoF.nrNavnVirksomhetStatusRespons",
       `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetMock.navn}Planlegger: Forslag sendt0/2 svar`,
+      `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Innkalling: Dato passert1/2 har åpnet`,
     ]);
   });
 });

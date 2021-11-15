@@ -16,7 +16,6 @@ import {
   createDialogmote,
   createPlanlagtMote,
   veilederMock,
-  virksomhetMock,
 } from "../mocks/data";
 import { render } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
@@ -139,18 +138,19 @@ describe("EnhetensMoter", () => {
 
     const rows = wrapper.getAllByRole("row");
     assertTableRows(rows, [
-      `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }${virksomhetMock.navn}Innkalling: Dato passert1/2 har lest`,
-      `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }${virksomhetMock.navn}Planlegger: Forslag sendt0/2 svar`,
-      `${getDatoFraZulu(daysFromToday(21))}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }${virksomhetMock.navn}Planlegger: Bekreftelse sendt2/2 svar`,
-      `${getDatoFraZulu(daysFromToday(5))}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }${virksomhetMock.navn}Innkalling: Endret tid/sted0/2 har lest`,
+      "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons",
+      `${getDatoFraZulu(daysFromToday(1))}${veilederMock.navn}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Planlegger: Forslag sendt0/2 svar`,
+      `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Planlegger: Bekreftelse sendt`,
+      `${getDatoFraZulu(daysFromToday(-1))}${veilederMock.navn}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Innkalling: Dato passert1/2 har åpnet`,
+      `${getDatoFraZulu(daysFromToday(5))}${veilederMock.navn}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Innkalling: Endret tid/sted0/2 har åpnet`,
     ]);
   });
 });

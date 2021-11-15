@@ -48,7 +48,7 @@ export const antallLesteVarslerTekst = (dialogmote: DialogmoterDTO): string => {
   } else {
     return "";
   }
-  return `${antallLest}/2 har lest`;
+  return `${antallLest}/2 har åpnet`;
 };
 
 const antallLesteVarsler = (
