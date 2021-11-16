@@ -16,41 +16,41 @@ import { daysFromToday } from "../testUtil";
 const lestDato = "2031-06-03T11:50:28.538";
 
 describe("dialogmoterUtil antallLesteVarslerTekst", () => {
-  it("viser 0 har lest når ingen har lest", () => {
+  it("viser 0 har åpnet når ingen har lest", () => {
     const dialogmote = getDialogmoteMedVarsler(
       DialogmoteStatus.INNKALT,
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT)],
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT)]
     );
     const respons = antallLesteVarslerTekst(dialogmote as DialogmoterDTO);
-    expect(respons).to.equal("0/2 har lest");
+    expect(respons).to.equal("0/2 har åpnet");
   });
-  it("viser 1/2 har lest når arbeidstaker har lest", () => {
+  it("viser 1/2 har åpnet når arbeidstaker har lest", () => {
     const dialogmote = getDialogmoteMedVarsler(
       DialogmoteStatus.INNKALT,
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT, lestDato)],
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT)]
     );
     const respons = antallLesteVarslerTekst(dialogmote as DialogmoterDTO);
-    expect(respons).to.equal("1/2 har lest");
+    expect(respons).to.equal("1/2 har åpnet");
   });
-  it("viser 1/2 har lest når arbeidsgiver har lest", () => {
+  it("viser 1/2 har åpnet når arbeidsgiver har lest", () => {
     const dialogmote = getDialogmoteMedVarsler(
       DialogmoteStatus.INNKALT,
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT)],
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT, lestDato)]
     );
     const respons = antallLesteVarslerTekst(dialogmote as DialogmoterDTO);
-    expect(respons).to.equal("1/2 har lest");
+    expect(respons).to.equal("1/2 har åpnet");
   });
-  it("viser 2/2 har lest når arbeidsgiver og arbeidstaker har lest", () => {
+  it("viser 2/2 har åpnet når arbeidsgiver og arbeidstaker har lest", () => {
     const dialogmote = getDialogmoteMedVarsler(
       DialogmoteStatus.INNKALT,
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT, lestDato)],
       [getVarsel(DialogmoteDeltakerVarselType.INNKALT, lestDato)]
     );
     const respons = antallLesteVarslerTekst(dialogmote as DialogmoterDTO);
-    expect(respons).to.equal("2/2 har lest");
+    expect(respons).to.equal("2/2 har åpnet");
   });
 });
 
