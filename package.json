@@ -8,6 +8,8 @@
     "test": "mocha -r ./test/babel-register.js -r @babel/polyfill -r jsdom-global/register -r ignore-styles --recursive --extension ts,js,jsx,tsx --exit",
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
+    "lint-and-typecheck": "npm run lint && npm run typecheck",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint src  --ext .ts  --ext .tsx  --ext .js  --ext .jsx",
     "lint:fix": "npm run lint -- --fix"
   },

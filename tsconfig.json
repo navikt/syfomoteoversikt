@@ -5,6 +5,7 @@
     "lib": ["es2019", "dom"],
     "sourceMap": true,
     "allowJs": true,
+    "skipLibCheck": true,
     "jsx": "react",
     "moduleResolution": "node",
     "outDir": "/",
@@ -12,10 +13,7 @@
     "paths": {
       "@/*": ["*"]
     },
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strict": true,
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "build", "webpack"]

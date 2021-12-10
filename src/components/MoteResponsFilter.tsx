@@ -14,7 +14,7 @@ const texts = {
 
 interface MoteResponsFilterProps {
   moteResponser: MoteRespons[];
-  onFilterChange: (changedFilter: string) => void;
+  onFilterChange: (changedFilter: MoteRespons) => void;
 }
 
 export const MoteResponsFilter = ({
@@ -26,7 +26,7 @@ export const MoteResponsFilter = ({
     label={texts.label}
     onChange={(e) => {
       trackOnClick(`${texts.label} - ${e.currentTarget.value}`);
-      onFilterChange(e.currentTarget.value);
+      onFilterChange(e.currentTarget.value as MoteRespons);
     }}
   >
     <option value="alle">{texts.visAlle}</option>
