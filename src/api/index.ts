@@ -6,7 +6,9 @@ import {
   loginRequiredError,
   networkError,
 } from "./errors";
+import { generateUUID } from "@/utils/uuidUtils";
 
+export const NAV_CALL_ID_HEADER = "Nav-Call-Id";
 export const NAV_CONSUMER_ID_HEADER = "Nav-Consumer-Id";
 export const NAV_CONSUMER_ID = "syfomoteoversikt";
 
@@ -14,6 +16,7 @@ const defaultRequestHeaders = (): HeadersInit => {
   return {
     "Content-Type": "application/json",
     [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
+    [NAV_CALL_ID_HEADER]: `${NAV_CONSUMER_ID}-${generateUUID()}`,
   };
 };
 
