@@ -19,7 +19,7 @@ import {
   virksomhetMock,
 } from "../mocks/data";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { apiMock } from "../mocks/stubApi";
 import nock from "nock";
@@ -70,7 +70,7 @@ describe("MineMoter", () => {
   });
 
   it("viser filter på respons", async () => {
-    const wrapper = render(
+    render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
           value={{
@@ -83,17 +83,17 @@ describe("MineMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await wrapper.findByRole("heading", { name: "Viser 2 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 2 møter" })).to
       .exist;
 
-    expect(wrapper.getByText("Filtrer på respons")).to.exist;
-    expect(wrapper.getByRole("option", { name: "Vis alle" })).to.exist;
-    expect(wrapper.getByRole("option", { name: "Ingen respons" })).to.exist;
-    expect(wrapper.getByRole("option", { name: "Respons mottatt" })).to.exist;
+    expect(screen.getByText("Filtrer på respons")).to.exist;
+    expect(screen.getByRole("option", { name: "Vis alle" })).to.exist;
+    expect(screen.getByRole("option", { name: "Ingen respons" })).to.exist;
+    expect(screen.getByRole("option", { name: "Respons mottatt" })).to.exist;
   });
 
   it("viser veileders aktive planlagte møter og dialogmøte-innkallinger", async () => {
-    const wrapper = render(
+    render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
           value={{
@@ -106,10 +106,10 @@ describe("MineMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await wrapper.findByRole("heading", { name: "Viser 2 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 2 møter" })).to
       .exist;
 
-    const headers = wrapper.getAllByRole("columnheader");
+    const headers = screen.getAllByRole("columnheader");
     assertTableHeaders(headers, [
       "Møtedato",
       "F.nr",
@@ -119,7 +119,7 @@ describe("MineMoter", () => {
       "Respons",
     ]);
 
-    const rows = wrapper.getAllByRole("row");
+    const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
       "MøtedatoF.nrNavnVirksomhetStatusRespons",
       `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
