@@ -17,7 +17,7 @@ import {
   createPlanlagtMote,
   veilederMock,
 } from "../mocks/data";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { apiMock } from "../mocks/stubApi";
 import nock from "nock";
@@ -78,7 +78,7 @@ describe("EnhetensMoter", () => {
   });
 
   it("viser filter på respons, veileder og type", async () => {
-    const wrapper = render(
+    render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
           value={{
@@ -91,25 +91,25 @@ describe("EnhetensMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await wrapper.findByRole("heading", { name: "Viser 4 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 4 møter" })).to
       .exist;
 
-    expect(wrapper.getByText("Filtrer på respons")).to.exist;
-    expect(wrapper.getByText("Filtrer på veileder")).to.exist;
-    expect(wrapper.getByText("Filtrer på type")).to.exist;
-    expect(wrapper.getAllByRole("option", { name: "Vis alle" })).to.have.length(
+    expect(screen.getByText("Filtrer på respons")).to.exist;
+    expect(screen.getByText("Filtrer på veileder")).to.exist;
+    expect(screen.getByText("Filtrer på type")).to.exist;
+    expect(screen.getAllByRole("option", { name: "Vis alle" })).to.have.length(
       3
     );
-    expect(wrapper.getByRole("option", { name: "Ingen respons" })).to.exist;
-    expect(wrapper.getByRole("option", { name: "Respons mottatt" })).to.exist;
-    expect(await wrapper.findByRole("option", { name: veilederMock.navn })).to
+    expect(screen.getByRole("option", { name: "Ingen respons" })).to.exist;
+    expect(screen.getByRole("option", { name: "Respons mottatt" })).to.exist;
+    expect(await screen.findByRole("option", { name: veilederMock.navn })).to
       .exist;
-    expect(wrapper.getByRole("option", { name: "Innkalling" })).to.exist;
-    expect(wrapper.getByRole("option", { name: "Planlegger" })).to.exist;
+    expect(screen.getByRole("option", { name: "Innkalling" })).to.exist;
+    expect(screen.getByRole("option", { name: "Planlegger" })).to.exist;
   });
 
   it("viser enhetens aktive planlagte møter og dialogmøte-innkallinger", async () => {
-    const wrapper = render(
+    render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
           value={{
@@ -122,10 +122,10 @@ describe("EnhetensMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await wrapper.findByRole("heading", { name: "Viser 4 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 4 møter" })).to
       .exist;
 
-    const headers = wrapper.getAllByRole("columnheader");
+    const headers = screen.getAllByRole("columnheader");
     assertTableHeaders(headers, [
       "Velg",
       "Møtedato",
@@ -136,7 +136,7 @@ describe("EnhetensMoter", () => {
       "Respons",
     ]);
 
-    const rows = wrapper.getAllByRole("row");
+    const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
       "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons",
       `${getDatoFraZulu(daysFromToday(1))}${veilederMock.navn}${

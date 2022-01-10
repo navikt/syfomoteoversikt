@@ -1,7 +1,7 @@
 import React from "react";
 import { expect } from "chai";
 import NavigasjonsTopp from "../../src/components/NavigasjonsTopp";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 describe("NavigasjonsTopp", () => {
@@ -23,12 +23,12 @@ describe("NavigasjonsTopp", () => {
         aktiv: false,
       },
     ];
-    const wrapper = render(
+    render(
       <MemoryRouter>
         <NavigasjonsTopp lenker={lenker} />
       </MemoryRouter>
     );
-    expect(wrapper.getAllByRole("link")).to.have.length(3);
+    expect(screen.getAllByRole("link")).to.have.length(3);
   });
 
   it("Viser lenke som aktiv", () => {
@@ -39,12 +39,12 @@ describe("NavigasjonsTopp", () => {
         aktiv: true,
       },
     ];
-    const wrapper = render(
+    render(
       <MemoryRouter>
         <NavigasjonsTopp lenker={lenker} />
       </MemoryRouter>
     );
-    expect(wrapper.getByRole("link").className).to.equal(
+    expect(screen.getByRole("link").className).to.equal(
       "navigasjon__element__inner--active"
     );
   });
@@ -57,12 +57,12 @@ describe("NavigasjonsTopp", () => {
         aktiv: false,
       },
     ];
-    const wrapper = render(
+    render(
       <MemoryRouter>
         <NavigasjonsTopp lenker={lenker} />
       </MemoryRouter>
     );
-    expect(wrapper.getByRole("link").className).to.equal(
+    expect(screen.getByRole("link").className).to.equal(
       "navigasjon__element__inner"
     );
   });
