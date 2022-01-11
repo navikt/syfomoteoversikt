@@ -86,8 +86,6 @@
     "react-query": "3.21.1",
     "react-router-dom": "5.3.0",
     "redis": "3.1.2",
-    "scroll-behavior": "0.3.2",
-    "simple-ajax": "2.6.0",
     "styled-components": "5.3.3"
   },
   "devDependencies": {
