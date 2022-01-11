@@ -39,12 +39,16 @@ module.exports = {
           },
           {
             loader: "css-loader",
+            options: {
+              modules: false,
+              url: false,
+            },
           },
           {
             loader: "postcss-loader",
             options: {
-              plugins: () => {
-                return [autoprefixer];
+              postcssOptions: {
+                plugins: [autoprefixer],
               },
             },
           },
