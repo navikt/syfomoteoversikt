@@ -41,7 +41,7 @@
     "amplitude-js": "8.3.1",
     "axios": "0.24.0",
     "classnames": "2.3.1",
-    "connect-redis": "4.0.3",
+    "connect-redis": "6.0.0",
     "cookie-parser": "1.4.4",
     "dotenv": "8.2.0",
     "express": "4.17.2",
@@ -87,7 +87,7 @@
     "react-dom": "16.13.1",
     "react-query": "3.21.1",
     "react-router-dom": "5.2.0",
-    "redis": "3.1.1",
+    "redis": "3.1.2",
     "scroll-behavior": "0.3.2",
     "simple-ajax": "2.6.0",
     "styled-components": "5.3.3"
