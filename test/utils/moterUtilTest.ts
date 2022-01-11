@@ -10,37 +10,37 @@ import { expect } from "chai";
 describe("moterUtil antallDeltakerSvarTekst", () => {
   it("skal vise 0 svar", () => {
     const mote = createMote(MoteStatus.OPPRETTET);
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    const svarStatus = antallDeltakerSvarTekst(mote as unknown as MoteDTO);
     expect(svarStatus).to.equal("0/2 svar");
   });
 
   it("skal vise 1 svar", () => {
     const mote = getMoteMedEttSvar();
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    const svarStatus = antallDeltakerSvarTekst(mote as unknown as MoteDTO);
     expect(svarStatus).to.equal("1/2 svar");
   });
 
   it("skal vise 2 svar når begge har svart på et alternativ", () => {
     const mote = getMoteMedBeggeSvar();
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    const svarStatus = antallDeltakerSvarTekst(mote as unknown as MoteDTO);
     expect(svarStatus).to.equal("2/2 svar");
   });
 
   it("skal vise 2 svar når begge har svart på alle alternativer", () => {
     const mote = getMoteMedBeggeSvarBeggeAlternativer();
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    const svarStatus = antallDeltakerSvarTekst(mote as unknown as MoteDTO);
     expect(svarStatus).to.equal("2/2 svar");
   });
 
   it("skal vise tomt svar når status er BEKREFTET", () => {
     const mote = createMote(MoteStatus.BEKREFTET);
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    const svarStatus = antallDeltakerSvarTekst(mote as unknown as MoteDTO);
     expect(svarStatus).to.equal("");
   });
 
   it("skal vise tomt svar når status er AVBRUTT", () => {
     const mote = createMote(MoteStatus.AVBRUTT);
-    const svarStatus = antallDeltakerSvarTekst((mote as unknown) as MoteDTO);
+    const svarStatus = antallDeltakerSvarTekst(mote as unknown as MoteDTO);
     expect(svarStatus).to.equal("");
   });
 });

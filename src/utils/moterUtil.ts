@@ -70,29 +70,28 @@ export const getMoteResponser = (
   moter: (MoteDTO | DialogmoterDTO)[]
 ): MoteRespons[] => [...new Set(moter.map((mote) => getMoteRespons(mote)))];
 
-export const ikkeAvbrutt = (): ((mote: MoteDTO) => boolean) => (
-  mote: MoteDTO
-) => mote.status !== MoteStatus.AVBRUTT;
+export const ikkeAvbrutt =
+  (): ((mote: MoteDTO) => boolean) => (mote: MoteDTO) =>
+    mote.status !== MoteStatus.AVBRUTT;
 
 export const findDeltakerByType = (
   mote: MoteDTO,
   type: "BRUKER" | "ARBEIDSGIVER"
 ) => mote.deltakere.find((deltaker) => deltaker.type.toUpperCase() === type);
 
-export const compareByMotedato = (): ((
-  a: MoteDTO | DialogmoterDTO,
-  b: MoteDTO | DialogmoterDTO
-) => number) => (a: MoteDTO | DialogmoterDTO, b: MoteDTO | DialogmoterDTO) => {
-  const moteDatoA = getMoteDato(a);
-  const moteDatoB = getMoteDato(b);
-  if (moteDatoA > moteDatoB) {
-    return 1;
-  }
-  if (moteDatoA < moteDatoB) {
-    return -1;
-  }
-  return 0;
-};
+export const compareByMotedato =
+  (): ((a: MoteDTO | DialogmoterDTO, b: MoteDTO | DialogmoterDTO) => number) =>
+  (a: MoteDTO | DialogmoterDTO, b: MoteDTO | DialogmoterDTO) => {
+    const moteDatoA = getMoteDato(a);
+    const moteDatoB = getMoteDato(b);
+    if (moteDatoA > moteDatoB) {
+      return 1;
+    }
+    if (moteDatoA < moteDatoB) {
+      return -1;
+    }
+    return 0;
+  };
 
 export const getMoteDato = (mote: MoteDTO | DialogmoterDTO) => {
   if (isDialogmote(mote)) {
