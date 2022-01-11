@@ -51,7 +51,7 @@ export const createDialogmote = (
   arbeidstakerSvar = false,
   arbeidsgiverSvar = false
 ): DialogmoterDTO =>
-  (({
+  ({
     sted: "video",
     status,
     arbeidsgiver: {
@@ -82,7 +82,7 @@ export const createDialogmote = (
     },
     tid: dato.toISOString(),
     tildeltVeilederIdent: veileder.ident,
-  } as unknown) as DialogmoterDTO);
+  } as unknown as DialogmoterDTO);
 
 export const createPlanlagtMote = (
   veileder: VeilederDto,
@@ -91,7 +91,7 @@ export const createPlanlagtMote = (
   arbeidstakerSvar = false,
   arbeidsgiverSvar = false
 ): MoteDTO =>
-  (({
+  ({
     aktorId: aktorId,
     status,
     sistEndret: daysFromToday(-3),
@@ -113,4 +113,4 @@ export const createPlanlagtMote = (
     bekreftetAlternativ: { tid: dato },
     alternativer: [{ tid: dato }],
     eier: veileder.ident,
-  } as unknown) as MoteDTO);
+  } as unknown as MoteDTO);

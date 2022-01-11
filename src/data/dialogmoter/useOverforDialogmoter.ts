@@ -20,9 +20,8 @@ export const useOverforDialogmoter = () => {
 
   return useMutation(postOverforDialogmoter, {
     onMutate: (dialogmoteUuids: string[]) => {
-      const previousDialogmoter = queryClient.getQueryData<DialogmoterDTO[]>(
-        dialogmoterQueryKey
-      );
+      const previousDialogmoter =
+        queryClient.getQueryData<DialogmoterDTO[]>(dialogmoterQueryKey);
       if (previousDialogmoter && aktivVeilederIdent) {
         queryClient.setQueryData(
           dialogmoterQueryKey,
