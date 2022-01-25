@@ -1,12 +1,17 @@
-const { addDaysToToday } = require("./mockUtils");
+import { addDaysToToday } from "../mockUtils";
+import {
+  DialogmoteDeltakerVarselType,
+  DialogmoteStatus,
+} from "../../src/data/dialogmoter/dialogmoterTypes";
+
 const createDialogmote = (
-  uuid,
-  status,
-  varselType,
-  veileder,
-  lestArbeidstakerVarsel,
-  lestArbeidsgiverVarsel,
-  dato
+  uuid: string,
+  status: DialogmoteStatus,
+  varselType: DialogmoteDeltakerVarselType,
+  veileder: string,
+  lestArbeidstakerVarsel: boolean,
+  lestArbeidsgiverVarsel: boolean,
+  dato: Date
 ) => {
   return {
     uuid,
@@ -52,8 +57,8 @@ const createDialogmote = (
 const dialogmoter = [
   createDialogmote(
     "1",
-    "INNKALT",
-    "INNKALT",
+    DialogmoteStatus.INNKALT,
+    DialogmoteDeltakerVarselType.INNKALT,
     "S123456",
     true,
     true,
@@ -61,8 +66,8 @@ const dialogmoter = [
   ),
   createDialogmote(
     "2",
-    "NYTT_TID_STED",
-    "NYTT_TID_STED",
+    DialogmoteStatus.NYTT_TID_STED,
+    DialogmoteDeltakerVarselType.NYTT_TID_STED,
     "S123456",
     false,
     false,
@@ -70,8 +75,8 @@ const dialogmoter = [
   ),
   createDialogmote(
     "3",
-    "NYTT_TID_STED",
-    "NYTT_TID_STED",
+    DialogmoteStatus.NYTT_TID_STED,
+    DialogmoteDeltakerVarselType.NYTT_TID_STED,
     "Z990197",
     true,
     false,
@@ -79,8 +84,8 @@ const dialogmoter = [
   ),
   createDialogmote(
     "4",
-    "AVLYST",
-    "AVLYST",
+    DialogmoteStatus.AVLYST,
+    DialogmoteDeltakerVarselType.AVLYST,
     "S123456",
     false,
     false,
@@ -88,8 +93,8 @@ const dialogmoter = [
   ),
   createDialogmote(
     "5",
-    "FERDIGSTILT",
-    "REFERAT",
+    DialogmoteStatus.FERDIGSTILT,
+    DialogmoteDeltakerVarselType.REFERAT,
     "Z990197",
     false,
     false,
@@ -97,6 +102,4 @@ const dialogmoter = [
   ),
 ];
 
-module.exports = {
-  getDialogmoter: dialogmoter,
-};
+export const dialogmoterMock = dialogmoter;

@@ -1,28 +1,32 @@
-const mockUtils = require("./mockUtils.js");
-const mockDialogmoter = require("./mockDialogmoter");
+import { veiederInfoMock } from "./Data/veilederInfoMock";
+import { veiledereMock } from "./Data/veiledereMock";
+import { virksomhetsInfoMock } from "./Data/virksomhetsInfoMock";
+import { brukerinfoMock } from "./Data/brukerInfoMock";
+import { fnrMock } from "./Data/fnrMock";
+import { moterMock } from "./Data/moterMock";
+import { dialogmoterMock } from "./Data/dialogmoterMock";
+
 const mockModiacontextholder = require("./mockModiacontextholder");
 
 const Auth = require("../server/auth/index.js");
 
-function mockEndepunkter(server) {
+const mockEndepunkter = (server: any) => {
   server.get(
     "/syfoveileder/api/v2/veileder/self",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockUtils.veilederInfo));
+      res.send(JSON.stringify(veiederInfoMock));
     }
   );
 
   server.get(
     "/syfoveileder/api/v2/veileder/:ident",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
       res.send(
-        JSON.stringify(
-          mockUtils.veiledere.find((v) => v.ident === req.params.ident)
-        )
+        JSON.stringify(veiledereMock.find((v) => v.ident === req.params.ident))
       );
     }
   );
@@ -30,34 +34,34 @@ function mockEndepunkter(server) {
   server.get(
     "/syfomoteadmin/api/internad/v2/virksomhet/:orgnr",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockUtils.virksomhetsInfo));
+      res.send(JSON.stringify(virksomhetsInfoMock));
     }
   );
 
   server.get(
     "/syfomoteadmin/api/internad/v2/brukerinfo/:ident",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockUtils.brukerInfo));
+      res.send(JSON.stringify(brukerinfoMock));
     }
   );
 
   server.get(
     "/syfomoteadmin/api/internad/v2/aktor/:aktorId",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockUtils.fnrInfo));
+      res.send(JSON.stringify(fnrMock));
     }
   );
 
   server.post(
     "/syfomoteadmin/api/internad/v2/actions/moter/overfor",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.send();
     }
   );
@@ -65,13 +69,13 @@ function mockEndepunkter(server) {
   server.get(
     "/syfomoteadmin/api/internad/v2/moter",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       if (req.query.veiledersmoter) {
         res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(mockUtils.moter));
+        res.send(JSON.stringify(moterMock));
       } else if (req.query.navenhet) {
         res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(mockUtils.moter));
+        res.send(JSON.stringify(moterMock));
       } else {
         res.send();
       }
@@ -81,30 +85,30 @@ function mockEndepunkter(server) {
   server.get(
     "/syfomoteadmin/api/internad/v2/moter?navenhet=enhetId",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockUtils.moter));
+      res.send(JSON.stringify(moterMock));
     }
   );
 
   server.get(
     "/isdialogmote/api/v2/dialogmote/enhet/:enhetId",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(mockDialogmoter.getDialogmoter));
+      res.send(JSON.stringify(dialogmoterMock));
     }
   );
 
   server.post(
     "/isdialogmote/api/v2/dialogmote/overta",
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.send();
     }
   );
 
   mockModiacontextholder(server);
-}
+};
 
-module.exports = mockEndepunkter;
+export default mockEndepunkter;
