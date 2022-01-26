@@ -4,10 +4,10 @@ export const moterMock = [
     moteUuid: "85902bc3-86d5-4571-b06a-35e098f86927",
     opprettetAv: "Z990197",
     aktorId: "1124536345939",
-    status: "OPPRETTET",
+    status: "BEKREFTET",
     fnr: null,
     opprettetTidspunkt: "2019-11-26T12:31:46.126",
-    bekreftetTidspunkt: null,
+    bekreftetTidspunkt: "2019-11-27T12:31:46.126",
     navEnhet: "0314",
     eier: "S123456",
     deltakere: [
@@ -36,7 +36,7 @@ export const moterMock = [
         orgnummer: null,
         epost: null,
         type: "Bruker",
-        svartidspunkt: null,
+        svartidspunkt: "2019-11-26T12:31:46.144",
         svar: [
           {
             id: 12954,
@@ -48,7 +48,13 @@ export const moterMock = [
         ],
       },
     ],
-    bekreftetAlternativ: null,
+    bekreftetAlternativ: {
+      id: 12954,
+      tid: "2019-11-30T11:11:00",
+      created: "2019-11-26T12:31:46.144",
+      sted: "1111",
+      valgt: false,
+    },
     alternativer: [
       {
         id: 12954,

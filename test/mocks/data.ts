@@ -4,6 +4,7 @@ import {
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
+  SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
 import { MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
 import { daysFromToday } from "../testUtil";
@@ -48,8 +49,9 @@ export const createDialogmote = (
   veileder: VeilederDto,
   status: DialogmoteStatus,
   dato: Date,
-  arbeidstakerSvar = false,
-  arbeidsgiverSvar = false
+  arbeidstakerRespons: { lestDato?: Date; svar?: SvarType } = {},
+  arbeidsgiverRespons: { lestDato?: Date; svar?: SvarType } = {},
+  behandlerRespons?: SvarType
 ): DialogmoterDTO =>
   ({
     sted: "video",
@@ -63,7 +65,10 @@ export const createDialogmote = (
             DialogmoteStatus.INNKALT === status
               ? DialogmoteDeltakerVarselType.INNKALT
               : DialogmoteDeltakerVarselType.NYTT_TID_STED,
-          lestDato: arbeidsgiverSvar ? new Date().toISOString() : null,
+          lestDato: arbeidsgiverRespons?.lestDato?.toISOString() ?? null,
+          svar: arbeidsgiverRespons.svar
+            ? { svarType: arbeidsgiverRespons.svar }
+            : null,
         },
       ],
     },
@@ -74,12 +79,30 @@ export const createDialogmote = (
             DialogmoteStatus.INNKALT === status
               ? DialogmoteDeltakerVarselType.INNKALT
               : DialogmoteDeltakerVarselType.NYTT_TID_STED,
-          lestDato: arbeidstakerSvar ? new Date().toISOString() : null,
+          lestDato: arbeidstakerRespons?.lestDato?.toISOString() ?? null,
+          svar: arbeidstakerRespons.svar
+            ? { svarType: arbeidstakerRespons.svar }
+            : null,
         },
       ],
       personIdent: arbeidstakerMock.fnr,
       navn: arbeidstakerMock.navn,
     },
+    ...(behandlerRespons
+      ? {
+          behandler: {
+            varselList: [
+              {
+                varselType:
+                  DialogmoteStatus.INNKALT === status
+                    ? DialogmoteDeltakerVarselType.INNKALT
+                    : DialogmoteDeltakerVarselType.NYTT_TID_STED,
+                svar: [{ svarType: behandlerRespons }],
+              },
+            ],
+          },
+        }
+      : {}),
     tid: dato.toISOString(),
     tildeltVeilederIdent: veileder.ident,
   } as unknown as DialogmoterDTO);

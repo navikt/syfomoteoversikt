@@ -6,7 +6,10 @@ import {
 } from "../testUtil";
 import React from "react";
 import MineMoter from "../../src/components/MineMoter";
-import { DialogmoteStatus } from "@/data/dialogmoter/dialogmoterTypes";
+import {
+  DialogmoteStatus,
+  SvarType,
+} from "@/data/dialogmoter/dialogmoterTypes";
 import { MoteStatus } from "@/data/moter/moterTypes";
 import { QueryClient, QueryClientProvider } from "react-query";
 import {
@@ -41,12 +44,21 @@ const dialogmoterData = [
     veilederMock,
     DialogmoteStatus.INNKALT,
     daysFromToday(-1),
-    true
+    { lestDato: new Date(), svar: SvarType.KOMMER_IKKE },
+    {}
   ),
   createDialogmote(
     annenVeilederMock,
     DialogmoteStatus.NYTT_TID_STED,
     daysFromToday(5)
+  ),
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.INNKALT,
+    daysFromToday(10),
+    {},
+    {},
+    SvarType.KOMMER
   ),
   createDialogmote(veilederMock, DialogmoteStatus.AVLYST, daysFromToday(-2)),
 ];
@@ -106,7 +118,7 @@ describe("MineMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByRole("heading", { name: "Viser 2 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 3 møter" })).to
       .exist;
 
     const headers = screen.getAllByRole("columnheader");
@@ -124,10 +136,13 @@ describe("MineMoter", () => {
       "MøtedatoF.nrNavnVirksomhetStatusRespons",
       `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Planlegger: Forslag sendt0/2 svar`,
+      }${virksomhetMock.navn}Planlegger: Forslag0/2 svar`,
       `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Innkalling: Dato passert1/2 har åpnet`,
+      }${virksomhetMock.navn}Møtedato passertavlysning`,
+      `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Innkalt (med lege)1/3 kommer`,
     ]);
   });
 });

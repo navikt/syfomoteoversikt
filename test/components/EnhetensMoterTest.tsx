@@ -1,7 +1,10 @@
 import EnhetensMoter from "../../src/components/EnhetensMoter";
 import React from "react";
 import { MoteStatus } from "@/data/moter/moterTypes";
-import { DialogmoteStatus } from "@/data/dialogmoter/dialogmoterTypes";
+import {
+  DialogmoteStatus,
+  SvarType,
+} from "@/data/dialogmoter/dialogmoterTypes";
 import {
   assertTableHeaders,
   assertTableRows,
@@ -34,7 +37,16 @@ const dialogmoterData = [
     veilederMock,
     DialogmoteStatus.INNKALT,
     daysFromToday(-1),
-    true
+    { lestDato: new Date(), svar: SvarType.KOMMER },
+    { lestDato: new Date(), svar: SvarType.KOMMER }
+  ),
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.INNKALT,
+    daysFromToday(2),
+    { lestDato: new Date(), svar: SvarType.KOMMER },
+    { lestDato: new Date(), svar: SvarType.KOMMER },
+    SvarType.NYTT_TID_STED
   ),
   createDialogmote(
     veilederMock,
@@ -91,7 +103,7 @@ describe("EnhetensMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByRole("heading", { name: "Viser 4 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 5 møter" })).to
       .exist;
 
     expect(screen.getByText("Filtrer på respons")).to.exist;
@@ -122,7 +134,7 @@ describe("EnhetensMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByRole("heading", { name: "Viser 4 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 5 møter" })).to
       .exist;
 
     const headers = screen.getAllByRole("columnheader");
@@ -141,16 +153,19 @@ describe("EnhetensMoter", () => {
       "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons",
       `${getDatoFraZulu(daysFromToday(1))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Planlegger: Forslag sendt0/2 svar`,
+      }${arbeidstakerMock.navn}Planlegger: Forslag0/2 svar`,
       `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Planlegger: Bekreftelse sendt`,
+      }${arbeidstakerMock.navn}Planlegger: Bekreftet`,
       `${getDatoFraZulu(daysFromToday(-1))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Innkalling: Dato passert1/2 har åpnet`,
+      }${arbeidstakerMock.navn}Møtedato passert2/2 kommer`,
+      `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Innkalt (med lege)endring`,
       `${getDatoFraZulu(daysFromToday(5))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Innkalling: Endret tid/sted0/2 har åpnet`,
+      }${arbeidstakerMock.navn}Endret0/2 har åpnet`,
     ]);
   });
 });
