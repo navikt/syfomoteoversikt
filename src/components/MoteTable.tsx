@@ -39,9 +39,9 @@ export const StatusColumn = styled(TruncatedTableColumn)`
 `;
 
 export const ResponsHeader = styled.th`
-  width: 12%;
+  width: 18%;
 `;
 
 export const ResponsColumn = styled(TruncatedTableColumn)`
-  width: 12%;
+  width: 18%;
 `;

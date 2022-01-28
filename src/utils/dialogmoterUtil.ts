@@ -1,91 +1,141 @@
 import {
+  DialogmotedeltakerBehandlerVarselDTO,
+  DialogmotedeltakerVarselDTO,
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
+  SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { MoteRespons } from "@/components/MoteResponsFilter";
 import { MoteDTO } from "@/data/moter/moterTypes";
+
+type DeltakerRespons = { harLest: boolean; svar?: SvarType };
 
 export const isDialogmote = (
   mote: MoteDTO | DialogmoterDTO
 ): mote is DialogmoterDTO => (mote as DialogmoterDTO).sted !== undefined;
 
-export const getDialogmoteRespons = (dialogmote: DialogmoterDTO): MoteRespons =>
-  erLest(dialogmote) ? MoteRespons.MOTTATT : MoteRespons.IKKE_MOTTATT;
+export const erResponsMottatt = (dialogmote: DialogmoterDTO): boolean => {
+  const { svar: arbeidstakerSvar } = getArbeidstakerRespons(dialogmote);
+  const { svar: arbeidsgiverSvar } = getArbeidsgiverRespons(dialogmote);
+  const behandlerSvar = getBehandlerRespons(dialogmote);
 
-const erLest = (dialogmote: DialogmoterDTO): boolean => {
-  const harLestVarsel = (type: DialogmoteDeltakerVarselType) =>
-    harArbeidstakerLestVarsel(dialogmote, type) ||
-    harArbeidsgiverLestVarsel(dialogmote, type);
-  switch (dialogmote.status) {
-    case DialogmoteStatus.INNKALT: {
-      return harLestVarsel(DialogmoteDeltakerVarselType.INNKALT);
-    }
-    case DialogmoteStatus.NYTT_TID_STED: {
-      return harLestVarsel(DialogmoteDeltakerVarselType.NYTT_TID_STED);
-    }
-    case DialogmoteStatus.AVLYST: {
-      return harLestVarsel(DialogmoteDeltakerVarselType.AVLYST);
-    }
-    case DialogmoteStatus.FERDIGSTILT: {
-      return harLestVarsel(DialogmoteDeltakerVarselType.REFERAT);
-    }
-  }
+  return !!arbeidstakerSvar || !!arbeidsgiverSvar || !!behandlerSvar;
 };
 
-export const antallLesteVarslerTekst = (dialogmote: DialogmoterDTO): string => {
-  let antallLest = 0;
-  if (dialogmote.status === DialogmoteStatus.INNKALT) {
-    antallLest = antallLesteVarsler(
-      dialogmote,
-      DialogmoteDeltakerVarselType.INNKALT
-    );
-  } else if (dialogmote.status === DialogmoteStatus.NYTT_TID_STED) {
-    antallLest = antallLesteVarsler(
-      dialogmote,
-      DialogmoteDeltakerVarselType.NYTT_TID_STED
-    );
-  } else {
-    return "";
+export const responsTekst = (dialogmote: DialogmoterDTO): string => {
+  if (erResponsMottatt(dialogmote)) {
+    return responsMottattTekst(dialogmote);
   }
-  return `${antallLest}/2 har åpnet`;
+
+  const antallHarLest = [
+    getArbeidstakerRespons(dialogmote),
+    getArbeidsgiverRespons(dialogmote),
+  ].filter((respons) => respons.harLest).length;
+
+  return dialogmote.behandler
+    ? `${antallHarLest}/3 har åpnet`
+    : `${antallHarLest}/2 har åpnet`;
 };
 
-const antallLesteVarsler = (
-  dialogmote: DialogmoterDTO,
-  varselType: DialogmoteDeltakerVarselType
-): number =>
-  [
-    harArbeidstakerLestVarsel(dialogmote, varselType),
-    harArbeidsgiverLestVarsel(dialogmote, varselType),
-  ].filter((erLest) => erLest).length;
-
-export const dialogmoteStatusTekst = (mote: DialogmoterDTO): string => {
-  const prefix = "Innkalling:";
+export const statusTekst = (mote: DialogmoterDTO): string => {
+  const postfix = mote.behandler ? " (med lege)" : "";
   if (getDialogmoteDato(mote) < new Date()) {
-    return `${prefix} Dato passert`;
+    return `Møtedato passert`;
   } else if (mote.status === DialogmoteStatus.INNKALT) {
-    return `${prefix} Sendt`;
+    return `Innkalt${postfix}`;
   } else {
-    return `${prefix} Endret tid/sted`;
+    return `Endret${postfix}`;
   }
 };
 
 export const getDialogmoteDato = (dialogmote: DialogmoterDTO) =>
   new Date(dialogmote.tid);
 
-const harArbeidstakerLestVarsel = (
-  dialogmote: DialogmoterDTO,
-  varselType: DialogmoteDeltakerVarselType
-): boolean =>
-  dialogmote.arbeidstaker.varselList
-    .filter((varsel) => varsel.varselType === varselType)
-    .some((varsel) => !!varsel.lestDato);
+const getBehandlerRespons = (
+  dialogmote: DialogmoterDTO
+): SvarType | undefined => {
+  const varselType = varselTypeFromStatus(dialogmote.status);
+  const varsel: DialogmotedeltakerBehandlerVarselDTO | undefined =
+    dialogmote.behandler?.varselList?.find(
+      (varsel) => varsel.varselType === varselType
+    );
 
-const harArbeidsgiverLestVarsel = (
-  dialogmote: DialogmoterDTO,
-  varselType: DialogmoteDeltakerVarselType
-): boolean =>
-  dialogmote.arbeidsgiver.varselList
-    .filter((varsel) => varsel.varselType === varselType)
-    .some((varsel) => !!varsel.lestDato);
+  return varsel?.svar[0]?.svarType;
+};
+
+const getArbeidsgiverRespons = (
+  dialogmote: DialogmoterDTO
+): DeltakerRespons => {
+  return getDeltakerRespons(
+    dialogmote.status,
+    dialogmote.arbeidsgiver.varselList
+  );
+};
+
+const getArbeidstakerRespons = (
+  dialogmote: DialogmoterDTO
+): DeltakerRespons => {
+  return getDeltakerRespons(
+    dialogmote.status,
+    dialogmote.arbeidstaker.varselList
+  );
+};
+
+const getDeltakerRespons = (
+  status: DialogmoteStatus,
+  varselList: DialogmotedeltakerVarselDTO[]
+): DeltakerRespons => {
+  const latestVarsel = varselList.find(
+    (varsel) => varsel.varselType === varselTypeFromStatus(status)
+  );
+
+  return {
+    harLest: !!latestVarsel?.lestDato,
+    svar: latestVarsel?.svar?.svarType,
+  };
+};
+
+const varselTypeFromStatus = (
+  status: DialogmoteStatus
+): DialogmoteDeltakerVarselType => {
+  switch (status) {
+    case DialogmoteStatus.INNKALT: {
+      return DialogmoteDeltakerVarselType.INNKALT;
+    }
+    case DialogmoteStatus.NYTT_TID_STED: {
+      return DialogmoteDeltakerVarselType.NYTT_TID_STED;
+    }
+    case DialogmoteStatus.AVLYST: {
+      return DialogmoteDeltakerVarselType.AVLYST;
+    }
+    case DialogmoteStatus.FERDIGSTILT: {
+      return DialogmoteDeltakerVarselType.REFERAT;
+    }
+  }
+};
+
+const responsMottattTekst = (dialogmote: DialogmoterDTO) => {
+  const svar = [
+    getBehandlerRespons(dialogmote),
+    getArbeidstakerRespons(dialogmote).svar,
+    getArbeidsgiverRespons(dialogmote).svar,
+  ];
+
+  const hasNyttTidStedRespons = svar.some(
+    (svar) => svar === SvarType.NYTT_TID_STED
+  );
+  const hasAvlysRespons = svar.some((svar) => svar === SvarType.KOMMER_IKKE);
+
+  if (hasNyttTidStedRespons && hasAvlysRespons) {
+    return "endring, avlysning";
+  } else if (hasNyttTidStedRespons) {
+    return "endring";
+  } else if (hasAvlysRespons) {
+    return "avlysning";
+  }
+
+  const antallKommer = svar.filter((svar) => svar === SvarType.KOMMER).length;
+  return dialogmote.behandler
+    ? `${antallKommer}/3 kommer`
+    : `${antallKommer}/2 kommer`;
+};

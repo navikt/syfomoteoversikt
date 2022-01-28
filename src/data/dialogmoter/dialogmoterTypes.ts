@@ -12,12 +12,18 @@ export enum DialogmoteDeltakerVarselType {
   AVLYST = "AVLYST",
 }
 
+export enum SvarType {
+  KOMMER = "KOMMER",
+  NYTT_TID_STED = "NYTT_TID_STED",
+  KOMMER_IKKE = "KOMMER_IKKE",
+}
+
 export interface DialogmotedeltakerVarselDTO {
   uuid: string;
   createdAt: string;
   varselType: DialogmoteDeltakerVarselType;
-  digitalt: boolean;
   lestDato?: string;
+  svar?: VarselSvarDTO;
 }
 
 interface DialogmotedeltakerArbeidstakerDTO {
@@ -36,6 +42,19 @@ interface DialogmotedeltakerArbeidsgiverDTO {
   varselList: DialogmotedeltakerVarselDTO[];
 }
 
+interface VarselSvarDTO {
+  svarType: SvarType;
+}
+
+export interface DialogmotedeltakerBehandlerVarselDTO {
+  varselType: DialogmoteDeltakerVarselType;
+  svar: VarselSvarDTO[];
+}
+
+export interface DialogmotedeltakerBehandlerDTO {
+  varselList: DialogmotedeltakerBehandlerVarselDTO[];
+}
+
 export interface DialogmoterDTO {
   uuid: string;
   createdAt: string;
@@ -43,10 +62,10 @@ export interface DialogmoterDTO {
   status: DialogmoteStatus;
   opprettetAv: string;
   tildeltVeilederIdent: string;
-  tildeltVeilederNavn?: string;
   tildeltEnhet: string;
   arbeidstaker: DialogmotedeltakerArbeidstakerDTO;
   arbeidsgiver: DialogmotedeltakerArbeidsgiverDTO;
+  behandler?: DialogmotedeltakerBehandlerDTO;
   sted: string;
   tid: string;
 }

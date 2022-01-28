@@ -1,8 +1,8 @@
 import { MoteDeltakerDTO, MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import {
+  erResponsMottatt,
   getDialogmoteDato,
-  getDialogmoteRespons,
   isDialogmote,
 } from "./dialogmoterUtil";
 import { MoteRespons } from "@/components/MoteResponsFilter";
@@ -16,13 +16,13 @@ export const moteStatusTekst = (mote: MoteDTO): string => {
   const prefix = "Planlegger:";
   switch (mote.status) {
     case MoteStatus.OPPRETTET: {
-      return `${prefix} Forslag sendt`;
+      return `${prefix} Forslag`;
     }
     case MoteStatus.BEKREFTET: {
-      return `${prefix} Bekreftelse sendt`;
+      return `${prefix} Bekreftet`;
     }
     case MoteStatus.FLERE_TIDSPUNKT: {
-      return `${prefix} Endring sendt`;
+      return `${prefix} Endring`;
     }
     case MoteStatus.AVBRUTT: {
       return `${prefix} Avbrutt`;
@@ -50,7 +50,9 @@ const harDeltakerSvart = (mote: MoteDTO, deltaker: MoteDeltakerDTO) =>
 
 export const getMoteRespons = (mote: MoteDTO | DialogmoterDTO): MoteRespons => {
   if (isDialogmote(mote)) {
-    return getDialogmoteRespons(mote);
+    return erResponsMottatt(mote)
+      ? MoteRespons.MOTTATT
+      : MoteRespons.IKKE_MOTTATT;
   } else {
     return erSvarMottatt(mote) ? MoteRespons.MOTTATT : MoteRespons.IKKE_MOTTATT;
   }

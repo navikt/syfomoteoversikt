@@ -49,7 +49,7 @@ describe("moterUtil moteStatusTekst", () => {
   it("Skal returnere riktig status for møte som er opprettet og svar ikke mottatt", () => {
     const _mote = createMote(MoteStatus.OPPRETTET) as unknown;
     expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
-      "Planlegger: Forslag sendt"
+      "Planlegger: Forslag"
     );
   });
 
@@ -59,7 +59,7 @@ describe("moterUtil moteStatusTekst", () => {
       "2017-04-03T11:50:28.538"
     ) as unknown;
     expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
-      "Planlegger: Forslag sendt"
+      "Planlegger: Forslag"
     );
   });
 
@@ -69,7 +69,7 @@ describe("moterUtil moteStatusTekst", () => {
       "2017-04-03T11:35:51.912"
     ) as unknown;
     expect(moteStatusTekst(_mote as MoteDTO)).to.deep.equal(
-      "Planlegger: Bekreftelse sendt"
+      "Planlegger: Bekreftet"
     );
   });
 
