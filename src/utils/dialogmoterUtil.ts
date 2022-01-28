@@ -89,10 +89,15 @@ const getDeltakerRespons = (
     (varsel) => varsel.varselType === varselTypeFromStatus(status)
   );
 
-  return {
+  const respons: DeltakerRespons = {
     harLest: !!latestVarsel?.lestDato,
-    svar: latestVarsel?.svar?.svarType,
   };
+
+  if (latestVarsel?.svar?.svarType) {
+    respons.svar = latestVarsel.svar.svarType;
+  }
+
+  return respons;
 };
 
 const varselTypeFromStatus = (

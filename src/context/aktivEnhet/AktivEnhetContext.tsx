@@ -6,7 +6,7 @@ type AktivEnhetProviderProps = {
 
 type AktivEnhetContextState = {
   setAktivEnhet: (enhetId: string) => void;
-  aktivEnhet?: string;
+  aktivEnhet: string | undefined;
 };
 
 export const AktivEnhetContext = React.createContext<

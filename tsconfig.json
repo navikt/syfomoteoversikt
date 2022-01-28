@@ -14,7 +14,9 @@
       "@/*": ["*"]
     },
     "strict": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
   },
   "exclude": ["node_modules", "build"]
 }
