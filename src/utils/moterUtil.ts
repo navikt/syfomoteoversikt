@@ -84,8 +84,8 @@ export const findDeltakerByType = (
 export const compareByMotedato =
   (): ((a: MoteDTO | DialogmoterDTO, b: MoteDTO | DialogmoterDTO) => number) =>
   (a: MoteDTO | DialogmoterDTO, b: MoteDTO | DialogmoterDTO) => {
-    const moteDatoA = getMoteDato(a);
-    const moteDatoB = getMoteDato(b);
+    const moteDatoA = getMoteDato(a) || 0;
+    const moteDatoB = getMoteDato(b) || 0;
     if (moteDatoA > moteDatoB) {
       return 1;
     }
@@ -95,7 +95,9 @@ export const compareByMotedato =
     return 0;
   };
 
-export const getMoteDato = (mote: MoteDTO | DialogmoterDTO) => {
+export const getMoteDato = (
+  mote: MoteDTO | DialogmoterDTO
+): Date | undefined => {
   if (isDialogmote(mote)) {
     return getDialogmoteDato(mote);
   } else {

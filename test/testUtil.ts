@@ -11,11 +11,11 @@ export const assertTableHeaders = (
   expectedHeaders: string[]
 ): void => {
   expectedHeaders.forEach((expected, index) => {
-    expect(headers[index].textContent).to.equal(expected);
+    expect(headers[index]?.textContent).to.equal(expected);
   });
 };
 
 export const assertTableRows = (rows: HTMLElement[], expectedRows: string[]) =>
   expectedRows.forEach((expectedRow, index) => {
-    expect(rows[index].textContent).to.equal(expectedRow);
+    expect(rows[index]?.textContent).to.equal(expectedRow);
   });

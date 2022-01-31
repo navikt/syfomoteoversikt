@@ -23,7 +23,7 @@ const defaultRequestHeaders = (): AxiosRequestHeaders => {
 const getCookie = (name: string): string => {
   const re = new RegExp(`${name}=([^;]+)`);
   const match = re.exec(document.cookie);
-  return match !== null ? match[1] : "";
+  return match?.[1] ?? "";
 };
 
 const handleAxiosError = (error: AxiosError) => {
