@@ -21,8 +21,10 @@ module.exports = merge(common, {
         redirect: false,
       },
     },
-    onAfterSetupMiddleware: (devServer: any) => {
+    setupMiddlewares: (middlewares: any, devServer: any) => {
       setupDev(devServer);
+
+      return middlewares;
     },
   },
 });
