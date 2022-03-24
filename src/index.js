@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { MoteoverforingProvider } from "@/context/moteoverforing/MoteoverforingContext";
 import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
 import { minutesToMillis } from "@/utils/timeUtils";
+import { isClientError } from "@/api/errors";
 
 initAmplitude();
 
@@ -18,6 +19,13 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       cacheTime: minutesToMillis(60),
       staleTime: minutesToMillis(30),
+      retry: (failureCount, error) => {
+        if (isClientError(error)) {
+          return false;
+        }
+
+        return failureCount < 3;
+      },
     },
   },
 });
