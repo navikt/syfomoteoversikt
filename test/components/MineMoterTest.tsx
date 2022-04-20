@@ -32,7 +32,7 @@ import {
   stubAktivVeilederApi,
   stubVeilederApi,
 } from "../mocks/stubVeilederApi";
-import { stubDialogmoterApi } from "../mocks/stubDialogmoterApi";
+import { stubDialogmoterVeilederidentApi } from "../mocks/stubDialogmoterApi";
 import { stubVeiledersMoterApi } from "../mocks/stubMoterApi";
 
 const moterData = [
@@ -74,7 +74,7 @@ describe("MineMoter", () => {
     stubAktivVeilederApi(scope, veilederMock);
     stubVeilederApi(scope, veilederMock);
     stubVeilederApi(scope, annenVeilederMock);
-    stubDialogmoterApi(scope, dialogmoterData);
+    stubDialogmoterVeilederidentApi(scope, veilederMock, dialogmoterData);
     stubVeiledersMoterApi(scope, moterData);
   });
   afterEach(() => {

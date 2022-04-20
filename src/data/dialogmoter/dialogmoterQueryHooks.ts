@@ -11,6 +11,7 @@ import { minutesToMillis } from "@/utils/timeUtils";
 
 export const dialogmoterQueryKeys = {
   dialogmoter: (enhetId?: string) => ["dialogmoter", enhetId],
+  veilederident: ["dialogmoter", "veilederident"],
 };
 
 export const useDialogmoterQuery = () => {
@@ -28,6 +29,16 @@ export const useDialogmoterQuery = () => {
       staleTime: minutesToMillis(10),
     }
   );
+};
+
+export const useDialogmoterVeilederidentQuery = () => {
+  const fetchDialogmoter = () =>
+    get<DialogmoterDTO[]>(`${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`);
+
+  return useQuery(dialogmoterQueryKeys.veilederident, fetchDialogmoter, {
+    select: aktiveDialogmoter,
+    staleTime: minutesToMillis(10),
+  });
 };
 
 export const useDialogmoterVeiledere = () => {
