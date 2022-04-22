@@ -100,6 +100,15 @@ const mockEndepunkter = (server: any) => {
     }
   );
 
+  server.get(
+    "/isdialogmote/api/v2/dialogmote/veilederident",
+    Auth.ensureAuthenticated(),
+    (req: any, res: any) => {
+      res.setHeader("Content-Type", "application/json");
+      res.send(JSON.stringify(dialogmoterMock));
+    }
+  );
+
   server.post(
     "/isdialogmote/api/v2/dialogmote/overta",
     Auth.ensureAuthenticated(),

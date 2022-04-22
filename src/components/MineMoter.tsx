@@ -5,7 +5,7 @@ import Moteoversikt from "./Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { Element } from "nav-frontend-typografi";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
-import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useDialogmoterVeilederidentQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 
@@ -68,7 +68,7 @@ const texts = {
 const Moter = (): ReactElement => {
   const aktivVeilederIdent = useAktivVeileder().data?.ident;
   const { antallOverfort } = useMoteoverforing();
-  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterQuery = useDialogmoterVeilederidentQuery();
   const moterQuery = useVeiledersMoterQuery();
   const harVeilederMoter = moterQuery.isSuccess && moterQuery.data.length > 0;
   const harVeilederDialogmoter = dialogmoterQuery.data?.some(
