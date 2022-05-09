@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MineMoterContainer from "../containers/MineMoterContainer";
 import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
 import { setAmplitudeUserProperties } from "@/amplitude/amplitude";
@@ -16,20 +16,18 @@ const AppRouter = (): ReactElement => {
 
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route
-          exact
           path="/syfomoteoversikt/minemoter"
-          component={MineMoterContainer}
+          element={<MineMoterContainer />}
         />
         <Route
-          exact
           path="/syfomoteoversikt/enhetensmoter"
-          component={EnhetensMoterContainer}
+          element={<EnhetensMoterContainer />}
         />
-        <Route path="/syfomoteoversikt" component={MineMoterContainer} />
-        <Route path="/" component={MineMoterContainer} />
-      </Switch>
+        <Route path="/syfomoteoversikt" element={<MineMoterContainer />} />
+        <Route path="/" element={<MineMoterContainer />} />
+      </Routes>
     </Router>
   );
 };

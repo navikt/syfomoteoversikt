@@ -1,5 +1,5 @@
-import { render } from "react-dom";
 import React from "react";
+import { createRoot } from "react-dom/client";
 import AppRouter from "./routers/AppRouter";
 import "./utils/globals";
 import "./styles/styles.less";
@@ -30,7 +30,11 @@ const queryClient = new QueryClient({
   },
 });
 
-render(
+const container =
+  document.getElementById("maincontent") || new DocumentFragment();
+const root = createRoot(container);
+
+root.render(
   <AktivEnhetProvider>
     <MoteoverforingProvider>
       <QueryClientProvider client={queryClient}>
@@ -38,6 +42,5 @@ render(
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </MoteoverforingProvider>
-  </AktivEnhetProvider>,
-  document.getElementById("maincontent")
+  </AktivEnhetProvider>
 );

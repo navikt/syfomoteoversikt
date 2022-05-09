@@ -1,7 +1,7 @@
 import React from "react";
 import { TrackedHovedknapp } from "./buttons/TrackedHovedknapp";
 import { useOverforMoter } from "@/data/moter/useOverforMoter";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 
@@ -27,7 +27,7 @@ export const OverforMoterKnapp = () => {
   };
 
   if (overforDialogmoter.isSuccess || overforMoter.isSuccess) {
-    return <Redirect to="/syfomoteoversikt/minemoter" />;
+    return <Navigate to="/syfomoteoversikt/minemoter" />;
   }
 
   return (
