@@ -1,3 +1,5 @@
+import express = require("express");
+
 const saksbehandler = {
   ident: "Z999999",
   navn: "Vetle Veileder",
@@ -25,15 +27,18 @@ const aktivEnhet = {
   aktivEnhet: "0316",
 };
 
-function mockForLokal(server: any) {
-  server.get("/modiacontextholder/api/decorator", (req: any, res: any) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(saksbehandler));
-  });
+const mockForLokal = (server: any) => {
+  server.get(
+    "/modiacontextholder/api/decorator",
+    (req: express.Request, res: express.Response) => {
+      res.setHeader("Content-Type", "application/json");
+      res.send(JSON.stringify(saksbehandler));
+    }
+  );
 
   server.get(
     "/modiacontextholder/api/context/aktivbruker",
-    (req: any, res: any) => {
+    (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(aktivBruker));
     }
@@ -41,19 +46,20 @@ function mockForLokal(server: any) {
 
   server.get(
     "/modiacontextholder/api/context/aktivenhet",
-    (req: any, res: any) => {
+    (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(aktivEnhet));
     }
   );
 
-  server.post("/modiacontextholder/api/context", (req: any, res: any) => {
-    res.send().status(204);
-  });
-}
+  server.post(
+    "/modiacontextholder/api/context",
+    (req: express.Request, res: express.Response) => {
+      res.send().status(204);
+    }
+  );
+};
 
-function mockModiacontextholder(server: any) {
+export const mockModiacontextholder = (server: any) => {
   mockForLokal(server);
-}
-
-module.exports = mockModiacontextholder;
+};

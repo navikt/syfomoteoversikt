@@ -1,9 +1,9 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
-const autoprefixer = require("autoprefixer");
-const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+import path = require("path");
+import HtmlWebpackPlugin = require("html-webpack-plugin");
+import CleanWebpackPlugin = require("clean-webpack-plugin");
+import Dotenv = require("dotenv-webpack");
+import autoprefixer = require("autoprefixer");
+import TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 const extensions = [".tsx", ".jsx", ".js", ".ts", ".json"];
 
@@ -18,7 +18,7 @@ module.exports = {
   },
   resolve: {
     plugins: [
-      new TsconfigPathsPlugin({
+      new TsconfigPathsPlugin.TsconfigPathsPlugin({
         extensions,
       }),
     ],
@@ -72,7 +72,7 @@ module.exports = {
       template: "public/index.html",
       filename: "index.html",
     }),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin.CleanWebpackPlugin(),
     new Dotenv({
       path: "./.env",
       safe: false,

@@ -1,15 +1,15 @@
-const express = require("express");
-const expressHttpProxy = require("express-http-proxy");
-const url = require("url");
+import express = require("express");
+import expressHttpProxy = require("express-http-proxy");
+import url = require("url");
 
-const AuthUtils = require("./auth/utils.js");
-const Config = require("./config.js");
+import AuthUtils = require("./auth/utils");
+import Config = require("./config");
 
-const proxyExternalHost = (host, accessToken, parseReqBody) =>
+const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
   expressHttpProxy(host, {
     https: true,
     parseReqBody: parseReqBody,
-    proxyReqOptDecorator: async (options, srcReq) => {
+    proxyReqOptDecorator: async (options: any, srcReq: express.Request) => {
       if (!accessToken) {
         return options;
       }
@@ -17,7 +17,7 @@ const proxyExternalHost = (host, accessToken, parseReqBody) =>
         options.headers = {};
       }
       if (host === Config.auth.modiacontextholder.host) {
-        const reqUser = srcReq.user;
+        const reqUser = srcReq.user as any;
         if (!reqUser) {
           return options;
         }
@@ -59,8 +59,14 @@ const proxyExternalHost = (host, accessToken, parseReqBody) =>
     },
   });
 
-const proxyOnBehalfOf = (req, res, next, authClient, externalAppConfig) => {
-  const user = req.user;
+const proxyOnBehalfOf = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+  authClient: any,
+  externalAppConfig: Config.ExternalAppConfig
+) => {
+  const user = req.user as any;
   if (!user) {
     console.log("Missing user in route, waiting for middleware authentication");
     res
@@ -79,7 +85,7 @@ const proxyOnBehalfOf = (req, res, next, authClient, externalAppConfig) => {
     externalAppConfig.tokenSetId,
     externalAppConfig.clientId
   )
-    .then((onBehalfOfToken) => {
+    .then((onBehalfOfToken: any) => {
       if (!onBehalfOfToken.access_token) {
         res.status(500).send("Failed to fetch access token on behalf of user.");
         console.log(
@@ -93,7 +99,7 @@ const proxyOnBehalfOf = (req, res, next, authClient, externalAppConfig) => {
         req.method === "POST"
       )(req, res, next);
     })
-    .catch((error) => {
+    .catch((error: any) => {
       console.log("Failed to renew token(s). Original error: %s", error);
       res
         .status(500)
@@ -101,24 +107,58 @@ const proxyOnBehalfOf = (req, res, next, authClient, externalAppConfig) => {
     });
 };
 
-const setup = (authClient) => {
+export const setupProxy = (authClient: any) => {
   const router = express.Router();
 
-  router.use("/modiacontextholder/*", (req, res, next) => {
-    proxyOnBehalfOf(req, res, next, authClient, Config.auth.modiacontextholder);
-  });
+  router.use(
+    "/modiacontextholder/*",
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(
+        req,
+        res,
+        next,
+        authClient,
+        Config.auth.modiacontextholder
+      );
+    }
+  );
 
-  router.use("/isdialogmote/*", (req, res, next) => {
-    proxyOnBehalfOf(req, res, next, authClient, Config.auth.isdialogmote);
-  });
+  router.use(
+    "/isdialogmote/*",
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(req, res, next, authClient, Config.auth.isdialogmote);
+    }
+  );
 
-  router.use("/syfomoteadmin/*", (req, res, next) => {
-    proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfomoteadmin);
-  });
+  router.use(
+    "/syfomoteadmin/*",
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfomoteadmin);
+    }
+  );
 
-  router.use("/syfoveileder/*", (req, res, next) => {
-    proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfoveileder);
-  });
+  router.use(
+    "/syfoveileder/*",
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfoveileder);
+    }
+  );
 
   router.use(
     "/internarbeidsflatedecorator",
@@ -144,4 +184,6 @@ const setup = (authClient) => {
   return router;
 };
 
-module.exports = setup;
+module.exports = {
+  setupProxy: setupProxy,
+};
