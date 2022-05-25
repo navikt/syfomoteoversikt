@@ -1,11 +1,11 @@
-const express = require("express");
-const helmet = require("helmet");
-const path = require("path");
-const prometheus = require("prom-client");
+import express = require("express");
+import helmet = require("helmet");
+import path = require("path");
+import prometheus = require("prom-client");
 
-const Auth = require("./server/auth/index.js");
+import Auth = require("./server/auth");
 
-const setupProxy = require("./server/proxy.js");
+import proxy = require("./server/proxy");
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -28,17 +28,21 @@ server.use(
   })
 );
 
-function nocache(req, res, next) {
+const nocache = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
   res.header("Expires", "-1");
   res.header("Pragma", "no-cache");
   next();
-}
+};
 
 const setupServer = async () => {
   const authClient = await Auth.setupAuth(server);
 
-  server.use(setupProxy(authClient));
+  server.use(proxy.setupProxy(authClient));
 
   server.get("/actuator/metrics", (req, res) => {
     res.set("Content-Type", prometheus.register.contentType);

@@ -1,11 +1,11 @@
 import { merge } from "webpack-merge";
 import mockEndepunkter from "./mock/mockEndepunkter";
 
-const path = require("path");
-const express = require("express");
-const common = require("./webpack.common.ts");
+import path = require("path");
+import express = require("express");
+import common = require("./webpack.common");
 
-const Auth = require("./server/auth/index.js");
+import Auth = require("./server/auth");
 
 module.exports = merge(common, {
   mode: "development",
@@ -41,7 +41,7 @@ const setupDev = async (devServer: { app: any; compiler: any }) => {
   );
   app.use("/static", express.static(path.resolve(__dirname, "dist")));
 
-  app.use("*", (req: any, res: any) => {
+  app.use("*", (req: express.Request, res: express.Response) => {
     const filename = path.join(compiler.outputPath, "index.html");
     compiler.outputFileSystem.readFile(filename, (err: any, result: any) => {
       if (err) {
