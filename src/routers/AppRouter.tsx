@@ -1,9 +1,17 @@
 import React, { ReactElement, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import MineMoterContainer from "../containers/MineMoterContainer";
 import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
 import { setAmplitudeUserProperties } from "@/amplitude/amplitude";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+
+export const mineMoterRoutePath = "/syfomoteoversikt/minemoter";
+export const enhetMoterOversiktRoutePath = "/syfomoteoversikt/enhetensmoter";
 
 const AppRouter = (): ReactElement => {
   const { aktivEnhet } = useAktivEnhet();
@@ -17,16 +25,12 @@ const AppRouter = (): ReactElement => {
   return (
     <Router>
       <Routes>
+        <Route path={mineMoterRoutePath} element={<MineMoterContainer />} />
         <Route
-          path="/syfomoteoversikt/minemoter"
-          element={<MineMoterContainer />}
-        />
-        <Route
-          path="/syfomoteoversikt/enhetensmoter"
+          path={enhetMoterOversiktRoutePath}
           element={<EnhetensMoterContainer />}
         />
-        <Route path="/syfomoteoversikt" element={<MineMoterContainer />} />
-        <Route path="/" element={<MineMoterContainer />} />
+        <Route path="*" element={<Navigate to={mineMoterRoutePath} />} />
       </Routes>
     </Router>
   );

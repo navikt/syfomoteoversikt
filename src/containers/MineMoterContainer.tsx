@@ -7,6 +7,10 @@ import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
 import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
+import {
+  enhetMoterOversiktRoutePath,
+  mineMoterRoutePath,
+} from "@/routers/AppRouter";
 
 const texts = {
   ingenMoter: "Bruker har ingen møter",
@@ -26,12 +30,12 @@ const MineMoterContainer = (): ReactElement => {
           lenker={[
             {
               tittel: "Mine møter",
-              url: "/syfomoteoversikt/minemoter",
+              url: mineMoterRoutePath,
               aktiv: true,
             },
             {
               tittel: "Enhetens møter",
-              url: "/syfomoteoversikt/enhetensmoter",
+              url: enhetMoterOversiktRoutePath,
               aktiv: false,
             },
           ]}
