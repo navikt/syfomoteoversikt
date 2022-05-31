@@ -11,6 +11,10 @@ import { useEnhetensMoterQuery } from "@/data/moter/moterQueryHooks";
 import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
+import {
+  enhetMoterOversiktRoutePath,
+  mineMoterRoutePath,
+} from "@/routers/AppRouter";
 
 const texts = {
   ingenMoter: "Enheten har ingen møter",
@@ -35,12 +39,12 @@ const EnhetensMoterContainer = (): ReactElement => {
           lenker={[
             {
               tittel: "Mine møter",
-              url: "/syfomoteoversikt/minemoter",
+              url: mineMoterRoutePath,
               aktiv: false,
             },
             {
               tittel: "Enhetens møter",
-              url: "/syfomoteoversikt/enhetensmoter",
+              url: enhetMoterOversiktRoutePath,
               aktiv: true,
             },
           ]}
