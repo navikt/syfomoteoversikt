@@ -8,7 +8,7 @@ import EnhetensMoter from "../components/EnhetensMoter";
 
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { useEnhetensMoterQuery } from "@/data/moter/moterQueryHooks";
-import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
 import {
@@ -23,7 +23,7 @@ const texts = {
 const EnhetensMoterContainer = (): ReactElement => {
   const { aktivEnhet } = useAktivEnhet();
   const moterEnhetQuery = useEnhetensMoterQuery();
-  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const { dispatch } = useMoteoverforing();
   useEffect(() => {
     dispatch({ type: MoteoverforingActionType.ResetAntallOverfort });

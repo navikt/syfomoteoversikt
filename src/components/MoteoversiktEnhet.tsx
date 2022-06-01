@@ -27,7 +27,7 @@ import {
   useEnhetensMoterVeiledere,
 } from "@/data/moter/moterQueryHooks";
 import {
-  useDialogmoterQuery,
+  useEnhetensDialogmoterQuery,
   useDialogmoterVeiledere,
 } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
@@ -52,7 +52,7 @@ const MoteoversiktEnhet = (): ReactElement => {
   const [filterType, setFilterType] = useState("alle");
 
   const moterEnhetQuery = useEnhetensMoterQuery();
-  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const dialogmoterVeiledere = useDialogmoterVeiledere();
   const moterVeiledere = useEnhetensMoterVeiledere();
   const moter = [
