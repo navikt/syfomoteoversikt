@@ -14,7 +14,7 @@ import {
   StatusHeader,
 } from "./MoteTable";
 import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
-import { useDialogmoterVeilederidentQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
   motedato: "Møtedato",
@@ -30,7 +30,7 @@ const Moteoversikt = (): ReactElement => {
     "alle"
   );
   const moterQuery = useVeiledersMoterQuery();
-  const dialogmoterQuery = useDialogmoterVeilederidentQuery();
+  const dialogmoterQuery = useMineDialogmoterQuery();
 
   const moter = [...(moterQuery.data || []), ...(dialogmoterQuery.data || [])];
 

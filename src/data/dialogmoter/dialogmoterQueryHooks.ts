@@ -14,7 +14,7 @@ export const dialogmoterQueryKeys = {
   veilederident: ["dialogmoter", "veilederident"],
 };
 
-export const useDialogmoterQuery = () => {
+export const useEnhetensDialogmoterQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const fetchDialogmoter = () =>
     get<DialogmoterDTO[]>(
@@ -31,7 +31,7 @@ export const useDialogmoterQuery = () => {
   );
 };
 
-export const useDialogmoterVeilederidentQuery = () => {
+export const useMineDialogmoterQuery = () => {
   const fetchDialogmoter = () =>
     get<DialogmoterDTO[]>(`${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`);
 
@@ -42,7 +42,7 @@ export const useDialogmoterVeilederidentQuery = () => {
 };
 
 export const useDialogmoterVeiledere = () => {
-  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const veilederIdenter =
     dialogmoterQuery.data?.map(
       (dialogmote) => dialogmote.tildeltVeilederIdent

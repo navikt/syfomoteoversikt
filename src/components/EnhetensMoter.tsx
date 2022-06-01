@@ -4,7 +4,7 @@ import MoteoversiktEnhet from "./MoteoversiktEnhet";
 import { useOverforMoter } from "@/data/moter/useOverforMoter";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useEnhetensMoterQuery } from "@/data/moter/moterQueryHooks";
-import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
   overtaMoterFeilet:
@@ -31,7 +31,7 @@ const EnhetensMoter = (): ReactElement => {
   const overforDialogmoter = useOverforDialogmoter();
   const overforMoter = useOverforMoter();
   const moterEnhetQuery = useEnhetensMoterQuery();
-  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const harMoter =
     (moterEnhetQuery.isSuccess && moterEnhetQuery.data.length > 0) ||
     (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
