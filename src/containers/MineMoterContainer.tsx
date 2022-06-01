@@ -5,7 +5,7 @@ import Side from "../sider/Side";
 import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import { useDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useDialogmoterVeilederidentQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
 import {
   enhetMoterOversiktRoutePath,
@@ -18,7 +18,7 @@ const texts = {
 
 const MineMoterContainer = (): ReactElement => {
   const moterQuery = useVeiledersMoterQuery();
-  const dialogmoterQuery = useDialogmoterQuery();
+  const dialogmoterQuery = useDialogmoterVeilederidentQuery();
   const harMoter =
     (moterQuery.isSuccess && moterQuery.data.length > 0) ||
     (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
