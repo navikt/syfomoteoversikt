@@ -4,6 +4,7 @@ import { DecoratorProps } from "./decoratorProps";
 import decoratorConfig from "./decoratorConfig";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
   "internarbeidsflatefs"
@@ -11,11 +12,16 @@ const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
 
 const Decorator = (): ReactElement => {
   const { setAktivEnhet } = useAktivEnhet();
+  const aktivBruker = useAktivBruker();
 
   const handlePersonsokSubmit = (nyttFnr: string) => {
-    const host = "syfomodiaperson";
-    const path = `/sykefravaer/${nyttFnr}`;
-    window.location.href = fullNaisUrlDefault(host, path);
+    aktivBruker.mutate(nyttFnr, {
+      onSuccess: () => {
+        const host = "syfomodiaperson";
+        const path = `/sykefravaer`;
+        window.location.href = fullNaisUrlDefault(host, path);
+      },
+    });
   };
 
   const handleChangeEnhet = (nyEnhet: string) => {

@@ -7,6 +7,7 @@ import { useBrukerQuery, useFnrQuery } from "@/data/bruker/brukerQueryHooks";
 import { isDialogmote } from "@/utils/dialogmoterUtil";
 import Lenke from "nav-frontend-lenker";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
+import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
 
 const texts = {
   henter: "Henter...",
@@ -15,24 +16,35 @@ const texts = {
   trackGoToSyfoModia: "Lenke til bruker i syfomodiaperson",
 };
 
-const syfomodiapersonMoterUrl = (fnr: string): string => {
-  const path = `/sykefravaer/${fnr}/moteoversikt`;
-  return fullNaisUrlDefault("syfomodiaperson", path);
-};
+const syfomodiapersonMoterUrl = fullNaisUrlDefault(
+  "syfomodiaperson",
+  "/sykefravaer/moteoversikt"
+);
 
 interface BrukerLenkeProps {
   fnr: string;
   navn: string;
 }
 
-const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => (
-  <Lenke
-    onClick={() => trackOnClick(texts.trackGoToSyfoModia)}
-    href={syfomodiapersonMoterUrl(fnr)}
-  >
-    {navn}
-  </Lenke>
-);
+const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
+  const aktivBruker = useAktivBruker();
+  return (
+    <Lenke
+      onClick={(event) => {
+        event.preventDefault();
+        trackOnClick(texts.trackGoToSyfoModia);
+        aktivBruker.mutate(fnr, {
+          onSuccess: () => {
+            window.location.href = syfomodiapersonMoterUrl;
+          },
+        });
+      }}
+      href={syfomodiapersonMoterUrl}
+    >
+      {navn}
+    </Lenke>
+  );
+};
 
 interface MoteArbeidstakerColumnsProps {
   mote: MoteDTO | DialogmoterDTO;
