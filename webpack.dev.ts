@@ -3,6 +3,7 @@ import mockEndepunkter from "./mock/mockEndepunkter";
 
 import path = require("path");
 import express = require("express");
+import compression = require("compression");
 import common = require("./webpack.common");
 
 import Auth = require("./server/auth");
@@ -32,6 +33,7 @@ module.exports = merge(common, {
 const setupDev = async (devServer: { app: any; compiler: any }) => {
   const { app, compiler } = devServer;
 
+  app.use(compression());
   await Auth.setupAuth(app);
 
   mockEndepunkter(app);
