@@ -3,7 +3,7 @@ import mockEndepunkter from "./mock/mockEndepunkter";
 
 import path = require("path");
 import express = require("express");
-import compression = require("compression");
+import * as compression from "compression";
 import common = require("./webpack.common");
 
 import Auth = require("./server/auth");
