@@ -1,5 +1,5 @@
 import express = require("express");
-import * as compression from "compression";
+import compression = require("compression");
 import helmet = require("helmet");
 import path = require("path");
 import prometheus = require("prom-client");
