@@ -1,4 +1,5 @@
 import express = require("express");
+import compression = require("compression");
 import helmet = require("helmet");
 import path = require("path");
 import prometheus = require("prom-client");
@@ -22,6 +23,7 @@ const httpRequestDurationMicroseconds = new prometheus.Histogram({
 const server = express();
 
 server.use(express.json());
+server.use(compression());
 server.use(
   helmet({
     contentSecurityPolicy: false,
