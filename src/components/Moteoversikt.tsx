@@ -22,7 +22,7 @@ const texts = {
   navn: "Navn",
   virksomhet: "Virksomhet",
   status: "Status",
-  respons: "Respons",
+  respons: "Respons fra deltakere",
 };
 
 const Moteoversikt = (): ReactElement => {

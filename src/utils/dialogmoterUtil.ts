@@ -44,7 +44,7 @@ export const statusTekst = (mote: DialogmoterDTO): string => {
   } else if (mote.status === DialogmoteStatus.INNKALT) {
     return `Innkalt${postfix}`;
   } else {
-    return `Endret${postfix}`;
+    return `Endring sendt${postfix}`;
   }
 };
 
@@ -132,11 +132,11 @@ const responsMottattTekst = (dialogmote: DialogmoterDTO) => {
   const hasAvlysRespons = svar.some((svar) => svar === SvarType.KOMMER_IKKE);
 
   if (hasNyttTidStedRespons && hasAvlysRespons) {
-    return "endring, avlysning";
+    return "endring ønskes, avlysning ønskes";
   } else if (hasNyttTidStedRespons) {
-    return "endring";
+    return "endring ønskes";
   } else if (hasAvlysRespons) {
-    return "avlysning";
+    return "avlysning ønskes";
   }
 
   const antallKommer = svar.filter((svar) => svar === SvarType.KOMMER).length;
