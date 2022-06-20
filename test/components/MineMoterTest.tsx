@@ -128,18 +128,18 @@ describe("MineMoter", () => {
       "Navn",
       "Virksomhet",
       "Status",
-      "Respons",
+      "Respons fra deltakere",
     ]);
 
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
-      "MøtedatoF.nrNavnVirksomhetStatusRespons",
+      "MøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
       `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetMock.navn}Planlegger: Forslag0/2 svar`,
       `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Møtedato passertavlysning`,
+      }${virksomhetMock.navn}Møtedato passertavlysning ønskes`,
       `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetMock.navn}Innkalt (med lege)1/3 kommer`,

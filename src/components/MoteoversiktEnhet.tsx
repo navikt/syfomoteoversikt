@@ -38,7 +38,7 @@ const texts = {
   fnr: "F.nr",
   sykmeldt: "Sykmeldt",
   status: "Status",
-  respons: "Respons",
+  respons: "Respons fra deltakere",
   filtrer: "Filtrer på veileder",
   filtrerType: "Filtrer på type",
 };

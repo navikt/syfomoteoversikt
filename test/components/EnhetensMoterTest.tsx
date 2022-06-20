@@ -145,12 +145,12 @@ describe("EnhetensMoter", () => {
       "F.nr",
       "Sykmeldt",
       "Status",
-      "Respons",
+      "Respons fra deltakere",
     ]);
 
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
-      "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons",
+      "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons fra deltakere",
       `${getDatoFraZulu(daysFromToday(1))}${veilederMock.navn}${
         arbeidstakerMock.fnr
       }${arbeidstakerMock.navn}Planlegger: Forslag0/2 svar`,
@@ -162,10 +162,10 @@ describe("EnhetensMoter", () => {
       }${arbeidstakerMock.navn}Møtedato passert2/2 kommer`,
       `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Innkalt (med lege)endring`,
+      }${arbeidstakerMock.navn}Innkalt (med lege)endring ønskes`,
       `${getDatoFraZulu(daysFromToday(5))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Endret0/2 har åpnet`,
+      }${arbeidstakerMock.navn}Endring sendt0/2 har åpnet`,
     ]);
   });
 });
