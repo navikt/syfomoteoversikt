@@ -162,7 +162,7 @@ describe("EnhetensMoter", () => {
       }${arbeidstakerMock.navn}Møtedato passert2/2 kommer`,
       `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Innkalt (med lege)endring ønskes`,
+      }${arbeidstakerMock.navn}Innkalt (med behandler)endring ønskes`,
       `${getDatoFraZulu(daysFromToday(5))}${veilederMock.navn}${
         arbeidstakerMock.fnr
       }${arbeidstakerMock.navn}Endring sendt0/2 har åpnet`,

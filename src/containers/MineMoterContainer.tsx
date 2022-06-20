@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Row, Column } from "nav-frontend-grid";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import Side from "../sider/Side";
+import SideFullBredde from "@/sider/SideFullbredde";
 import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
@@ -24,7 +24,7 @@ const MineMoterContainer = (): ReactElement => {
     (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
 
   return (
-    <Side tittel="Møteoversikt">
+    <SideFullBredde tittel="Møteoversikt">
       <Column className="col-xs-12">
         <NavigasjonsTopp
           lenker={[
@@ -55,7 +55,7 @@ const MineMoterContainer = (): ReactElement => {
           return <p>{texts.ingenMoter}</p>;
         })()}
       </Column>
-    </Side>
+    </SideFullBredde>
   );
 };
 

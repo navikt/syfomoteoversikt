@@ -8,5 +8,7 @@ export const getDatoFraZulu = (zulutid: Date): string => {
   const d = new Date(zulutid);
   const dag = pad(d.getDate());
   const maned = pad(d.getMonth() + 1);
-  return `${dag}.${maned}.${d.getFullYear()}`;
+  const time = pad(d.getHours());
+  const minutt = pad(d.getMinutes());
+  return `${dag}.${maned}.${d.getFullYear()} kl. ${time}.${minutt}`;
 };

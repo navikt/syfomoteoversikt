@@ -38,7 +38,7 @@ export const responsTekst = (dialogmote: DialogmoterDTO): string => {
 };
 
 export const statusTekst = (mote: DialogmoterDTO): string => {
-  const postfix = mote.behandler ? " (med lege)" : "";
+  const postfix = mote.behandler ? " (med behandler)" : "";
   if (getDialogmoteDato(mote) < new Date()) {
     return `Møtedato passert`;
   } else if (mote.status === DialogmoteStatus.INNKALT) {

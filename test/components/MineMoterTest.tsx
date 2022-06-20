@@ -142,7 +142,7 @@ describe("MineMoter", () => {
       }${virksomhetMock.navn}Møtedato passertavlysning ønskes`,
       `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Innkalt (med lege)1/3 kommer`,
+      }${virksomhetMock.navn}Innkalt (med behandler)1/3 kommer`,
     ]);
   });
 });
