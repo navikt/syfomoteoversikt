@@ -212,7 +212,7 @@ describe("dialogmoterUtil statusTekst", () => {
     const result = statusTekst(dialogmote);
     expect(result).to.equal("Møtedato passert");
   });
-  it("Returnerer 'Endring sendt (med lege)' for endret tid/sted når lege er med", () => {
+  it("Returnerer 'Endring sendt (med behandler)' for endret tid/sted når lege er med", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.NYTT_TID_STED,
       daysFromToday(1),
@@ -220,9 +220,9 @@ describe("dialogmoterUtil statusTekst", () => {
     );
 
     const result = statusTekst(dialogmote);
-    expect(result).to.equal("Endring sendt (med lege)");
+    expect(result).to.equal("Endring sendt (med behandler)");
   });
-  it("Returnerer 'Innkalt (med lege)' for innkalling når lege er med", () => {
+  it("Returnerer 'Innkalt (med behandler)' for innkalling når lege er med", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.INNKALT,
       daysFromToday(1),
@@ -230,7 +230,7 @@ describe("dialogmoterUtil statusTekst", () => {
     );
 
     const result = statusTekst(dialogmote);
-    expect(result).to.equal("Innkalt (med lege)");
+    expect(result).to.equal("Innkalt (med behandler)");
   });
 });
 

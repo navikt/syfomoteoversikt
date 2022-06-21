@@ -1,16 +1,24 @@
 import React, { ReactElement, useEffect } from "react";
-import { Container, Row } from "nav-frontend-grid";
-import Decorator from "../decorator/Decorator";
+import { Container, Column, Row } from "nav-frontend-grid";
 import DocumentTitle from "react-document-title";
+import styled from "styled-components";
+import Decorator from "../decorator/Decorator";
 import { trackPageLoad } from "@/amplitude/amplitude";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 
-interface SideProps {
+interface SideFullbreddeProps {
   tittel: string;
   children: React.ReactNode;
 }
 
-const Side = ({ tittel, children }: SideProps): ReactElement => {
+const StyledContainer = styled(Container)`
+  width: 95%;
+`;
+
+const SideFullBredde = ({
+  tittel,
+  children,
+}: SideFullbreddeProps): ReactElement => {
   const { aktivEnhet } = useAktivEnhet();
 
   useEffect(() => {
@@ -22,12 +30,14 @@ const Side = ({ tittel, children }: SideProps): ReactElement => {
       <Decorator />
 
       <DocumentTitle title={tittel}>
-        <Container>
-          <Row>{children}</Row>
-        </Container>
+        <StyledContainer>
+          <Row>
+            <Column>{children}</Column>
+          </Row>
+        </StyledContainer>
       </DocumentTitle>
     </>
   );
 };
 
-export default Side;
+export default SideFullBredde;

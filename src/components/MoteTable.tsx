@@ -15,33 +15,33 @@ export const VelgMoteColumn = styled.td`
 `;
 
 export const MoteDatoHeader = styled.th`
-  width: 10%;
+  width: 14%;
 `;
 
 export const MoteDatoColumn = styled.td`
-  width: 10%;
+  width: 14%;
 `;
 
 export const FnrHeader = styled.th`
-  width: 12%;
+  width: 8%;
 `;
 
 export const FnrColumn = styled.td`
-  width: 12%;
+  width: 8%;
 `;
 
 export const StatusHeader = styled.th`
-  width: 20%;
+  width: 18%;
 `;
 
 export const StatusColumn = styled(TruncatedTableColumn)`
-  width: 20%;
+  width: 18%;
 `;
 
 export const ResponsHeader = styled.th`
-  width: 18%;
+  width: 20%;
 `;
 
 export const ResponsColumn = styled(TruncatedTableColumn)`
-  width: 18%;
+  width: 20%;
 `;
