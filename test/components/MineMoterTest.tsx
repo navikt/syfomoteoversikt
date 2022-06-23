@@ -139,7 +139,7 @@ describe("MineMoter", () => {
       }${virksomhetMock.navn}Planlegger: Forslag0/2 svar`,
       `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Møtedato passertavlysning ønskes`,
+      }${virksomhetMock.navn}Referat ikke sendtavlysning ønskes`,
       `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetMock.navn}Innkalt (med behandler)1/3 kommer`,

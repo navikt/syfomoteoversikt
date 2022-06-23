@@ -185,14 +185,14 @@ describe("dialogmoterUtil statusTekst", () => {
     const result = statusTekst(dialogmote);
     expect(result).to.equal("Innkalt");
   });
-  it("Returnerer 'Møtedato passert' når dato har passert for innkalling", () => {
+  it("Returnerer 'Referat ikke sendt' når dato har passert for innkalling", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.INNKALT,
       daysFromToday(-1)
     );
 
     const result = statusTekst(dialogmote);
-    expect(result).to.equal("Møtedato passert");
+    expect(result).to.equal("Referat ikke sendt");
   });
   it("Returnerer 'Endring sendt' for endret tid/sted", () => {
     const dialogmote = getDialogmote(
@@ -203,14 +203,14 @@ describe("dialogmoterUtil statusTekst", () => {
     const result = statusTekst(dialogmote);
     expect(result).to.equal("Endring sendt");
   });
-  it("Returnerer 'Møtedato passert' når dato har passert for endret tid/sted", () => {
+  it("Returnerer 'Referat ikke sendt' når dato har passert for endret tid/sted", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.NYTT_TID_STED,
       daysFromToday(-1)
     );
 
     const result = statusTekst(dialogmote);
-    expect(result).to.equal("Møtedato passert");
+    expect(result).to.equal("Referat ikke sendt");
   });
   it("Returnerer 'Endring sendt (med behandler)' for endret tid/sted når lege er med", () => {
     const dialogmote = getDialogmote(
