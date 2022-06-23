@@ -159,7 +159,7 @@ describe("EnhetensMoter", () => {
       }${arbeidstakerMock.navn}Planlegger: Bekreftet`,
       `${getDatoFraZulu(daysFromToday(-1))}${veilederMock.navn}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Møtedato passert2/2 kommer`,
+      }${arbeidstakerMock.navn}Referat ikke sendt2/2 kommer`,
       `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
         arbeidstakerMock.fnr
       }${arbeidstakerMock.navn}Innkalt (med behandler)endring ønskes`,
