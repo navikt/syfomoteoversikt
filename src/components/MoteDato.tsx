@@ -1,16 +1,15 @@
-import { MoteDTO } from "@/data/moter/moterTypes";
+import React from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { MoteDatoColumn } from "@/components/MoteTable";
-import React from "react";
-import { getMoteDato } from "@/utils/moterUtil";
 import { getDatoFraZulu } from "@/utils/dateUtil";
+import { getDialogmoteDato } from "@/utils/dialogmoterUtil";
 
 interface MoteDatoProps {
-  mote: MoteDTO | DialogmoterDTO;
+  mote: DialogmoterDTO;
 }
 
-const moteDato = (mote: MoteDTO | DialogmoterDTO): string => {
-  const moteDato = getMoteDato(mote);
+const moteDato = (mote: DialogmoterDTO): string => {
+  const moteDato = getDialogmoteDato(mote);
   return moteDato ? getDatoFraZulu(moteDato) : "Mangler dato";
 };
 

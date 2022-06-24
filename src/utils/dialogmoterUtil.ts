@@ -6,13 +6,8 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { MoteDTO } from "@/data/moter/moterTypes";
 
 type DeltakerRespons = { harLest: boolean; svar?: SvarType };
-
-export const isDialogmote = (
-  mote: MoteDTO | DialogmoterDTO
-): mote is DialogmoterDTO => (mote as DialogmoterDTO).sted !== undefined;
 
 export const erResponsMottatt = (dialogmote: DialogmoterDTO): boolean => {
   const { svar: arbeidstakerSvar } = getArbeidstakerRespons(dialogmote);

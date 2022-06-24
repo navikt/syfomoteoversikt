@@ -13,7 +13,6 @@ import {
   ResponsHeader,
   StatusHeader,
 } from "./MoteTable";
-import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
@@ -29,10 +28,9 @@ const Moteoversikt = (): ReactElement => {
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
     "alle"
   );
-  const moterQuery = useVeiledersMoterQuery();
   const dialogmoterQuery = useMineDialogmoterQuery();
 
-  const moter = [...(moterQuery.data || []), ...(dialogmoterQuery.data || [])];
+  const moter = [...(dialogmoterQuery.data || [])];
 
   const getFiltrerteMoter = () => {
     if (responsFilter === "alle") {

@@ -7,8 +7,6 @@ import {
   compareByMotedato,
   getMoteRespons,
   getMoteResponser,
-  getMoteType,
-  MoteType,
 } from "@/utils/moterUtil";
 import { OverforMoterKnapp } from "./OverforMoterKnapp";
 import { trackOnClick } from "@/amplitude/amplitude";
@@ -19,13 +17,7 @@ import {
   StatusHeader,
   VelgMoteHeader,
 } from "./MoteTable";
-import { MoteDTO } from "@/data/moter/moterTypes";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { isDialogmote } from "@/utils/dialogmoterUtil";
-import {
-  useEnhetensMoterQuery,
-  useEnhetensMoterVeiledere,
-} from "@/data/moter/moterQueryHooks";
 import {
   useEnhetensDialogmoterQuery,
   useDialogmoterVeiledere,
@@ -49,17 +41,11 @@ const MoteoversiktEnhet = (): ReactElement => {
   );
 
   const [filterVeileder, setFilterVeileder] = useState("alle");
-  const [filterType, setFilterType] = useState("alle");
 
-  const moterEnhetQuery = useEnhetensMoterQuery();
   const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const dialogmoterVeiledere = useDialogmoterVeiledere();
-  const moterVeiledere = useEnhetensMoterVeiledere();
-  const moter = [
-    ...(moterEnhetQuery.data || []),
-    ...(dialogmoterQuery.data || []),
-  ];
-  const veiledere = [...dialogmoterVeiledere, ...moterVeiledere];
+  const moter = [...(dialogmoterQuery.data || [])];
+  const veiledere = [...dialogmoterVeiledere];
 
   const navnPaaVeiledere = (): string[] => {
     return [
@@ -71,21 +57,11 @@ const MoteoversiktEnhet = (): ReactElement => {
     ];
   };
 
-  const veilederNavnForMote = (
-    mote: MoteDTO | DialogmoterDTO
-  ): string | undefined =>
-    veiledere.find(({ ident }) =>
-      isDialogmote(mote)
-        ? mote.tildeltVeilederIdent === ident
-        : mote.eier === ident
-    )?.navn;
+  const veilederNavnForMote = (mote: DialogmoterDTO): string | undefined =>
+    veiledere.find(({ ident }) => mote.tildeltVeilederIdent === ident)?.navn;
 
   const getFiltrerteMoter = () => {
-    if (
-      responsFilter === "alle" &&
-      filterVeileder === "alle" &&
-      filterType === "alle"
-    ) {
+    if (responsFilter === "alle" && filterVeileder === "alle") {
       return moter;
     }
 
@@ -95,8 +71,7 @@ const MoteoversiktEnhet = (): ReactElement => {
         veilederNavnForMote(mote) === filterVeileder;
       const status =
         responsFilter === "alle" || getMoteRespons(mote) === responsFilter;
-      const type = filterType === "alle" || getMoteType(mote) === filterType;
-      return veileder && status && type;
+      return veileder && status;
     });
   };
 
@@ -129,24 +104,6 @@ const MoteoversiktEnhet = (): ReactElement => {
                   {veileder}
                 </option>
               ))}
-            </Select>
-          </div>
-          <div className="verktoylinje__filter">
-            <Select
-              label={texts.filtrerType}
-              onChange={(e) => {
-                trackOnClick(`${texts.filtrerType} - ${e.currentTarget.value}`);
-                setFilterType(e.currentTarget.value);
-              }}
-            >
-              <option value="alle">Vis alle</option>
-              {Object.values(MoteType).map(
-                (moteType: string, index: number) => (
-                  <option key={index} value={moteType}>
-                    {moteType}
-                  </option>
-                )
-              )}
             </Select>
           </div>
         </div>

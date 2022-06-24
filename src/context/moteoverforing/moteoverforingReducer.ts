@@ -9,21 +9,6 @@ export const moteoverforingReducer = (
   action: MoteoverforingAction
 ): MoteoverforingState => {
   switch (action.type) {
-    case MoteoverforingActionType.MarkerMote: {
-      if (action.overta) {
-        return {
-          ...state,
-          moterMarkert: [...state.moterMarkert, action.moteUuid],
-        };
-      } else {
-        return {
-          ...state,
-          moterMarkert: state.moterMarkert.filter(
-            (uuid) => uuid !== action.moteUuid
-          ),
-        };
-      }
-    }
     case MoteoverforingActionType.MarkerDialogmote: {
       if (action.overta) {
         return {
@@ -42,13 +27,6 @@ export const moteoverforingReducer = (
         };
       }
     }
-    case MoteoverforingActionType.MoterOverfort: {
-      return {
-        ...state,
-        moterMarkert: [],
-        antallMoterOverfort: state.moterMarkert.length,
-      };
-    }
     case MoteoverforingActionType.DialogmoterOverfort: {
       return {
         ...state,
@@ -60,7 +38,6 @@ export const moteoverforingReducer = (
     case MoteoverforingActionType.ResetAntallOverfort: {
       return {
         ...state,
-        antallMoterOverfort: undefined,
         antallDialogmoterOverfort: undefined,
       };
     }

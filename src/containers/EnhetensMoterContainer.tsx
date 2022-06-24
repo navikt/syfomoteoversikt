@@ -7,7 +7,6 @@ import NavigasjonsTopp from "../components/NavigasjonsTopp";
 import EnhetensMoter from "../components/EnhetensMoter";
 
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
-import { useEnhetensMoterQuery } from "@/data/moter/moterQueryHooks";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
@@ -22,15 +21,13 @@ const texts = {
 
 const EnhetensMoterContainer = (): ReactElement => {
   const { aktivEnhet } = useAktivEnhet();
-  const moterEnhetQuery = useEnhetensMoterQuery();
   const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const { dispatch } = useMoteoverforing();
   useEffect(() => {
     dispatch({ type: MoteoverforingActionType.ResetAntallOverfort });
   }, [dispatch]);
   const harMoter =
-    (moterEnhetQuery.isSuccess && moterEnhetQuery.data.length > 0) ||
-    (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
+    dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0;
 
   return (
     <SideFullBredde tittel="Møteoversikt">
@@ -59,13 +56,13 @@ const EnhetensMoterContainer = (): ReactElement => {
                 }
               />
             );
-          } else if (moterEnhetQuery.isLoading || dialogmoterQuery.isLoading) {
+          } else if (dialogmoterQuery.isLoading) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (moterEnhetQuery.isError && dialogmoterQuery.isError) {
+          } else if (dialogmoterQuery.isError) {
             return <Feilmelding />;
           } else if (harMoter) {
             return <EnhetensMoter />;

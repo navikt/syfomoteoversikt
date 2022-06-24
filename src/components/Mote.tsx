@@ -1,22 +1,17 @@
 import React, { ReactElement } from "react";
-import { findDeltakerByType } from "@/utils/moterUtil";
-import { MoteDTO } from "@/data/moter/moterTypes";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
-import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
+import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 import { TruncatedTableColumn } from "./MoteTable";
-import { isDialogmote } from "@/utils/dialogmoterUtil";
 import { useVirksomhetQuery } from "@/data/virksomhet/virksomhetQueryHooks";
 import { MoteDato } from "./MoteDato";
 
 interface MoteProps {
-  mote: MoteDTO | DialogmoterDTO;
+  mote: DialogmoterDTO;
 }
 
 const Mote = ({ mote }: MoteProps): ReactElement => {
-  const orgnummer = isDialogmote(mote)
-    ? mote.arbeidsgiver.virksomhetsnummer
-    : findDeltakerByType(mote, "ARBEIDSGIVER")?.orgnummer;
+  const orgnummer = mote.arbeidsgiver.virksomhetsnummer;
   const virksomhetQuery = useVirksomhetQuery(orgnummer);
 
   const virksomhetsNavn = (): string => {
@@ -32,7 +27,7 @@ const Mote = ({ mote }: MoteProps): ReactElement => {
   return (
     <tr>
       <MoteDato mote={mote} />
-      <MoteArbeidstakerColumns mote={mote} />
+      <DialogmoteArbeidstakerColumns dialogmote={mote} />
       <TruncatedTableColumn>{virksomhetsNavn()}</TruncatedTableColumn>
       <MoteStatusResponsColumns mote={mote} />
     </tr>

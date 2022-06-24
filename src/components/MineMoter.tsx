@@ -6,7 +6,6 @@ import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { Element } from "nav-frontend-typografi";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
-import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 
 const tallOrdFraTall = (tall: number): string | number => {
@@ -69,12 +68,10 @@ const Moter = (): ReactElement => {
   const aktivVeilederIdent = useAktivVeileder().data?.ident;
   const { antallOverfort } = useMoteoverforing();
   const dialogmoterQuery = useMineDialogmoterQuery();
-  const moterQuery = useVeiledersMoterQuery();
-  const harVeilederMoter = moterQuery.isSuccess && moterQuery.data.length > 0;
   const harVeilederDialogmoter = dialogmoterQuery.data?.some(
     ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeilederIdent
   );
-  const harMoter = harVeilederMoter || harVeilederDialogmoter;
+  const harMoter = harVeilederDialogmoter;
 
   return (
     <div>

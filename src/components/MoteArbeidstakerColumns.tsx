@@ -1,10 +1,8 @@
 import React from "react";
-import { MoteDTO } from "@/data/moter/moterTypes";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { trackOnClick } from "@/amplitude/amplitude";
 import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
-import { useBrukerQuery, useFnrQuery } from "@/data/bruker/brukerQueryHooks";
-import { isDialogmote } from "@/utils/dialogmoterUtil";
+import { useBrukerQuery } from "@/data/bruker/brukerQueryHooks";
 import Lenke from "nav-frontend-lenker";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
 import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
@@ -46,25 +44,11 @@ const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
   );
 };
 
-interface MoteArbeidstakerColumnsProps {
-  mote: MoteDTO | DialogmoterDTO;
-}
-
-export const MoteArbeidstakerColumns = ({
-  mote,
-}: MoteArbeidstakerColumnsProps) => {
-  return isDialogmote(mote) ? (
-    <DialogmoteArbeidstakerColumns dialogmote={mote} />
-  ) : (
-    <MoteplanleggerArbeidstakerColumns mote={mote} />
-  );
-};
-
 interface DialogmoteArbeidstakerColumnsProps {
   dialogmote: DialogmoterDTO;
 }
 
-const DialogmoteArbeidstakerColumns = ({
+export const DialogmoteArbeidstakerColumns = ({
   dialogmote,
 }: DialogmoteArbeidstakerColumnsProps) => {
   const brukerQuery = useBrukerQuery(dialogmote.arbeidstaker.personIdent);
@@ -86,40 +70,6 @@ const DialogmoteArbeidstakerColumns = ({
   return (
     <>
       <FnrColumn>{dialogmote.arbeidstaker.personIdent}</FnrColumn>
-      <TruncatedTableColumn>
-        <BrukersNavn />
-      </TruncatedTableColumn>
-    </>
-  );
-};
-
-interface MoteplanleggerArbeidstakerColumnsProps {
-  mote: MoteDTO;
-}
-
-const MoteplanleggerArbeidstakerColumns = ({
-  mote,
-}: MoteplanleggerArbeidstakerColumnsProps) => {
-  const brukerQuery = useBrukerQuery(mote.aktorId);
-  const fnrQuery = useFnrQuery(mote.aktorId);
-
-  const BrukersNavn = () => {
-    if (brukerQuery.isLoading || fnrQuery.isLoading) {
-      return <>{texts.henterNavn}</>;
-    } else if (brukerQuery.data && fnrQuery.data) {
-      return (
-        <BrukerLenke fnr={fnrQuery.data.fnr} navn={brukerQuery.data.navn} />
-      );
-    } else {
-      return <>{texts.notFound}</>;
-    }
-  };
-
-  return (
-    <>
-      <FnrColumn>
-        {fnrQuery.isLoading ? texts.henter : fnrQuery.data?.fnr}
-      </FnrColumn>
       <TruncatedTableColumn>
         <BrukersNavn />
       </TruncatedTableColumn>
