@@ -22,7 +22,7 @@ import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { apiMock } from "../mocks/stubApi";
 import nock from "nock";
-import { stubBrukerApi } from "../mocks/stubBrukerApi";
+import { stubBrukernavnApi } from "../mocks/stubBrukernavnApi";
 import {
   stubAktivVeilederApi,
   stubVeilederApi,
@@ -62,7 +62,7 @@ const scope = apiMock();
 
 describe("EnhetensMoter", () => {
   beforeEach(() => {
-    stubBrukerApi(scope);
+    stubBrukernavnApi(scope);
     stubDialogmoterApi(scope, dialogmoterData);
     stubVeilederApi(scope, veilederMock);
     stubAktivVeilederApi(scope, veilederMock);

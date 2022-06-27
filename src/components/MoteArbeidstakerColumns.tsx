@@ -2,7 +2,7 @@ import React from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { trackOnClick } from "@/amplitude/amplitude";
 import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
-import { useBrukerQuery } from "@/data/bruker/brukerQueryHooks";
+import { useBrukerQuery } from "@/data/bruker/brukernavnQueryHooks";
 import Lenke from "nav-frontend-lenker";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
 import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
@@ -51,15 +51,15 @@ interface DialogmoteArbeidstakerColumnsProps {
 export const DialogmoteArbeidstakerColumns = ({
   dialogmote,
 }: DialogmoteArbeidstakerColumnsProps) => {
-  const brukerQuery = useBrukerQuery(dialogmote.arbeidstaker.personIdent);
+  const brukernavnQuery = useBrukerQuery(dialogmote.arbeidstaker.personIdent);
   const BrukersNavn = () => {
-    if (brukerQuery.isLoading) {
+    if (brukernavnQuery.isLoading) {
       return <>{texts.henterNavn}</>;
-    } else if (brukerQuery.data) {
+    } else if (brukernavnQuery.data) {
       return (
         <BrukerLenke
           fnr={dialogmote.arbeidstaker.personIdent}
-          navn={brukerQuery.data.navn}
+          navn={brukernavnQuery.data.navn}
         />
       );
     } else {

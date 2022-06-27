@@ -1,4 +1,4 @@
-import { BrukerinfoDTO } from "@/data/bruker/BrukerinfoDTO";
+import { BrukerFnrMedNavnDTO } from "@/data/bruker/BrukerFnrMedNavnDTO";
 import {
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
@@ -10,11 +10,11 @@ import { VeilederDto } from "@/data/veiledere/veilederTypes";
 
 export const aktivEnhetMock = "0316";
 export const brukerFnr = "10108000398";
-export const aktorId = `10${brukerFnr}`;
 export const orgnr = "974574861";
 export const virksomhetNavn = "Skomaker Andersen";
 export const brukerNavn = "Arne Arbeidstaker";
-export const brukerMock: BrukerinfoDTO = {
+export const brukernavnMock: BrukerFnrMedNavnDTO = {
+  fnr: "",
   navn: brukerNavn,
 };
 export const arbeidstakerMock = {

@@ -150,6 +150,17 @@ export const setupProxy = (authClient: any) => {
   );
 
   router.use(
+    "/syfoperson/*",
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfoperson);
+    }
+  );
+
+  router.use(
     "/syfoveileder/*",
     (
       req: express.Request,

@@ -2,12 +2,12 @@ import express = require("express");
 import { veiederInfoMock } from "./Data/veilederInfoMock";
 import { veiledereMock } from "./Data/veiledereMock";
 import { virksomhetsInfoMock } from "./Data/virksomhetsInfoMock";
-import { brukerinfoMock } from "./Data/brukerInfoMock";
 import { dialogmoterMock } from "./Data/dialogmoterMock";
 
 import { mockModiacontextholder } from "./mockModiacontextholder";
 
 import Auth = require("../server/auth");
+import mockSyfoperson from "./mockSyfoperson";
 
 const mockEndepunkter = (server: any) => {
   server.get(
@@ -40,15 +40,6 @@ const mockEndepunkter = (server: any) => {
   );
 
   server.get(
-    "/syfomoteadmin/api/internad/v2/brukerinfo/:ident",
-    Auth.ensureAuthenticated(),
-    (req: express.Request, res: express.Response) => {
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(brukerinfoMock));
-    }
-  );
-
-  server.get(
     "/isdialogmote/api/v2/dialogmote/enhet/:enhetId",
     Auth.ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
@@ -75,6 +66,7 @@ const mockEndepunkter = (server: any) => {
   );
 
   mockModiacontextholder(server);
+  mockSyfoperson(server);
 };
 
 export default mockEndepunkter;

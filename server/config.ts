@@ -142,6 +142,15 @@ export const auth = {
     }),
     tokenSetId: tokenSetIdType.self,
   },
+  syfoperson: {
+    applicationName: "syfoperson",
+    clientId: envVar({
+      name: "SYFOPERSON_AAD_APP_CLIENT_ID",
+    }),
+    host: envVar({
+      name: "SYFOPERSON_HOST",
+    }),
+  },
   syfoveileder: {
     clientId: envVar({
       name: "SYFOVEILEDER_AAD_APP_CLIENT_ID",
