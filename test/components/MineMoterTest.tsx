@@ -10,14 +10,12 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { MoteStatus } from "@/data/moter/moterTypes";
 import { QueryClient, QueryClientProvider } from "react-query";
 import {
   aktivEnhetMock,
   annenVeilederMock,
   arbeidstakerMock,
   createDialogmote,
-  createPlanlagtMote,
   veilederMock,
   virksomhetMock,
 } from "../mocks/data";
@@ -26,19 +24,14 @@ import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { apiMock } from "../mocks/stubApi";
 import nock from "nock";
-import { stubBrukerApi, stubFnrApi } from "../mocks/stubBrukerApi";
+import { stubBrukerApi } from "../mocks/stubBrukerApi";
 import { stubVirksomhetApi } from "../mocks/stubVirksomhetApi";
 import {
   stubAktivVeilederApi,
   stubVeilederApi,
 } from "../mocks/stubVeilederApi";
 import { stubDialogmoterVeilederidentApi } from "../mocks/stubDialogmoterApi";
-import { stubVeiledersMoterApi } from "../mocks/stubMoterApi";
 
-const moterData = [
-  createPlanlagtMote(veilederMock, MoteStatus.OPPRETTET, daysFromToday(1)),
-  createPlanlagtMote(veilederMock, MoteStatus.AVBRUTT, daysFromToday(3)),
-];
 const dialogmoterData = [
   createDialogmote(
     veilederMock,
@@ -61,6 +54,11 @@ const dialogmoterData = [
     SvarType.KOMMER
   ),
   createDialogmote(veilederMock, DialogmoteStatus.AVLYST, daysFromToday(-2)),
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.NYTT_TID_STED,
+    daysFromToday(5)
+  ),
 ];
 
 const queryClient = new QueryClient();
@@ -69,13 +67,11 @@ const scope = apiMock();
 describe("MineMoter", () => {
   beforeEach(() => {
     stubBrukerApi(scope);
-    stubFnrApi(scope);
     stubVirksomhetApi(scope);
     stubAktivVeilederApi(scope, veilederMock);
     stubVeilederApi(scope, veilederMock);
     stubVeilederApi(scope, annenVeilederMock);
     stubDialogmoterVeilederidentApi(scope, veilederMock, dialogmoterData);
-    stubVeiledersMoterApi(scope, moterData);
   });
   afterEach(() => {
     nock.cleanAll();
@@ -95,7 +91,7 @@ describe("MineMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByRole("heading", { name: "Viser 2 møter" })).to
+    expect(await screen.findByRole("heading", { name: "Viser 3 møter" })).to
       .exist;
 
     expect(screen.getByText("Filtrer på respons")).to.exist;
@@ -104,7 +100,7 @@ describe("MineMoter", () => {
     expect(screen.getByRole("option", { name: "Respons mottatt" })).to.exist;
   });
 
-  it("viser veileders aktive planlagte møter og dialogmøte-innkallinger", async () => {
+  it("viser veileders aktive dialogmøte-innkallinger", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
@@ -134,12 +130,12 @@ describe("MineMoter", () => {
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
       "MøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
-      `${getDatoFraZulu(daysFromToday(1))}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }${virksomhetMock.navn}Planlegger: Forslag0/2 svar`,
       `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetMock.navn}Referat ikke sendtavlysning ønskes`,
+      `${getDatoFraZulu(daysFromToday(5))}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }${virksomhetMock.navn}Endring sendt0/2 har åpnet`,
       `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetMock.navn}Innkalt (med behandler)1/3 kommer`,

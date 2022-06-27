@@ -41,23 +41,17 @@ export const useMoteoverforing = () => {
   }
 
   const {
-    state: {
-      dialogmoterMarkert,
-      moterMarkert,
-      antallDialogmoterOverfort,
-      antallMoterOverfort,
-    },
+    state: { dialogmoterMarkert, antallDialogmoterOverfort },
     dispatch,
   } = context;
   const antallOverfort =
-    antallMoterOverfort !== undefined || antallDialogmoterOverfort !== undefined
-      ? (antallMoterOverfort || 0) + (antallDialogmoterOverfort || 0)
+    antallDialogmoterOverfort !== undefined
+      ? antallDialogmoterOverfort || 0
       : undefined;
 
   return {
     dispatch,
     antallOverfort,
-    moterMarkert,
     dialogmoterMarkert,
   };
 };

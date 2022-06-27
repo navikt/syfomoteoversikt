@@ -1,22 +1,18 @@
 import React, { ReactElement } from "react";
-import { MoteDTO } from "@/data/moter/moterTypes";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { OverforMote } from "./OverforMote";
-import { isDialogmote } from "@/utils/dialogmoterUtil";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
-import { MoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
+import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 import { TruncatedTableColumn, VelgMoteColumn } from "./MoteTable";
 import { useVeilederQuery } from "@/data/veiledere/veilederQueryHooks";
 import { MoteDato } from "@/components/MoteDato";
 
 interface MoteEnhetProps {
-  mote: MoteDTO | DialogmoterDTO;
+  mote: DialogmoterDTO;
 }
 
 const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
-  const veilederIdent = isDialogmote(mote)
-    ? mote.tildeltVeilederIdent
-    : mote.eier;
+  const veilederIdent = mote.tildeltVeilederIdent;
   const veilederQuery = useVeilederQuery(veilederIdent);
 
   const veilederNavn = () => {
@@ -35,7 +31,7 @@ const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
       </VelgMoteColumn>
       <MoteDato mote={mote} />
       <TruncatedTableColumn>{veilederNavn()}</TruncatedTableColumn>
-      <MoteArbeidstakerColumns mote={mote} />
+      <DialogmoteArbeidstakerColumns dialogmote={mote} />
       <MoteStatusResponsColumns mote={mote} />
     </tr>
   );

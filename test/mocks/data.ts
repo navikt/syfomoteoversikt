@@ -1,13 +1,10 @@
 import { BrukerinfoDTO } from "@/data/bruker/BrukerinfoDTO";
-import { AktorDTO } from "@/data/bruker/AktorDTO";
 import {
   DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { MoteDTO, MoteStatus } from "@/data/moter/moterTypes";
-import { daysFromToday } from "../testUtil";
 import { VirksomhetDTO } from "@/data/virksomhet/VirksomhetDTO";
 import { VeilederDto } from "@/data/veiledere/veilederTypes";
 
@@ -19,9 +16,6 @@ export const virksomhetNavn = "Skomaker Andersen";
 export const brukerNavn = "Arne Arbeidstaker";
 export const brukerMock: BrukerinfoDTO = {
   navn: brukerNavn,
-};
-export const aktorMock: AktorDTO = {
-  fnr: brukerFnr,
 };
 export const arbeidstakerMock = {
   fnr: brukerFnr,
@@ -106,34 +100,3 @@ export const createDialogmote = (
     tid: dato.toISOString(),
     tildeltVeilederIdent: veileder.ident,
   } as unknown as DialogmoterDTO);
-
-export const createPlanlagtMote = (
-  veileder: VeilederDto,
-  status: MoteStatus,
-  dato: Date,
-  arbeidstakerSvar = false,
-  arbeidsgiverSvar = false
-): MoteDTO =>
-  ({
-    aktorId: aktorId,
-    status,
-    sistEndret: daysFromToday(-3),
-    deltakere: [
-      {
-        type: "BRUKER",
-        fnr: arbeidstakerMock.fnr,
-        navn: arbeidstakerMock.navn,
-        svartidspunkt: arbeidstakerSvar ? new Date() : null,
-      },
-      {
-        type: "ARBEIDSGIVER",
-        svartidspunkt: arbeidsgiverSvar ? new Date() : null,
-        navn: arbeidsgiverMock.leder,
-        virksomhet: arbeidsgiverMock.virksomhet,
-        orgnummer: arbeidsgiverMock.orgnummer,
-      },
-    ],
-    bekreftetAlternativ: { tid: dato },
-    alternativer: [{ tid: dato }],
-    eier: veileder.ident,
-  } as unknown as MoteDTO);

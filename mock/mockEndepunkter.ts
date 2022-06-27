@@ -3,8 +3,6 @@ import { veiederInfoMock } from "./Data/veilederInfoMock";
 import { veiledereMock } from "./Data/veiledereMock";
 import { virksomhetsInfoMock } from "./Data/virksomhetsInfoMock";
 import { brukerinfoMock } from "./Data/brukerInfoMock";
-import { fnrMock } from "./Data/fnrMock";
-import { moterMock } from "./Data/moterMock";
 import { dialogmoterMock } from "./Data/dialogmoterMock";
 
 import { mockModiacontextholder } from "./mockModiacontextholder";
@@ -47,48 +45,6 @@ const mockEndepunkter = (server: any) => {
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(brukerinfoMock));
-    }
-  );
-
-  server.get(
-    "/syfomoteadmin/api/internad/v2/aktor/:aktorId",
-    Auth.ensureAuthenticated(),
-    (req: express.Request, res: express.Response) => {
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(fnrMock));
-    }
-  );
-
-  server.post(
-    "/syfomoteadmin/api/internad/v2/actions/moter/overfor",
-    Auth.ensureAuthenticated(),
-    (req: express.Request, res: express.Response) => {
-      res.send();
-    }
-  );
-
-  server.get(
-    "/syfomoteadmin/api/internad/v2/moter",
-    Auth.ensureAuthenticated(),
-    (req: express.Request, res: express.Response) => {
-      if (req.query.veiledersmoter) {
-        res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(moterMock));
-      } else if (req.query.navenhet) {
-        res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(moterMock));
-      } else {
-        res.send();
-      }
-    }
-  );
-
-  server.get(
-    "/syfomoteadmin/api/internad/v2/moter?navenhet=enhetId",
-    Auth.ensureAuthenticated(),
-    (req: express.Request, res: express.Response) => {
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(moterMock));
     }
   );
 

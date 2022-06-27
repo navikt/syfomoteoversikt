@@ -6,7 +6,6 @@ import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
-import { useVeiledersMoterQuery } from "@/data/moter/moterQueryHooks";
 import {
   enhetMoterOversiktRoutePath,
   mineMoterRoutePath,
@@ -17,11 +16,9 @@ const texts = {
 };
 
 const MineMoterContainer = (): ReactElement => {
-  const moterQuery = useVeiledersMoterQuery();
   const dialogmoterQuery = useMineDialogmoterQuery();
   const harMoter =
-    (moterQuery.isSuccess && moterQuery.data.length > 0) ||
-    (dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0);
+    dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0;
 
   return (
     <SideFullBredde tittel="Møteoversikt">
@@ -41,13 +38,13 @@ const MineMoterContainer = (): ReactElement => {
           ]}
         />
         {(() => {
-          if (moterQuery.isLoading || dialogmoterQuery.isLoading) {
+          if (dialogmoterQuery.isLoading) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
               </Row>
             );
-          } else if (moterQuery.isError && dialogmoterQuery.isError) {
+          } else if (dialogmoterQuery.isError) {
             return <Feilmelding />;
           } else if (harMoter) {
             return <Moter />;
