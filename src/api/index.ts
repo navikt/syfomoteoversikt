@@ -6,18 +6,28 @@ import {
   loginRequiredError,
   networkError,
 } from "./errors";
-import { generateUUID } from "@/utils/uuidUtils";
+import { generateUUID } from "../utils/uuidUtils";
 
 export const NAV_CALL_ID_HEADER = "Nav-Call-Id";
 export const NAV_CONSUMER_ID_HEADER = "Nav-Consumer-Id";
 export const NAV_CONSUMER_ID = "syfomoteoversikt";
+export const NAV_PERSONIDENT_HEADER = "nav-personident";
 
-const defaultRequestHeaders = (): AxiosRequestHeaders => {
-  return {
+const defaultRequestHeaders = (personIdent?: string): AxiosRequestHeaders => {
+  const headers = {
     "Content-Type": "application/json",
     [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
     [NAV_CALL_ID_HEADER]: `${NAV_CONSUMER_ID}-${generateUUID()}`,
   };
+
+  if (personIdent) {
+    return {
+      ...headers,
+      [NAV_PERSONIDENT_HEADER]: personIdent,
+    };
+  } else {
+    return headers;
+  }
 };
 
 const getCookie = (name: string): string => {
@@ -52,10 +62,13 @@ const handleAxiosError = (error: AxiosError) => {
   }
 };
 
-export const get = <ResponseData>(url: string): Promise<ResponseData> => {
+export const get = <ResponseData>(
+  url: string,
+  personIdent?: string
+): Promise<ResponseData> => {
   return axios
     .get(url, {
-      headers: defaultRequestHeaders(),
+      headers: defaultRequestHeaders(personIdent),
     })
     .then((response) => response.data)
     .catch(function (error) {

@@ -66,6 +66,10 @@ spec:
       value: "dev-fss.teamsykefravr.syfomoteadmin"
     - name: SYFOMOTEADMIN_HOST
       value: "syfomoteadmin.dev.intern.nav.no"
+    - name: SYFOPERSON_AAD_APP_CLIENT_ID
+      value: "dev-gcp.teamsykefravr.syfoperson"
+    - name: SYFOPERSON_HOST
+      value: "syfoperson.dev.intern.nav.no"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoveileder"
     - name: SYFOVEILEDER_HOST

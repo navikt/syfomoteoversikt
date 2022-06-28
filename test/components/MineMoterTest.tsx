@@ -24,7 +24,7 @@ import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { apiMock } from "../mocks/stubApi";
 import nock from "nock";
-import { stubBrukerApi } from "../mocks/stubBrukerApi";
+import { stubBrukernavnApi } from "../mocks/stubBrukernavnApi";
 import { stubVirksomhetApi } from "../mocks/stubVirksomhetApi";
 import {
   stubAktivVeilederApi,
@@ -66,7 +66,7 @@ const scope = apiMock();
 
 describe("MineMoter", () => {
   beforeEach(() => {
-    stubBrukerApi(scope);
+    stubBrukernavnApi(scope);
     stubVirksomhetApi(scope);
     stubAktivVeilederApi(scope, veilederMock);
     stubVeilederApi(scope, veilederMock);
