@@ -1,12 +1,12 @@
-import express = require("express");
-import OpenIdClient = require("openid-client");
-import passport = require("passport");
+import express from "express";
+import OpenIdClient from "openid-client";
+import passport from "passport";
 
-import session = require("../session");
-import AuthUtils = require("./utils");
-import Config = require("../config");
+import * as session from "../session";
+import * as AuthUtils from "./utils";
+import * as Config from "../config";
 
-import dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
 
 export const ensureAuthenticated = () => {
@@ -22,7 +22,7 @@ export const ensureAuthenticated = () => {
   };
 };
 
-const getStrategy = async (authClient: any) => {
+const getStrategy = async (authClient: OpenIdClient.Client) => {
   return new OpenIdClient.Strategy(
     {
       client: authClient,
@@ -52,7 +52,10 @@ const getStrategy = async (authClient: any) => {
   );
 };
 
-const setupPassport = async (app: express.Application, authClient: any) => {
+const setupPassport = async (
+  app: express.Application,
+  authClient: OpenIdClient.Client
+) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
@@ -69,7 +72,7 @@ const setupPassport = async (app: express.Application, authClient: any) => {
 
   app.get(
     "/login",
-    (req: any, _res: express.Response, next: any) => {
+    (req: any, _res: express.Response, next: express.NextFunction) => {
       if (typeof req.query.redirectTo === "string") {
         req.session.redirectTo = req.query.redirectTo;
       }
@@ -101,9 +104,4 @@ export const setupAuth = async (app: express.Application) => {
   await setupPassport(app, authClient);
 
   return authClient;
-};
-
-module.exports = {
-  setupAuth: setupAuth,
-  ensureAuthenticated: ensureAuthenticated,
 };

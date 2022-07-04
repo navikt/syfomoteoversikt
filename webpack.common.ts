@@ -1,13 +1,16 @@
-import path = require("path");
-import HtmlWebpackPlugin = require("html-webpack-plugin");
-import CleanWebpackPlugin = require("clean-webpack-plugin");
-import Dotenv = require("dotenv-webpack");
-import autoprefixer = require("autoprefixer");
-import TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+import "regenerator-runtime/runtime";
+
+import path from "path";
+import { Configuration } from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import Dotenv from "dotenv-webpack";
+import autoprefixer from "autoprefixer";
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 const extensions = [".tsx", ".jsx", ".js", ".ts", ".json"];
 
-module.exports = {
+const commonConfig: Configuration = {
   entry: {
     main: ["@babel/polyfill", "./src/index.js"],
   },
@@ -18,7 +21,7 @@ module.exports = {
   },
   resolve: {
     plugins: [
-      new TsconfigPathsPlugin.TsconfigPathsPlugin({
+      new TsconfigPathsPlugin({
         extensions,
       }),
     ],
@@ -72,10 +75,12 @@ module.exports = {
       template: "public/index.html",
       filename: "index.html",
     }),
-    new CleanWebpackPlugin.CleanWebpackPlugin(),
+    new CleanWebpackPlugin(),
     new Dotenv({
       path: "./.env",
       safe: false,
     }),
   ],
 };
+
+export default commonConfig;

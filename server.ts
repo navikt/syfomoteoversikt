@@ -1,11 +1,10 @@
-import express = require("express");
-import helmet = require("helmet");
-import path = require("path");
-import prometheus = require("prom-client");
+import express from "express";
+import helmet from "helmet";
+import path from "path";
+import prometheus from "prom-client";
 
-import Auth = require("./server/auth");
-
-import proxy = require("./server/proxy");
+import { setupAuth } from "./server/auth";
+import { setupProxy } from "./server/proxy";
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -40,9 +39,9 @@ const nocache = (
 };
 
 const setupServer = async () => {
-  const authClient = await Auth.setupAuth(server);
+  const authClient = await setupAuth(server);
 
-  server.use(proxy.setupProxy(authClient));
+  server.use(setupProxy(authClient));
 
   server.get("/actuator/metrics", (req, res) => {
     res.set("Content-Type", prometheus.register.contentType);

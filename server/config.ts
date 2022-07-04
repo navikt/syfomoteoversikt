@@ -1,6 +1,4 @@
-import path = require("path");
-
-import dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
 
 const hasEnvVar = (name: any) => {
@@ -169,13 +167,4 @@ export const redis = {
     name: "REDIS_PASSWORD",
     defaultValue: { dev: "", prod: "" },
   }),
-};
-
-module.exports = {
-  tokenSetIdType: tokenSetIdType,
-  auth: auth,
-  redis: redis,
-  server: server,
-  isDev: isDev,
-  isProd: isProd,
 };

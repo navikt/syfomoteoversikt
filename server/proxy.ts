@@ -1,15 +1,16 @@
-import express = require("express");
-import expressHttpProxy = require("express-http-proxy");
-import url = require("url");
+import express from "express";
+import expressHttpProxy from "express-http-proxy";
+import url from "url";
+import OpenIdClient from "openid-client";
 
-import AuthUtils = require("./auth/utils");
-import Config = require("./config");
+import * as AuthUtils from "./auth/utils";
+import * as Config from "./config";
 
 const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
   expressHttpProxy(host, {
     https: true,
     parseReqBody: parseReqBody,
-    proxyReqOptDecorator: async (options: any, srcReq: express.Request) => {
+    proxyReqOptDecorator: async (options, srcReq: express.Request) => {
       if (!accessToken) {
         return options;
       }
@@ -63,7 +64,7 @@ const proxyOnBehalfOf = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
-  authClient: any,
+  authClient: OpenIdClient.Client,
   externalAppConfig: Config.ExternalAppConfig
 ) => {
   const user = req.user as any;
@@ -107,7 +108,7 @@ const proxyOnBehalfOf = (
     });
 };
 
-export const setupProxy = (authClient: any) => {
+export const setupProxy = (authClient: OpenIdClient.Client) => {
   const router = express.Router();
 
   router.use(
@@ -193,8 +194,4 @@ export const setupProxy = (authClient: any) => {
     })
   );
   return router;
-};
-
-module.exports = {
-  setupProxy: setupProxy,
 };
