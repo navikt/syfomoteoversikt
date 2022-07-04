@@ -17,7 +17,7 @@ import {
   arbeidstakerMock,
   createDialogmote,
   veilederMock,
-  virksomhetMock,
+  virksomhetNavn,
 } from "../mocks/data";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import { render, screen } from "@testing-library/react";
@@ -132,13 +132,13 @@ describe("MineMoter", () => {
       "MøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
       `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Referat ikke sendtavlysning ønskes`,
+      }${virksomhetNavn}Referat ikke sendtavlysning ønskes`,
       `${getDatoFraZulu(daysFromToday(5))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Endring sendt0/2 har åpnet`,
+      }${virksomhetNavn}Endring sendt0/2 har åpnet`,
       `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetMock.navn}Innkalt (med behandler)1/3 kommer`,
+      }${virksomhetNavn}Innkalt (med behandler)1/3 kommer`,
     ]);
   });
 });

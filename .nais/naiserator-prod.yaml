@@ -54,6 +54,8 @@ spec:
       value: "https://syfomoteoversikt.intern.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfomoteoversikt-redis"
+    - name: EREG_HOST
+      value: "ereg-services.intern.nav.no"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
       value: "internarbeidsflatedecorator.intern.nav.no"
     - name: ISDIALOGMOTE_HOST
@@ -62,10 +64,6 @@ spec:
       value: "prod-gcp.teamsykefravr.isdialogmote"
     - name: MODIACONTEXTHOLDER_HOST
       value: "modiacontextholder.intern.nav.no"
-    - name: SYFOMOTEADMIN_AAD_APP_CLIENT_ID
-      value: "prod-fss.teamsykefravr.syfomoteadmin"
-    - name: SYFOMOTEADMIN_HOST
-      value: "syfomoteadmin.intern.nav.no"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfoperson"
     - name: SYFOPERSON_HOST

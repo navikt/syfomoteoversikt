@@ -11,14 +11,14 @@ interface MoteProps {
 }
 
 const Mote = ({ mote }: MoteProps): ReactElement => {
-  const orgnummer = mote.arbeidsgiver.virksomhetsnummer;
-  const virksomhetQuery = useVirksomhetQuery(orgnummer);
+  const virksomhetsnummer = mote.arbeidsgiver.virksomhetsnummer;
+  const virksomhetQuery = useVirksomhetQuery(virksomhetsnummer);
 
   const virksomhetsNavn = (): string => {
     if (virksomhetQuery.isLoading) {
       return "Henter virksomhet...";
-    } else if (virksomhetQuery.data) {
-      return virksomhetQuery.data.navn;
+    } else if (virksomhetQuery.virksomhetsnavn) {
+      return virksomhetQuery.virksomhetsnavn;
     } else {
       return "Fant ikke virksomheten";
     }
