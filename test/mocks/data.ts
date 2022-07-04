@@ -5,13 +5,12 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { VirksomhetDTO } from "@/data/virksomhet/VirksomhetDTO";
 import { VeilederDto } from "@/data/veiledere/veilederTypes";
 
 export const aktivEnhetMock = "0316";
 export const brukerFnr = "10108000398";
 export const orgnr = "974574861";
-export const virksomhetNavn = "Skomaker Andersen";
+export const virksomhetNavn = "Skomaker Andersen, Oslo";
 export const brukerNavn = "Arne Arbeidstaker";
 export const brukernavnMock: BrukerFnrMedNavnDTO = {
   fnr: "",
@@ -35,8 +34,11 @@ export const arbeidsgiverMock = {
   virksomhet: virksomhetNavn,
 };
 
-export const virksomhetMock: VirksomhetDTO = {
-  navn: virksomhetNavn,
+export const eregOrganisasjonResponseMock = {
+  navn: {
+    navnelinje1: "Skomaker Andersen",
+    redigertnavn: "Skomaker Andersen, Oslo",
+  },
 };
 
 export const createDialogmote = (

@@ -115,6 +115,13 @@ export const auth = {
     name: "INTERNARBEIDSFLATEDECORATOR_HOST",
   }),
 
+  ereg: {
+    clientId: "",
+    host: envVar({
+      name: "EREG_HOST",
+    }),
+    tokenSetId: tokenSetIdType.self,
+  },
   modiacontextholder: {
     clientId: graphapiClientId,
     host: envVar({
@@ -128,15 +135,6 @@ export const auth = {
     }),
     host: envVar({
       name: "ISDIALOGMOTE_HOST",
-    }),
-    tokenSetId: tokenSetIdType.self,
-  },
-  syfomoteadmin: {
-    clientId: envVar({
-      name: "SYFOMOTEADMIN_AAD_APP_CLIENT_ID",
-    }),
-    host: envVar({
-      name: "SYFOMOTEADMIN_HOST",
     }),
     tokenSetId: tokenSetIdType.self,
   },
