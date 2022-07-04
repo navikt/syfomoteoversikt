@@ -1,7 +1,7 @@
-import HttpsProxyAgent = require("https-proxy-agent");
-import OpenIdClient = require("openid-client");
+import HttpsProxyAgent from "https-proxy-agent";
+import OpenIdClient from "openid-client";
 
-import Config = require("../config");
+import * as Config from "../config";
 
 const OBO_TOKEN_EXPIRATION_MARGIN_SECONDS = 60;
 
@@ -21,7 +21,7 @@ const getTokenSetById = (tokenSets: any, id: any) => {
 };
 
 export const getOrRefreshOnBehalfOfToken = async (
-  authClient: any,
+  authClient: OpenIdClient.Client,
   tokenSets: any,
   tokenSetId: any,
   clientId: any
@@ -73,7 +73,7 @@ export const getOrRefreshOnBehalfOfToken = async (
 };
 
 const getOrRefreshSelfTokenIfExpired = async (
-  authClient: any,
+  authClient: OpenIdClient.Client,
   selfToken: any,
   tokenSets: any
 ) => {
@@ -96,10 +96,10 @@ const getScope = (tokenSetId: any, clientId: any) => {
 };
 
 const requestOnBehalfOfToken = async (
-  authClient: any,
+  authClient: OpenIdClient.Client,
   tokenSet: any,
   tokenSetId: any,
-  clientId: any
+  clientId: string
 ) => {
   if (!tokenSet.access_token) {
     throw Error(
@@ -117,7 +117,9 @@ const requestOnBehalfOfToken = async (
   return await authClient.grant(grantBody);
 };
 
-export const getOpenIdClient = async (issuerUrl: any) => {
+export const getOpenIdClient = async (
+  issuerUrl: string
+): Promise<OpenIdClient.Client> => {
   try {
     if (Config.server.proxy) {
       const proxyAgent = HttpsProxyAgent(Config.server.proxy);
@@ -143,9 +145,4 @@ export const getOpenIdClient = async (issuerUrl: any) => {
     console.log("Could not discover issuer", issuerUrl);
     throw e;
   }
-};
-
-module.exports = {
-  getOpenIdClient: getOpenIdClient,
-  getOrRefreshOnBehalfOfToken: getOrRefreshOnBehalfOfToken,
 };

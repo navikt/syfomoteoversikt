@@ -1,14 +1,14 @@
-import express = require("express");
+import express from "express";
+import { ensureAuthenticated } from "../server/auth";
 import { brukernavnMock } from "./Data/brukernavnMock";
 
-import Auth = require("../server/auth");
 import { NAV_PERSONIDENT_HEADER } from "../src/api";
 import { SYFOPERSON_ROOT } from "../src/utils/apiUrlUtil";
 
-const mockSyfoperson = (server: any) => {
+const mockSyfoperson = (server: express.Application) => {
   server.get(
     `${SYFOPERSON_ROOT}/person/navn`,
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       if (req.headers[NAV_PERSONIDENT_HEADER]?.length === 11) {
         res.setHeader("Content-Type", "application/json");

@@ -1,4 +1,5 @@
-import express = require("express");
+import express from "express";
+import { ensureAuthenticated } from "../server/auth";
 import { veiederInfoMock } from "./Data/veilederInfoMock";
 import { veiledereMock } from "./Data/veiledereMock";
 import { virksomhetsInfoMock } from "./Data/virksomhetsInfoMock";
@@ -6,13 +7,12 @@ import { dialogmoterMock } from "./Data/dialogmoterMock";
 
 import { mockModiacontextholder } from "./mockModiacontextholder";
 
-import Auth = require("../server/auth");
 import mockSyfoperson from "./mockSyfoperson";
 
-const mockEndepunkter = (server: any) => {
+const mockEndepunkter = (server: express.Application) => {
   server.get(
     "/syfoveileder/api/v2/veileder/self",
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(veiederInfoMock));
@@ -21,7 +21,7 @@ const mockEndepunkter = (server: any) => {
 
   server.get(
     "/syfoveileder/api/v2/veileder/:ident",
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(
@@ -32,7 +32,7 @@ const mockEndepunkter = (server: any) => {
 
   server.get(
     "/syfomoteadmin/api/internad/v2/virksomhet/:orgnr",
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(virksomhetsInfoMock));
@@ -41,7 +41,7 @@ const mockEndepunkter = (server: any) => {
 
   server.get(
     "/isdialogmote/api/v2/dialogmote/enhet/:enhetId",
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(dialogmoterMock));
@@ -50,7 +50,7 @@ const mockEndepunkter = (server: any) => {
 
   server.get(
     "/isdialogmote/api/v2/dialogmote/veilederident",
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(dialogmoterMock));
@@ -59,7 +59,7 @@ const mockEndepunkter = (server: any) => {
 
   server.post(
     "/isdialogmote/api/v2/dialogmote/overta",
-    Auth.ensureAuthenticated(),
+    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.send();
     }

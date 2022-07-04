@@ -1,4 +1,4 @@
-import express = require("express");
+import express from "express";
 
 const saksbehandler = {
   ident: "Z999999",
@@ -27,7 +27,7 @@ const aktivEnhet = {
   aktivEnhet: "0316",
 };
 
-const mockForLokal = (server: any) => {
+const mockForLokal = (server: express.Application) => {
   server.get(
     "/modiacontextholder/api/decorator",
     (req: express.Request, res: express.Response) => {
