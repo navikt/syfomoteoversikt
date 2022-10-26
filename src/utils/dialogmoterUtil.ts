@@ -111,6 +111,9 @@ const varselTypeFromStatus = (
     case DialogmoteStatus.FERDIGSTILT: {
       return DialogmoteDeltakerVarselType.REFERAT;
     }
+    case DialogmoteStatus.LUKKET: {
+      return DialogmoteDeltakerVarselType.INNKALT;
+    }
   }
 };
 

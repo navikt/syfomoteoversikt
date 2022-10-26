@@ -3,6 +3,7 @@ export enum DialogmoteStatus {
   AVLYST = "AVLYST",
   FERDIGSTILT = "FERDIGSTILT",
   NYTT_TID_STED = "NYTT_TID_STED",
+  LUKKET = "LUKKET",
 }
 
 export enum DialogmoteDeltakerVarselType {
