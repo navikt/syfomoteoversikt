@@ -69,7 +69,7 @@
     "nav-frontend-typografi": "3.0.4",
     "nav-frontend-typografi-style": "1.0.35",
     "openid-client": "4.2.2",
-    "passport": "0.5.2",
+    "passport": "0.6.0",
     "prom-client": "11.5.3",
     "react": "18.2.0",
     "react-document-title": "2.0.3",
