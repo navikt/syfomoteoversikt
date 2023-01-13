@@ -29,33 +29,31 @@ import {
 } from "../mocks/stubVeilederApi";
 import { stubDialogmoterApi } from "../mocks/stubDialogmoterApi";
 
+const yesterday = daysFromToday(-1);
+const inTwoDays = daysFromToday(2);
+const inFiveDays = daysFromToday(5);
+const threeDaysAgo = daysFromToday(-3);
+const twoDaysAgo = daysFromToday(-2);
+
 const dialogmoterData = [
   createDialogmote(
     veilederMock,
     DialogmoteStatus.INNKALT,
-    daysFromToday(-1),
+    yesterday,
     { lestDato: new Date(), svar: SvarType.KOMMER },
     { lestDato: new Date(), svar: SvarType.KOMMER }
   ),
   createDialogmote(
     veilederMock,
     DialogmoteStatus.INNKALT,
-    daysFromToday(2),
+    inTwoDays,
     { lestDato: new Date(), svar: SvarType.KOMMER },
     { lestDato: new Date(), svar: SvarType.KOMMER },
     SvarType.NYTT_TID_STED
   ),
-  createDialogmote(
-    veilederMock,
-    DialogmoteStatus.NYTT_TID_STED,
-    daysFromToday(5)
-  ),
-  createDialogmote(veilederMock, DialogmoteStatus.AVLYST, daysFromToday(-2)),
-  createDialogmote(
-    veilederMock,
-    DialogmoteStatus.FERDIGSTILT,
-    daysFromToday(-3)
-  ),
+  createDialogmote(veilederMock, DialogmoteStatus.NYTT_TID_STED, inFiveDays),
+  createDialogmote(veilederMock, DialogmoteStatus.AVLYST, twoDaysAgo),
+  createDialogmote(veilederMock, DialogmoteStatus.FERDIGSTILT, threeDaysAgo),
 ];
 const queryClient = new QueryClient();
 const scope = apiMock();
@@ -131,13 +129,13 @@ describe("EnhetensMoter", () => {
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
       "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons fra deltakere",
-      `${getDatoFraZulu(daysFromToday(-1))}${veilederMock.navn}${
-        arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Referat ikke sendt2/2 kommer`,
-      `${getDatoFraZulu(daysFromToday(2))}${veilederMock.navn}${
-        arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Innkalt (med behandler)endring ønskes`,
-      `${getDatoFraZulu(daysFromToday(5))}${veilederMock.navn}${
+      `${getDatoFraZulu(yesterday)}${veilederMock.navn}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }Referat ikke sendt2/2 kommer`,
+      `${getDatoFraZulu(inTwoDays)}${veilederMock.navn}${arbeidstakerMock.fnr}${
+        arbeidstakerMock.navn
+      }Innkalt (med behandler)endring ønskes`,
+      `${getDatoFraZulu(inFiveDays)}${veilederMock.navn}${
         arbeidstakerMock.fnr
       }${arbeidstakerMock.navn}Endring sendt0/2 har åpnet`,
     ]);
