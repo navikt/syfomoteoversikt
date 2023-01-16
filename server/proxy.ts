@@ -44,7 +44,6 @@ const proxyDirectly = (
 ) => {
   const user = req.user as any;
   if (!user) {
-    console.log("Missing user in route, waiting for middleware authentication");
     res
       .status(401)
       .header(
@@ -125,7 +124,6 @@ const proxyOnBehalfOf = (
 ) => {
   const user = req.user as any;
   if (!user) {
-    console.log("Missing user in route, waiting for middleware authentication");
     res
       .status(401)
       .header(

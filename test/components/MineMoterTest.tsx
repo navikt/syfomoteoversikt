@@ -32,33 +32,33 @@ import {
 } from "../mocks/stubVeilederApi";
 import { stubDialogmoterVeilederidentApi } from "../mocks/stubDialogmoterApi";
 
+const yesterday = daysFromToday(-1);
+const inFiveDays = daysFromToday(5);
+const inTenDays = daysFromToday(10);
+
 const dialogmoterData = [
   createDialogmote(
     veilederMock,
     DialogmoteStatus.INNKALT,
-    daysFromToday(-1),
+    yesterday,
     { lestDato: new Date(), svar: SvarType.KOMMER_IKKE },
     {}
   ),
   createDialogmote(
     annenVeilederMock,
     DialogmoteStatus.NYTT_TID_STED,
-    daysFromToday(5)
+    inFiveDays
   ),
   createDialogmote(
     veilederMock,
     DialogmoteStatus.INNKALT,
-    daysFromToday(10),
+    inTenDays,
     {},
     {},
     SvarType.KOMMER
   ),
   createDialogmote(veilederMock, DialogmoteStatus.AVLYST, daysFromToday(-2)),
-  createDialogmote(
-    veilederMock,
-    DialogmoteStatus.NYTT_TID_STED,
-    daysFromToday(5)
-  ),
+  createDialogmote(veilederMock, DialogmoteStatus.NYTT_TID_STED, inFiveDays),
 ];
 
 const queryClient = new QueryClient();
@@ -130,13 +130,13 @@ describe("MineMoter", () => {
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
       "MøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
-      `${getDatoFraZulu(daysFromToday(-1))}${arbeidstakerMock.fnr}${
+      `${getDatoFraZulu(yesterday)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetNavn}Referat ikke sendtavlysning ønskes`,
-      `${getDatoFraZulu(daysFromToday(5))}${arbeidstakerMock.fnr}${
+      `${getDatoFraZulu(inFiveDays)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetNavn}Endring sendt0/2 har åpnet`,
-      `${getDatoFraZulu(daysFromToday(10))}${arbeidstakerMock.fnr}${
+      `${getDatoFraZulu(inTenDays)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetNavn}Innkalt (med behandler)1/3 kommer`,
     ]);
