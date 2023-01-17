@@ -10,7 +10,7 @@ import {
   daysFromToday,
 } from "../testUtil";
 import { expect } from "chai";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import {
   aktivEnhetMock,

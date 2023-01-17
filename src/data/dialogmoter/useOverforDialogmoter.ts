@@ -1,6 +1,6 @@
 import { post } from "@/api";
 import { ISDIALOGMOTE_ROOT } from "@/utils/apiUrlUtil";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { dialogmoterQueryKeys } from "./dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";

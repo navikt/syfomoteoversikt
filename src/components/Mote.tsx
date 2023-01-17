@@ -15,7 +15,7 @@ const Mote = ({ mote }: MoteProps): ReactElement => {
   const virksomhetQuery = useVirksomhetQuery(virksomhetsnummer);
 
   const virksomhetsNavn = (): string => {
-    if (virksomhetQuery.isLoading) {
+    if (virksomhetQuery.isInitialLoading) {
       return "Henter virksomhet...";
     } else if (virksomhetQuery.virksomhetsnavn) {
       return virksomhetQuery.virksomhetsnavn;

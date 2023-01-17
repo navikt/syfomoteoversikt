@@ -5,7 +5,7 @@ import {
 } from "@/data/virksomhet/EregVirksomhetsnavn";
 import { EREG_ROOT } from "@/utils/apiUrlUtil";
 import { minutesToMillis } from "@/utils/timeUtils";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const virksomhetQueryKeys = {
   virksomhet: (virksomhetsnummer: string) => ["virksomhet", virksomhetsnummer],

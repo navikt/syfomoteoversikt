@@ -38,7 +38,7 @@ const MineMoterContainer = (): ReactElement => {
           ]}
         />
         {(() => {
-          if (dialogmoterQuery.isLoading) {
+          if (dialogmoterQuery.isInitialLoading) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />

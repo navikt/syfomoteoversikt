@@ -1,7 +1,7 @@
 import { get } from "@/api";
 import { BrukerFnrMedNavnDTO } from "@/data/bruker/BrukerFnrMedNavnDTO";
 import { SYFOPERSON_ROOT } from "@/utils/apiUrlUtil";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const brukerQueryKeys = {
   brukernavn: (ident: string) => ["brukernavn", ident],

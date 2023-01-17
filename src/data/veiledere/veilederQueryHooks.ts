@@ -1,7 +1,7 @@
 import { VeilederDto } from "@/data/veiledere/veilederTypes";
 import { get } from "@/api";
 import { SYFOVEILEDER_ROOT } from "@/utils/apiUrlUtil";
-import { useQueries, useQuery, UseQueryResult } from "react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 export const veilederQueryKeys = {
   veileder: ["veileder"],
@@ -26,12 +26,11 @@ export const useVeilederQuery = (ident: string) => {
 };
 
 export const useVeiledereQuery = (identList: string[]) => {
-  const veiledereQueries = useQueries(
-    identList.map((ident) => ({
+  const veiledereQueries = useQueries({
+    queries: identList.map((ident) => ({
       queryKey: veilederQueryKeys.veilederByIdent(ident),
-      queryFn: () => fetchVeilederByIdent(ident),
-    }))
-  ) as UseQueryResult<VeilederDto>[];
+    })),
+  });
   return veiledereQueries
     .map((query) => query.data)
     .filter((veileder) => veileder !== undefined) as VeilederDto[];

@@ -4,7 +4,7 @@ import {
   DialogmoteStatus,
 } from "@/data/dialogmoter/dialogmoterTypes";
 import { get } from "@/api";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useVeiledereQuery } from "@/data/veiledere/veilederQueryHooks";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { minutesToMillis } from "@/utils/timeUtils";
