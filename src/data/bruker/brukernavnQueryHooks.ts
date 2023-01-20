@@ -11,7 +11,9 @@ export const brukerQueryKeys = {
 export const useBrukerQuery = (ident: string) => {
   const fetchBrukernavn = () =>
     get<BrukerFnrMedNavnDTO>(`${SYFOPERSON_ROOT}/person/navn`, ident);
-  return useQuery(brukerQueryKeys.brukernavn(ident), fetchBrukernavn, {
+  return useQuery({
+    queryKey: brukerQueryKeys.brukernavn(ident),
+    queryFn: fetchBrukernavn,
     enabled: !!ident,
   });
 };

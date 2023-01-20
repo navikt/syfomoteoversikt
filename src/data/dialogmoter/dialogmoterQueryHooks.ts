@@ -20,22 +20,22 @@ export const useEnhetensDialogmoterQuery = () => {
     get<DialogmoterDTO[]>(
       `${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${aktivEnhet}`
     );
-  return useQuery(
-    dialogmoterQueryKeys.dialogmoter(aktivEnhet),
-    fetchDialogmoter,
-    {
-      enabled: !!aktivEnhet,
-      select: aktiveDialogmoter,
-      staleTime: minutesToMillis(10),
-    }
-  );
+  return useQuery({
+    queryKey: dialogmoterQueryKeys.dialogmoter(aktivEnhet),
+    queryFn: fetchDialogmoter,
+    enabled: !!aktivEnhet,
+    select: aktiveDialogmoter,
+    staleTime: minutesToMillis(10),
+  });
 };
 
 export const useMineDialogmoterQuery = () => {
   const fetchDialogmoter = () =>
     get<DialogmoterDTO[]>(`${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`);
 
-  return useQuery(dialogmoterQueryKeys.veilederident, fetchDialogmoter, {
+  return useQuery({
+    queryKey: dialogmoterQueryKeys.veilederident,
+    queryFn: fetchDialogmoter,
     select: aktiveDialogmoter,
     staleTime: minutesToMillis(10),
   });

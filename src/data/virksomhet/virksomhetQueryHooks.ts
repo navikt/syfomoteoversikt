@@ -16,14 +16,12 @@ export const useVirksomhetQuery = (virksomhetsnummer: string) => {
     get<EregOrganisasjonResponseDTO>(
       `${EREG_ROOT}/organisasjon/${virksomhetsnummer}`
     );
-  const query = useQuery(
-    virksomhetQueryKeys.virksomhet(virksomhetsnummer),
-    fetchVirksomhet,
-    {
-      enabled: !!virksomhetsnummer,
-      staleTime: minutesToMillis(60 * 12),
-    }
-  );
+  const query = useQuery({
+    queryKey: virksomhetQueryKeys.virksomhet(virksomhetsnummer),
+    queryFn: fetchVirksomhet,
+    enabled: !!virksomhetsnummer,
+    staleTime: minutesToMillis(60 * 12),
+  });
   return {
     ...query,
     virksomhetsnavn: query.data && getVirksomhetsnavn(query.data),

@@ -14,15 +14,18 @@ const fetchVeilederByIdent = (ident: string) =>
 export const useAktivVeileder = () => {
   const fetchVeileder = () =>
     get<VeilederDto>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
-  return useQuery(veilederQueryKeys.veileder, fetchVeileder);
+  return useQuery({
+    queryKey: veilederQueryKeys.veileder,
+    queryFn: fetchVeileder,
+  });
 };
 
 export const useVeilederQuery = (ident: string) => {
-  return useQuery(
-    veilederQueryKeys.veilederByIdent(ident),
-    () => fetchVeilederByIdent(ident),
-    { enabled: !!ident }
-  );
+  return useQuery({
+    queryKey: veilederQueryKeys.veilederByIdent(ident),
+    queryFn: () => fetchVeilederByIdent(ident),
+    enabled: !!ident,
+  });
 };
 
 export const useVeiledereQuery = (identList: string[]) => {

@@ -88,6 +88,7 @@
     "@babel/preset-typescript": "7.18.6",
     "@babel/register": "7.18.9",
     "@sheerun/mutationobserver-shim": "0.3.3",
+    "@tanstack/eslint-plugin-query": "^4.21.0",
     "@testing-library/react": "13.4.0",
     "@types/chai": "4.3.4",
     "@types/dotenv-webpack": "7.0.3",
