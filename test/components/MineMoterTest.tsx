@@ -10,7 +10,7 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   aktivEnhetMock,
   annenVeilederMock,
@@ -126,6 +126,13 @@ describe("MineMoter", () => {
       "Status",
       "Respons fra deltakere",
     ]);
+
+    expect(
+      await screen.findAllByText(arbeidstakerMock.navn, { exact: false })
+    ).to.have.length.least(1);
+    expect(
+      await screen.findAllByText(virksomhetNavn, { exact: false })
+    ).to.have.length.least(1);
 
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [

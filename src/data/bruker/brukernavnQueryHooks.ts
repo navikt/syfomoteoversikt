@@ -1,7 +1,7 @@
 import { get } from "@/api";
 import { BrukerFnrMedNavnDTO } from "@/data/bruker/BrukerFnrMedNavnDTO";
 import { SYFOPERSON_ROOT } from "@/utils/apiUrlUtil";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const brukerQueryKeys = {
   brukernavn: (ident: string) => ["brukernavn", ident],
@@ -11,7 +11,9 @@ export const brukerQueryKeys = {
 export const useBrukerQuery = (ident: string) => {
   const fetchBrukernavn = () =>
     get<BrukerFnrMedNavnDTO>(`${SYFOPERSON_ROOT}/person/navn`, ident);
-  return useQuery(brukerQueryKeys.brukernavn(ident), fetchBrukernavn, {
+  return useQuery({
+    queryKey: brukerQueryKeys.brukernavn(ident),
+    queryFn: fetchBrukernavn,
     enabled: !!ident,
   });
 };

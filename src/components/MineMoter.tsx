@@ -68,10 +68,9 @@ const Moter = (): ReactElement => {
   const aktivVeilederIdent = useAktivVeileder().data?.ident;
   const { antallOverfort } = useMoteoverforing();
   const dialogmoterQuery = useMineDialogmoterQuery();
-  const harVeilederDialogmoter = dialogmoterQuery.data?.some(
+  const harMoter = dialogmoterQuery.data?.some(
     ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeilederIdent
   );
-  const harMoter = harVeilederDialogmoter;
 
   return (
     <div>

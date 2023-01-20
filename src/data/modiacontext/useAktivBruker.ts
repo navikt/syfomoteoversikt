@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { post } from "@/api";
 import { MODIACONTEXTHOLDER_ROOT } from "@/utils/apiUrlUtil";
 

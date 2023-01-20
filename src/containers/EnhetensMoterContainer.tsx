@@ -56,7 +56,7 @@ const EnhetensMoterContainer = (): ReactElement => {
                 }
               />
             );
-          } else if (dialogmoterQuery.isLoading) {
+          } else if (dialogmoterQuery.isInitialLoading) {
             return (
               <Row className="row-centered">
                 <NavFrontendSpinner type="XL" />
