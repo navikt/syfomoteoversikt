@@ -57,13 +57,15 @@ spec:
     - name: EREG_HOST
       value: "ereg-services-q1.dev.intern.nav.no"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
-      value: "internarbeidsflatedecorator-q0.dev.intern.nav.no"
+      value: "internarbeidsflatedecorator-q1.dev.intern.nav.no"
     - name: ISDIALOGMOTE_HOST
       value: "isdialogmote.dev.intern.nav.no"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.isdialogmote"
+    - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
+      value: "dev-fss.personoversikt.modiacontextholder-q1"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder-q0.dev.intern.nav.no"
+      value: "modiacontextholder-q1.dev.intern.nav.no"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoperson"
     - name: SYFOPERSON_HOST
