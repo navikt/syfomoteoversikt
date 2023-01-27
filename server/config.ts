@@ -33,18 +33,11 @@ export const isProd = envVar({ name: "NODE_ENV" }) === "production";
 
 const graphapiClientId = "https://graph.microsoft.com";
 
-const tokenSetSelfId = "self";
-const tokenSetGraphId = "graph";
-
-export const tokenSetIdType = {
-  self: tokenSetSelfId,
-  graph: tokenSetGraphId,
-};
+export const tokenSetSelf = "self";
 
 export interface ExternalAppConfig {
   clientId: string;
   host: string;
-  tokenSetId?: any;
   removePathPrefix?: boolean;
 }
 
@@ -120,14 +113,14 @@ export const auth = {
     host: envVar({
       name: "EREG_HOST",
     }),
-    tokenSetId: tokenSetIdType.self,
   },
   modiacontextholder: {
-    clientId: graphapiClientId,
+    clientId: envVar({
+      name: "MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID",
+    }),
     host: envVar({
       name: "MODIACONTEXTHOLDER_HOST",
     }),
-    tokenSetId: tokenSetIdType.graph,
   },
   isdialogmote: {
     clientId: envVar({
@@ -136,7 +129,6 @@ export const auth = {
     host: envVar({
       name: "ISDIALOGMOTE_HOST",
     }),
-    tokenSetId: tokenSetIdType.self,
   },
   syfoperson: {
     applicationName: "syfoperson",
@@ -154,7 +146,6 @@ export const auth = {
     host: envVar({
       name: "SYFOVEILEDER_HOST",
     }),
-    tokenSetId: tokenSetIdType.self,
   },
 };
 

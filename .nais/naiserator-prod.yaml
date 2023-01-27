@@ -62,6 +62,8 @@ spec:
       value: "isdialogmote.intern.nav.no"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.isdialogmote"
+    - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
+      value: "prod-fss.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST
       value: "modiacontextholder.intern.nav.no"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
