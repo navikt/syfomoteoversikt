@@ -1,5 +1,8 @@
 const erPreProd = (): boolean => {
-  return window.location.href.indexOf("dev.intern.nav.no") > -1;
+  return (
+    window.location.href.indexOf("dev.intern.nav.no") > -1 ||
+    window.location.href.indexOf("intern.dev.nav.no") > -1
+  );
 };
 
 const erLokal = (): boolean => {

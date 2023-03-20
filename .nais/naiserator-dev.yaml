@@ -46,12 +46,11 @@ spec:
   webproxy: true
   ingresses:
     - "https://syfomoteoversikt.dev.intern.nav.no"
-    - "https://syfomoteoversikt.intern.dev.nav.no"
   env:
     - name: NODE_ENV
       value: "production"
     - name: AUTH_REDIRECT_URI
-      value: "https://syfomoteoversikt.intern.dev.nav.no/oauth2/callback"
+      value: "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfomoteoversikt-redis"
     - name: EREG_HOST
