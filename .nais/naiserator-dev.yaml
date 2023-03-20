@@ -38,8 +38,6 @@ spec:
       allowAllUsers: true
       enabled: true
       tenant: trygdeetaten.no
-      replyURLs:
-        - "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
       claims:
         extra:
           - "NAVident"
@@ -48,11 +46,12 @@ spec:
   webproxy: true
   ingresses:
     - "https://syfomoteoversikt.dev.intern.nav.no"
+    - "https://syfomoteoversikt.intern.dev.nav.no"
   env:
     - name: NODE_ENV
       value: "production"
     - name: AUTH_REDIRECT_URI
-      value: "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
+      value: "https://syfomoteoversikt.intern.dev.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfomoteoversikt-redis"
     - name: EREG_HOST
@@ -60,7 +59,7 @@ spec:
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
       value: "internarbeidsflatedecorator-q1.dev.intern.nav.no"
     - name: ISDIALOGMOTE_HOST
-      value: "isdialogmote.dev.intern.nav.no"
+      value: "isdialogmote.intern.dev.nav.no"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.isdialogmote"
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
@@ -70,8 +69,8 @@ spec:
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoperson"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.dev.intern.nav.no"
+      value: "syfoperson.intern.dev.nav.no"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoveileder"
     - name: SYFOVEILEDER_HOST
-      value: "syfoveileder.dev.intern.nav.no"
+      value: "syfoveileder.intern.dev.nav.no"
