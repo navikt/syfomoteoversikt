@@ -8,7 +8,7 @@ import * as Config from "./config";
 
 const proxyExternalHostWithoutAuthentication = (host: any) =>
   expressHttpProxy(host, {
-    https: true,
+    https: false,
     proxyReqPathResolver: (req) => {
       const urlFromApi = url.parse(host);
       const pathFromApi =
@@ -23,7 +23,7 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
         (pathFromRequest ? pathFromRequest : "") +
         (queryString ? "?" + queryString : "");
 
-      return `https://${newPath}`;
+      return newPath;
     },
     proxyErrorHandler: (err, res, next) => {
       console.log(`Error in proxy for ${host} ${err.message}, ${err.code}`);
@@ -63,7 +63,7 @@ const proxyDirectly = (
 
 const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
   expressHttpProxy(host, {
-    https: true,
+    https: false,
     parseReqBody: parseReqBody,
     proxyReqOptDecorator: async (options, srcReq: express.Request) => {
       if (!accessToken) {
@@ -91,9 +91,9 @@ const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
 
       if (host === Config.auth.isdialogmote.host) {
         const newPathIsdialogmote = newPath.replace("isdialogmote/", "");
-        return `https://${newPathIsdialogmote}`;
+        return newPathIsdialogmote;
       }
-      return `https://${newPath}`;
+      return newPath;
     },
     proxyErrorHandler: (err, res, next) => {
       console.log(`Error in proxy for ${host} ${err.message}, ${err.code}`);

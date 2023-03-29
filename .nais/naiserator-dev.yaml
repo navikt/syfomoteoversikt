@@ -41,35 +41,46 @@ spec:
       claims:
         extra:
           - "NAVident"
+  accessPolicy:
+    outbound:
+      external:
+        - host: "login.microsoftonline.com"
+        - host: "internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
+        - host: "modiacontextholder-q1.dev-fss-pub.nais.io"
+        - host: "ereg-services-q1.dev-fss-pub.nais.io"
+      rules:
+        - application: isdialogmote
+        - application: syfoveileder
+        - application: syfoperson
+        - application: syfomoteoversikt-redis
   envFrom:
     - secret: syfomoteoversikt-session-key
-  webproxy: true
   ingresses:
-    - "https://syfomoteoversikt.dev.intern.nav.no"
+    - "https://syfomoteoversikt.intern.dev.nav.no"
   env:
     - name: NODE_ENV
       value: "production"
     - name: AUTH_REDIRECT_URI
-      value: "https://syfomoteoversikt.dev.intern.nav.no/oauth2/callback"
+      value: "https://syfomoteoversikt.intern.dev.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfomoteoversikt-redis"
     - name: EREG_HOST
-      value: "ereg-services-q1.dev.intern.nav.no"
+      value: "https://ereg-services-q1.dev-fss-pub.nais.io"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
-      value: "internarbeidsflatedecorator-q1.dev.intern.nav.no"
+      value: "https://internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
     - name: ISDIALOGMOTE_HOST
-      value: "isdialogmote.intern.dev.nav.no"
+      value: "http://isdialogmote"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.isdialogmote"
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
       value: "dev-fss.personoversikt.modiacontextholder-q1"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder-q1.dev.intern.nav.no"
+      value: "https://modiacontextholder-q1.dev-fss-pub.nais.io"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoperson"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.intern.dev.nav.no"
+      value: "http://syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoveileder"
     - name: SYFOVEILEDER_HOST
-      value: "syfoveileder.intern.dev.nav.no"
+      value: "http://syfoveileder"
