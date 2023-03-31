@@ -41,9 +41,20 @@ spec:
       claims:
         extra:
           - "NAVident"
+  accessPolicy:
+    outbound:
+      external:
+        - host: "login.microsoftonline.com"
+        - host: "internarbeidsflatedecorator.prod-fss-pub.nais.io"
+        - host: "modiacontextholder.prod-fss-pub.nais.io"
+        - host: "ereg-services.prod-fss-pub.nais.io"
+      rules:
+        - application: isdialogmote
+        - application: syfoperson
+        - application: syfoveileder
+        - application: syfomoteoversikt-redis
   envFrom:
     - secret: syfomoteoversikt-session-key
-  webproxy: true
   ingresses:
     - "https://syfomoteoversikt.intern.nav.no"
   env:
@@ -54,23 +65,22 @@ spec:
     - name: REDIS_HOST
       value: "syfomoteoversikt-redis"
     - name: EREG_HOST
-      value: "ereg-services.intern.nav.no"
+      value: "https://ereg-services.prod-fss-pub.nais.io"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
-      value: "internarbeidsflatedecorator.intern.nav.no"
+      value: "https://internarbeidsflatedecorator.prod-fss-pub.nais.io"
     - name: ISDIALOGMOTE_HOST
-      value: "isdialogmote.intern.nav.no"
+      value: "http://isdialogmote"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.isdialogmote"
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
       value: "prod-fss.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder.intern.nav.no"
+      value: "https://modiacontextholder.prod-fss-pub.nais.io"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfoperson"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.intern.nav.no"
-    - name: SYFOSMREGISTER_AAD_APP_CLIENT_ID
+      value: "http://syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfoveileder"
     - name: SYFOVEILEDER_HOST
-      value: "syfoveileder.intern.nav.no"
+      value: "http://syfoveileder"
