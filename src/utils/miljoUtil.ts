@@ -10,7 +10,7 @@ const erLokal = (): boolean => {
 };
 
 const finnNaisUrlDefault = (): string => {
-  return erPreProd() ? ".dev.intern.nav.no" : ".intern.nav.no";
+  return erPreProd() ? ".intern.dev.nav.no" : ".intern.nav.no";
 };
 
 export const fullNaisUrlDefault = (host: string, path: string): string => {
