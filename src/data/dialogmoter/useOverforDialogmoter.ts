@@ -18,7 +18,8 @@ export const useOverforDialogmoter = () => {
   const postOverforDialogmoter = (dialogmoteUuids: string[]) =>
     post(path, { dialogmoteUuids });
 
-  return useMutation(postOverforDialogmoter, {
+  return useMutation({
+    mutationFn: postOverforDialogmoter,
     onMutate: (dialogmoteUuids: string[]) => {
       const previousDialogmoter =
         queryClient.getQueryData<DialogmoterDTO[]>(dialogmoterQueryKey);
