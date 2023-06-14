@@ -65,6 +65,12 @@ export const auth = {
       dev: `http://localhost:${server.mockOauthServerPort}/default`,
     },
   }),
+  jwksUri: envVar({
+    name: "AZURE_OPENID_CONFIG_JWKS_URI",
+    defaultValue: {
+      dev: `http://localhost:${server.mockOauthServerPort}/default`,
+    },
+  }),
   clientId: envVar({
     name: "AZURE_APP_CLIENT_ID",
     defaultValue: { dev: "syfomoteoversikt" },

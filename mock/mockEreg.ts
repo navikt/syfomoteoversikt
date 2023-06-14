@@ -1,6 +1,6 @@
 import express from "express";
 
-import { ensureAuthenticated } from "../server/auth";
+import { ensureAuthenticated } from "../server/authUtils";
 
 export const eregOrganisasjonResponse = {
   navn: {
