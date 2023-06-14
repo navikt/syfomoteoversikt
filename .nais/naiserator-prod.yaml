@@ -28,7 +28,6 @@ spec:
     path: /actuator/metrics
   resources:
     limits:
-      cpu: 500m
       memory: 1Gi
     requests:
       cpu: 100m
@@ -55,6 +54,7 @@ spec:
         - application: syfomoteoversikt-redis
   envFrom:
     - secret: syfomoteoversikt-session-key
+    - secret: syfomoteoversikt-redis-password
   ingresses:
     - "https://syfomoteoversikt.intern.nav.no"
   env:
