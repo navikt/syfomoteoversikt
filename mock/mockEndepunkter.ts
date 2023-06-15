@@ -1,5 +1,5 @@
 import express from "express";
-import { ensureAuthenticated } from "../server/auth";
+import { ensureAuthenticated } from "../server/authUtils";
 import { veiederInfoMock } from "./Data/veilederInfoMock";
 import { veiledereMock } from "./Data/veiledereMock";
 import { dialogmoterMock } from "./Data/dialogmoterMock";

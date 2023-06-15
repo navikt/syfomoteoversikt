@@ -1,5 +1,5 @@
 import express from "express";
-import { ensureAuthenticated } from "../server/auth";
+import { ensureAuthenticated } from "../server/authUtils";
 import { brukernavnMock } from "./Data/brukernavnMock";
 
 import { NAV_PERSONIDENT_HEADER } from "../src/api";

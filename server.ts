@@ -3,8 +3,10 @@ import helmet from "helmet";
 import path from "path";
 import prometheus from "prom-client";
 
-import { setupAuth } from "./server/auth";
+import * as Config from "./server/config";
+import { getOpenIdClient, getOpenIdIssuer } from "./server/authUtils";
 import { setupProxy } from "./server/proxy";
+import { setupSession } from "./server/session";
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -38,10 +40,24 @@ const nocache = (
   next();
 };
 
-const setupServer = async () => {
-  const authClient = await setupAuth(server);
+const redirectIfUnauthorized = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  if (req.headers["authorization"]) {
+    next();
+  } else {
+    res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
+  }
+};
 
-  server.use(setupProxy(authClient));
+const setupServer = async () => {
+  setupSession(server);
+  const issuer = await getOpenIdIssuer();
+  const authClient = await getOpenIdClient(issuer);
+
+  server.use(setupProxy(authClient, issuer));
 
   server.get("/actuator/metrics", (req, res) => {
     res.set("Content-Type", prometheus.register.contentType);
@@ -76,8 +92,8 @@ const setupServer = async () => {
       "/syfomoteoversikt/*",
       /^\/syfomoteoversikt\/(?!(resources|img)).*$/,
     ],
-    nocache,
-    (req, res) => {
+    [nocache, redirectIfUnauthorized],
+    (req: express.Request, res: express.Response) => {
       res.sendFile(HTML_FILE);
       httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
     }
