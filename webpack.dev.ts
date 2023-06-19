@@ -34,10 +34,10 @@ const devConfig: Webpack.Configuration = {
 };
 
 const setupDev = async (devServer: WebpackDevServer) => {
-  const app = devServer.app!!;
+  const app = devServer.app!;
   const compiler = devServer.compiler;
 
-  Session.setupSession(app);
+  await Session.setupSession(app);
 
   mockEndepunkter(app);
   app.use(
