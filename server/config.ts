@@ -31,10 +31,6 @@ const envVar = ({ name, defaultValue }: EnvVarType) => {
 export const isDev = envVar({ name: "NODE_ENV" }) === "development";
 export const isProd = envVar({ name: "NODE_ENV" }) === "production";
 
-const graphapiClientId = "https://graph.microsoft.com";
-
-export const tokenSetSelf = "self";
-
 export interface ExternalAppConfig {
   clientId: string;
   host: string;
@@ -51,9 +47,6 @@ export const server = {
     defaultValue: "isso-idtoken-v2",
   }),
 
-  mockOauthServerPort: Number.parseInt(
-    envVar({ name: "LOCAL_AUTH_SERVER_PORT", defaultValue: "4321" })
-  ),
   logLevel: envVar({ name: "LOG_LEVEL", defaultValue: "info" }),
 };
 
@@ -62,13 +55,13 @@ export const auth = {
   discoverUrl: envVar({
     name: "AZURE_APP_WELL_KNOWN_URL",
     defaultValue: {
-      dev: `http://localhost:${server.mockOauthServerPort}/default`,
+      dev: "",
     },
   }),
   jwksUri: envVar({
     name: "AZURE_OPENID_CONFIG_JWKS_URI",
     defaultValue: {
-      dev: `http://localhost:${server.mockOauthServerPort}/default`,
+      dev: "",
     },
   }),
   clientId: envVar({
