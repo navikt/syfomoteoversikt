@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { Row, Column } from "nav-frontend-grid";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import SideFullBredde from "@/sider/SideFullbredde";
 import Feilmelding from "../components/Feilmelding";
 import Moter from "../components/MineMoter";
@@ -10,6 +9,7 @@ import {
   enhetMoterOversiktRoutePath,
   mineMoterRoutePath,
 } from "@/routers/AppRouter";
+import { Loader } from "@navikt/ds-react";
 
 const texts = {
   ingenMoter: "Bruker har ingen møter",
@@ -41,7 +41,7 @@ const MineMoterContainer = (): ReactElement => {
           if (dialogmoterQuery.isInitialLoading) {
             return (
               <Row className="row-centered">
-                <NavFrontendSpinner type="XL" />
+                <Loader size="2xlarge" />
               </Row>
             );
           } else if (dialogmoterQuery.isError) {
