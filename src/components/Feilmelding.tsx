@@ -1,20 +1,25 @@
 import React, { ReactElement } from "react";
-import Panel from "nav-frontend-paneler";
 import { Undertittel } from "nav-frontend-typografi";
+import { Panel } from "@navikt/ds-react";
+import styled from "styled-components";
 
 interface FeilmeldingProps {
   tittel?: string;
   melding?: string;
 }
 
+const StyledPanel = styled(Panel)`
+  text-align: center;
+`;
+
 const Feilmelding = ({
   tittel = "Beklager, det oppstod en feil",
   melding = "Vennligst prøv igjen litt senere.",
 }: FeilmeldingProps): ReactElement => (
-  <Panel className="feilmelding">
+  <StyledPanel>
     <Undertittel>{tittel}</Undertittel>
     <p>{melding}</p>
-  </Panel>
+  </StyledPanel>
 );
 
 export default Feilmelding;

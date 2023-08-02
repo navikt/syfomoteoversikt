@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Panel from "nav-frontend-paneler";
+import { Panel } from "@navikt/ds-react";
 import Moteoversikt from "./Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { Element } from "nav-frontend-typografi";
