@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { Select } from "nav-frontend-skjema";
+import { Select } from "@navikt/ds-react";
 import MoteEnhet from "./MoteEnhet";
 import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
@@ -91,6 +91,7 @@ const MoteoversiktEnhet = (): ReactElement => {
           </div>
           <div className="verktoylinje__filter">
             <Select
+              size="small"
               id="moteoversikt-filtrer"
               label={texts.filtrer}
               onChange={(e) => {
