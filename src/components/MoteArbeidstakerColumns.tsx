@@ -3,9 +3,9 @@ import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { trackOnClick } from "@/amplitude/amplitude";
 import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
 import { useBrukerQuery } from "@/data/bruker/brukernavnQueryHooks";
-import Lenke from "nav-frontend-lenker";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
 import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
+import { Link } from "@navikt/ds-react";
 
 const texts = {
   henter: "Henter...",
@@ -27,7 +27,7 @@ interface BrukerLenkeProps {
 const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
   const aktivBruker = useAktivBruker();
   return (
-    <Lenke
+    <Link
       onClick={(event) => {
         event.preventDefault();
         trackOnClick(texts.trackGoToSyfoModia);
@@ -40,7 +40,7 @@ const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
       href={syfomodiapersonMoterUrl}
     >
       {navn}
-    </Lenke>
+    </Link>
   );
 };
 
