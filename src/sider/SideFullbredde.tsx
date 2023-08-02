@@ -1,19 +1,14 @@
 import React, { ReactElement, useEffect } from "react";
-import { Container, Column, Row } from "nav-frontend-grid";
 import DocumentTitle from "react-document-title";
-import styled from "styled-components";
 import Decorator from "../decorator/Decorator";
 import { trackPageLoad } from "@/amplitude/amplitude";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { Column, Container, Row } from "@/components/layout/Layout";
 
 interface SideFullbreddeProps {
   tittel: string;
   children: React.ReactNode;
 }
-
-const StyledContainer = styled(Container)`
-  width: 95%;
-`;
 
 const SideFullBredde = ({
   tittel,
@@ -30,11 +25,11 @@ const SideFullBredde = ({
       <Decorator />
 
       <DocumentTitle title={tittel}>
-        <StyledContainer>
+        <Container>
           <Row>
             <Column>{children}</Column>
           </Row>
-        </StyledContainer>
+        </Container>
       </DocumentTitle>
     </>
   );
