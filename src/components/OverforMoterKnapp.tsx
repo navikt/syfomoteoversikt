@@ -1,9 +1,10 @@
 import React from "react";
-import { TrackedHovedknapp } from "./buttons/TrackedHovedknapp";
 import { Navigate } from "react-router-dom";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { mineMoterRoutePath } from "@/routers/AppRouter";
+import { Button } from "@navikt/ds-react";
+import { trackOnClick } from "@/amplitude/amplitude";
 
 const texts = {
   overta: "Overta møter",
@@ -25,11 +26,15 @@ export const OverforMoterKnapp = () => {
   }
 
   return (
-    <TrackedHovedknapp
+    <Button
+      variant="primary"
       disabled={overforDialogmoter.isLoading}
-      onClick={handleClick}
+      onClick={() => {
+        trackOnClick(texts.overta);
+        handleClick();
+      }}
     >
       {texts.overta}
-    </TrackedHovedknapp>
+    </Button>
   );
 };
