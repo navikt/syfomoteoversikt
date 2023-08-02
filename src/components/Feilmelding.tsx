@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
-import { Undertittel } from "nav-frontend-typografi";
-import { Panel } from "@navikt/ds-react";
+import { Heading, Panel } from "@navikt/ds-react";
 import styled from "styled-components";
 
 interface FeilmeldingProps {
@@ -17,7 +16,7 @@ const Feilmelding = ({
   melding = "Vennligst prøv igjen litt senere.",
 }: FeilmeldingProps): ReactElement => (
   <StyledPanel>
-    <Undertittel>{tittel}</Undertittel>
+    <Heading size="small">{tittel}</Heading>
     <p>{melding}</p>
   </StyledPanel>
 );
