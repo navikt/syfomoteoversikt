@@ -1,8 +1,7 @@
 import React, { ReactElement } from "react";
-import { Panel } from "@navikt/ds-react";
+import { Label, Panel } from "@navikt/ds-react";
 import Moteoversikt from "./Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
-import { Element } from "nav-frontend-typografi";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
@@ -81,9 +80,10 @@ const Moter = (): ReactElement => {
     <div>
       {antallOverfort && (
         <StyledAlert size="small" variant="success">
-          <Element>{`Du har lagt til ${hentTallordTekst(
+          <Label size="small">{`Du har lagt til ${hentTallordTekst(
             antallOverfort
-          )}`}</Element>
+          )}`}</Label>
+          <br />
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
         </StyledAlert>
       )}
