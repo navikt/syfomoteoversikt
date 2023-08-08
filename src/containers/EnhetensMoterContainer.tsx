@@ -1,6 +1,4 @@
 import React, { ReactElement, useEffect } from "react";
-import { Column, Row } from "nav-frontend-grid";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import SideFullBredde from "@/sider/SideFullbredde";
 import Feilmelding from "../components/Feilmelding";
 import NavigasjonsTopp from "../components/NavigasjonsTopp";
@@ -14,6 +12,8 @@ import {
   enhetMoterOversiktRoutePath,
   mineMoterRoutePath,
 } from "@/routers/AppRouter";
+import { Loader } from "@navikt/ds-react";
+import { Column, RowCentered } from "@/components/layout/Layout";
 
 const texts = {
   ingenMoter: "Enheten har ingen møter",
@@ -31,7 +31,7 @@ const EnhetensMoterContainer = (): ReactElement => {
 
   return (
     <SideFullBredde tittel="Møteoversikt">
-      <Column className="col-xs-12">
+      <Column>
         <NavigasjonsTopp
           lenker={[
             {
@@ -58,9 +58,9 @@ const EnhetensMoterContainer = (): ReactElement => {
             );
           } else if (dialogmoterQuery.isInitialLoading) {
             return (
-              <Row className="row-centered">
-                <NavFrontendSpinner type="XL" />
-              </Row>
+              <RowCentered>
+                <Loader size="2xlarge" />
+              </RowCentered>
             );
           } else if (dialogmoterQuery.isError) {
             return <Feilmelding />;

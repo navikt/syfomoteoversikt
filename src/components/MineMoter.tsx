@@ -1,12 +1,12 @@
 import React, { ReactElement } from "react";
-import Panel from "nav-frontend-paneler";
-import Alertstripe from "nav-frontend-alertstriper";
+import { Label, Panel } from "@navikt/ds-react";
 import Moteoversikt from "./Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
-import { Element } from "nav-frontend-typografi";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
+import styled from "styled-components";
+import { Alert } from "@navikt/ds-react";
 
 const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
@@ -64,6 +64,10 @@ const texts = {
   ingenMoter: "Du har ingen aktive møter.",
 };
 
+const StyledAlert = styled(Alert)`
+  margin-bottom: 2em;
+`;
+
 const Moter = (): ReactElement => {
   const aktivVeilederIdent = useAktivVeileder().data?.ident;
   const { antallOverfort } = useMoteoverforing();
@@ -75,12 +79,13 @@ const Moter = (): ReactElement => {
   return (
     <div>
       {antallOverfort && (
-        <Alertstripe className="blokk" type="suksess">
-          <Element>{`Du har lagt til ${hentTallordTekst(
+        <StyledAlert size="small" variant="success">
+          <Label size="small">{`Du har lagt til ${hentTallordTekst(
             antallOverfort
-          )}`}</Element>
+          )}`}</Label>
+          <br />
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
-        </Alertstripe>
+        </StyledAlert>
       )}
       {!harMoter && (
         <Panel>

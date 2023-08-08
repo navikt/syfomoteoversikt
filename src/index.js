@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import AppRouter from "./routers/AppRouter";
 import "./utils/globals";
 import "./styles/styles.less";
+import "@navikt/ds-css";
 import { initAmplitude } from "./amplitude/amplitude";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";

@@ -1,8 +1,9 @@
 import React, { ReactElement } from "react";
-import AlertStripe from "nav-frontend-alertstriper";
 import MoteoversiktEnhet from "./MoteoversiktEnhet";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { Alert } from "@navikt/ds-react";
+import styled from "styled-components";
 
 const texts = {
   overtaDialogmoterFeilet:
@@ -15,12 +16,16 @@ interface OverforFeilmeldingProps {
   children: string;
 }
 
+const StyledAlert = styled(Alert)`
+  margin-bottom: 2em;
+`;
+
 const OverforFeilmelding = ({ children }: OverforFeilmeldingProps) => (
-  <AlertStripe className="blokk" type="advarsel">
+  <StyledAlert size="small" variant="warning">
     {children}
     <br />
     {texts.provIgjen}
-  </AlertStripe>
+  </StyledAlert>
 );
 
 const EnhetensMoter = (): ReactElement => {

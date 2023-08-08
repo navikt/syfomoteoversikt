@@ -1,4 +1,4 @@
-import { Select } from "nav-frontend-skjema";
+import { Select } from "@navikt/ds-react";
 import React, { ReactElement } from "react";
 import { trackOnClick } from "@/amplitude/amplitude";
 
@@ -22,6 +22,7 @@ export const MoteResponsFilter = ({
   onFilterChange,
 }: MoteResponsFilterProps): ReactElement => (
   <Select
+    size="small"
     id="moteoversikt-filtrer"
     label={texts.label}
     onChange={(e) => {
