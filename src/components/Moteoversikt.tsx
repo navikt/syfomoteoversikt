@@ -10,8 +10,10 @@ import {
 import {
   FnrHeader,
   MoteDatoHeader,
+  Motetabell,
   ResponsHeader,
   StatusHeader,
+  TH,
 } from "./MoteTable";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { Verktoylinje } from "@/components/Verktoylinje";
@@ -54,13 +56,13 @@ const Moteoversikt = (): ReactElement => {
       </Verktoylinje>
       <div className="moteoversikt">
         <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
-        <table className="motetabell">
+        <Motetabell>
           <thead>
             <tr>
               <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
               <FnrHeader scope="col">{texts.fnr}</FnrHeader>
-              <th scope="col">{texts.navn}</th>
-              <th scope="col">{texts.virksomhet}</th>
+              <TH scope="col">{texts.navn}</TH>
+              <TH scope="col">{texts.virksomhet}</TH>
               <StatusHeader scope="col">{texts.status}</StatusHeader>
               <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
             </tr>
@@ -70,7 +72,7 @@ const Moteoversikt = (): ReactElement => {
               <Mote key={index} mote={mote} />
             ))}
           </tbody>
-        </table>
+        </Motetabell>
       </div>
     </>
   );
