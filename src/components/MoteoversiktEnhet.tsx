@@ -22,6 +22,7 @@ import {
   useEnhetensDialogmoterQuery,
   useDialogmoterVeiledere,
 } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { Verktoylinje } from "@/components/Verktoylinje";
 
 const texts = {
   velg: "Velg",
@@ -78,37 +79,31 @@ const MoteoversiktEnhet = (): ReactElement => {
   const filtrerteMoter = getFiltrerteMoter();
 
   return (
-    <div>
-      <div className="verktoylinje">
-        <div className="verktoylinje__verktoy">
-          <div className="verktoylinje__filter">
-            <MoteResponsFilter
-              moteResponser={getMoteResponser(moter)}
-              onFilterChange={(changedFilter: MoteRespons) =>
-                setResponsFilter(changedFilter)
-              }
-            />
-          </div>
-          <div className="verktoylinje__filter">
-            <Select
-              size="small"
-              id="moteoversikt-filtrer"
-              label={texts.filtrer}
-              onChange={(e) => {
-                trackOnClick(texts.filtrer);
-                setFilterVeileder(e.currentTarget.value);
-              }}
-            >
-              <option value="alle">Vis alle</option>
-              {navnPaaVeiledere().map((veileder, index) => (
-                <option key={index} value={veileder}>
-                  {veileder}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </div>
-      </div>
+    <>
+      <Verktoylinje>
+        <MoteResponsFilter
+          moteResponser={getMoteResponser(moter)}
+          onFilterChange={(changedFilter: MoteRespons) =>
+            setResponsFilter(changedFilter)
+          }
+        />
+        <Select
+          size="small"
+          id="moteoversikt-filtrer"
+          label={texts.filtrer}
+          onChange={(e) => {
+            trackOnClick(texts.filtrer);
+            setFilterVeileder(e.currentTarget.value);
+          }}
+        >
+          <option value="alle">Vis alle</option>
+          {navnPaaVeiledere().map((veileder, index) => (
+            <option key={index} value={veileder}>
+              {veileder}
+            </option>
+          ))}
+        </Select>
+      </Verktoylinje>
       <div className="moteoversikt">
         <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
         <table className="motetabell">
@@ -131,7 +126,7 @@ const MoteoversiktEnhet = (): ReactElement => {
         </table>
         <OverforMoterKnapp />
       </div>
-    </div>
+    </>
   );
 };
 
