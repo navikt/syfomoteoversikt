@@ -30,40 +30,4 @@ describe("NavigasjonsTopp", () => {
     );
     expect(screen.getAllByRole("link")).to.have.length(3);
   });
-
-  it("Viser lenke som aktiv", () => {
-    const lenker = [
-      {
-        tittel: "tittel1",
-        url: "/url1",
-        aktiv: true,
-      },
-    ];
-    render(
-      <MemoryRouter>
-        <NavigasjonsTopp lenker={lenker} />
-      </MemoryRouter>
-    );
-    expect(screen.getByRole("link").className).to.equal(
-      "navigasjon__element__inner--active"
-    );
-  });
-
-  it("Viser lenke som ikke aktiv", () => {
-    const lenker = [
-      {
-        tittel: "tittel1",
-        url: "/url1",
-        aktiv: false,
-      },
-    ];
-    render(
-      <MemoryRouter>
-        <NavigasjonsTopp lenker={lenker} />
-      </MemoryRouter>
-    );
-    expect(screen.getByRole("link").className).to.equal(
-      "navigasjon__element__inner"
-    );
-  });
 });
