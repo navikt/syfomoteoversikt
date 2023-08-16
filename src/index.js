@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import AppRouter from "./routers/AppRouter";
 import "./utils/globals";
-import "./styles/styles.less";
+import "./styles/styles.css";
 import "@navikt/ds-css";
 import { initAmplitude } from "./amplitude/amplitude";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

@@ -29,32 +29,6 @@ const commonConfig: Configuration = {
         exclude: /node_modules/,
       },
       {
-        test: /\.less$/,
-        use: [
-          {
-            loader: "style-loader",
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: false,
-              url: false,
-            },
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: [autoprefixer],
-              },
-            },
-          },
-          {
-            loader: "less-loader",
-          },
-        ],
-      },
-      {
         test: /\.(css|sass)$/,
         use: [
           {

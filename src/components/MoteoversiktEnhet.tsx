@@ -13,8 +13,10 @@ import { trackOnClick } from "@/amplitude/amplitude";
 import {
   FnrHeader,
   MoteDatoHeader,
+  Motetabell,
   ResponsHeader,
   StatusHeader,
+  TH,
   VelgMoteHeader,
 } from "./MoteTable";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
@@ -106,14 +108,14 @@ const MoteoversiktEnhet = (): ReactElement => {
       </Verktoylinje>
       <div className="moteoversikt">
         <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
-        <table className="motetabell">
+        <Motetabell>
           <thead>
             <tr>
               <VelgMoteHeader scope="col">{texts.velg}</VelgMoteHeader>
               <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
-              <th scope="col">{texts.veileder}</th>
+              <TH scope="col">{texts.veileder}</TH>
               <FnrHeader scope="col">{texts.fnr}</FnrHeader>
-              <th scope="col">{texts.sykmeldt}</th>
+              <TH scope="col">{texts.sykmeldt}</TH>
               <StatusHeader scope="col">{texts.status}</StatusHeader>
               <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
             </tr>
@@ -123,7 +125,7 @@ const MoteoversiktEnhet = (): ReactElement => {
               <MoteEnhet key={index} mote={mote} />
             ))}
           </tbody>
-        </table>
+        </Motetabell>
         <OverforMoterKnapp />
       </div>
     </>
