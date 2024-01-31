@@ -9,6 +9,10 @@ const erLokal = (): boolean => {
   return window.location.host.indexOf("localhost") > -1;
 };
 
+export function erProd(): boolean {
+  return window.location.href.indexOf("syfomoteoversikt.intern.nav.no") > -1;
+}
+
 const finnNaisUrlDefault = (): string => {
   return erPreProd() ? ".intern.dev.nav.no" : ".intern.nav.no";
 };
