@@ -3,16 +3,10 @@ import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
 import { Checkbox } from "@navikt/ds-react";
-import styled from "styled-components";
 
 interface OverforMoteProps {
   mote: DialogmoterDTO;
 }
-
-const StyledCheckbox = styled(Checkbox)`
-  margin-bottom: -1em;
-  margin-top: -1em;
-`;
 
 export const OverforMote = ({ mote }: OverforMoteProps) => {
   const { dialogmoterMarkert, dispatch } = useMoteoverforing();
@@ -31,12 +25,13 @@ export const OverforMote = ({ mote }: OverforMoteProps) => {
   };
 
   return (
-    <StyledCheckbox
+    <Checkbox
+      size="small"
       id={uuid}
       checked={isMoteMarkert()}
       onChange={(e) => handleChange(e.target.checked)}
     >
       {""}
-    </StyledCheckbox>
+    </Checkbox>
   );
 };

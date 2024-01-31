@@ -16,7 +16,6 @@ import {
   TH,
 } from "./MoteTable";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
-import { Verktoylinje } from "@/components/Verktoylinje";
 
 const texts = {
   motedato: "Møtedato",
@@ -46,14 +45,14 @@ const Moteoversikt = (): ReactElement => {
 
   return (
     <>
-      <Verktoylinje>
+      <div className="flex mb-8">
         <MoteResponsFilter
           moteResponser={getMoteResponser(moter)}
           onFilterChange={(changedFilter: MoteRespons) =>
             setResponsFilter(changedFilter)
           }
         />
-      </Verktoylinje>
+      </div>
       <div className="moteoversikt">
         <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
         <Motetabell>

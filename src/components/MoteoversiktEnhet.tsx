@@ -24,7 +24,6 @@ import {
   useEnhetensDialogmoterQuery,
   useDialogmoterVeiledere,
 } from "@/data/dialogmoter/dialogmoterQueryHooks";
-import { Verktoylinje } from "@/components/Verktoylinje";
 
 const texts = {
   velg: "Velg",
@@ -82,7 +81,7 @@ const MoteoversiktEnhet = (): ReactElement => {
 
   return (
     <>
-      <Verktoylinje>
+      <div className="flex mb-8 gap-8">
         <MoteResponsFilter
           moteResponser={getMoteResponser(moter)}
           onFilterChange={(changedFilter: MoteRespons) =>
@@ -105,7 +104,7 @@ const MoteoversiktEnhet = (): ReactElement => {
             </option>
           ))}
         </Select>
-      </Verktoylinje>
+      </div>
       <div className="moteoversikt">
         <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
         <Motetabell>
