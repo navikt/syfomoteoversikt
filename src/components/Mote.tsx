@@ -2,17 +2,21 @@ import React, { ReactElement } from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
-import { TruncatedTableColumn } from "./MoteTable";
+import { TruncatedTableColumn, VelgMoteColumn } from "./MoteTable";
 import { useVirksomhetQuery } from "@/data/virksomhet/virksomhetQueryHooks";
 import { MoteDato } from "./MoteDato";
+import { Checkbox } from "@navikt/ds-react";
+import { useDialogmoterUuids } from "@/data/dialogmoter/useDialogmoterUuids";
 
 interface MoteProps {
   mote: DialogmoterDTO;
 }
 
 const Mote = ({ mote }: MoteProps): ReactElement => {
-  const virksomhetsnummer = mote.arbeidsgiver.virksomhetsnummer;
-  const virksomhetQuery = useVirksomhetQuery(virksomhetsnummer);
+  const virksomhetQuery = useVirksomhetQuery(
+    mote.arbeidsgiver.virksomhetsnummer
+  );
+  const { modifyDialogmoterUuids, isSelected } = useDialogmoterUuids();
 
   const virksomhetsNavn = (): string => {
     if (virksomhetQuery.isInitialLoading) {
@@ -26,6 +30,16 @@ const Mote = ({ mote }: MoteProps): ReactElement => {
 
   return (
     <tr>
+      <VelgMoteColumn>
+        <Checkbox
+          id="dialogmote"
+          checked={isSelected(mote.uuid)}
+          onChange={(e) => modifyDialogmoterUuids(e.target.value)}
+          value={mote.uuid}
+        >
+          {""}
+        </Checkbox>
+      </VelgMoteColumn>
       <MoteDato mote={mote} />
       <DialogmoteArbeidstakerColumns dialogmote={mote} />
       <TruncatedTableColumn>{virksomhetsNavn()}</TruncatedTableColumn>

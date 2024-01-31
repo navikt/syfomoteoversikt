@@ -1,19 +1,22 @@
-import { VeilederDto } from "@/data/veiledere/veilederTypes";
+import {VeilederDto, VeilederInfoDto} from "@/data/veiledere/veilederTypes";
 import { get } from "@/api";
 import { SYFOVEILEDER_ROOT } from "@/utils/apiUrlUtil";
 import { useQueries, useQuery } from "@tanstack/react-query";
+import {useEffect} from "react";
 
 export const veilederQueryKeys = {
   veileder: ["veileder"],
+  enhet: ["enhet"],
   veilederByIdent: (ident: string) => [...veilederQueryKeys.veileder, ident],
+  veiledereByEnhet: (enhet: string) => [...veilederQueryKeys.enhet, enhet],
 };
 
 const fetchVeilederByIdent = (ident: string) =>
-  get<VeilederDto>(`${SYFOVEILEDER_ROOT}/v2/veileder/${ident}`);
+  get<VeilederInfoDto>(`${SYFOVEILEDER_ROOT}/v2/veileder/${ident}`);
 
 export const useAktivVeileder = () => {
   const fetchVeileder = () =>
-    get<VeilederDto>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
+    get<VeilederInfoDto>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
   return useQuery({
     queryKey: veilederQueryKeys.veileder,
     queryFn: fetchVeileder,
@@ -36,5 +39,13 @@ export const useVeiledereQuery = (identList: string[]) => {
   });
   return veiledereQueries
     .map((query) => query.data)
-    .filter((veileder) => veileder !== undefined) as VeilederDto[];
+    .filter((veileder) => veileder !== undefined) as VeilederInfoDto[];
 };
+
+export function useGetVeiledere(enhet: string) {
+    return useQuery({
+      queryKey: veilederQueryKeys.veiledereByEnhet(enhet),
+      queryFn: () => get<VeilederDto[]>(`${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${enhet}`),
+      enabled: !!enhet,
+    })
+}

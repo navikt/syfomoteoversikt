@@ -1,6 +1,6 @@
 import express from "express";
 import { veiederInfoMock } from "./Data/veilederInfoMock";
-import { veiledereMock } from "./Data/veiledereMock";
+import {veiledereInfoMock, veiledereMock} from "./Data/veiledereInfoMock";
 import { dialogmoterMock } from "./Data/dialogmoterMock";
 
 import { mockModiacontextholder } from "./mockModiacontextholder";
@@ -22,9 +22,19 @@ const mockEndepunkter = (server: express.Application) => {
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(
-        JSON.stringify(veiledereMock.find((v) => v.ident === req.params.ident))
+        JSON.stringify(veiledereInfoMock.find((v) => v.ident === req.params.ident))
       );
     }
+  );
+
+  server.get(
+      "/syfoveileder/api/v2/veiledere/enhet/:enhet",
+      (req: express.Request, res: express.Response) => {
+          res.setHeader("Content-Type", "application/json");
+          res.send(
+              JSON.stringify(veiledereMock)
+          );
+      }
   );
 
   server.get(

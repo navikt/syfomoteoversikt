@@ -13,7 +13,6 @@ import { trackOnClick } from "@/amplitude/amplitude";
 import {
   FnrHeader,
   MoteDatoHeader,
-  Motetabell,
   ResponsHeader,
   StatusHeader,
   TH,
@@ -107,7 +106,7 @@ const MoteoversiktEnhet = (): ReactElement => {
       </div>
       <div className="moteoversikt">
         <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
-        <Motetabell>
+        <table className="mb-8 w-full border-collapse table-fixed">
           <thead>
             <tr>
               <VelgMoteHeader scope="col">{texts.velg}</VelgMoteHeader>
@@ -124,7 +123,7 @@ const MoteoversiktEnhet = (): ReactElement => {
               <MoteEnhet key={index} mote={mote} />
             ))}
           </tbody>
-        </Motetabell>
+        </table>
         <OverforMoterKnapp />
       </div>
     </>

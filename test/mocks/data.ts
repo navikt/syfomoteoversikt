@@ -5,7 +5,7 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { VeilederDto } from "@/data/veiledere/veilederTypes";
+import { VeilederInfoDto } from "@/data/veiledere/veilederTypes";
 
 export const aktivEnhetMock = "0316";
 export const brukerFnr = "10108000398";
@@ -42,7 +42,7 @@ export const eregOrganisasjonResponseMock = {
 };
 
 export const createDialogmote = (
-  veileder: VeilederDto,
+  veileder: VeilederInfoDto,
   status: DialogmoteStatus,
   dato: Date,
   arbeidstakerRespons: { lestDato?: Date; svar?: SvarType } = {},
