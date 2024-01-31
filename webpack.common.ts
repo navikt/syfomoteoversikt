@@ -29,7 +29,7 @@ const commonConfig: Configuration = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(css|sass)$/,
+        test: /\.css$/,
         use: [
           {
             loader: "style-loader",

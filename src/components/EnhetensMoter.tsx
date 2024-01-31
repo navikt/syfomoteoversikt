@@ -3,7 +3,6 @@ import MoteoversiktEnhet from "./MoteoversiktEnhet";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { Alert } from "@navikt/ds-react";
-import styled from "styled-components";
 
 const texts = {
   overtaDialogmoterFeilet:
@@ -16,16 +15,12 @@ interface OverforFeilmeldingProps {
   children: string;
 }
 
-const StyledAlert = styled(Alert)`
-  margin-bottom: 2em;
-`;
-
 const OverforFeilmelding = ({ children }: OverforFeilmeldingProps) => (
-  <StyledAlert size="small" variant="warning">
+  <Alert size="small" variant="warning" className="mb-8">
     {children}
     <br />
     {texts.provIgjen}
-  </StyledAlert>
+  </Alert>
 );
 
 const EnhetensMoter = (): ReactElement => {

@@ -5,7 +5,6 @@ import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
-import styled from "styled-components";
 import { Alert } from "@navikt/ds-react";
 
 const tallOrdFraTall = (tall: number): string | number => {
@@ -64,10 +63,6 @@ const texts = {
   ingenMoter: "Du har ingen aktive møter.",
 };
 
-const StyledAlert = styled(Alert)`
-  margin-bottom: 2em;
-`;
-
 const Moter = (): ReactElement => {
   const aktivVeilederIdent = useAktivVeileder().data?.ident;
   const { antallOverfort } = useMoteoverforing();
@@ -79,13 +74,13 @@ const Moter = (): ReactElement => {
   return (
     <div>
       {antallOverfort && (
-        <StyledAlert size="small" variant="success">
+        <Alert size="small" variant="success" className="mb-8">
           <Label size="small">{`Du har lagt til ${hentTallordTekst(
             antallOverfort
           )}`}</Label>
           <br />
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
-        </StyledAlert>
+        </Alert>
       )}
       {!harMoter && (
         <Panel>
