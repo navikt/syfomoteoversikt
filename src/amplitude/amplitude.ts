@@ -1,27 +1,21 @@
-import amplitude from "amplitude-js";
+import * as amplitude from "@amplitude/analytics-browser";
+import { erProd } from "@/utils/miljoUtil";
 
 export const texts = {
   click: "Klikker på:",
   pageLoad: "Laster side",
 };
 
-export const initAmplitude = () => {
-  amplitude?.getInstance().init("default", "", {
-    apiEndpoint: "amplitude.nav.no/collect-auto",
-    saveEvents: false,
-    includeUtm: true,
-    includeReferrer: true,
-    platform: window.location.toString(),
-  });
+const getApiKey = () => {
+  return erProd()
+    ? "e4b68538f8d185f0ee2d913d8e51bd39"
+    : "c7bcaaf5d0fddda592412234dd3da1ba";
 };
 
-export interface UserProperties {
-  valgtEnhet: string;
-}
-
-export const setAmplitudeUserProperties = (userProperties: UserProperties) => {
-  amplitude?.getInstance().setUserProperties(userProperties);
-};
+amplitude.init(getApiKey(), undefined, {
+  serverUrl: "https://amplitude.nav.no/collect",
+  defaultTracking: true,
+});
 
 export const trackOnClick = (elementName: string) => {
   trackEvent(`${texts.click} ${elementName}`, {
@@ -38,6 +32,4 @@ export const trackPageLoad = (pageName: string) => {
 export const trackEvent = (
   eventName: string,
   eventData?: Record<string, string>
-) => {
-  amplitude.getInstance().logEvent(eventName, eventData);
-};
+) => amplitude.track(eventName, eventData);

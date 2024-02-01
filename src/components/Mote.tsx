@@ -19,7 +19,7 @@ const Mote = ({ mote }: MoteProps): ReactElement => {
   const { modifyDialogmoterUuids, isSelected } = useDialogmoterUuids();
 
   const virksomhetsNavn = (): string => {
-    if (virksomhetQuery.isInitialLoading) {
+    if (virksomhetQuery.isLoading) {
       return "Henter virksomhet...";
     } else if (virksomhetQuery.virksomhetsnavn) {
       return virksomhetQuery.virksomhetsnavn;

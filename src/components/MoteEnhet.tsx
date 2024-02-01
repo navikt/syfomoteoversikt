@@ -16,7 +16,7 @@ const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
   const veilederQuery = useVeilederQuery(veilederIdent);
 
   const veilederNavn = () => {
-    if (veilederQuery.isInitialLoading) {
+    if (veilederQuery.isLoading) {
       return "Henter navn...";
     } else if (veilederQuery.data?.navn) {
       return veilederQuery.data.navn;
