@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -7,21 +7,11 @@ import {
 } from "react-router-dom";
 import MineMoterContainer from "../containers/MineMoterContainer";
 import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
-import { setAmplitudeUserProperties } from "@/amplitude/amplitude";
-import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 
 export const mineMoterRoutePath = "/syfomoteoversikt/minemoter";
 export const enhetMoterOversiktRoutePath = "/syfomoteoversikt/enhetensmoter";
 
 const AppRouter = (): ReactElement => {
-  const { aktivEnhet } = useAktivEnhet();
-
-  useEffect(() => {
-    if (aktivEnhet) {
-      setAmplitudeUserProperties({ valgtEnhet: aktivEnhet });
-    }
-  }, [aktivEnhet]);
-
   return (
     <Router>
       <Routes>

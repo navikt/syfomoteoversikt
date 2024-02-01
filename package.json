@@ -23,6 +23,7 @@
   "author": "Team DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
   "dependencies": {
+    "@amplitude/analytics-browser": "2.4.0",
     "@babel/polyfill": "7.12.1",
     "@navikt/ds-css": "4.7.2",
     "@navikt/ds-react": "4.7.2",
@@ -41,7 +42,6 @@
     "@types/react-router-dom": "5.3.3",
     "@types/redis": "2.8.32",
     "@types/styled-components": "5.1.26",
-    "amplitude-js": "8.21.7",
     "axios": "1.6.3",
     "classnames": "2.3.2",
     "connect-redis": "6.1.3",

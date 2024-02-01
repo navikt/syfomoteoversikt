@@ -5,15 +5,12 @@ import "./utils/globals";
 import "./styles/styles.css";
 import "./styles/style.css";
 import "@navikt/ds-css";
-import { initAmplitude } from "./amplitude/amplitude";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { MoteoverforingProvider } from "@/context/moteoverforing/MoteoverforingContext";
 import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
 import { minutesToMillis } from "@/utils/timeUtils";
 import { isClientError } from "@/api/errors";
-
-initAmplitude();
 
 const queryClient = new QueryClient({
   defaultOptions: {
