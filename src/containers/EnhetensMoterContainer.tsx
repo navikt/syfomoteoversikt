@@ -56,7 +56,7 @@ const EnhetensMoterContainer = (): ReactElement => {
                 }
               />
             );
-          } else if (dialogmoterQuery.isInitialLoading) {
+          } else if (dialogmoterQuery.isLoading) {
             return (
               <RowCentered>
                 <Loader size="2xlarge" />

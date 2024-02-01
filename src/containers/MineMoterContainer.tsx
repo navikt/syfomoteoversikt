@@ -38,7 +38,7 @@ const MineMoterContainer = (): ReactElement => {
           ]}
         />
         {(() => {
-          if (dialogmoterQuery.isInitialLoading) {
+          if (dialogmoterQuery.isLoading) {
             return (
               <RowCentered>
                 <Loader size="2xlarge" />
