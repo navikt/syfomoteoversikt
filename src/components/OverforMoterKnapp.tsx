@@ -28,7 +28,7 @@ export const OverforMoterKnapp = () => {
   return (
     <Button
       variant="primary"
-      disabled={overforDialogmoter.isLoading}
+      disabled={overforDialogmoter.isPending}
       onClick={() => {
         trackOnClick(texts.overta);
         handleClick();

@@ -51,6 +51,7 @@ export const useOverforDialogmoter = () => {
     },
     onSuccess: () =>
       dispatch({ type: MoteoverforingActionType.DialogmoterOverfort }),
-    onSettled: () => queryClient.invalidateQueries(dialogmoterQueryKey),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: dialogmoterQueryKey }),
   });
 };

@@ -53,7 +53,7 @@ export const DialogmoteArbeidstakerColumns = ({
 }: DialogmoteArbeidstakerColumnsProps) => {
   const brukernavnQuery = useBrukerQuery(dialogmote.arbeidstaker.personIdent);
   const BrukersNavn = () => {
-    if (brukernavnQuery.isInitialLoading) {
+    if (brukernavnQuery.isLoading) {
       return <>{texts.henterNavn}</>;
     } else if (brukernavnQuery.data) {
       return (
