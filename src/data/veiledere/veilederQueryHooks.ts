@@ -1,8 +1,7 @@
-import {VeilederDto, VeilederInfoDto} from "@/data/veiledere/veilederTypes";
+import { VeilederDto, VeilederInfoDto } from "@/data/veiledere/veilederTypes";
 import { get } from "@/api";
 import { SYFOVEILEDER_ROOT } from "@/utils/apiUrlUtil";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import {useEffect} from "react";
 
 export const veilederQueryKeys = {
   veileder: ["veileder"],
@@ -43,9 +42,10 @@ export const useVeiledereQuery = (identList: string[]) => {
 };
 
 export function useGetVeiledere(enhet: string) {
-    return useQuery({
-      queryKey: veilederQueryKeys.veiledereByEnhet(enhet),
-      queryFn: () => get<VeilederDto[]>(`${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${enhet}`),
-      enabled: !!enhet,
-    })
+  return useQuery({
+    queryKey: veilederQueryKeys.veiledereByEnhet(enhet),
+    queryFn: () =>
+      get<VeilederDto[]>(`${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${enhet}`),
+    enabled: !!enhet,
+  });
 }

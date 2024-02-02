@@ -1,27 +1,53 @@
 import { ISDIALOGMOTE_ROOT } from "@/utils/apiUrlUtil";
-import { post } from "@/api";
+import { patch } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   DialogmoterDTO,
-  TildelDialogmoterRequest,
+  TildelDialogmoterRequestBody,
 } from "@/data/dialogmoter/dialogmoterTypes";
+import { dialogmoterQueryKeys } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 
-export const tildelDialogmoterQueryKeys = {
-  veileder: (veilederIdent: string) => ["veilederIdent", veilederIdent],
-};
-
-export function useTildelDialogmoter(veilederIdent: string) {
+export function useTildelDialogmoter() {
   const queryClient = useQueryClient();
+  const { aktivEnhet } = useAktivEnhet();
   const path = `${ISDIALOGMOTE_ROOT}/v2/dialogmote/tildel`;
-  const veilederQueryKey = tildelDialogmoterQueryKeys.veileder(veilederIdent);
+
+  const tildelDialogmoterRequest = (
+    requestBody: TildelDialogmoterRequestBody
+  ) => patch(path, requestBody);
 
   return useMutation({
-    mutationFn: (requestBody: TildelDialogmoterRequest) =>
-      post<TildelDialogmoterRequest>(path, requestBody),
-    onSuccess: (data: DialogmoterDTO[]) => {
-      queryClient.setQueryData(veilederQueryKey, data);
+    mutationFn: tildelDialogmoterRequest,
+    onMutate: (requestBody: TildelDialogmoterRequestBody) => {
+      const previousDialogmoter = queryClient.getQueryData<DialogmoterDTO[]>(
+        dialogmoterQueryKeys.veilederident
+      );
+      if (previousDialogmoter) {
+        queryClient.setQueryData(
+          dialogmoterQueryKeys.veilederident,
+          previousDialogmoter.filter(
+            (mote) => !requestBody.dialogmoteUuids.includes(mote.uuid)
+          )
+        );
+      }
+      return { previousDialogmoter };
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: veilederQueryKey }),
+    onError: (err, requestBody, context) => {
+      if (context?.previousDialogmoter) {
+        queryClient.setQueryData(
+          dialogmoterQueryKeys.veilederident,
+          context.previousDialogmoter
+        );
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: dialogmoterQueryKeys.veilederident,
+      });
+      queryClient.invalidateQueries({
+        queryKey: dialogmoterQueryKeys.dialogmoter(aktivEnhet),
+      });
+    },
   });
 }

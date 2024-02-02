@@ -118,7 +118,7 @@ const proxyOnBehalfOf = (
       return proxyExternalHost(
         externalAppConfig.host,
         onBehalfOfToken.accessToken,
-        req.method === "POST"
+        req.method === "POST" || req.method === "PATCH"
       )(req, res, next);
     })
     .catch((error: any) => {

@@ -2,27 +2,29 @@ import { useState } from "react";
 
 export function useDialogmoterUuids() {
   const [dialogmoterUuids, setDialogmoterUuids] = useState<string[]>([]);
-  const removeDialogmoteUuid = (dialogmoteUuidToRemove: string) => {
-    setDialogmoterUuids(() =>
-      dialogmoterUuids.filter((uuid) => uuid !== dialogmoteUuidToRemove)
-    );
-  };
 
-  const modifyDialogmoterUuids = (dialogmoteUuid: string) => {
+  function modifyDialogmoterUuids(dialogmoteUuid: string) {
     if (isSelected(dialogmoteUuid)) {
-      removeDialogmoteUuid(dialogmoteUuid);
+      setDialogmoterUuids(
+        dialogmoterUuids.filter((uuid) => uuid !== dialogmoteUuid)
+      );
     } else {
       setDialogmoterUuids(() => [...dialogmoterUuids, dialogmoteUuid]);
     }
-  };
+  }
 
-  const isSelected = (dialogmoteUuid: string): boolean => {
+  function isSelected(dialogmoteUuid: string): boolean {
     return dialogmoterUuids.includes(dialogmoteUuid);
-  };
+  }
+
+  function clearSelected(): void {
+    setDialogmoterUuids([]);
+  }
 
   return {
     dialogmoterUuids,
     modifyDialogmoterUuids,
     isSelected,
+    clearSelected,
   };
 }

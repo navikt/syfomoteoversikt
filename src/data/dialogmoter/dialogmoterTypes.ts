@@ -71,7 +71,7 @@ export interface DialogmoterDTO {
   tid: string;
 }
 
-export interface TildelDialogmoterRequest {
+export interface TildelDialogmoterRequestBody {
   veilederIdent: string;
-  dialogmoter: string[];
+  dialogmoteUuids: string[];
 }

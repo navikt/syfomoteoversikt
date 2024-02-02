@@ -119,6 +119,7 @@ describe("MineMoter", () => {
 
     const headers = screen.getAllByRole("columnheader");
     assertTableHeaders(headers, [
+      "Velg",
       "Møtedato",
       "F.nr",
       "Navn",
@@ -136,7 +137,7 @@ describe("MineMoter", () => {
 
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
-      "MøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
+      "VelgMøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
       `${getDatoFraZulu(yesterday)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetNavn}Referat ikke sendtavlysning ønskes`,
