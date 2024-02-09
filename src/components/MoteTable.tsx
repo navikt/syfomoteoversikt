@@ -1,12 +1,5 @@
 import styled, { css } from "styled-components";
 
-export const Motetabell = styled.table`
-  margin-bottom: 2em;
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-`;
-
 const thStyle = css`
   border-bottom: 0.125em solid #efefef;
   color: white;

@@ -26,7 +26,6 @@ export const OverforMote = ({ mote }: OverforMoteProps) => {
 
   return (
     <Checkbox
-      size="small"
       id={uuid}
       checked={isMoteMarkert()}
       onChange={(e) => handleChange(e.target.checked)}

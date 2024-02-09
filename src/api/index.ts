@@ -102,3 +102,24 @@ export const post = <ResponseData>(
       }
     });
 };
+
+export const patch = <RequestBody, ResponseData>(
+  url: string,
+  requestBody: RequestBody
+): Promise<ResponseData> => {
+  return axios
+    .patch(url, requestBody, {
+      headers: {
+        ...defaultRequestHeaders(),
+        NAV_CSRF_PROTECTION: getCookie("NAV_CSRF_PROTECTION"),
+      },
+    })
+    .then((response) => response.data)
+    .catch(function (error) {
+      if (axios.isAxiosError(error)) {
+        handleAxiosError(error);
+      } else {
+        throw new ApiErrorException(generalError(error), error.code);
+      }
+    });
+};

@@ -70,3 +70,8 @@ export interface DialogmoterDTO {
   sted: string;
   tid: string;
 }
+
+export interface TildelDialogmoterRequestBody {
+  veilederIdent: string;
+  dialogmoteUuids: string[];
+}
