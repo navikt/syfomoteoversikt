@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import SideFullBredde from "@/sider/SideFullbredde";
-import Feilmelding from "../components/Feilmelding";
-import Moter from "../components/MineMoter";
-import NavigasjonsTopp from "../components/NavigasjonsTopp";
+import SideFullBredde from "@/components/layout/SideFullbredde";
+import Feilmelding from "../../components/Feilmelding";
+import MineMoter from "./MineMoter";
+import NavigasjonsTopp from "../../components/NavigasjonsTopp";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import {
   enhetMoterOversiktRoutePath,
@@ -40,7 +40,7 @@ const MineMoterContainer = (): ReactElement => {
         {isLoading && <Loader size="2xlarge" className="flex justify-center" />}
         {isError && <Feilmelding />}
         {isSuccess && (
-          <Moter
+          <MineMoter
             aktivVeileder={aktivVeilederQuery.data}
             moter={dialogmoterQuery.data}
           />

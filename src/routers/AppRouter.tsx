@@ -5,8 +5,8 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import MineMoterContainer from "../containers/MineMoterContainer";
-import EnhetensMoterContainer from "../containers/EnhetensMoterContainer";
+import MineMoterContainer from "../sider/minemoter/MineMoterContainer";
+import EnhetensMoterContainer from "../sider/enhetensmoter/EnhetensMoterContainer";
 
 export const mineMoterRoutePath = "/syfomoteoversikt/minemoter";
 export const enhetMoterOversiktRoutePath = "/syfomoteoversikt/enhetensmoter";

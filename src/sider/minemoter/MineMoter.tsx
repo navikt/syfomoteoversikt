@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Label, Panel } from "@navikt/ds-react";
-import Moteoversikt from "./Moteoversikt";
+import Moteoversikt from "../../components/Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { Alert } from "@navikt/ds-react";
@@ -68,7 +68,7 @@ interface Props {
   moter: DialogmoterDTO[];
 }
 
-const Moter = ({ aktivVeileder, moter }: Props): ReactElement => {
+const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
   const { antallOverfort } = useMoteoverforing();
   const harMoter = moter.some(
     ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeileder.ident
@@ -95,4 +95,4 @@ const Moter = ({ aktivVeileder, moter }: Props): ReactElement => {
   );
 };
 
-export default Moter;
+export default MineMoter;

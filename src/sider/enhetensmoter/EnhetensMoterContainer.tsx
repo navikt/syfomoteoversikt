@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect } from "react";
-import SideFullBredde from "@/sider/SideFullbredde";
-import Feilmelding from "../components/Feilmelding";
-import NavigasjonsTopp from "../components/NavigasjonsTopp";
-import EnhetensMoter from "../components/EnhetensMoter";
+import SideFullBredde from "@/components/layout/SideFullbredde";
+import Feilmelding from "../../components/Feilmelding";
+import NavigasjonsTopp from "../../components/NavigasjonsTopp";
+import EnhetensMoter from "./EnhetensMoter";
 
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";

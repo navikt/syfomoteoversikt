@@ -1,4 +1,4 @@
-import EnhetensMoter from "../../src/components/EnhetensMoter";
+import EnhetensMoter from "@/sider/enhetensmoter/EnhetensMoter";
 import React from "react";
 import {
   DialogmoteStatus,

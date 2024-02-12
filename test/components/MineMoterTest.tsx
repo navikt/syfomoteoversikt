@@ -5,7 +5,7 @@ import {
   daysFromToday,
 } from "../testUtil";
 import React from "react";
-import MineMoter from "../../src/components/MineMoter";
+import MineMoter from "@/sider/minemoter/MineMoter";
 import {
   DialogmoteStatus,
   SvarType,
