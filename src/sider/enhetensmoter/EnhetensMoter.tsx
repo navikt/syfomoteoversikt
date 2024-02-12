@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import MoteoversiktEnhet from "./MoteoversiktEnhet";
+import MoteoversiktEnhet from "../../components/MoteoversiktEnhet";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { Alert } from "@navikt/ds-react";

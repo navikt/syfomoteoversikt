@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import DocumentTitle from "react-document-title";
-import Decorator from "../decorator/Decorator";
+import Decorator from "../../decorator/Decorator";
 import { trackPageLoad } from "@/amplitude/amplitude";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { Column, Container, Row } from "@/components/layout/Layout";
