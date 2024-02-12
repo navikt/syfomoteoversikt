@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Label, Panel } from "@navikt/ds-react";
-import Moteoversikt from "./Moteoversikt";
+import Moteoversikt from "../../components/Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
