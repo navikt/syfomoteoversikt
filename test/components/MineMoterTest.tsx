@@ -86,7 +86,7 @@ describe("MineMoter", () => {
             setAktivEnhet: () => void 0,
           }}
         >
-          <MineMoter />
+          <MineMoter aktivVeileder={veilederMock} moter={dialogmoterData} />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
     );
@@ -109,7 +109,7 @@ describe("MineMoter", () => {
             setAktivEnhet: () => void 0,
           }}
         >
-          <MineMoter />
+          <MineMoter aktivVeileder={veilederMock} moter={dialogmoterData} />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
     );
