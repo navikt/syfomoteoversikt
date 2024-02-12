@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import SideFullBredde from "@/components/layout/SideFullbredde";
 import Feilmelding from "../../components/Feilmelding";
-import Moter from "./MineMoter";
+import MineMoter from "./MineMoter";
 import NavigasjonsTopp from "../../components/NavigasjonsTopp";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import {
@@ -9,16 +9,16 @@ import {
   mineMoterRoutePath,
 } from "@/routers/AppRouter";
 import { Loader } from "@navikt/ds-react";
-import { Column, RowCentered } from "@/components/layout/Layout";
-
-const texts = {
-  ingenMoter: "Bruker har ingen møter",
-};
+import { Column } from "@/components/layout/Layout";
+import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
 
 const MineMoterContainer = (): ReactElement => {
+  const aktivVeilederQuery = useAktivVeileder();
   const dialogmoterQuery = useMineDialogmoterQuery();
-  const harMoter =
-    dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0;
+
+  const isLoading = aktivVeilederQuery.isLoading || dialogmoterQuery.isLoading;
+  const isError = aktivVeilederQuery.isError || dialogmoterQuery.isError;
+  const isSuccess = aktivVeilederQuery.isSuccess && dialogmoterQuery.isSuccess;
 
   return (
     <SideFullBredde tittel="Møteoversikt">
@@ -37,20 +37,14 @@ const MineMoterContainer = (): ReactElement => {
             },
           ]}
         />
-        {(() => {
-          if (dialogmoterQuery.isLoading) {
-            return (
-              <RowCentered>
-                <Loader size="2xlarge" />
-              </RowCentered>
-            );
-          } else if (dialogmoterQuery.isError) {
-            return <Feilmelding />;
-          } else if (harMoter) {
-            return <Moter />;
-          }
-          return <p>{texts.ingenMoter}</p>;
-        })()}
+        {isLoading && <Loader size="2xlarge" className="flex justify-center" />}
+        {isError && <Feilmelding />}
+        {isSuccess && (
+          <MineMoter
+            aktivVeileder={aktivVeilederQuery.data}
+            moter={dialogmoterQuery.data}
+          />
+        )}
       </Column>
     </SideFullBredde>
   );

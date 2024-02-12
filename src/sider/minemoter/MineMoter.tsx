@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import { Label, Panel } from "@navikt/ds-react";
 import Moteoversikt from "../../components/Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
-import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
-import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { Alert } from "@navikt/ds-react";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
+import { VeilederInfoDto } from "@/data/veiledere/veilederTypes";
 
 const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
@@ -63,12 +63,15 @@ const texts = {
   ingenMoter: "Du har ingen aktive møter.",
 };
 
-const Moter = (): ReactElement => {
-  const aktivVeilederIdent = useAktivVeileder().data?.ident;
+interface Props {
+  aktivVeileder: VeilederInfoDto;
+  moter: DialogmoterDTO[];
+}
+
+const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
   const { antallOverfort } = useMoteoverforing();
-  const dialogmoterQuery = useMineDialogmoterQuery();
-  const harMoter = dialogmoterQuery.data?.some(
-    ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeilederIdent
+  const harMoter = moter.some(
+    ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeileder.ident
   );
 
   return (
@@ -92,4 +95,4 @@ const Moter = (): ReactElement => {
   );
 };
 
-export default Moter;
+export default MineMoter;
