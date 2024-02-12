@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Label, Panel } from "@navikt/ds-react";
+import { Label } from "@navikt/ds-react";
 import Moteoversikt from "../../components/Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
@@ -59,10 +59,6 @@ const hentTallordTekst = (tall: number) => {
   return tall === 1 ? `${tallord} nytt møte` : `${tallord} nye møter`;
 };
 
-const texts = {
-  ingenMoter: "Du har ingen aktive møter.",
-};
-
 interface Props {
   aktivVeileder: VeilederInfoDto;
   moter: DialogmoterDTO[];
@@ -70,9 +66,6 @@ interface Props {
 
 const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
   const { antallOverfort } = useMoteoverforing();
-  const harMoter = moter.some(
-    ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeileder.ident
-  );
 
   return (
     <div>
@@ -85,12 +78,7 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
           <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
         </Alert>
       )}
-      {!harMoter && (
-        <Panel>
-          <p>{texts.ingenMoter}</p>
-        </Panel>
-      )}
-      {harMoter && <Moteoversikt />}
+      <Moteoversikt aktivVeileder={aktivVeileder} moter={moter} />
     </div>
   );
 };

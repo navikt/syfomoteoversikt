@@ -22,11 +22,16 @@ export const stubDialogmoterVeilederidentApi = (
 ) =>
   scope
     .get(`${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`)
-    .reply(200, () =>
-      dialogmoter.filter(
-        (dialogmote) =>
-          dialogmote.tildeltVeilederIdent === veileder.ident &&
-          (dialogmote.status == DialogmoteStatus.INNKALT ||
-            dialogmote.status == DialogmoteStatus.NYTT_TID_STED)
-      )
-    );
+    .reply(200, () => filterUnfinishedMoter(veileder, dialogmoter));
+
+export function filterUnfinishedMoter(
+  veileder: VeilederInfoDto,
+  dialogmoter: DialogmoterDTO[]
+): DialogmoterDTO[] {
+  return dialogmoter.filter(
+    (dialogmote) =>
+      dialogmote.tildeltVeilederIdent === veileder.ident &&
+      (dialogmote.status == DialogmoteStatus.INNKALT ||
+        dialogmote.status == DialogmoteStatus.NYTT_TID_STED)
+  );
+}

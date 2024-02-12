@@ -14,15 +14,24 @@ import {
   TH,
   VelgMoteHeader,
 } from "./MoteTable";
-import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
-import { Alert, Button, ErrorMessage, Label, Select } from "@navikt/ds-react";
+import {
+  Alert,
+  Button,
+  ErrorMessage,
+  Label,
+  Panel,
+  Select,
+} from "@navikt/ds-react";
 import { useGetVeiledere } from "@/data/veiledere/veilederQueryHooks";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import Mote from "@/components/Mote";
 import { useTildelDialogmoter } from "@/data/dialogmoter/useTildelDialogmoter";
-import { TildelDialogmoterRequestBody } from "@/data/dialogmoter/dialogmoterTypes";
+import {
+  DialogmoterDTO,
+  TildelDialogmoterRequestBody,
+} from "@/data/dialogmoter/dialogmoterTypes";
 import { useDialogmoterUuids } from "@/data/dialogmoter/useDialogmoterUuids";
-import { VeilederDto } from "@/data/veiledere/veilederTypes";
+import { VeilederDto, VeilederInfoDto } from "@/data/veiledere/veilederTypes";
 
 const texts = {
   velgKolonneTittel: "Velg",
@@ -35,6 +44,7 @@ const texts = {
     const meetingsSingularOrPlural = antallMoterTildelt > 1 ? "møter" : "møte";
     return `Du har tildelt ${antallMoterTildelt} ${meetingsSingularOrPlural} til ${tildeltVeileder}`;
   },
+  ingenMoter: "Du har ingen aktive møter.",
   moteTildelingFeilet:
     "Det skjedde en feil slik at du ikke fikk tildelt dialogmøtene.",
   motedato: "Møtedato",
@@ -45,12 +55,16 @@ const texts = {
   respons: "Respons fra deltakere",
 };
 
-const Moteoversikt = (): ReactElement => {
+interface Props {
+  aktivVeileder: VeilederInfoDto;
+  moter: DialogmoterDTO[];
+}
+
+const Moteoversikt = ({ aktivVeileder, moter }: Props): ReactElement => {
   const { aktivEnhet } = useAktivEnhet();
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
     "alle"
   );
-  const dialogmoterQuery = useMineDialogmoterQuery();
   const veiledereFromEnhet = useGetVeiledere(aktivEnhet || "").data || [];
   const [veilederIdent, setVeilederIdent] = useState<string>();
   const {
@@ -61,7 +75,9 @@ const Moteoversikt = (): ReactElement => {
   } = useDialogmoterUuids();
   const tildelDialogmoter = useTildelDialogmoter();
   const [isFormErrorsVisible, setFormErrorsVisible] = useState<boolean>(false);
-  const moter = [...(dialogmoterQuery.data || [])];
+  const harMoter = moter.some(
+    ({ tildeltVeilederIdent }) => tildeltVeilederIdent === aktivVeileder.ident
+  );
 
   function veilederNavn(veilederIdent: string): string {
     const veileder = veiledereFromEnhet.find(
@@ -107,72 +123,83 @@ const Moteoversikt = (): ReactElement => {
 
   return (
     <>
-      <div className="flex mb-8">
-        <MoteResponsFilter
-          moteResponser={getMoteResponser(moter)}
-          onFilterChange={(changedFilter: MoteRespons) =>
-            setResponsFilter(changedFilter)
-          }
-        />
-      </div>
-      <form onSubmit={onSubmitHandler}>
-        <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
-        <table className="w-full border-collapse table-fixed">
-          <thead>
-            <tr>
-              <VelgMoteHeader scope="col">
-                {texts.velgKolonneTittel}
-              </VelgMoteHeader>
-              <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
-              <FnrHeader scope="col">{texts.fnr}</FnrHeader>
-              <TH scope="col">{texts.navn}</TH>
-              <TH scope="col">{texts.virksomhet}</TH>
-              <StatusHeader scope="col">{texts.status}</StatusHeader>
-              <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
-            </tr>
-          </thead>
-          <tbody>
-            {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
-              <Mote
-                key={index}
-                mote={mote}
-                isMoteSelected={isSelected}
-                modifyDialogmoterUuids={modifyDialogmoterUuids}
-              />
-            ))}
-          </tbody>
-        </table>
-        <div className="mb-8">
-          {isFormErrorsVisible && dialogmoterUuids.length == 0 && (
-            <ErrorMessage>{texts.noDialogmoterSelected}</ErrorMessage>
-          )}
-        </div>
-        <Select
-          label={texts.selectVeilederToAssignLabel}
-          className="mb-4 w-72"
-          value={veilederIdent}
-          onChange={(event) => setVeilederIdent(event.target.value)}
-          error={
-            isFormErrorsVisible &&
-            (veilederIdent == undefined || veilederIdent == "") &&
-            texts.missingVeilederIdent
-          }
-        >
-          <option value="">{texts.selectVeilederToAssignDefaultOption}</option>
-          {Array.from(veiledereFromEnhet).map((veileder, index) => (
-            <option key={index} value={veileder.ident}>
-              {fulltNavn(veileder)}
-            </option>
-          ))}
-        </Select>
-        <Button
-          loading={tildelDialogmoter.isPending}
-          variant="primary"
-          type="submit"
-        >
-          {texts.assignMeetings}
-        </Button>
-      </form>
+      {!harMoter && (
+        <Panel>
+          <p>{texts.ingenMoter}</p>
+        </Panel>
+      )}
+      {harMoter && (
+        <>
+          <div className="flex mb-8">
+            <MoteResponsFilter
+              moteResponser={getMoteResponser(moter)}
+              onFilterChange={(changedFilter: MoteRespons) =>
+                setResponsFilter(changedFilter)
+              }
+            />
+          </div>
+          <form onSubmit={onSubmitHandler}>
+            <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
+            <table className="w-full border-collapse table-fixed">
+              <thead>
+                <tr>
+                  <VelgMoteHeader scope="col">
+                    {texts.velgKolonneTittel}
+                  </VelgMoteHeader>
+                  <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
+                  <FnrHeader scope="col">{texts.fnr}</FnrHeader>
+                  <TH scope="col">{texts.navn}</TH>
+                  <TH scope="col">{texts.virksomhet}</TH>
+                  <StatusHeader scope="col">{texts.status}</StatusHeader>
+                  <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
+                </tr>
+              </thead>
+              <tbody>
+                {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
+                  <Mote
+                    key={index}
+                    mote={mote}
+                    isMoteSelected={isSelected}
+                    modifyDialogmoterUuids={modifyDialogmoterUuids}
+                  />
+                ))}
+              </tbody>
+            </table>
+            <div className="mb-8">
+              {isFormErrorsVisible && dialogmoterUuids.length == 0 && (
+                <ErrorMessage>{texts.noDialogmoterSelected}</ErrorMessage>
+              )}
+            </div>
+            <Select
+              label={texts.selectVeilederToAssignLabel}
+              className="mb-4 w-72"
+              value={veilederIdent}
+              onChange={(event) => setVeilederIdent(event.target.value)}
+              error={
+                isFormErrorsVisible &&
+                (veilederIdent == undefined || veilederIdent == "") &&
+                texts.missingVeilederIdent
+              }
+            >
+              <option value="">
+                {texts.selectVeilederToAssignDefaultOption}
+              </option>
+              {Array.from(veiledereFromEnhet).map((veileder, index) => (
+                <option key={index} value={veileder.ident}>
+                  {fulltNavn(veileder)}
+                </option>
+              ))}
+            </Select>
+            <Button
+              loading={tildelDialogmoter.isPending}
+              variant="primary"
+              type="submit"
+            >
+              {texts.assignMeetings}
+            </Button>
+          </form>
+        </>
+      )}
       {tildelDialogmoter.isSuccess && (
         <Alert size="small" variant="success" className="mt-8 w-fit">
           <Label size="small">

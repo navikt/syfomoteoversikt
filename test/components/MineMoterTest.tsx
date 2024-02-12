@@ -30,7 +30,10 @@ import {
   stubAktivVeilederApi,
   stubVeilederApi,
 } from "../mocks/stubVeilederApi";
-import { stubDialogmoterVeilederidentApi } from "../mocks/stubDialogmoterApi";
+import {
+  filterUnfinishedMoter,
+  stubDialogmoterVeilederidentApi,
+} from "../mocks/stubDialogmoterApi";
 
 const yesterday = daysFromToday(-1);
 const inFiveDays = daysFromToday(5);
@@ -86,7 +89,10 @@ describe("MineMoter", () => {
             setAktivEnhet: () => void 0,
           }}
         >
-          <MineMoter aktivVeileder={veilederMock} moter={dialogmoterData} />
+          <MineMoter
+            aktivVeileder={veilederMock}
+            moter={filterUnfinishedMoter(veilederMock, dialogmoterData)}
+          />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
     );
@@ -109,7 +115,10 @@ describe("MineMoter", () => {
             setAktivEnhet: () => void 0,
           }}
         >
-          <MineMoter aktivVeileder={veilederMock} moter={dialogmoterData} />
+          <MineMoter
+            aktivVeileder={veilederMock}
+            moter={filterUnfinishedMoter(veilederMock, dialogmoterData)}
+          />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
     );
