@@ -15,6 +15,7 @@ export const useOverforDialogmoter = () => {
   const queryClient = useQueryClient();
   const path = `${ISDIALOGMOTE_ROOT}/v2/dialogmote/overta`;
   const dialogmoterQueryKey = dialogmoterQueryKeys.dialogmoter(aktivEnhet);
+  const dialogmoterVeilederidentQueryKey = dialogmoterQueryKeys.veilederident;
   const postOverforDialogmoter = (dialogmoteUuids: string[]) =>
     post(path, { dialogmoteUuids });
 
@@ -51,7 +52,11 @@ export const useOverforDialogmoter = () => {
     },
     onSuccess: () =>
       dispatch({ type: MoteoverforingActionType.DialogmoterOverfort }),
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: dialogmoterQueryKey }),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: dialogmoterQueryKey });
+      queryClient.invalidateQueries({
+        queryKey: dialogmoterVeilederidentQueryKey,
+      });
+    },
   });
 };
