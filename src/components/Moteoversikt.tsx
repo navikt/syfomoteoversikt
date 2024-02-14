@@ -123,12 +123,11 @@ const Moteoversikt = ({ aktivVeileder, moter }: Props): ReactElement => {
 
   return (
     <>
-      {!harMoter && (
+      {!harMoter ? (
         <Panel>
           <p>{texts.ingenMoter}</p>
         </Panel>
-      )}
-      {harMoter && (
+      ) : (
         <>
           <div className="flex mb-8">
             <MoteResponsFilter
