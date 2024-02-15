@@ -32,6 +32,7 @@ import {
 } from "@/data/dialogmoter/dialogmoterTypes";
 import { useDialogmoterUuids } from "@/data/dialogmoter/useDialogmoterUuids";
 import { VeilederDto, VeilederInfoDto } from "@/data/veiledere/veilederTypes";
+import { trackEvent } from "@/amplitude/amplitude";
 
 const texts = {
   velgKolonneTittel: "Velg",
@@ -115,6 +116,9 @@ const Moteoversikt = ({ aktivVeileder, moter }: Props): ReactElement => {
           setFormErrorsVisible(false);
           setVeilederIdent("");
           clearSelected();
+          trackEvent("moter tildelt", {
+            antall: `${requestBody.dialogmoteUuids.length}`,
+          });
         },
       });
     }
