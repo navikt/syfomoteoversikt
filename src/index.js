@@ -11,6 +11,7 @@ import { MoteoverforingProvider } from "@/context/moteoverforing/MoteoverforingC
 import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
 import { minutesToMillis } from "@/utils/timeUtils";
 import { isClientError } from "@/api/errors";
+import { initFaro } from "@/faro";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +33,8 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+initFaro();
 
 const container =
   document.getElementById("maincontent") || new DocumentFragment();
