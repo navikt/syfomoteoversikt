@@ -15,7 +15,7 @@ const getUrl = () => {
 export const initFaro = () =>
   initializeFaro({
     url: getUrl(),
-    app: { name: "syfomodiaperson" },
+    app: { name: "syfomoteoversikt" },
     paused: erLokal(),
     instrumentations: [
       ...getWebInstrumentations({ captureConsole: false }),
