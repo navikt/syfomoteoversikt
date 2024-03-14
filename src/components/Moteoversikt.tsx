@@ -31,8 +31,8 @@ import {
   TildelDialogmoterRequestBody,
 } from "@/data/dialogmoter/dialogmoterTypes";
 import { useDialogmoterUuids } from "@/data/dialogmoter/useDialogmoterUuids";
-import { VeilederDto, VeilederInfoDto } from "@/data/veiledere/veilederTypes";
 import { trackEvent } from "@/amplitude/amplitude";
+import { Veileder } from "@/data/veiledere/veilederTypes";
 
 const texts = {
   velgKolonneTittel: "Velg",
@@ -57,7 +57,7 @@ const texts = {
 };
 
 interface Props {
-  aktivVeileder: VeilederInfoDto;
+  aktivVeileder: Veileder;
   moter: DialogmoterDTO[];
 }
 
@@ -84,11 +84,7 @@ const Moteoversikt = ({ aktivVeileder, moter }: Props): ReactElement => {
     const veileder = veiledereFromEnhet.find(
       (veileder) => veileder.ident == veilederIdent
     );
-    return veileder ? fulltNavn(veileder) : veilederIdent;
-  }
-
-  function fulltNavn(veileder: VeilederDto): string {
-    return veileder.fornavn + " " + veileder.etternavn;
+    return veileder ? veileder.fulltNavn() : veilederIdent;
   }
 
   const getFiltrerteMoter = () => {
@@ -189,7 +185,7 @@ const Moteoversikt = ({ aktivVeileder, moter }: Props): ReactElement => {
               </option>
               {Array.from(veiledereFromEnhet).map((veileder, index) => (
                 <option key={index} value={veileder.ident}>
-                  {fulltNavn(veileder)}
+                  {veileder.fulltNavn()}
                 </option>
               ))}
             </Select>
