@@ -1,11 +1,10 @@
 import React, { ReactElement } from "react";
-import { Label } from "@navikt/ds-react";
+import { Alert, Label } from "@navikt/ds-react";
 import Moteoversikt from "../../components/Moteoversikt";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
-import { Alert } from "@navikt/ds-react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { VeilederInfoDto } from "@/data/veiledere/veilederTypes";
+import { Veileder } from "@/data/veiledere/veilederTypes";
 
 const tallOrdFraTall = (tall: number): string | number => {
   switch (tall) {
@@ -60,7 +59,7 @@ const hentTallordTekst = (tall: number) => {
 };
 
 interface Props {
-  aktivVeileder: VeilederInfoDto;
+  aktivVeileder: Veileder;
   moter: DialogmoterDTO[];
 }
 

@@ -10,7 +10,7 @@ import mockEreg from "./mockEreg";
 
 const mockEndepunkter = (server: express.Application) => {
   server.get(
-    "/syfoveileder/api/v2/veileder/self",
+    "/syfoveileder/api/v3/veiledere/self",
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(veiederInfoMock));
@@ -18,7 +18,7 @@ const mockEndepunkter = (server: express.Application) => {
   );
 
   server.get(
-    "/syfoveileder/api/v2/veileder/:ident",
+    "/syfoveileder/api/v3/veiledere/:ident",
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(
@@ -30,7 +30,7 @@ const mockEndepunkter = (server: express.Application) => {
   );
 
   server.get(
-    "/syfoveileder/api/v2/veiledere/enhet/:enhet",
+    "/syfoveileder/api/v3/veiledere?enhetNr=:enhet",
     (req: express.Request, res: express.Response) => {
       res.setHeader("Content-Type", "application/json");
       res.send(JSON.stringify(veiledereMock));

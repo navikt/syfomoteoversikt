@@ -15,14 +15,13 @@ const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
   const veilederIdent = mote.tildeltVeilederIdent;
   const veilederQuery = useVeilederQuery(veilederIdent);
 
-  const veilederNavn = () => {
-    if (veilederQuery.isLoading) {
-      return "Henter navn...";
-    } else if (veilederQuery.data?.navn) {
-      return veilederQuery.data.navn;
-    }
-    return "Fant ikke navn";
-  };
+  function veilederNavn(): string {
+    return veilederQuery.isLoading
+      ? "Henter navn..."
+      : veilederQuery.data
+      ? veilederQuery.data.fulltNavn()
+      : "Fant ikke navn";
+  }
 
   return (
     <tr>

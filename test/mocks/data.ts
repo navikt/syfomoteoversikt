@@ -5,7 +5,8 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { VeilederInfoDto } from "@/data/veiledere/veilederTypes";
+import { Veileder } from "@/data/veiledere/veilederTypes";
+import { EregOrganisasjonResponseDTO } from "@/data/virksomhet/EregVirksomhetsnavn";
 
 export const aktivEnhetMock = "0316";
 export const brukerFnr = "10108000398";
@@ -16,25 +17,34 @@ export const brukernavnMock: BrukerFnrMedNavnDTO = {
   fnr: "",
   navn: brukerNavn,
 };
+
 export const arbeidstakerMock = {
   fnr: brukerFnr,
   navn: "Arne Arbeidstaker",
 };
-export const veilederMock = {
-  ident: "Z990197",
-  navn: "Vetle Veileder",
-};
-export const annenVeilederMock = {
-  ident: "S123456",
-  navn: "Dana Scully",
-};
+export const veilederMock = new Veileder(
+  "Z990197",
+  "Vetle",
+  "Veileder",
+  "vetle.veileder@veileder.no",
+  "12345678"
+);
+
+export const annenVeilederMock = new Veileder(
+  "S123456",
+  "Dana",
+  "Scully",
+  "dana.scully@veileder.no",
+  "87654321"
+);
+
 export const arbeidsgiverMock = {
   leder: "Korrupt Bolle",
   orgnummer: orgnr,
   virksomhet: virksomhetNavn,
 };
 
-export const eregOrganisasjonResponseMock = {
+export const eregOrganisasjonResponseMock: EregOrganisasjonResponseDTO = {
   navn: {
     navnelinje1: "Skomaker Andersen",
     redigertnavn: "Skomaker Andersen, Oslo",
@@ -42,7 +52,7 @@ export const eregOrganisasjonResponseMock = {
 };
 
 export const createDialogmote = (
-  veileder: VeilederInfoDto,
+  veileder: Veileder,
   status: DialogmoteStatus,
   dato: Date,
   arbeidstakerRespons: { lestDato?: Date; svar?: SvarType } = {},

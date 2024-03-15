@@ -94,8 +94,9 @@ describe("EnhetensMoter", () => {
     );
     expect(screen.getByRole("option", { name: "Ingen respons" })).to.exist;
     expect(screen.getByRole("option", { name: "Respons mottatt" })).to.exist;
-    expect(await screen.findByRole("option", { name: veilederMock.navn })).to
-      .exist;
+    expect(
+      await screen.findByRole("option", { name: veilederMock.fulltNavn() })
+    ).to.exist;
   });
 
   it("viser enhetens aktive dialogmøte-innkallinger", async () => {
@@ -129,13 +130,13 @@ describe("EnhetensMoter", () => {
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
       "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons fra deltakere",
-      `${getDatoFraZulu(yesterday)}${veilederMock.navn}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }Referat ikke sendt2/2 kommer`,
-      `${getDatoFraZulu(inTwoDays)}${veilederMock.navn}${arbeidstakerMock.fnr}${
-        arbeidstakerMock.navn
-      }Innkalt (med behandler)endring ønskes`,
-      `${getDatoFraZulu(inFiveDays)}${veilederMock.navn}${
+      `${getDatoFraZulu(yesterday)}${veilederMock.fulltNavn()}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Referat ikke sendt2/2 kommer`,
+      `${getDatoFraZulu(inTwoDays)}${veilederMock.fulltNavn()}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}Innkalt (med behandler)endring ønskes`,
+      `${getDatoFraZulu(inFiveDays)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
       }${arbeidstakerMock.navn}Endring sendt0/2 har åpnet`,
     ]);

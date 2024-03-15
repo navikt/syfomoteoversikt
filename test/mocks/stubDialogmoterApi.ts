@@ -5,7 +5,7 @@ import {
 import { ISDIALOGMOTE_ROOT } from "@/utils/apiUrlUtil";
 import { aktivEnhetMock } from "./data";
 import nock from "nock";
-import { VeilederInfoDto } from "@/data/veiledere/veilederTypes";
+import { Veileder } from "@/data/veiledere/veilederTypes";
 
 export const stubDialogmoterApi = (
   scope: nock.Scope,
@@ -17,7 +17,7 @@ export const stubDialogmoterApi = (
 
 export const stubDialogmoterVeilederidentApi = (
   scope: nock.Scope,
-  veileder: VeilederInfoDto,
+  veileder: Veileder,
   dialogmoter: DialogmoterDTO[]
 ) =>
   scope
@@ -25,7 +25,7 @@ export const stubDialogmoterVeilederidentApi = (
     .reply(200, () => filterUnfinishedMoter(veileder, dialogmoter));
 
 export function filterUnfinishedMoter(
-  veileder: VeilederInfoDto,
+  veileder: Veileder,
   dialogmoter: DialogmoterDTO[]
 ): DialogmoterDTO[] {
   return dialogmoter.filter(

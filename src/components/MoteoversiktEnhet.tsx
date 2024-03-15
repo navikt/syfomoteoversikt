@@ -52,14 +52,18 @@ const MoteoversiktEnhet = (): ReactElement => {
     return [
       ...new Set(
         veiledere
-          .map((veileder) => veileder.navn)
+          .map((veileder) => veileder.fulltNavn())
           .filter((navn) => navn !== undefined) as string[]
       ),
     ];
   };
 
-  const veilederNavnForMote = (mote: DialogmoterDTO): string | undefined =>
-    veiledere.find(({ ident }) => mote.tildeltVeilederIdent === ident)?.navn;
+  const veilederNavnForMote = (mote: DialogmoterDTO): string | undefined => {
+    const matchingVeileder = veiledere.find(
+      ({ ident }) => mote.tildeltVeilederIdent === ident
+    );
+    return matchingVeileder?.fulltNavn();
+  };
 
   const getFiltrerteMoter = () => {
     if (responsFilter === "alle" && filterVeileder === "alle") {

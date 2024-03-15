@@ -1,10 +1,33 @@
-export interface VeilederInfoDto {
+export interface VeilederDTO {
   ident: string;
-  navn?: string;
+  fornavn: string;
+  etternavn: string;
+  epost: string;
+  telefonnummer?: string;
 }
 
-export interface VeilederDto {
+export class Veileder {
   ident: string;
-  fornavn?: string;
-  etternavn?: string;
+  fornavn: string;
+  etternavn: string;
+  epost: string;
+  telefonnummer: string | undefined;
+
+  constructor(
+    ident: string,
+    fornavn: string,
+    etternavn: string,
+    epost: string,
+    telefonnummer?: string
+  ) {
+    this.ident = ident;
+    this.fornavn = fornavn;
+    this.etternavn = etternavn;
+    this.epost = epost;
+    this.telefonnummer = telefonnummer;
+  }
+
+  fulltNavn(): string {
+    return this.fornavn + " " + this.etternavn;
+  }
 }
