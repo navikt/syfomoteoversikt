@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import SideFullBredde from "@/components/layout/SideFullbredde";
 import Feilmelding from "../../components/Feilmelding";
-import MineMoter from "./MineMoter";
 import NavigasjonsTopp from "../../components/NavigasjonsTopp";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import {
@@ -11,6 +10,7 @@ import {
 import { Loader } from "@navikt/ds-react";
 import { Column } from "@/components/layout/Layout";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
+import MineMoter from "@/sider/minemoter/MineMoter";
 
 const MineMoterContainer = (): ReactElement => {
   const aktivVeilederQuery = useAktivVeileder();

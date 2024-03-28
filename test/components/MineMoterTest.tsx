@@ -5,7 +5,6 @@ import {
   daysFromToday,
 } from "../testUtil";
 import React from "react";
-import MineMoter from "@/sider/minemoter/MineMoter";
 import {
   DialogmoteStatus,
   SvarType,
@@ -34,6 +33,7 @@ import {
   filterUnfinishedMoter,
   stubDialogmoterVeilederidentApi,
 } from "../mocks/stubDialogmoterApi";
+import MineMoter from "@/sider/minemoter/MineMoter";
 
 const yesterday = daysFromToday(-1);
 const inFiveDays = daysFromToday(5);
