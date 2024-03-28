@@ -39,7 +39,7 @@ const tallOrdFraTall = (tall: number): string | number => {
       return "ni";
     }
     case 10: {
-      return "t1";
+      return "ti";
     }
     case 11: {
       return "elleve";
