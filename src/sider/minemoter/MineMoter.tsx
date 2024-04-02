@@ -125,7 +125,7 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
   );
   const veiledereFromEnhet = useGetVeiledere(aktivEnhet || "").data || [];
   const [veilederIdent, setVeilederIdent] = useState<string>();
-  const [isAntallOverforVisible, setIsAntallOverforVisible] =
+  const [isAntallOverfortVisible, setIsAntallOverfortVisible] =
     useState<boolean>(true);
   const { antallOverfort } = useMoteoverforing();
   const {
@@ -160,6 +160,7 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
     veilederIdent && veilederIdent != "" && dialogmoterUuids.length > 0;
 
   function onSubmitHandler(event: FormEvent<HTMLFormElement>) {
+    setIsAntallOverfortVisible(false);
     if (!isFormValid) {
       setFormErrorsVisible(true);
     } else {
@@ -170,7 +171,6 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
       tildelDialogmoter.mutate(requestBody, {
         onSuccess: () => {
           setFormErrorsVisible(false);
-          setIsAntallOverforVisible(false);
           setVeilederIdent("");
           clearSelected();
           trackEvent("moter tildelt", {
@@ -190,7 +190,7 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
         </Panel>
       ) : (
         <>
-          {antallOverfort && isAntallOverforVisible && (
+          {antallOverfort && isAntallOverfortVisible && (
             <Alert size="small" variant="success" className="mb-8">
               <Label size="small">{`Du har lagt til ${hentTallordTekst(
                 antallOverfort
