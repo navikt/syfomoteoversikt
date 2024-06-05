@@ -9,7 +9,7 @@ import {
   assertTableRows,
   daysFromToday,
 } from "../testUtil";
-import { expect } from "chai";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import {

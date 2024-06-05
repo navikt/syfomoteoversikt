@@ -1,7 +1,7 @@
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { getDialogmoteDato } from "@/utils/dialogmoterUtil";
-import { expect } from "chai";
+import { describe, it, expect } from "vitest";
 
 describe("dateUtil getDatoFraZulu", () => {
   it("viser riktig dato for dialogmøte", () => {
