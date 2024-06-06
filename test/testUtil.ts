@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 export const daysFromToday = (days: number): Date => {
   const nyDato = new Date();

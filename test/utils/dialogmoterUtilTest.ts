@@ -12,7 +12,7 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import { expect } from "chai";
+import { describe, it, expect } from "vitest";
 import { compareByMotedato } from "@/utils/moterUtil";
 import { daysFromToday } from "../testUtil";
 

@@ -1,5 +1,5 @@
 import { minutesToMillis } from "@/utils/timeUtils";
-import { expect } from "chai";
+import { describe, it, expect } from "vitest";
 
 describe("timeUtils minutesToMillis", () => {
   it("returnerer 120000 millisekunder når input er 2 minutter", () => {

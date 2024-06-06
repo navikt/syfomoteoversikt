@@ -1,5 +1,5 @@
 import React from "react";
-import { expect } from "chai";
+import { describe, it, expect } from "vitest";
 import NavigasjonsTopp from "../../src/components/NavigasjonsTopp";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
