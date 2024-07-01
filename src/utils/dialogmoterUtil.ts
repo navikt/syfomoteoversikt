@@ -7,7 +7,7 @@ import {
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
 
-type DeltakerRespons = { harLest: boolean; svar?: SvarType };
+export type DeltakerRespons = { harLest: boolean; svar?: SvarType };
 
 export const erResponsMottatt = (dialogmote: DialogmoterDTO): boolean => {
   const { svar: arbeidstakerSvar } = getArbeidstakerRespons(dialogmote);
@@ -15,21 +15,6 @@ export const erResponsMottatt = (dialogmote: DialogmoterDTO): boolean => {
   const behandlerSvar = getBehandlerRespons(dialogmote);
 
   return !!arbeidstakerSvar || !!arbeidsgiverSvar || !!behandlerSvar;
-};
-
-export const responsTekst = (dialogmote: DialogmoterDTO): string => {
-  if (erResponsMottatt(dialogmote)) {
-    return responsMottattTekst(dialogmote);
-  }
-
-  const antallHarLest = [
-    getArbeidstakerRespons(dialogmote),
-    getArbeidsgiverRespons(dialogmote),
-  ].filter((respons) => respons.harLest).length;
-
-  return dialogmote.behandler
-    ? `${antallHarLest}/3 har åpnet`
-    : `${antallHarLest}/2 har åpnet`;
 };
 
 export const statusTekst = (mote: DialogmoterDTO): string => {
@@ -46,7 +31,7 @@ export const statusTekst = (mote: DialogmoterDTO): string => {
 export const getDialogmoteDato = (dialogmote: DialogmoterDTO) =>
   new Date(dialogmote.tid);
 
-const getBehandlerRespons = (
+export const getBehandlerRespons = (
   dialogmote: DialogmoterDTO
 ): SvarType | undefined => {
   const varselType = varselTypeFromStatus(dialogmote.status);
@@ -58,7 +43,7 @@ const getBehandlerRespons = (
   return varsel?.svar[0]?.svarType;
 };
 
-const getArbeidsgiverRespons = (
+export const getArbeidsgiverRespons = (
   dialogmote: DialogmoterDTO
 ): DeltakerRespons => {
   return getDeltakerRespons(
@@ -67,7 +52,7 @@ const getArbeidsgiverRespons = (
   );
 };
 
-const getArbeidstakerRespons = (
+export const getArbeidstakerRespons = (
   dialogmote: DialogmoterDTO
 ): DeltakerRespons => {
   return getDeltakerRespons(
@@ -115,30 +100,4 @@ const varselTypeFromStatus = (
       return DialogmoteDeltakerVarselType.INNKALT;
     }
   }
-};
-
-const responsMottattTekst = (dialogmote: DialogmoterDTO) => {
-  const svar = [
-    getBehandlerRespons(dialogmote),
-    getArbeidstakerRespons(dialogmote).svar,
-    getArbeidsgiverRespons(dialogmote).svar,
-  ];
-
-  const hasNyttTidStedRespons = svar.some(
-    (svar) => svar === SvarType.NYTT_TID_STED
-  );
-  const hasAvlysRespons = svar.some((svar) => svar === SvarType.KOMMER_IKKE);
-
-  if (hasNyttTidStedRespons && hasAvlysRespons) {
-    return "endring ønskes, avlysning ønskes";
-  } else if (hasNyttTidStedRespons) {
-    return "endring ønskes";
-  } else if (hasAvlysRespons) {
-    return "avlysning ønskes";
-  }
-
-  const antallKommer = svar.filter((svar) => svar === SvarType.KOMMER).length;
-  return dialogmote.behandler
-    ? `${antallKommer}/3 kommer`
-    : `${antallKommer}/2 kommer`;
 };

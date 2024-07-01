@@ -149,13 +149,13 @@ describe("MineMoter", () => {
       "VelgMøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
       `${getDatoFraZulu(yesterday)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetNavn}Referat ikke sendtavlysning ønskes`,
+      }${virksomhetNavn}Referat ikke sendtArbeidstaker:Kommer ikkeArbeidsgiver:Ikke åpnet`,
       `${getDatoFraZulu(inFiveDays)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetNavn}Endring sendt0/2 har åpnet`,
+      }${virksomhetNavn}Endring sendtArbeidstaker:Ikke åpnetArbeidsgiver:Ikke åpnet`,
       `${getDatoFraZulu(inTenDays)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
-      }${virksomhetNavn}Innkalt (med behandler)1/3 kommer`,
+      }${virksomhetNavn}Innkalt (med behandler)Arbeidstaker:Ikke åpnetArbeidsgiver:Ikke åpnetBehandler:Kommer`,
     ]);
   });
 });
