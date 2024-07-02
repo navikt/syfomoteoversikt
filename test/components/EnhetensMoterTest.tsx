@@ -132,13 +132,19 @@ describe("EnhetensMoter", () => {
       "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons fra deltakere",
       `${getDatoFraZulu(yesterday)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Referat ikke sendt2/2 kommer`,
+      }${
+        arbeidstakerMock.navn
+      }Referat ikke sendtArbeidstaker:KommerArbeidsgiver:Kommer`,
       `${getDatoFraZulu(inTwoDays)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Innkalt (med behandler)endring ønskes`,
+      }${
+        arbeidstakerMock.navn
+      }Innkalt (med behandler)Arbeidstaker:KommerArbeidsgiver:KommerBehandler:Endring ønskes`,
       `${getDatoFraZulu(inFiveDays)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
-      }${arbeidstakerMock.navn}Endring sendt0/2 har åpnet`,
+      }${
+        arbeidstakerMock.navn
+      }Endring sendtArbeidstaker:Ikke åpnetArbeidsgiver:Ikke åpnet`,
     ]);
   });
 });

@@ -1,11 +1,16 @@
 import React, { ReactElement } from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { MoteStatusResponsColumns } from "./MoteStatusResponsColumns";
 import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
-import { TruncatedTableColumn, VelgMoteColumn } from "./MoteTable";
+import {
+  StatusColumn,
+  TruncatedTableColumn,
+  VelgMoteColumn,
+} from "./MoteTable";
 import { useVirksomhetQuery } from "@/data/virksomhet/virksomhetQueryHooks";
 import { MoteDato } from "./MoteDato";
 import { Checkbox } from "@navikt/ds-react";
+import { statusTekst } from "@/utils/dialogmoterUtil";
+import MoteresponsColumn from "@/components/MoteresponsColumn";
 
 interface MoteProps {
   mote: DialogmoterDTO;
@@ -47,7 +52,8 @@ const Mote = ({
       <MoteDato mote={mote} />
       <DialogmoteArbeidstakerColumns dialogmote={mote} />
       <TruncatedTableColumn>{virksomhetsNavn()}</TruncatedTableColumn>
-      <MoteStatusResponsColumns mote={mote} />
+      <StatusColumn>{statusTekst(mote)}</StatusColumn>
+      <MoteresponsColumn dialogmote={mote} />
     </tr>
   );
 };

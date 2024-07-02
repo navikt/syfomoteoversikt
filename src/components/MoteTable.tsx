@@ -13,7 +13,7 @@ const thStyle = css`
 
 const tdStyle = css`
   border-bottom: 0.125em solid #efefef;
-  padding: 1em;
+  padding: 0.5rem;
   background: white;
 `;
 
@@ -74,4 +74,8 @@ export const ResponsHeader = styled.th`
 
 export const ResponsColumn = styled(TruncatedTableColumn)`
   width: 20%;
+
+  > *:not(:last-child) {
+    margin-bottom: 0.35rem;
+  }
 `;
