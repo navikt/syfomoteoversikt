@@ -9,7 +9,13 @@ import {
   getBehandlerRespons,
 } from "@/utils/dialogmoterUtil";
 
-function ResponsTag({ respons }: { respons: DeltakerRespons }): ReactElement {
+function ResponsTag({
+  respons,
+  deltaker,
+}: {
+  respons: DeltakerRespons;
+  deltaker: string;
+}): ReactElement {
   if (respons.svar === SvarType.KOMMER) {
     return (
       <Tag variant="success" size="xsmall">
@@ -34,6 +40,12 @@ function ResponsTag({ respons }: { respons: DeltakerRespons }): ReactElement {
         Har åpnet
       </Tag>
     );
+  } else if (deltaker === "Behandler" && !respons.harLest && !respons.svar) {
+    return (
+      <Tag variant="alt2" size="xsmall">
+        Ikke svart
+      </Tag>
+    );
   } else {
     return (
       <Tag variant="alt2" size="xsmall">
@@ -55,7 +67,7 @@ function ResponseEntry({
       <BodyShort size="small" className="w-24">
         {deltaker}:
       </BodyShort>
-      <ResponsTag respons={respons} />
+      <ResponsTag respons={respons} deltaker={deltaker} />
     </div>
   );
 }
@@ -73,10 +85,13 @@ export default function MoteresponsColumn({ dialogmote }: Props): ReactElement {
     <ResponsColumn>
       <ResponseEntry deltaker={"Arbeidstaker"} respons={arbeidstakerRespons} />
       <ResponseEntry deltaker={"Arbeidsgiver"} respons={arbeidsgiverRespons} />
-      {behandlerSvar && (
+      {dialogmote.behandler && (
         <ResponseEntry
           deltaker={"Behandler"}
-          respons={{ harLest: false, svar: behandlerSvar }}
+          respons={{
+            harLest: false,
+            svar: behandlerSvar ? behandlerSvar : undefined,
+          }}
         />
       )}
     </ResponsColumn>

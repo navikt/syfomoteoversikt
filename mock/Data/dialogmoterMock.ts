@@ -174,6 +174,22 @@ const dialogmoter = [
       svar: { svarType: SvarType.KOMMER_IKKE },
     }
   ),
+  createDialogmote(
+    "11",
+    addDaysToToday(19),
+    DialogmoteStatus.INNKALT,
+    DialogmoteDeltakerVarselType.INNKALT,
+    "Z990197",
+    {
+      lestDato: addDaysToToday(-1).toISOString(),
+      svar: { svarType: SvarType.NYTT_TID_STED },
+    },
+    {
+      lestDato: addDaysToToday(-1).toISOString(),
+      svar: { svarType: SvarType.KOMMER_IKKE },
+    },
+    { varselType: DialogmoteDeltakerVarselType.INNKALT, svar: [] }
+  ),
 ];
 
 export const dialogmoterMock = dialogmoter;

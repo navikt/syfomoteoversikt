@@ -8,6 +8,7 @@ import { render, screen } from "@testing-library/react";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import React from "react";
 import {
+  DialogmoteDeltakerVarselType,
   DialogmoterDTO,
   DialogmoteStatus,
   SvarType,
@@ -68,6 +69,27 @@ const moteATKommerAGKommerBehandlerKommer = createDialogmote(
   SvarType.KOMMER
 );
 
+let moteATKommerAGKommerBehandlerIkkeSvart = createDialogmote(
+  veilederMock,
+  DialogmoteStatus.INNKALT,
+  new Date(),
+  { lestDato: new Date(), svar: SvarType.KOMMER },
+  { lestDato: new Date(), svar: SvarType.KOMMER },
+  SvarType.KOMMER
+);
+
+moteATKommerAGKommerBehandlerIkkeSvart = {
+  ...moteATKommerAGKommerBehandlerIkkeSvart,
+  behandler: {
+    varselList: [
+      {
+        varselType: DialogmoteDeltakerVarselType.INNKALT,
+        svar: [],
+      },
+    ],
+  },
+};
+
 describe("MineMoter", () => {
   afterEach(() => {
     nock.cleanAll();
@@ -119,5 +141,15 @@ describe("MineMoter", () => {
     renderMoreresponsColumn(moteATKommerAGKommerBehandlerKommer);
 
     expect(screen.getAllByText("Kommer")).to.have.length(3);
+  });
+
+  it("should render Kommer, Kommer, Ikke svart", () => {
+    stubDialogmoterVeilederidentApi(scope, veilederMock, [
+      moteATKommerAGKommerBehandlerIkkeSvart,
+    ]);
+    renderMoreresponsColumn(moteATKommerAGKommerBehandlerIkkeSvart);
+
+    expect(screen.getAllByText("Kommer")).to.have.length(2);
+    expect(screen.getAllByText("Ikke svart")).to.have.length(1);
   });
 });
