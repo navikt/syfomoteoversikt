@@ -7,7 +7,7 @@ import {
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
 
-export type DeltakerRespons = { harLest: boolean; svar?: SvarType };
+export type DeltakerRespons = { harLest: boolean; svar: SvarType | undefined };
 
 export const erResponsMottatt = (dialogmote: DialogmoterDTO): boolean => {
   const { svar: arbeidstakerSvar } = getArbeidstakerRespons(dialogmote);
@@ -69,15 +69,10 @@ const getDeltakerRespons = (
     (varsel) => varsel.varselType === varselTypeFromStatus(status)
   );
 
-  const respons: DeltakerRespons = {
+  return {
     harLest: !!latestVarsel?.lestDato,
+    svar: latestVarsel?.svar?.svarType ? latestVarsel.svar.svarType : undefined,
   };
-
-  if (latestVarsel?.svar?.svarType) {
-    respons.svar = latestVarsel.svar.svarType;
-  }
-
-  return respons;
 };
 
 const varselTypeFromStatus = (
