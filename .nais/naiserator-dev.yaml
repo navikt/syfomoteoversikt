@@ -48,13 +48,14 @@ spec:
       external:
         - host: "login.microsoftonline.com"
         - host: "internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
-        - host: "modiacontextholder-q1.dev-fss-pub.nais.io"
         - host: "ereg-services-q1.dev-fss-pub.nais.io"
       rules:
         - application: isdialogmote
         - application: syfoveileder
         - application: syfoperson
         - application: syfomoteoversikt-redis
+        - application: modiacontextholder
+          namespace: personoversikt
   envFrom:
     - secret: syfomoteoversikt-session-key
     - secret: syfomoteoversikt-redis-password
@@ -76,9 +77,9 @@ spec:
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.isdialogmote"
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
-      value: "dev-fss.personoversikt.modiacontextholder-q1"
+      value: "dev-gcp.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "https://modiacontextholder-q1.dev-fss-pub.nais.io"
+      value: "http://modiacontextholder.personoversikt"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoperson"
     - name: SYFOPERSON_HOST
