@@ -61,6 +61,7 @@ spec:
     - secret: syfomoteoversikt-redis-password
   ingresses:
     - "https://syfomoteoversikt.intern.dev.nav.no"
+    - "https://syfomoteoversikt.ansatt.dev.nav.no"
   env:
     - name: NODE_ENV
       value: "production"
