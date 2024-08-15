@@ -4,11 +4,11 @@ import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContex
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
 import { Checkbox } from "@navikt/ds-react";
 
-interface OverforMoteProps {
+interface Props {
   mote: DialogmoterDTO;
 }
 
-export const OverforMote = ({ mote }: OverforMoteProps) => {
+export const MarkerMote = ({ mote }: Props) => {
   const { dialogmoterMarkert, dispatch } = useMoteoverforing();
   const uuid = mote.uuid;
 

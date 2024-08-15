@@ -97,8 +97,7 @@ describe("MineMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByRole("heading", { name: "Viser 3 møter" })).to
-      .exist;
+    expect(await screen.findByText("Viser 3 møter")).to.exist;
 
     expect(screen.getByText("Filtrer på respons")).to.exist;
     expect(screen.getByRole("option", { name: "Vis alle" })).to.exist;
@@ -123,8 +122,7 @@ describe("MineMoter", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByRole("heading", { name: "Viser 3 møter" })).to
-      .exist;
+    expect(await screen.findByText("Viser 3 møter")).to.exist;
 
     const headers = screen.getAllByRole("columnheader");
     assertTableHeaders(headers, [

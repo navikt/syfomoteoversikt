@@ -12,11 +12,6 @@ interface NavigasjonsToppProps {
   lenker: Lenke[];
 }
 
-const NavigasjonLenkeListe = styled.ul`
-  padding: 0;
-  margin-bottom: 2.5em;
-`;
-
 const NavigasjonsLenke = styled.li`
   display: inline-block;
   padding-top: 0.25em;
@@ -50,7 +45,7 @@ const StyledLink = styled(Link)<{ aktiv: number }>`
 
 const NavigasjonsTopp = ({ lenker }: NavigasjonsToppProps): ReactElement => (
   <header>
-    <NavigasjonLenkeListe>
+    <ul className="p-0">
       {lenker.map((lenke) => (
         <NavigasjonsLenke key={lenke.url}>
           <StyledLink aktiv={lenke.aktiv ? 1 : 0} to={lenke.url}>
@@ -58,7 +53,7 @@ const NavigasjonsTopp = ({ lenker }: NavigasjonsToppProps): ReactElement => (
           </StyledLink>
         </NavigasjonsLenke>
       ))}
-    </NavigasjonLenkeListe>
+    </ul>
   </header>
 );
 

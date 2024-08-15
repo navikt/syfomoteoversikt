@@ -1,14 +1,13 @@
 import React, { ReactElement, useState } from "react";
-import { Select } from "@navikt/ds-react";
+import { BodyShort, Select } from "@navikt/ds-react";
 import MoteEnhet from "./MoteEnhet";
-import { MoteOversiktHeading } from "./MoteOversiktHeading";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
 import {
   compareByMotedato,
   getMoteRespons,
   getMoteResponser,
 } from "@/utils/moterUtil";
-import { OverforMoterKnapp } from "./OverforMoterKnapp";
+import { OverforMoter } from "./OverforMoter";
 import { trackOnClick } from "@/amplitude/amplitude";
 import {
   FnrHeader,
@@ -20,8 +19,8 @@ import {
 } from "./MoteTable";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import {
-  useEnhetensDialogmoterQuery,
   useDialogmoterVeiledere,
+  useEnhetensDialogmoterQuery,
 } from "@/data/dialogmoter/dialogmoterQueryHooks";
 
 const texts = {
@@ -81,35 +80,39 @@ const MoteoversiktEnhet = (): ReactElement => {
   };
 
   const filtrerteMoter = getFiltrerteMoter();
-
   return (
     <>
-      <div className="flex mb-8 gap-8">
-        <MoteResponsFilter
-          moteResponser={getMoteResponser(moter)}
-          onFilterChange={(changedFilter: MoteRespons) =>
-            setResponsFilter(changedFilter)
-          }
-        />
-        <Select
-          size="small"
-          id="moteoversikt-filtrer"
-          label={texts.filtrer}
-          onChange={(e) => {
-            trackOnClick(texts.filtrer);
-            setFilterVeileder(e.currentTarget.value);
-          }}
-        >
-          <option value="alle">Vis alle</option>
-          {navnPaaVeiledere().map((veileder, index) => (
-            <option key={index} value={veileder}>
-              {veileder}
-            </option>
-          ))}
-        </Select>
+      <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">
+        <OverforMoter />
+        <div className="flex gap-8 items-center">
+          <Select
+            size="small"
+            id="moteoversikt-filtrer"
+            label={texts.filtrer}
+            onChange={(e) => {
+              trackOnClick(texts.filtrer);
+              setFilterVeileder(e.currentTarget.value);
+            }}
+          >
+            <option value="alle">Vis alle</option>
+            {navnPaaVeiledere().map((veileder, index) => (
+              <option key={index} value={veileder}>
+                {veileder}
+              </option>
+            ))}
+          </Select>
+          <MoteResponsFilter
+            moteResponser={getMoteResponser(moter)}
+            onFilterChange={(changedFilter: MoteRespons) =>
+              setResponsFilter(changedFilter)
+            }
+          />
+          <BodyShort>
+            <b>Viser {filtrerteMoter.length} møter</b>
+          </BodyShort>
+        </div>
       </div>
       <div className="moteoversikt">
-        <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
         <table className="mb-8 w-full border-collapse table-fixed">
           <thead>
             <tr>
@@ -128,7 +131,6 @@ const MoteoversiktEnhet = (): ReactElement => {
             ))}
           </tbody>
         </table>
-        <OverforMoterKnapp />
       </div>
     </>
   );
