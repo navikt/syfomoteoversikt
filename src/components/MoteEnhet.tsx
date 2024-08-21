@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { OverforMote } from "./OverforMote";
+import { MarkerMote } from "./MarkerMote";
 import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 import {
   StatusColumn,
@@ -31,7 +31,7 @@ const MoteEnhet = ({ mote }: MoteEnhetProps): ReactElement => {
   return (
     <tr>
       <VelgMoteColumn>
-        <OverforMote mote={mote} />
+        <MarkerMote mote={mote} />
       </VelgMoteColumn>
       <MoteDato mote={mote} />
       <TruncatedTableColumn>{veilederNavn()}</TruncatedTableColumn>

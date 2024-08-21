@@ -10,7 +10,7 @@ const texts = {
   overta: "Overta møter",
 };
 
-export const OverforMoterKnapp = () => {
+export const OverforMoter = () => {
   const { dialogmoterMarkert } = useMoteoverforing();
   const overforDialogmoter = useOverforDialogmoter();
   const harMarkertDialogmoter = dialogmoterMarkert.length > 0;
@@ -32,15 +32,18 @@ export const OverforMoterKnapp = () => {
   }
 
   return (
-    <Button
-      variant="primary"
-      disabled={overforDialogmoter.isPending}
-      onClick={() => {
-        trackOnClick(texts.overta);
-        handleClick();
-      }}
-    >
-      {texts.overta}
-    </Button>
+    <div className="flex flex-col gap-2">
+      <Button
+        variant="primary"
+        disabled={overforDialogmoter.isPending}
+        onClick={() => {
+          trackOnClick(texts.overta);
+          handleClick();
+        }}
+        className="w-fit"
+      >
+        {texts.overta}
+      </Button>
+    </div>
   );
 };

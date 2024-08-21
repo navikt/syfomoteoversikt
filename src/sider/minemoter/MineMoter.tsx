@@ -1,5 +1,4 @@
 import React, { FormEvent, ReactElement, useState } from "react";
-import { MoteOversiktHeading } from "../../components/MoteOversiktHeading";
 import {
   MoteRespons,
   MoteResponsFilter,
@@ -19,6 +18,7 @@ import {
 } from "../../components/MoteTable";
 import {
   Alert,
+  BodyShort,
   Button,
   ErrorMessage,
   Label,
@@ -190,26 +190,87 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
         </Panel>
       ) : (
         <>
-          {antallOverfort && isAntallOverfortVisible && (
-            <Alert size="small" variant="success" className="mb-8">
-              <Label size="small">{`Du har lagt til ${hentTallordTekst(
-                antallOverfort
-              )}`}</Label>
-              <br />
-              <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
-            </Alert>
-          )}
-          <div className="flex mb-8">
-            <MoteResponsFilter
-              moteResponser={getMoteResponser(moter)}
-              onFilterChange={(changedFilter: MoteRespons) =>
-                setResponsFilter(changedFilter)
-              }
-            />
-          </div>
           <form onSubmit={onSubmitHandler}>
-            <MoteOversiktHeading antallMoter={filtrerteMoter.length} />
-            <table className="w-full border-collapse table-fixed">
+            {antallOverfort && isAntallOverfortVisible && (
+              <Alert size="small" variant="success" className="mb-4 w-fit">
+                <Label size="small">{`Du har lagt til ${hentTallordTekst(
+                  antallOverfort
+                )}`}</Label>
+                <br />
+                <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
+              </Alert>
+            )}
+            {tildelDialogmoter.isSuccess && (
+              <Alert size="small" variant="success" className="mb-4 w-fit">
+                <Label size="small">
+                  {texts.moterTildelt(
+                    tildelDialogmoter.variables.dialogmoteUuids.length,
+                    veilederNavn(tildelDialogmoter.variables.veilederIdent)
+                  )}
+                </Label>
+                <br />
+              </Alert>
+            )}
+            {tildelDialogmoter.isError && (
+              <Alert size="small" variant="error" className="mb-4 w-fit">
+                <Label size="small">{texts.moteTildelingFeilet}</Label>
+                <br />
+              </Alert>
+            )}
+            <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center gap-4">
+                <div>
+                  {isFormErrorsVisible && dialogmoterUuids.length == 0 && (
+                    <ErrorMessage size="small">
+                      {texts.noDialogmoterSelected}
+                    </ErrorMessage>
+                  )}
+                  <div className="flex gap-4 items-end">
+                    <Select
+                      label={texts.selectVeilederToAssignLabel}
+                      className="w-48"
+                      size="small"
+                      value={veilederIdent}
+                      onChange={(event) => setVeilederIdent(event.target.value)}
+                      error={
+                        isFormErrorsVisible &&
+                        (veilederIdent == undefined || veilederIdent == "") &&
+                        texts.missingVeilederIdent
+                      }
+                    >
+                      <option value="">
+                        {texts.selectVeilederToAssignDefaultOption}
+                      </option>
+                      {Array.from(veiledereFromEnhet).map((veileder, index) => (
+                        <option key={index} value={veileder.ident}>
+                          {veileder.fulltNavn()}
+                        </option>
+                      ))}
+                    </Select>
+                    <Button
+                      loading={tildelDialogmoter.isPending}
+                      variant="primary"
+                      type="submit"
+                    >
+                      {texts.assignMeetings}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-8 items-center">
+                <MoteResponsFilter
+                  moteResponser={getMoteResponser(moter)}
+                  onFilterChange={(changedFilter: MoteRespons) =>
+                    setResponsFilter(changedFilter)
+                  }
+                />
+                <BodyShort>
+                  <b>Viser {filtrerteMoter.length} møter</b>
+                </BodyShort>
+              </div>
+            </div>
+
+            <table className="w-full border-collapse table-fixed mb-8">
               <thead>
                 <tr>
                   <VelgMoteHeader scope="col">
@@ -234,57 +295,8 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
                 ))}
               </tbody>
             </table>
-            <div className="mb-8">
-              {isFormErrorsVisible && dialogmoterUuids.length == 0 && (
-                <ErrorMessage>{texts.noDialogmoterSelected}</ErrorMessage>
-              )}
-            </div>
-            <Select
-              label={texts.selectVeilederToAssignLabel}
-              className="mb-4 w-72"
-              value={veilederIdent}
-              onChange={(event) => setVeilederIdent(event.target.value)}
-              error={
-                isFormErrorsVisible &&
-                (veilederIdent == undefined || veilederIdent == "") &&
-                texts.missingVeilederIdent
-              }
-            >
-              <option value="">
-                {texts.selectVeilederToAssignDefaultOption}
-              </option>
-              {Array.from(veiledereFromEnhet).map((veileder, index) => (
-                <option key={index} value={veileder.ident}>
-                  {veileder.fulltNavn()}
-                </option>
-              ))}
-            </Select>
-            <Button
-              loading={tildelDialogmoter.isPending}
-              variant="primary"
-              type="submit"
-            >
-              {texts.assignMeetings}
-            </Button>
           </form>
         </>
-      )}
-      {tildelDialogmoter.isSuccess && (
-        <Alert size="small" variant="success" className="mt-8 w-fit">
-          <Label size="small">
-            {texts.moterTildelt(
-              tildelDialogmoter.variables.dialogmoteUuids.length,
-              veilederNavn(tildelDialogmoter.variables.veilederIdent)
-            )}
-          </Label>
-          <br />
-        </Alert>
-      )}
-      {tildelDialogmoter.isError && (
-        <Alert size="small" variant="error" className="mt-8 w-fit">
-          <Label size="small">{texts.moteTildelingFeilet}</Label>
-          <br />
-        </Alert>
       )}
     </>
   );
