@@ -18,12 +18,11 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
       const pathFromRequest = urlFromRequest.pathname;
 
       const queryString = urlFromRequest.query;
-      const newPath =
+      return (
         (pathFromApi ? pathFromApi : "") +
         (pathFromRequest ? pathFromRequest : "") +
-        (queryString ? "?" + queryString : "");
-
-      return newPath;
+        (queryString ? "?" + queryString : "")
+      );
     },
     proxyErrorHandler: (err, res, next) => {
       console.log(`Error in proxy for ${host} ${err.message}, ${err.code}`);
@@ -49,7 +48,11 @@ const proxyDirectly = (
   );
 };
 
-const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
+const proxyExternalHost = (
+  { applicationName, host, removePathPrefix }: Config.ExternalAppConfig,
+  accessToken: any,
+  parseReqBody: any
+) =>
   expressHttpProxy(host, {
     https: false,
     parseReqBody: parseReqBody,
@@ -77,10 +80,10 @@ const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
         (pathFromRequest ? pathFromRequest : "") +
         (queryString ? "?" + queryString : "");
 
-      if (host === Config.auth.isdialogmote.host) {
-        const newPathIsdialogmote = newPath.replace("isdialogmote/", "");
-        return newPathIsdialogmote;
+      if (removePathPrefix) {
+        return newPath.replace(`${applicationName}/`, "");
       }
+
       return newPath;
     },
     proxyErrorHandler: (err, res, next) => {
@@ -116,7 +119,7 @@ const proxyOnBehalfOf = (
         return;
       }
       return proxyExternalHost(
-        externalAppConfig.host,
+        externalAppConfig,
         onBehalfOfToken.accessToken,
         req.method === "POST" || req.method === "PATCH"
       )(req, res, next);
@@ -218,26 +221,5 @@ export const setupProxy = (
     }
   );
 
-  router.use(
-    "/internarbeidsflatedecorator",
-    expressHttpProxy(Config.auth.internarbeidsflatedecoratorHost, {
-      https: true,
-      proxyReqPathResolver: (req) => {
-        return `/internarbeidsflatedecorator${req.url}`;
-      },
-      proxyErrorHandler: (err, res, next) => {
-        console.log(
-          `Error in proxy for internarbeidsflatedecorator ${err.message}, ${err.code}`
-        );
-        if (err && err.code === "ECONNREFUSED") {
-          console.log("proxyErrorHandler: Got ECONNREFUSED");
-          return res
-            .status(503)
-            .send({ message: `Could not contact internarbeidsflatedecorator` });
-        }
-        next(err);
-      },
-    })
-  );
   return router;
 };

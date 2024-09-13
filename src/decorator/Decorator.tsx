@@ -1,13 +1,13 @@
 import React, { ReactElement, useCallback } from "react";
 import NAVSPA from "@navikt/navspa";
-import { DecoratorProps } from "./decoratorProps";
 import decoratorConfig from "./decoratorConfig";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
+import { DecoratorProps } from "@/decorator/decoratorProps";
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
-  "internarbeidsflatefs"
+  "internarbeidsflate-decorator-v3"
 );
 
 const Decorator = (): ReactElement => {

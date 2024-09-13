@@ -45,7 +45,7 @@ const StyledLink = styled(Link)<{ aktiv: number }>`
 
 const NavigasjonsTopp = ({ lenker }: NavigasjonsToppProps): ReactElement => (
   <header>
-    <ul className="p-0">
+    <ul className="py-4">
       {lenker.map((lenke) => (
         <NavigasjonsLenke key={lenke.url}>
           <StyledLink aktiv={lenke.aktiv ? 1 : 0} to={lenke.url}>

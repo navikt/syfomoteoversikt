@@ -32,6 +32,7 @@ export const isDev = envVar({ name: "NODE_ENV" }) === "development";
 export const isProd = envVar({ name: "NODE_ENV" }) === "production";
 
 export interface ExternalAppConfig {
+  applicationName: string;
   clientId: string;
   host: string;
   removePathPrefix?: boolean;
@@ -97,31 +98,32 @@ export const auth = {
   responseMode: "query",
   tokenEndpointAuthSigningAlg: "RS256",
 
-  internarbeidsflatedecoratorHost: envVar({
-    name: "INTERNARBEIDSFLATEDECORATOR_HOST",
-  }),
-
   ereg: {
+    applicationName: "ereg",
     clientId: "",
     host: envVar({
       name: "EREG_HOST",
     }),
   },
   modiacontextholder: {
+    applicationName: "modiacontextholder",
     clientId: envVar({
       name: "MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID",
     }),
     host: envVar({
       name: "MODIACONTEXTHOLDER_HOST",
     }),
+    removePathPrefix: true,
   },
   isdialogmote: {
+    applicationName: "isdialogmote",
     clientId: envVar({
       name: "ISDIALOGMOTE_AAD_APP_CLIENT_ID",
     }),
     host: envVar({
       name: "ISDIALOGMOTE_HOST",
     }),
+    removePathPrefix: true,
   },
   syfoperson: {
     applicationName: "syfoperson",
@@ -133,6 +135,7 @@ export const auth = {
     }),
   },
   syfoveileder: {
+    applicationName: "syfoveileder",
     clientId: envVar({
       name: "SYFOVEILEDER_AAD_APP_CLIENT_ID",
     }),
