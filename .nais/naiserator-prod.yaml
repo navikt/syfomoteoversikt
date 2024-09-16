@@ -47,7 +47,6 @@ spec:
     outbound:
       external:
         - host: "login.microsoftonline.com"
-        - host: "internarbeidsflatedecorator.prod-fss-pub.nais.io"
         - host: "ereg-services.prod-fss-pub.nais.io"
       rules:
         - application: isdialogmote
@@ -70,8 +69,6 @@ spec:
       value: "syfomoteoversikt-redis"
     - name: EREG_HOST
       value: "https://ereg-services.prod-fss-pub.nais.io"
-    - name: INTERNARBEIDSFLATEDECORATOR_HOST
-      value: "https://internarbeidsflatedecorator.prod-fss-pub.nais.io"
     - name: ISDIALOGMOTE_HOST
       value: "http://isdialogmote"
     - name: ISDIALOGMOTE_AAD_APP_CLIENT_ID
