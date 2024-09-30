@@ -1,9 +1,7 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { aktivEnhetMock, createDialogmote, veilederMock } from "../mocks/data";
 import { stubDialogmoterVeilederidentApi } from "../mocks/stubDialogmoterApi";
-import nock from "nock";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { apiMock } from "../mocks/stubApi";
 import { render, screen } from "@testing-library/react";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import React from "react";
@@ -16,7 +14,6 @@ import {
 import MoteresponsColumn from "@/components/MoteresponsColumn";
 
 const queryClient = new QueryClient();
-const scope = apiMock();
 
 const renderMoreresponsColumn = (dialogmote: DialogmoterDTO) =>
   render(
@@ -91,12 +88,8 @@ moteATKommerAGKommerBehandlerIkkeSvart = {
 };
 
 describe("MineMoter", () => {
-  afterEach(() => {
-    nock.cleanAll();
-  });
-
   it("should render Ikke åpnet, Ikke åpnet", () => {
-    stubDialogmoterVeilederidentApi(scope, veilederMock, [moteInnkalt]);
+    stubDialogmoterVeilederidentApi(veilederMock, [moteInnkalt]);
     renderMoreresponsColumn(moteInnkalt);
 
     expect(screen.getAllByText("Ikke åpnet")).to.have.length(2);
@@ -104,7 +97,7 @@ describe("MineMoter", () => {
   });
 
   it("should render Har åpnet, Ikke åpnet", () => {
-    stubDialogmoterVeilederidentApi(scope, veilederMock, [moteATHarLest]);
+    stubDialogmoterVeilederidentApi(veilederMock, [moteATHarLest]);
     renderMoreresponsColumn(moteATHarLest);
 
     expect(screen.getAllByText("Har åpnet")).to.have.length(1);
@@ -113,9 +106,7 @@ describe("MineMoter", () => {
   });
 
   it("should render Kommer, Har åpnet", () => {
-    stubDialogmoterVeilederidentApi(scope, veilederMock, [
-      moteATSvartAGHarLest,
-    ]);
+    stubDialogmoterVeilederidentApi(veilederMock, [moteATSvartAGHarLest]);
     renderMoreresponsColumn(moteATSvartAGHarLest);
 
     expect(screen.getAllByText("Kommer")).to.have.length(1);
@@ -124,9 +115,7 @@ describe("MineMoter", () => {
   });
 
   it("should render Endring ønskes, Kommer ikke", () => {
-    stubDialogmoterVeilederidentApi(scope, veilederMock, [
-      moteATEndringAGKommerIkke,
-    ]);
+    stubDialogmoterVeilederidentApi(veilederMock, [moteATEndringAGKommerIkke]);
     renderMoreresponsColumn(moteATEndringAGKommerIkke);
 
     expect(screen.getAllByText("Endring ønskes")).to.have.length(1);
@@ -135,7 +124,7 @@ describe("MineMoter", () => {
   });
 
   it("should render Kommer, Kommer, Kommer", () => {
-    stubDialogmoterVeilederidentApi(scope, veilederMock, [
+    stubDialogmoterVeilederidentApi(veilederMock, [
       moteATKommerAGKommerBehandlerKommer,
     ]);
     renderMoreresponsColumn(moteATKommerAGKommerBehandlerKommer);
@@ -144,7 +133,7 @@ describe("MineMoter", () => {
   });
 
   it("should render Kommer, Kommer, Ikke svart", () => {
-    stubDialogmoterVeilederidentApi(scope, veilederMock, [
+    stubDialogmoterVeilederidentApi(veilederMock, [
       moteATKommerAGKommerBehandlerIkkeSvart,
     ]);
     renderMoreresponsColumn(moteATKommerAGKommerBehandlerIkkeSvart);

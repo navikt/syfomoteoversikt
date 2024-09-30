@@ -9,7 +9,7 @@ import {
   assertTableRows,
   daysFromToday,
 } from "../testUtil";
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import {
@@ -20,8 +20,6 @@ import {
 } from "../mocks/data";
 import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
-import { apiMock } from "../mocks/stubApi";
-import nock from "nock";
 import { stubBrukernavnApi } from "../mocks/stubBrukernavnApi";
 import {
   stubAktivVeilederApi,
@@ -56,18 +54,13 @@ const dialogmoterData = [
   createDialogmote(veilederMock, DialogmoteStatus.FERDIGSTILT, threeDaysAgo),
 ];
 const queryClient = new QueryClient();
-const scope = apiMock();
 
 describe("EnhetensMoter", () => {
   beforeEach(() => {
-    stubBrukernavnApi(scope);
-    stubDialogmoterApi(scope, dialogmoterData);
-    stubVeilederApi(scope, veilederMock);
-    stubAktivVeilederApi(scope, veilederMock);
-  });
-
-  afterEach(() => {
-    nock.cleanAll();
+    stubBrukernavnApi();
+    stubDialogmoterApi(dialogmoterData);
+    stubVeilederApi(veilederMock);
+    stubAktivVeilederApi(veilederMock);
   });
 
   it("viser filter på respons og veileder", async () => {

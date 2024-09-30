@@ -6,7 +6,6 @@ import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
 
 import common from "./webpack.common";
-import mockEndepunkter from "./mock/mockEndepunkter";
 import * as Session from "./server/session";
 
 const devConfig: Webpack.Configuration = {
@@ -17,12 +16,7 @@ const devConfig: Webpack.Configuration = {
   },
   devServer: {
     port: 8080,
-    static: {
-      directory: path.join(__dirname, "dist"),
-      staticOptions: {
-        redirect: false,
-      },
-    },
+    static: "./public",
     setupMiddlewares: (
       middlewares: WebpackDevServer.Middleware[],
       devServer: WebpackDevServer
@@ -38,13 +32,6 @@ const setupDev = async (devServer: WebpackDevServer) => {
   const compiler = devServer.compiler;
 
   await Session.setupSession(app);
-
-  mockEndepunkter(app);
-  app.use(
-    "/syfomoteoversikt/img",
-    express.static(path.resolve(__dirname, "img"))
-  );
-  app.use("/static", express.static(path.resolve(__dirname, "dist")));
 
   app.use("*", (req: express.Request, res: express.Response) => {
     const filename = path.join(compiler.outputPath, "index.html");

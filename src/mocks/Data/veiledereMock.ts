@@ -1,4 +1,4 @@
-import { VeilederDTO } from "../../src/data/veiledere/veilederTypes";
+import { VeilederDTO } from "../../data/veiledere/veilederTypes";
 
 export const veiledereMock: VeilederDTO[] = [
   {

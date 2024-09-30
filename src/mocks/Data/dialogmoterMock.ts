@@ -5,7 +5,7 @@ import {
   DialogmoteDeltakerVarselType,
   DialogmoteStatus,
   SvarType,
-} from "../../src/data/dialogmoter/dialogmoterTypes";
+} from "../../data/dialogmoter/dialogmoterTypes";
 
 const createDialogmote = (
   uuid: string,

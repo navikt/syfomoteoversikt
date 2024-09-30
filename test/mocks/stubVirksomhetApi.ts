@@ -1,8 +1,11 @@
 import { EREG_ROOT } from "@/utils/apiUrlUtil";
 import { eregOrganisasjonResponseMock, orgnr } from "./data";
-import nock from "nock";
+import { mockServer } from "../setup";
+import { http, HttpResponse } from "msw";
 
-export const stubVirksomhetApi = (scope: nock.Scope) =>
-  scope
-    .get(`${EREG_ROOT}/organisasjon/${orgnr}`)
-    .reply(200, () => eregOrganisasjonResponseMock);
+export const stubVirksomhetApi = () =>
+  mockServer.use(
+    http.get(`*${EREG_ROOT}/organisasjon/${orgnr}`, () =>
+      HttpResponse.json(eregOrganisasjonResponseMock)
+    )
+  );
