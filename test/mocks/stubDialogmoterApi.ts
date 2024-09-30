@@ -4,25 +4,27 @@ import {
 } from "@/data/dialogmoter/dialogmoterTypes";
 import { ISDIALOGMOTE_ROOT } from "@/utils/apiUrlUtil";
 import { aktivEnhetMock } from "./data";
-import nock from "nock";
 import { Veileder } from "@/data/veiledere/veilederTypes";
+import { mockServer } from "../setup";
+import { http, HttpResponse } from "msw";
 
-export const stubDialogmoterApi = (
-  scope: nock.Scope,
-  dialogmoter: DialogmoterDTO[]
-) =>
-  scope
-    .get(`${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${aktivEnhetMock}`)
-    .reply(200, () => dialogmoter);
+export const stubDialogmoterApi = (dialogmoter: DialogmoterDTO[]) =>
+  mockServer.use(
+    http.get(
+      `*${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${aktivEnhetMock}`,
+      () => HttpResponse.json(dialogmoter)
+    )
+  );
 
 export const stubDialogmoterVeilederidentApi = (
-  scope: nock.Scope,
   veileder: Veileder,
   dialogmoter: DialogmoterDTO[]
 ) =>
-  scope
-    .get(`${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`)
-    .reply(200, () => filterUnfinishedMoter(veileder, dialogmoter));
+  mockServer.use(
+    http.get(`*${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`, () =>
+      HttpResponse.json(filterUnfinishedMoter(veileder, dialogmoter))
+    )
+  );
 
 export function filterUnfinishedMoter(
   veileder: Veileder,

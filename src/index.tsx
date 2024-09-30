@@ -12,6 +12,7 @@ import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
 import { minutesToMillis } from "@/utils/timeUtils";
 import { isClientError } from "@/api/errors";
 import { initFaro } from "@/faro";
+import { erLokal } from "@/utils/miljoUtil";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +22,7 @@ const queryClient = new QueryClient({
     queries: {
       networkMode: "offlineFirst",
       refetchOnWindowFocus: false,
-      cacheTime: minutesToMillis(60),
+      gcTime: minutesToMillis(60),
       staleTime: minutesToMillis(30),
       retry: (failureCount, error) => {
         if (isClientError(error)) {
@@ -40,13 +41,28 @@ const container =
   document.getElementById("maincontent") || new DocumentFragment();
 const root = createRoot(container);
 
-root.render(
-  <AktivEnhetProvider>
-    <MoteoverforingProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppRouter />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </MoteoverforingProvider>
-  </AktivEnhetProvider>
-);
+function renderApp() {
+  root.render(
+    <AktivEnhetProvider>
+      <MoteoverforingProvider>
+        <QueryClientProvider client={queryClient}>
+          <AppRouter />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </MoteoverforingProvider>
+    </AktivEnhetProvider>
+  );
+}
+
+async function setupMocking() {
+  const { worker } = await import("./mocks/browser");
+  return worker.start({
+    onUnhandledRequest: "bypass",
+  });
+}
+
+if (erLokal()) {
+  setupMocking().then(() => renderApp());
+} else {
+  renderApp();
+}

@@ -2,7 +2,7 @@
   "name": "syfomoteoversikt",
   "version": "0.0.1",
   "description": "Digitalisering av sykefraværsoppfølging",
-  "main": "index.js",
+  "main": "index.tsx",
   "test": "npm run test",
   "scripts": {
     "test": "vitest run",
@@ -91,7 +91,7 @@
     "eslint-plugin-unused-imports": "2.0.0",
     "html-webpack-plugin": "5.5.1",
     "jsdom": "21.1.1",
-    "nock": "13.3.0",
+    "msw": "2.4.9",
     "postcss-loader": "7.2.4",
     "prettier": "2.6.2",
     "react-is": "17.0.2",
@@ -100,12 +100,17 @@
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "3.5.2",
     "typescript": "5.0.4",
+    "url-loader": "4.1.1",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.6.0",
-    "url-loader": "4.1.1",
     "webpack": "5.79.0",
     "webpack-cli": "5.0.1",
     "webpack-dev-server": "4.13.3",
     "webpack-merge": "5.8.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

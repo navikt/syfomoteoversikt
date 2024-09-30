@@ -11,7 +11,7 @@ const extensions = [".tsx", ".jsx", ".js", ".ts", ".json"];
 
 const commonConfig: Configuration = {
   entry: {
-    main: ["@babel/polyfill", "./src/index.js"],
+    main: ["./src/index.tsx"],
   },
   output: {
     filename: "[name].bundle.js",

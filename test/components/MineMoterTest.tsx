@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import {
   assertTableHeaders,
   assertTableRows,
@@ -21,8 +21,6 @@ import {
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import { render, screen } from "@testing-library/react";
 import { getDatoFraZulu } from "@/utils/dateUtil";
-import { apiMock } from "../mocks/stubApi";
-import nock from "nock";
 import { stubBrukernavnApi } from "../mocks/stubBrukernavnApi";
 import { stubVirksomhetApi } from "../mocks/stubVirksomhetApi";
 import {
@@ -65,19 +63,15 @@ const dialogmoterData = [
 ];
 
 const queryClient = new QueryClient();
-const scope = apiMock();
 
 describe("MineMoter", () => {
   beforeEach(() => {
-    stubBrukernavnApi(scope);
-    stubVirksomhetApi(scope);
-    stubAktivVeilederApi(scope, veilederMock);
-    stubVeilederApi(scope, veilederMock);
-    stubVeilederApi(scope, annenVeilederMock);
-    stubDialogmoterVeilederidentApi(scope, veilederMock, dialogmoterData);
-  });
-  afterEach(() => {
-    nock.cleanAll();
+    stubBrukernavnApi();
+    stubVirksomhetApi();
+    stubAktivVeilederApi(veilederMock);
+    stubVeilederApi(veilederMock);
+    stubVeilederApi(annenVeilederMock);
+    stubDialogmoterVeilederidentApi(veilederMock, dialogmoterData);
   });
 
   it("viser filter på respons", async () => {

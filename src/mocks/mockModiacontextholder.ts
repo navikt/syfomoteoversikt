@@ -1,0 +1,51 @@
+import { http, HttpResponse } from "msw";
+
+const saksbehandler = {
+  ident: "Z999999",
+  navn: "Vetle Veileder",
+  fornavn: "Vetle",
+  etternavn: "Veileder",
+  enheter: [
+    {
+      enhetId: "0315",
+      navn: "NAV Grünerløkka",
+    },
+    {
+      enhetId: "0316",
+      navn: "NAV Gamle Oslo",
+    },
+  ],
+};
+
+const aktivBruker = {
+  aktivBruker: null,
+  aktivEnhet: null,
+};
+
+const aktivEnhet = {
+  aktivBruker: null,
+  aktivEnhet: "0316",
+};
+
+export const mockModiacontextholder = [
+  http.get("/modiacontextholder/api/decorator", () =>
+    HttpResponse.json(saksbehandler)
+  ),
+
+  http.get("/modiacontextholder/api/context/aktivbruker", () =>
+    HttpResponse.json(aktivBruker)
+  ),
+
+  http.get("/modiacontextholder/api/context/aktivenhet", () =>
+    HttpResponse.json(aktivEnhet)
+  ),
+
+  http.get("/modiacontextholder/api/context/v2/aktivenhet", () =>
+    HttpResponse.json(aktivEnhet)
+  ),
+
+  http.post(
+    "/modiacontextholder/api/context",
+    () => new HttpResponse(null, { status: 204 })
+  ),
+];
