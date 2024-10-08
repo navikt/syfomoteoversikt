@@ -27,6 +27,8 @@ const decoratorConfig = (
     environment: getEnvironment(),
     urlFormat: getUrlFormat(),
     proxy: "/modiacontextholder",
+    fnrSyncMode: "writeOnly",
+    enhetSyncMode: "writeOnly",
   };
 };
 
