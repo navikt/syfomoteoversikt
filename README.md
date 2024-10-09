@@ -18,7 +18,7 @@ Du må ha Node v18 og npm v9 installert.
 
 Appen finner du [her](http://localhost:8080/syfomoteoversikt)
 
-Ved første kjøring:
+Ved første kjøring: 
 
 ```sh
 $ cp .env.template .env # for å sette opp lokale miljøvariabler
