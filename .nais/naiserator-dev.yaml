@@ -43,6 +43,9 @@ spec:
       claims:
         extra:
           - "NAVident"
+  redis:
+    - instance: cache
+      access: readwrite
   accessPolicy:
     outbound:
       external:
@@ -52,12 +55,10 @@ spec:
         - application: isdialogmote
         - application: syfoveileder
         - application: syfoperson
-        - application: syfomoteoversikt-redis
         - application: modiacontextholder
           namespace: personoversikt
   envFrom:
     - secret: syfomoteoversikt-session-key
-    - secret: syfomoteoversikt-redis-password
   ingresses:
     - "https://syfomoteoversikt.intern.dev.nav.no"
     - "https://syfomoteoversikt.ansatt.dev.nav.no"
@@ -66,8 +67,6 @@ spec:
       value: "production"
     - name: AUTH_REDIRECT_URI
       value: "https://syfomoteoversikt.intern.dev.nav.no/oauth2/callback"
-    - name: REDIS_HOST
-      value: "syfomoteoversikt-redis"
     - name: EREG_HOST
       value: "https://ereg-services-q1.dev-fss-pub.nais.io"
     - name: ISDIALOGMOTE_HOST
