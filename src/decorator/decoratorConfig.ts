@@ -28,7 +28,6 @@ const decoratorConfig = (
     urlFormat: getUrlFormat(),
     proxy: "/modiacontextholder",
     fnrSyncMode: "writeOnly",
-    enhetSyncMode: "writeOnly",
   };
 };
 
