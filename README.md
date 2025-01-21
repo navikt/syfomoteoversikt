@@ -8,7 +8,7 @@ React-app for administrasjon av dialogmøter for veileder.
 
 ## Kjøre lokalt
 
-Du må ha Node v18 og npm v9 installert.
+Du må ha Node v22 og npm v10 installert.
 
 - For å kjøre koden lokalt:
   - `$ npm install`
