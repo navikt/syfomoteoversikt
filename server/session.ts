@@ -27,7 +27,7 @@ const getValkeyStore = () => {
     ttl: SESSION_MAX_AGE_SECONDS,
     disableTouch: true,
   });
-
+};
 export const setupSession = (app: express.Application) => {
   app.set("trust proxy", 1);
 
