@@ -54,8 +54,10 @@ export const DialogmoteArbeidstakerColumns = ({
   const brukernavnQuery = useBrukerQuery(dialogmote.arbeidstaker.personIdent);
   const BrukersNavn = () => {
     if (brukernavnQuery.isLoading) {
+      console.log("brukernavnQuery.isLoading")
       return <>{texts.henterNavn}</>;
     } else if (brukernavnQuery.data) {
+      console.log("brukernavnQuery.data")
       return (
         <BrukerLenke
           fnr={dialogmote.arbeidstaker.personIdent}
@@ -63,6 +65,7 @@ export const DialogmoteArbeidstakerColumns = ({
         />
       );
     } else {
+      console.log("else")
       return <>{texts.notFound}</>;
     }
   };
