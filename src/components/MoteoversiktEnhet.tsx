@@ -48,13 +48,9 @@ const MoteoversiktEnhet = (): ReactElement => {
   const veiledere = [...dialogmoterVeiledere];
 
   const navnPaaVeiledere = (): string[] => {
-    return [
-      ...new Set(
-        veiledere
-          .map((veileder) => veileder.fulltNavn())
-          .filter((navn) => navn !== undefined) as string[]
-      ),
-    ];
+    return veiledere
+      .map((veileder) => veileder.fulltNavn())
+      .filter((navn) => navn !== undefined) as string[];
   };
 
   const veilederNavnForMote = (mote: DialogmoterDTO): string | undefined => {

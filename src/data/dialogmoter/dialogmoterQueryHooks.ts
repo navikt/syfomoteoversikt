@@ -47,7 +47,7 @@ export const useDialogmoterVeiledere = () => {
     dialogmoterQuery.data?.map(
       (dialogmote) => dialogmote.tildeltVeilederIdent
     ) || [];
-  return useVeiledereQuery(veilederIdenter);
+  return useVeiledereQuery([...new Set(veilederIdenter)]);
 };
 
 const aktiveDialogmoter = (dialogmoter: DialogmoterDTO[]) =>
