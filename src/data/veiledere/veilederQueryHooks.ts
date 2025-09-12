@@ -19,14 +19,7 @@ export const useAktivVeileder = () => {
   return useQuery({
     queryKey: veilederQueryKeys.veileder,
     queryFn: fetchVeileder,
-    select: (data) =>
-      new Veileder(
-        data.ident,
-        data.fornavn,
-        data.etternavn,
-        data.epost,
-        data.telefonnummer
-      ),
+    select: (data) => new Veileder(data.ident, data.fornavn, data.etternavn),
   });
 };
 
@@ -35,14 +28,7 @@ export const useVeilederQuery = (ident: string) => {
     queryKey: veilederQueryKeys.veilederByIdent(ident),
     queryFn: () => fetchVeilederByIdent(ident),
     enabled: !!ident,
-    select: (data) =>
-      new Veileder(
-        data.ident,
-        data.fornavn,
-        data.etternavn,
-        data.epost,
-        data.telefonnummer
-      ),
+    select: (data) => new Veileder(data.ident, data.fornavn, data.etternavn),
   });
 };
 
@@ -51,13 +37,7 @@ export const useVeiledereQuery = (identList: string[]) => {
     queries: identList.map((ident) => ({
       queryKey: veilederQueryKeys.veilederByIdent(ident),
       select: (data: VeilederDTO) =>
-        new Veileder(
-          data.ident,
-          data.fornavn,
-          data.etternavn,
-          data.epost,
-          data.telefonnummer
-        ),
+        new Veileder(data.ident, data.fornavn, data.etternavn),
     })),
   });
   return veiledereQueries
@@ -74,13 +54,7 @@ export function useGetVeiledere(enhet: string) {
     select: (data) =>
       data.map(
         (veileder) =>
-          new Veileder(
-            veileder.ident,
-            veileder.fornavn,
-            veileder.etternavn,
-            veileder.epost,
-            veileder.telefonnummer
-          )
+          new Veileder(veileder.ident, veileder.fornavn, veileder.etternavn)
       ),
   });
 }

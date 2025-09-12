@@ -2,29 +2,17 @@ export interface VeilederDTO {
   ident: string;
   fornavn: string;
   etternavn: string;
-  epost: string;
-  telefonnummer?: string;
 }
 
 export class Veileder {
   ident: string;
   fornavn: string;
   etternavn: string;
-  epost: string;
-  telefonnummer: string | undefined;
 
-  constructor(
-    ident: string,
-    fornavn: string,
-    etternavn: string,
-    epost: string,
-    telefonnummer?: string
-  ) {
+  constructor(ident: string, fornavn: string, etternavn: string) {
     this.ident = ident;
     this.fornavn = fornavn;
     this.etternavn = etternavn;
-    this.epost = epost;
-    this.telefonnummer = telefonnummer;
   }
 
   fulltNavn(): string {
