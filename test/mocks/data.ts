@@ -22,21 +22,9 @@ export const arbeidstakerMock = {
   fnr: brukerFnr,
   navn: "Arne Arbeidstaker",
 };
-export const veilederMock = new Veileder(
-  "Z990197",
-  "Vetle",
-  "Veileder",
-  "vetle.veileder@veileder.no",
-  "12345678"
-);
+export const veilederMock = new Veileder("Z990197", "Vetle", "Veileder");
 
-export const annenVeilederMock = new Veileder(
-  "S123456",
-  "Dana",
-  "Scully",
-  "dana.scully@veileder.no",
-  "87654321"
-);
+export const annenVeilederMock = new Veileder("S123456", "Dana", "Scully");
 
 export const arbeidsgiverMock = {
   leder: "Korrupt Bolle",
