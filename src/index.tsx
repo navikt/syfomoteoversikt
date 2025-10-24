@@ -12,7 +12,7 @@ import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
 import { minutesToMillis } from "@/utils/timeUtils";
 import { isClientError } from "@/api/errors";
 import { initFaro } from "@/faro";
-import { erLokal } from "@/utils/miljoUtil";
+import { erLokal, erProd } from "@/utils/miljoUtil";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +35,21 @@ const queryClient = new QueryClient({
   },
 });
 
+function addUmamiScript() {
+  const dataWebsiteId = erProd()
+    ? "19fa498f-4d3e-4ad5-b484-e16469cb569b"
+    : "67e34db2-7797-4ff8-ac22-49cbce18fd69";
+  const script = document.createElement("script");
+  script.setAttribute("data-host-url", "https://umami.nav.no");
+  script.setAttribute("data-website-id", dataWebsiteId);
+  script.setAttribute(
+    "src",
+    "https://cdn.nav.no/team-researchops/sporing/sporing.js"
+  );
+  script.setAttribute("defer", "defer");
+  document.head.appendChild(script);
+}
+
 initFaro();
 
 const container =
@@ -42,6 +57,9 @@ const container =
 const root = createRoot(container);
 
 function renderApp() {
+  if (!erLokal()) {
+    addUmamiScript();
+  }
   root.render(
     <AktivEnhetProvider>
       <MoteoverforingProvider>
