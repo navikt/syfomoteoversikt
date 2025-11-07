@@ -4,7 +4,6 @@ import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter"
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { mineMoterRoutePath } from "@/routers/AppRouter";
 import { Button } from "@navikt/ds-react";
-import { trackEvent, trackOnClick } from "@/amplitude/amplitude";
 
 const texts = {
   overta: "Overta møter",
@@ -17,13 +16,7 @@ export const OverforMoter = () => {
 
   const handleClick = () => {
     if (harMarkertDialogmoter) {
-      overforDialogmoter.mutate(dialogmoterMarkert, {
-        onSuccess: () => {
-          trackEvent("moter overtatt", {
-            antall: `${dialogmoterMarkert.length}`,
-          });
-        },
-      });
+      overforDialogmoter.mutate(dialogmoterMarkert);
     }
   };
 
@@ -36,10 +29,7 @@ export const OverforMoter = () => {
       <Button
         variant="primary"
         disabled={overforDialogmoter.isPending}
-        onClick={() => {
-          trackOnClick(texts.overta);
-          handleClick();
-        }}
+        onClick={() => handleClick()}
         className="w-fit"
       >
         {texts.overta}

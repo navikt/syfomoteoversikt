@@ -1,6 +1,5 @@
 import React from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { trackOnClick } from "@/amplitude/amplitude";
 import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
 import { useBrukerQuery } from "@/data/bruker/brukernavnQueryHooks";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
@@ -30,7 +29,6 @@ const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
     <Link
       onClick={(event) => {
         event.preventDefault();
-        trackOnClick(texts.trackGoToSyfoModia);
         aktivBruker.mutate(fnr, {
           onSuccess: () => {
             window.location.href = syfomodiapersonMoterUrl;

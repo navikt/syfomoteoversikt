@@ -1,11 +1,6 @@
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { setupServer } from "msw/node";
 
-vi.mock("@amplitude/analytics-browser", () => ({
-  track: vi.fn(),
-  init: vi.fn(),
-}));
-
 export const mockServer = setupServer();
 
 // Start server before all tests
