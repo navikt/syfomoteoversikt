@@ -8,7 +8,6 @@ import {
   getMoteResponser,
 } from "@/utils/moterUtil";
 import { OverforMoter } from "./OverforMoter";
-import { trackOnClick } from "@/amplitude/amplitude";
 import {
   FnrHeader,
   MoteDatoHeader,
@@ -85,10 +84,7 @@ const MoteoversiktEnhet = (): ReactElement => {
             size="small"
             id="moteoversikt-filtrer"
             label={texts.filtrer}
-            onChange={(e) => {
-              trackOnClick(texts.filtrer);
-              setFilterVeileder(e.currentTarget.value);
-            }}
+            onChange={(e) => setFilterVeileder(e.currentTarget.value)}
           >
             <option value="alle">Vis alle</option>
             {navnPaaVeiledere().map((veileder, index) => (

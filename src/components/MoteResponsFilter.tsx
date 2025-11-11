@@ -1,6 +1,5 @@
 import { Select } from "@navikt/ds-react";
 import React, { ReactElement } from "react";
-import { trackOnClick } from "@/amplitude/amplitude";
 
 export enum MoteRespons {
   MOTTATT = "Respons mottatt",
@@ -25,10 +24,7 @@ export const MoteResponsFilter = ({
     size="small"
     id="moteoversikt-filtrer"
     label={texts.label}
-    onChange={(e) => {
-      trackOnClick(`${texts.label} - ${e.currentTarget.value}`);
-      onFilterChange(e.currentTarget.value as MoteRespons);
-    }}
+    onChange={(e) => onFilterChange(e.currentTarget.value as MoteRespons)}
   >
     <option value="alle">{texts.visAlle}</option>
     {moteResponser.map((respons, index) => (

@@ -34,7 +34,6 @@ import {
   TildelDialogmoterRequestBody,
 } from "@/data/dialogmoter/dialogmoterTypes";
 import { useDialogmoterUuids } from "@/data/dialogmoter/useDialogmoterUuids";
-import { trackEvent } from "@/amplitude/amplitude";
 import { Veileder } from "@/data/veiledere/veilederTypes";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
@@ -173,9 +172,6 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
           setFormErrorsVisible(false);
           setVeilederIdent("");
           clearSelected();
-          trackEvent("moter tildelt", {
-            antall: `${requestBody.dialogmoteUuids.length}`,
-          });
         },
       });
     }
