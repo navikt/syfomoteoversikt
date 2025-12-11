@@ -1,60 +1,52 @@
 import React, { ReactElement } from "react";
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Box, Heading, Tabs } from "@navikt/ds-react";
+import LinkAsTab from "@/components/LinkAsTab";
+import { fullNaisUrlDefault } from "@/utils/miljoUtil";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
+import {
+  enhetensMoterRoutePath,
+  mineMoterRoutePath,
+} from "@/routers/AppRouter";
 
-interface Lenke {
-  tittel: string;
-  url: string;
-  aktiv: boolean;
+const texts = {
+  minOversikt: "Min oversikt",
+  enhetensOversikt: "Enhetens oversikt",
+  mineMoter: "Mine møter",
+  enhetensMoter: "Enhetens møter",
+  sokSykmeldt: "Søk etter sykmeldt",
+};
+
+export default function NavigasjonsTopp(): ReactElement {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  return (
+    <Box background="surface-default" className="mb-4">
+      <Tabs value={pathname} onChange={(value) => navigate(value)}>
+        <Tabs.List>
+          <LinkAsTab
+            href={fullNaisUrlDefault("syfooversikt", "/minoversikt")}
+            label={<Heading size="xsmall">{texts.minOversikt}</Heading>}
+          />
+          <LinkAsTab
+            href={fullNaisUrlDefault("syfooversikt", "/enhet")}
+            label={<Heading size="xsmall">{texts.enhetensOversikt}</Heading>}
+          />
+          <Tabs.Tab
+            value={mineMoterRoutePath}
+            label={<Heading size="xsmall">{texts.mineMoter}</Heading>}
+          />
+          <Tabs.Tab
+            value={enhetensMoterRoutePath}
+            label={<Heading size="xsmall">{texts.enhetensMoter}</Heading>}
+          />
+          <LinkAsTab
+            href={fullNaisUrlDefault("syfooversikt", "/sok")}
+            label={<Heading size="xsmall">{texts.sokSykmeldt}</Heading>}
+            icon={<MagnifyingGlassIcon />}
+          />
+        </Tabs.List>
+      </Tabs>
+    </Box>
+  );
 }
-
-interface NavigasjonsToppProps {
-  lenker: Lenke[];
-}
-
-const NavigasjonsLenke = styled.li`
-  display: inline-block;
-  padding-top: 0.25em;
-  padding-bottom: 0.5em;
-  padding-right: 0.5em;
-  margin: 0 2em 0 0;
-
-  text-transform: uppercase;
-
-  a {
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-    font-size: 1.125em;
-  }
-`;
-
-const StyledLink = styled(Link)<{ aktiv: number }>`
-  align-items: center;
-  cursor: pointer;
-
-  ${(props) =>
-    props.aktiv &&
-    css`
-      border-bottom: 4px var(--a-blue-500) solid;
-    `}
-  &:hover {
-    border-bottom: 4px var(--a-blue-500) solid;
-  }
-`;
-
-const NavigasjonsTopp = ({ lenker }: NavigasjonsToppProps): ReactElement => (
-  <header>
-    <ul className="py-4">
-      {lenker.map((lenke) => (
-        <NavigasjonsLenke key={lenke.url}>
-          <StyledLink aktiv={lenke.aktiv ? 1 : 0} to={lenke.url}>
-            {lenke.tittel}
-          </StyledLink>
-        </NavigasjonsLenke>
-      ))}
-    </ul>
-  </header>
-);
-
-export default NavigasjonsTopp;

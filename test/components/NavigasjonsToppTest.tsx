@@ -5,29 +5,16 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 describe("NavigasjonsTopp", () => {
-  it("Viser tre stk lenker dersom man sender inn 3 lenker", () => {
-    const lenker = [
-      {
-        tittel: "tittel1",
-        url: "/url1",
-        aktiv: false,
-      },
-      {
-        tittel: "tittel2",
-        url: "/url2",
-        aktiv: false,
-      },
-      {
-        tittel: "tittel3",
-        url: "/url3",
-        aktiv: false,
-      },
-    ];
+  it("Viser lenker", () => {
     render(
       <MemoryRouter>
-        <NavigasjonsTopp lenker={lenker} />
+        <NavigasjonsTopp />
       </MemoryRouter>
     );
-    expect(screen.getAllByRole("link")).to.have.length(3);
+    expect(screen.getByText("Min oversikt")).to.exist;
+    expect(screen.getByText("Enhetens oversikt")).to.exist;
+    expect(screen.getByText("Mine møter")).to.exist;
+    expect(screen.getByText("Enhetens møter")).to.exist;
+    expect(screen.getByText("Søk etter sykmeldt")).to.exist;
   });
 });

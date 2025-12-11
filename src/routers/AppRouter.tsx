@@ -9,7 +9,7 @@ import EnhetensMoterContainer from "../sider/enhetensmoter/EnhetensMoterContaine
 import MineMoterContainer from "@/sider/minemoter/MineMoterContainer";
 
 export const mineMoterRoutePath = "/syfomoteoversikt/minemoter";
-export const enhetMoterOversiktRoutePath = "/syfomoteoversikt/enhetensmoter";
+export const enhetensMoterRoutePath = "/syfomoteoversikt/enhetensmoter";
 
 const AppRouter = (): ReactElement => {
   return (
@@ -17,7 +17,7 @@ const AppRouter = (): ReactElement => {
       <Routes>
         <Route path={mineMoterRoutePath} element={<MineMoterContainer />} />
         <Route
-          path={enhetMoterOversiktRoutePath}
+          path={enhetensMoterRoutePath}
           element={<EnhetensMoterContainer />}
         />
         <Route path="*" element={<Navigate to={mineMoterRoutePath} />} />

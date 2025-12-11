@@ -1,10 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import AppRouter from "./routers/AppRouter";
+import "@navikt/ds-css";
 import "./utils/globals";
 import "./styles/styles.css";
 import "./styles/style.css";
-import "@navikt/ds-css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { MoteoverforingProvider } from "@/context/moteoverforing/MoteoverforingContext";

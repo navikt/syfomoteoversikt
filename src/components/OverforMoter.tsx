@@ -2,8 +2,8 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
-import { mineMoterRoutePath } from "@/routers/AppRouter";
 import { Button } from "@navikt/ds-react";
+import { mineMoterRoutePath } from "@/routers/AppRouter";
 
 const texts = {
   overta: "Overta møter",
