@@ -3,10 +3,6 @@ import SideFullBredde from "@/components/layout/SideFullbredde";
 import Feilmelding from "../../components/Feilmelding";
 import NavigasjonsTopp from "../../components/NavigasjonsTopp";
 import { useMineDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
-import {
-  enhetMoterOversiktRoutePath,
-  mineMoterRoutePath,
-} from "@/routers/AppRouter";
 import { Loader } from "@navikt/ds-react";
 import { Column } from "@/components/layout/Layout";
 import { useAktivVeileder } from "@/data/veiledere/veilederQueryHooks";
@@ -23,20 +19,7 @@ const MineMoterContainer = (): ReactElement => {
   return (
     <SideFullBredde tittel="Møteoversikt">
       <Column>
-        <NavigasjonsTopp
-          lenker={[
-            {
-              tittel: "Mine møter",
-              url: mineMoterRoutePath,
-              aktiv: true,
-            },
-            {
-              tittel: "Enhetens møter",
-              url: enhetMoterOversiktRoutePath,
-              aktiv: false,
-            },
-          ]}
-        />
+        <NavigasjonsTopp />
         {isLoading && <Loader size="2xlarge" className="flex justify-center" />}
         {isError && <Feilmelding />}
         {isSuccess && (

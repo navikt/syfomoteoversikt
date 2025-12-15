@@ -8,10 +8,6 @@ import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
-import {
-  enhetMoterOversiktRoutePath,
-  mineMoterRoutePath,
-} from "@/routers/AppRouter";
 import { Loader } from "@navikt/ds-react";
 import { Column, RowCentered } from "@/components/layout/Layout";
 
@@ -32,20 +28,7 @@ const EnhetensMoterContainer = (): ReactElement => {
   return (
     <SideFullBredde tittel="Møteoversikt">
       <Column>
-        <NavigasjonsTopp
-          lenker={[
-            {
-              tittel: "Mine møter",
-              url: mineMoterRoutePath,
-              aktiv: false,
-            },
-            {
-              tittel: "Enhetens møter",
-              url: enhetMoterOversiktRoutePath,
-              aktiv: true,
-            },
-          ]}
-        />
+        <NavigasjonsTopp />
         {(() => {
           if (!aktivEnhet) {
             return (
