@@ -23,7 +23,7 @@ interface BrukerLenkeProps {
   navn: string;
 }
 
-const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
+function BrukerLenke({ fnr, navn }: BrukerLenkeProps) {
   const aktivBruker = useAktivBruker();
   return (
     <Link
@@ -40,37 +40,33 @@ const BrukerLenke = ({ fnr, navn }: BrukerLenkeProps) => {
       {navn}
     </Link>
   );
-};
+}
+
+function BrukersNavn({ personident }: { personident: string }) {
+  const brukernavnQuery = useBrukerQuery(personident);
+
+  if (brukernavnQuery.isLoading) {
+    return <>{texts.henterNavn}</>;
+  } else if (brukernavnQuery.data) {
+    return <BrukerLenke fnr={personident} navn={brukernavnQuery.data.navn} />;
+  } else {
+    return <>{texts.notFound}</>;
+  }
+}
 
 interface DialogmoteArbeidstakerColumnsProps {
   dialogmote: DialogmoterDTO;
 }
 
-export const DialogmoteArbeidstakerColumns = ({
+export function DialogmoteArbeidstakerColumns({
   dialogmote,
-}: DialogmoteArbeidstakerColumnsProps) => {
-  const brukernavnQuery = useBrukerQuery(dialogmote.arbeidstaker.personIdent);
-  const BrukersNavn = () => {
-    if (brukernavnQuery.isLoading) {
-      return <>{texts.henterNavn}</>;
-    } else if (brukernavnQuery.data) {
-      return (
-        <BrukerLenke
-          fnr={dialogmote.arbeidstaker.personIdent}
-          navn={brukernavnQuery.data.navn}
-        />
-      );
-    } else {
-      return <>{texts.notFound}</>;
-    }
-  };
-
+}: DialogmoteArbeidstakerColumnsProps) {
   return (
     <>
       <FnrColumn>{dialogmote.arbeidstaker.personIdent}</FnrColumn>
       <TruncatedTableColumn>
-        <BrukersNavn />
+        <BrukersNavn personident={dialogmote.arbeidstaker.personIdent} />
       </TruncatedTableColumn>
     </>
   );
-};
+}
