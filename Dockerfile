@@ -10,7 +10,7 @@ COPY dist ./dist
 RUN npm install -g typescript
 RUN tsc --build
 
-FROM gcr.io/distroless/nodejs22-debian12
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:22-slim
 WORKDIR /syfomoteoversikt
 
 COPY --from=builder /syfomoteoversikt/package.json ./
