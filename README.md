@@ -11,10 +11,10 @@ React-app for administrasjon av dialogmøter for veileder.
 Du må ha Node v22 og npm v10 installert.
 
 - For å kjøre koden lokalt:
-  - `$ npm install`
-  - `$ npm run start`
+  - `$ pnpm install`
+  - `$ pnpm run start`
   - Eventuelt kan kommandoene kjøres fra `package.json` i Intellij.
-- Kjør tester med `npm test`.
+- Kjør tester med `pnpm test`.
 
 Appen finner du [her](http://localhost:8080/syfomoteoversikt)
 
@@ -22,7 +22,7 @@ Ved første kjøring:
 
 ```sh
 $ cp .env.template .env # for å sette opp lokale miljøvariabler
-$ npm install # installerer avhengigheter
+$ pnpm install # installerer avhengigheter
 ```
 
 ## Valkey Cache
