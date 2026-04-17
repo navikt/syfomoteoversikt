@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "ES2019",
     "lib": ["es2019", "dom"],
     "sourceMap": true,
@@ -8,11 +8,13 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "strict": true,
     "noImplicitAny": true,

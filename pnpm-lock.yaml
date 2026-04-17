@@ -8,6 +8,11 @@ overrides:
   react: 19.0.0
   react-dom: 19.0.0
 
+patchedDependencies:
+  openid-client@4.2.2:
+    hash: 2e406ba0ff2e6302a7c46582b242b820adb1d9c1df2e9ff78a812fac9b7b87ed
+    path: patches/openid-client@4.2.2.patch
+
 importers:
 
   .:
@@ -39,9 +44,6 @@ importers:
       '@tanstack/react-query':
         specifier: 5.90.7
         version: 5.90.7(react@19.0.0)
-      '@tanstack/react-query-devtools':
-        specifier: 5.90.2
-        version: 5.90.2(@tanstack/react-query@5.90.7(react@19.0.0))(react@19.0.0)
       '@types/connect-redis':
         specifier: 0.0.19
         version: 0.0.19
@@ -79,8 +81,8 @@ importers:
         specifier: 0.4.1
         version: 0.4.1
       dotenv:
-        specifier: 10.0.0
-        version: 10.0.0
+        specifier: 16.5.0
+        version: 16.5.0
       express:
         specifier: 4.22.1
         version: 4.22.1
@@ -107,7 +109,7 @@ importers:
         version: 4.1.1
       openid-client:
         specifier: 4.2.2
-        version: 4.2.2
+        version: 4.2.2(patch_hash=2e406ba0ff2e6302a7c46582b242b820adb1d9c1df2e9ff78a812fac9b7b87ed)
       prom-client:
         specifier: 11.5.3
         version: 11.5.3
@@ -148,6 +150,9 @@ importers:
       '@tanstack/eslint-plugin-query':
         specifier: 4.29.0
         version: 4.29.0
+      '@tanstack/react-query-devtools':
+        specifier: 5.90.2
+        version: 5.90.2(@tanstack/react-query@5.90.7(react@19.0.0))(react@19.0.0)
       '@testing-library/dom':
         specifier: 10.4.1
         version: 10.4.1
@@ -2759,9 +2764,9 @@ packages:
     peerDependencies:
       webpack: ^4 || ^5
 
-  dotenv@10.0.0:
-    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
-    engines: {node: '>=10'}
+  dotenv@16.5.0:
+    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+    engines: {node: '>=12'}
 
   dotenv@8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
@@ -8084,7 +8089,7 @@ snapshots:
       dotenv-defaults: 2.0.2
       webpack: 5.104.1(webpack-cli@6.0.1)
 
-  dotenv@10.0.0: {}
+  dotenv@16.5.0: {}
 
   dotenv@8.6.0: {}
 
@@ -9554,7 +9559,7 @@ snapshots:
       is-inside-container: 1.0.0
       wsl-utils: 0.1.0
 
-  openid-client@4.2.2:
+  openid-client@4.2.2(patch_hash=2e406ba0ff2e6302a7c46582b242b820adb1d9c1df2e9ff78a812fac9b7b87ed):
     dependencies:
       base64url: 3.0.1
       got: 11.8.6
