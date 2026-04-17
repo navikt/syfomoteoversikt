@@ -1,0 +1,21 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 8a9370241f3f43fbc3101555275be6b22f7b0107..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 5e7d0dd5091d7463ee0acfa09ad68b2164032954..26022392c110a69f4f853cd3b285cf726990001a 100644
+--- a/package.json
++++ b/package.json
+@@ -30,8 +30,11 @@
+   "license": "MIT",
+   "author": "Filip Skokan <panva.ip@gmail.com>",
+   "exports": {
+-    "import": "./lib/index.mjs",
+-    "require": "./lib/index.js"
++    ".": {
++      "types": "./types/index.d.ts",
++      "import": "./lib/index.mjs",
++      "require": "./lib/index.js"
++    }
+   },
+   "main": "lib/index.js",
+   "types": "types/index.d.ts",

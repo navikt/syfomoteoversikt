@@ -2,7 +2,6 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import AppRouter from "./routers/AppRouter";
 import "@navikt/ds-css";
-import "./utils/globals";
 import "./styles/styles.css";
 import "./styles/style.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

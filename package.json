@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "description": "Digitalisering av sykefraværsoppfølging",
   "main": "index.tsx",
+  "type": "module",
   "test": "pnpm test",
   "scripts": {
     "test": "vitest run",
-    "start": "webpack serve --config webpack.dev.ts",
-    "build": "webpack --config webpack.prod.ts && pnpm run build:server",
+    "start": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js && pnpm run build:server",
     "build:server": "tsc --build ./server/tsconfig.json",
     "lint-and-typecheck": "pnpm lint && pnpm typecheck",
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -27,7 +28,6 @@
     "@navikt/ds-react": "7.33.2",
     "@navikt/navspa": "6.0.1",
     "@tanstack/react-query": "5.90.7",
-    "@tanstack/react-query-devtools": "5.90.2",
     "@types/connect-redis": "0.0.19",
     "@types/express": "4.17.21",
     "@types/express-http-proxy": "1.6.6",
@@ -40,7 +40,7 @@
     "axios": "1.15.0",
     "connect-redis": "6.1.3",
     "decode-uri-component": "0.4.1",
-    "dotenv": "10.0.0",
+    "dotenv": "16.5.0",
     "express": "4.22.1",
     "express-http-proxy": "1.6.3",
     "express-session": "1.18.2",
@@ -59,14 +59,15 @@
     "styled-components": "5.3.6"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "5.90.2",
     "@babel/cli": "7.28.3",
     "@babel/core": "7.28.5",
     "@babel/preset-env": "7.28.5",
     "@babel/preset-react": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
     "@tanstack/eslint-plugin-query": "4.29.0",
-    "@testing-library/react": "16.3.0",
     "@testing-library/dom": "10.4.1",
+    "@testing-library/react": "16.3.0",
     "@types/dotenv-webpack": "7.0.8",
     "@types/node": "22.13.1",
     "@types/react-document-title": "2.0.10",
@@ -111,6 +112,9 @@
     "overrides": {
       "react": "19.0.0",
       "react-dom": "19.0.0"
+    },
+    "patchedDependencies": {
+      "openid-client@4.2.2": "patches/openid-client@4.2.2.patch"
     }
   },
   "msw": {
