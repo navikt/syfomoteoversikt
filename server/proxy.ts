@@ -1,9 +1,8 @@
 import express from "express";
 import expressHttpProxy from "express-http-proxy";
 import url from "url";
-import { Client, Issuer } from "openid-client";
 
-import { getOrRefreshOnBehalfOfToken } from "./authUtils.js";
+import { getOnBehalfOfToken } from "./authUtils.js";
 import * as Config from "./config.js";
 
 const proxyExternalHostWithoutAuthentication = (host: any) =>
@@ -33,20 +32,6 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
       next(err);
     },
   });
-
-const proxyDirectly = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction,
-  authClient: Client,
-  externalAppConfig: Config.ExternalAppConfig
-) => {
-  return proxyExternalHostWithoutAuthentication(externalAppConfig.host)(
-    req,
-    res,
-    next
-  );
-};
 
 const proxyExternalHost = (
   { applicationName, host, removePathPrefix }: Config.ExternalAppConfig,
@@ -100,42 +85,28 @@ const proxyOnBehalfOf = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
-  authClient: Client,
-  issuer: Issuer<any>,
   externalAppConfig: Config.ExternalAppConfig
 ) => {
-  getOrRefreshOnBehalfOfToken(
-    authClient,
-    issuer,
-    req,
-    externalAppConfig.clientId
-  )
-    .then((onBehalfOfToken) => {
-      if (!onBehalfOfToken || !onBehalfOfToken.accessToken) {
+  getOnBehalfOfToken(req, externalAppConfig.clientId)
+    .then((accessToken) => {
+      if (!accessToken) {
         res.status(500).send("Failed to fetch access token on behalf of user.");
-        console.log(
-          "proxyOnBehalfOf: on-behalf-of-token or accessToken was undefined"
-        );
+        console.log("proxyOnBehalfOf: on-behalf-of-token was undefined");
         return;
       }
       return proxyExternalHost(
         externalAppConfig,
-        onBehalfOfToken.accessToken,
+        accessToken,
         req.method === "POST" || req.method === "PATCH"
       )(req, res, next);
     })
     .catch((error: any) => {
-      console.log("Failed to renew token(s). Original error: %s", error);
-      res
-        .status(500)
-        .send("Failed to fetch/refresh access tokens on behalf of user");
+      console.log("Failed to get OBO token. Original error: %s", error);
+      res.status(500).send("Failed to fetch access tokens on behalf of user");
     });
 };
 
-export const setupProxy = (
-  authClient: Client,
-  issuer: Issuer<any>
-): express.Router => {
+export const setupProxy = (): express.Router => {
   const router = express.Router();
 
   router.use(
@@ -145,7 +116,11 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyDirectly(req, res, next, authClient, Config.auth.ereg);
+      proxyExternalHostWithoutAuthentication(Config.auth.ereg.host)(
+        req,
+        res,
+        next
+      );
     }
   );
 
@@ -160,8 +135,6 @@ export const setupProxy = (
         req,
         res,
         next,
-        authClient,
-        issuer,
         Config.auth.modiacontextholder
       );
     }
@@ -178,8 +151,6 @@ export const setupProxy = (
         req,
         res,
         next,
-        authClient,
-        issuer,
         Config.auth.isdialogmote
       );
     }
@@ -196,8 +167,6 @@ export const setupProxy = (
         req,
         res,
         next,
-        authClient,
-        issuer,
         Config.auth.syfoperson
       );
     }
@@ -214,8 +183,6 @@ export const setupProxy = (
         req,
         res,
         next,
-        authClient,
-        issuer,
         Config.auth.syfoveileder
       );
     }

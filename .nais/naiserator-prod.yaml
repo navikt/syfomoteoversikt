@@ -5,6 +5,8 @@ metadata:
   namespace: teamsykefravr
   labels:
     team: teamsykefravr
+  annotations:
+    texas.nais.io/enabled: "true"
 spec:
   image: {{ image }}
   replicas:
@@ -43,9 +45,6 @@ spec:
       claims:
         extra:
           - "NAVident"
-  valkey:
-    - instance: cache
-      access: readwrite
   accessPolicy:
     outbound:
       external:
@@ -57,15 +56,11 @@ spec:
         - application: syfoveileder
         - application: modiacontextholder
           namespace: personoversikt
-  envFrom:
-    - secret: syfomoteoversikt-session-key
   ingresses:
     - "https://syfomoteoversikt.intern.nav.no"
   env:
     - name: NODE_ENV
       value: "production"
-    - name: AUTH_REDIRECT_URI
-      value: "https://syfomoteoversikt.intern.nav.no/oauth2/callback"
     - name: EREG_HOST
       value: "https://ereg-services.prod-fss-pub.nais.io"
     - name: ISDIALOGMOTE_HOST
