@@ -131,12 +131,7 @@ export const setupProxy = (): express.Router => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        Config.auth.modiacontextholder
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.modiacontextholder);
     }
   );
 
@@ -147,12 +142,7 @@ export const setupProxy = (): express.Router => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        Config.auth.isdialogmote
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.isdialogmote);
     }
   );
 
@@ -163,12 +153,7 @@ export const setupProxy = (): express.Router => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        Config.auth.syfoperson
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.syfoperson);
     }
   );
 
@@ -179,12 +164,7 @@ export const setupProxy = (): express.Router => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        Config.auth.syfoveileder
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.syfoveileder);
     }
   );
 
