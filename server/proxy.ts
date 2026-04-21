@@ -111,17 +111,7 @@ export const setupProxy = (): express.Router => {
 
   router.use(
     "/ereg/*",
-    (
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction
-    ) => {
-      proxyExternalHostWithoutAuthentication(Config.auth.ereg.host)(
-        req,
-        res,
-        next
-      );
-    }
+    proxyExternalHostWithoutAuthentication(Config.auth.ereg.host)
   );
 
   router.use(
