@@ -57,8 +57,8 @@ importers:
         specifier: 1.15.1
         version: 1.15.1
       dotenv:
-        specifier: 16.5.0
-        version: 16.5.0
+        specifier: 17.4.2
+        version: 17.4.2
       express:
         specifier: 4.22.1
         version: 4.22.1
@@ -2698,8 +2698,8 @@ packages:
     peerDependencies:
       webpack: ^4 || ^5
 
-  dotenv@16.5.0:
-    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+  dotenv@17.4.2:
+    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
 
   dotenv@8.6.0:
@@ -7954,7 +7954,7 @@ snapshots:
       dotenv-defaults: 2.0.2
       webpack: 5.106.2(webpack-cli@6.0.1)
 
-  dotenv@16.5.0: {}
+  dotenv@17.4.2: {}
 
   dotenv@8.6.0: {}
 
