@@ -184,8 +184,8 @@ importers:
         specifier: 4.6.2
         version: 4.6.2(eslint@8.38.0)
       eslint-plugin-testing-library:
-        specifier: 5.10.3
-        version: 5.10.3(eslint@8.38.0)(typescript@5.9.3)
+        specifier: 6.5.0
+        version: 6.5.0(eslint@8.38.0)(typescript@5.9.3)
       eslint-plugin-unused-imports:
         specifier: 2.0.0
         version: 2.0.0(@typescript-eslint/eslint-plugin@5.58.0(@typescript-eslint/parser@5.58.0(eslint@8.38.0)(typescript@5.9.3))(eslint@8.38.0)(typescript@5.9.3))(eslint@8.38.0)
@@ -2885,11 +2885,11 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-plugin-testing-library@5.10.3:
-    resolution: {integrity: sha512-0yhsKFsjHLud5PM+f2dWr9K3rqYzMy4cSHs3lcmFYMa1CdSzRvHGgXvsFarBjZ41gU8jhTdMIkg8jHLxGJqLqw==}
+  eslint-plugin-testing-library@6.5.0:
+    resolution: {integrity: sha512-Ls5TUfLm5/snocMAOlofSOJxNN0aKqwTlco7CrNtMjkTdQlkpSMaeTCDHCuXfzrI97xcx2rSCNeKeJjtpkNC1w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0, npm: '>=6'}
     peerDependencies:
-      eslint: ^7.5.0 || ^8.0.0
+      eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
 
   eslint-plugin-unused-imports@2.0.0:
     resolution: {integrity: sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==}
@@ -8251,7 +8251,7 @@ snapshots:
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
 
-  eslint-plugin-testing-library@5.10.3(eslint@8.38.0)(typescript@5.9.3):
+  eslint-plugin-testing-library@6.5.0(eslint@8.38.0)(typescript@5.9.3):
     dependencies:
       '@typescript-eslint/utils': 5.62.0(eslint@8.38.0)(typescript@5.9.3)
       eslint: 8.38.0
