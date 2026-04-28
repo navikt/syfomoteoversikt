@@ -20,7 +20,8 @@
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "types": ["vite/client"]
   },
   "exclude": ["node_modules", "build"]
 }
