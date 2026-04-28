@@ -54,6 +54,9 @@ const redirectIfUnauthorized = async (
 };
 
 const setupServer = async () => {
+  const DIST_DIR = path.join(__dirname, "dist");
+  const HTML_FILE = path.join(DIST_DIR, "index.html");
+
   server.use(setupProxy());
 
   server.get("/actuator/metrics", (req, res) => {
@@ -69,34 +72,23 @@ const setupServer = async () => {
     res.sendStatus(200);
   });
 
-  const DIST_DIR = path.join(__dirname, "dist");
-  const HTML_FILE = path.join(DIST_DIR, "index.html");
-
-  server.use(
-    "/syfomoteoversikt",
-    express.static(path.join(__dirname, "..", "build"))
-  );
-
-  server.use(
-    "/syfomoteoversikt/img",
-    express.static(path.resolve(__dirname, "img"))
-  );
+  server.use("/syfomoteoversikt", express.static(DIST_DIR));
 
   server.get(
-    [
-      "/",
-      "/syfomoteoversikt",
-      "/syfomoteoversikt/*",
-      /^\/syfomoteoversikt\/(?!(resources|img)).*$/,
-    ],
+    ["/", "/syfomoteoversikt/*"],
     [nocache, redirectIfUnauthorized],
-    (req: express.Request, res: express.Response) => {
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      if (path.extname(req.path)) {
+        return next();
+      }
+
       res.sendFile(HTML_FILE);
-      httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
     }
   );
-
-  server.use("/static", express.static(DIST_DIR));
 
   const port = 8080;
 
