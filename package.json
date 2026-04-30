@@ -4,23 +4,22 @@
   "description": "Digitalisering av sykefraværsoppfølging",
   "main": "index.tsx",
   "type": "module",
-  "test": "pnpm test",
   "scripts": {
-    "test": "vitest run",
-    "start": "pnpm msw:update && webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js && pnpm run build:server",
+    "start": "pnpm msw:update && vite",
+    "build": "pnpm build:client && pnpm build:server",
+    "build:client": "vite build",
     "build:server": "tsc --build ./server/tsconfig.json",
+    "test": "vitest run",
     "lint-and-typecheck": "pnpm lint && pnpm typecheck",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint src test --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "pnpm lint -- --fix",
-    "msw:update": "msw init public --save"
+    "msw:update": "msw init . --save"
   },
   "author": "Team DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
-    "@babel/polyfill": "7.12.1",
     "@grafana/faro-react": "1.19.0",
     "@grafana/faro-web-sdk": "1.19.0",
     "@grafana/faro-web-tracing": "1.19.0",
@@ -51,28 +50,17 @@
     "styled-components": "5.3.6"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "5.99.2",
-    "@babel/cli": "7.28.6",
-    "@babel/core": "7.29.0",
-    "@babel/preset-env": "7.29.2",
-    "@babel/preset-react": "7.28.5",
-    "@babel/preset-typescript": "7.28.5",
+    "@tailwindcss/vite": "4.2.4",
     "@tanstack/eslint-plugin-query": "4.29.0",
+    "@tanstack/react-query-devtools": "5.99.2",
     "@testing-library/dom": "10.4.1",
     "@testing-library/react": "16.3.2",
-    "@types/dotenv-webpack": "7.0.8",
     "@types/node": "22.13.1",
     "@types/react-document-title": "2.0.10",
-    "@types/webpack": "5.28.5",
     "@typescript-eslint/eslint-plugin": "5.58.0",
     "@typescript-eslint/parser": "5.58.0",
+    "@vitejs/plugin-react": "6.0.1",
     "autoprefixer": "10.5.0",
-    "babel-loader": "9.2.1",
-    "babel-plugin-module-resolver": "5.0.3",
-    "babel-plugin-styled-components": "2.1.4",
-    "clean-webpack-plugin": "4.0.0",
-    "css-loader": "7.1.4",
-    "dotenv-webpack": "8.1.1",
     "eslint": "8.38.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.8.0",
@@ -82,27 +70,19 @@
     "eslint-plugin-react-hooks": "4.6.2",
     "eslint-plugin-testing-library": "5.10.3",
     "eslint-plugin-unused-imports": "2.0.0",
-    "html-webpack-plugin": "5.6.7",
     "jsdom": "26.0.0",
     "msw": "2.13.4",
-    "postcss-loader": "8.2.1",
     "prettier": "2.6.2",
-    "style-loader": "4.0.0",
-    "tailwindcss": "3.4.17",
+    "tailwindcss": "4.2.4",
     "ts-node": "10.9.2",
-    "tsconfig-paths-webpack-plugin": "4.2.0",
     "typescript": "5.9.3",
-    "url-loader": "4.1.1",
-    "vite-tsconfig-paths": "4.3.2",
-    "vitest": "3.0.5",
-    "webpack": "5.106.2",
-    "webpack-cli": "6.0.1",
-    "webpack-dev-server": "5.2.3",
-    "webpack-merge": "6.0.1"
+    "vite": "8.0.10",
+    "vite-plugin-svgr": "5.2.0",
+    "vitest": "4.1.5"
   },
   "msw": {
     "workerDirectory": [
-      "public"
+      ""
     ]
   }
 }
