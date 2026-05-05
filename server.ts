@@ -4,6 +4,7 @@ import path from "path";
 import prometheus from "prom-client";
 import { validateToken } from "./server/authUtils.js";
 import { setupProxy } from "./server/proxy.js";
+import { logger } from "@navikt/pino-logger";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -93,7 +94,7 @@ const setupServer = async () => {
   const port = 8080;
 
   server.listen(port, () => {
-    console.log(`App listening on port: ${port}`);
+    logger.info(`App listening on port: ${port}`);
   });
 };
 
