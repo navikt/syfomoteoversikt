@@ -1,39 +1,63 @@
-import React, { ReactElement, useCallback } from "react";
-import NAVSPA from "@navikt/navspa";
-import decoratorConfig from "./decoratorConfig";
-import { fullNaisUrlDefault } from "@/utils/miljoUtil";
-import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import React, { useLayoutEffect, useRef } from "react";
+import { decoratorConfig } from "./decoratorConfig";
 import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
-import { DecoratorProps } from "@/decorator/decoratorProps";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext.tsx";
+import { fullNaisUrlDefault } from "@/utils/miljoUtil.ts";
 
-const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
-  "internarbeidsflate-decorator-v3"
-);
-
-const Decorator = (): ReactElement => {
-  const { setAktivEnhet } = useAktivEnhet();
+const Decorator = () => {
+  const aktivEnhet = useAktivEnhet();
   const aktivBruker = useAktivBruker();
+  const decoratorRef = useRef<InternarbeidsflateDecoratorElement>(null);
 
-  const handlePersonsokSubmit = (nyttFnr: string) => {
-    aktivBruker.mutate(nyttFnr, {
-      onSuccess: () => {
-        const host = "syfomodiaperson";
-        const path = `/sykefravaer`;
-        window.location.href = fullNaisUrlDefault(host, path);
-      },
-    });
-  };
+  useLayoutEffect(() => {
+    const handlePersonsokSubmit = (nyttFnr: string) => {
+      aktivBruker.mutate(nyttFnr, {
+        onSuccess: () => {
+          const host = "syfomodiaperson";
+          const path = `/sykefravaer`;
+          window.location.href = fullNaisUrlDefault(host, path);
+        },
+      });
+    };
 
-  const handleChangeEnhet = (nyEnhet: string) => {
-    setAktivEnhet(nyEnhet);
-  };
+    const decoratorElement = decoratorRef.current;
+    if (!decoratorElement) return;
 
-  const config = useCallback(decoratorConfig, [
-    handlePersonsokSubmit,
-    handleChangeEnhet,
-  ])(handlePersonsokSubmit, handleChangeEnhet);
+    const onEnhetChanged = (event: CustomEvent<EnhetChangedDetail>) => {
+      const { enhet } = event.detail;
+      if (enhet) aktivEnhet.setAktivEnhet(enhet);
+    };
 
-  return <InternflateDecorator {...config} />;
+    const onFnrChanged = (event: CustomEvent<FnrChangedDetail>) => {
+      const { fnr } = event.detail;
+      if (fnr) handlePersonsokSubmit(fnr);
+    };
+
+    decoratorElement.addEventListener("fnr-changed", onFnrChanged);
+    decoratorElement.addEventListener("enhet-changed", onEnhetChanged);
+
+    return () => {
+      decoratorElement.removeEventListener("fnr-changed", onFnrChanged);
+      decoratorElement.removeEventListener("enhet-changed", onEnhetChanged);
+    };
+  });
+
+  return (
+    <internarbeidsflate-decorator
+      ref={decoratorRef}
+      app-name={decoratorConfig.appName}
+      fetch-active-enhet-on-mount={String(
+        decoratorConfig.fetchActiveEnhetOnMount
+      )}
+      show-enheter={String(decoratorConfig.showEnheter)}
+      show-search-area={String(decoratorConfig.showSearchArea)}
+      show-hotkeys={String(decoratorConfig.showHotkeys)}
+      environment={decoratorConfig.environment}
+      url-format={decoratorConfig.urlFormat}
+      proxy={decoratorConfig.proxy}
+      fnr-sync-mode={decoratorConfig.fnrSyncMode}
+    />
+  );
 };
 
 export default Decorator;
