@@ -21,8 +21,8 @@ importers:
         specifier: 7.33.2
         version: 7.33.2
       '@navikt/ds-css':
-        specifier: 7.33.2
-        version: 7.33.2
+        specifier: 8.10.5
+        version: 8.10.5
       '@navikt/ds-react':
         specifier: 7.33.2
         version: 7.33.2(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -470,8 +470,8 @@ packages:
   '@navikt/aksel-icons@7.33.2':
     resolution: {integrity: sha512-yF676LoUCSVQoN9X03ONh0gi3svpTpWScpjmHqxxjBPDJf0okIBQKFztI6iGOrFIB/kVyI4M8Qy8EsBuop1KAA==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/7.33.2/e39a489773cb78aa2a0cb96ee89ba3793dc856de}
 
-  '@navikt/ds-css@7.33.2':
-    resolution: {integrity: sha512-isd/GMpXLLrfEl1fLXVZmwxCQUa+tb7qY8V4zt+OqKVXxb9RkNvYONEAVmR7pFTklhPYafU4sJDt6mPfWBrhZw==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/7.33.2/479e17163cea5c114de01a6b6801b321b8e94207}
+  '@navikt/ds-css@8.10.5':
+    resolution: {integrity: sha512-XJXHPyN0IPQV/zMSVw06uJsqrSyOObgJ7PiQ9wSkw5bLfwv8ksn51HV3EkRXy7h0A8EHnlywFvgROwMVIBqHoA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.10.5/55b51c6fdb86d5123b4b18265f53dc67eb26e6f7}
 
   '@navikt/ds-react@7.33.2':
     resolution: {integrity: sha512-RHVraNiRxn2zTDtbJSsWRGSVc6qQLhV0HiALcvU9vSSzrQ5AFXhdEEmCbWsl6Dy4/TjxJJYV/KhHX2ZH1ZMwjw==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/7.33.2/0841c85fc1181a633edcd33fdff5f7a39f8685ec}
@@ -2945,6 +2945,9 @@ packages:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
 
+  real-require@1.0.0:
+    resolution: {integrity: sha512-P4nbQYQfePJxRSmY+v/KINxVucm4NF3p3s7pJveMTtom52FR4YGltUQLB8idDXwDDWW+eYrWDFbuzUnjoWHF7g==}
+
   reflect.getprototypeof@1.0.10:
     resolution: {integrity: sha512-00o4I+DVrefhv+nX0ulyi3biSHCPDe+yLv5o/p6d/UVlirijB8E16FtfwSAi4g3tcqrQ4lRAqQSoFEZJehYEcw==}
     engines: {node: '>= 0.4'}
@@ -3239,8 +3242,8 @@ packages:
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
 
-  thread-stream@4.0.0:
-    resolution: {integrity: sha512-4iMVL6HAINXWf1ZKZjIPcz5wYaOdPhtO8ATvZ+Xqp3BTdaqtAwQkNmKORqcIo5YkQqGXq5cwfswDwMqqQNrpJA==}
+  thread-stream@4.2.0:
+    resolution: {integrity: sha512-e2zZ96wSChazBsbENf/Pcm/4swHt2cEKQ92rhUjkL9GCKiTDJIaTBenjE/m9DXi0QBmTMDkFDdOomUy20A1tDQ==}
     engines: {node: '>=20'}
 
   through2@4.0.2:
@@ -3948,7 +3951,7 @@ snapshots:
 
   '@navikt/aksel-icons@7.33.2': {}
 
-  '@navikt/ds-css@7.33.2': {}
+  '@navikt/ds-css@8.10.5': {}
 
   '@navikt/ds-react@7.33.2(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -6406,7 +6409,7 @@ snapshots:
       real-require: 0.2.0
       safe-stable-stringify: 2.5.0
       sonic-boom: 4.2.1
-      thread-stream: 4.0.0
+      thread-stream: 4.2.0
 
   possible-typed-array-names@1.1.0: {}
 
@@ -6540,6 +6543,8 @@ snapshots:
     optional: true
 
   real-require@0.2.0: {}
+
+  real-require@1.0.0: {}
 
   reflect.getprototypeof@1.0.10:
     dependencies:
@@ -6946,9 +6951,9 @@ snapshots:
 
   text-table@0.2.0: {}
 
-  thread-stream@4.0.0:
+  thread-stream@4.2.0:
     dependencies:
-      real-require: 0.2.0
+      real-require: 1.0.0
 
   through2@4.0.2:
     dependencies:
