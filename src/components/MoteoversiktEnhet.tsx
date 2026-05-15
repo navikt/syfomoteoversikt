@@ -1,21 +1,9 @@
 import React, { ReactElement, useState } from "react";
 import { BodyShort, Select } from "@navikt/ds-react";
-import Mote from "./Mote";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
-import {
-  compareByMotedato,
-  getMoteRespons,
-  getMoteResponser,
-} from "@/utils/moterUtil";
+import { getMoteRespons, getMoteResponser } from "@/utils/moterUtil";
 import { OverforMoter } from "./OverforMoter";
-import {
-  FnrHeader,
-  MoteDatoHeader,
-  ResponsHeader,
-  StatusHeader,
-  TH,
-  VelgMoteHeader,
-} from "./MoteTable";
+import MoteTabell from "./MoteTabell";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import {
   useDialogmoterVeiledere,
@@ -35,7 +23,7 @@ const texts = {
   filtrer: "Filtrer på veileder",
 };
 
-const MoteoversiktEnhet = (): ReactElement => {
+export default function MoteoversiktEnhet(): ReactElement {
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
     "alle"
   );
@@ -120,35 +108,13 @@ const MoteoversiktEnhet = (): ReactElement => {
           </BodyShort>
         </div>
       </div>
-      <div className="moteoversikt">
-        <table className="mb-8 w-full border-collapse table-fixed">
-          <thead>
-            <tr>
-              <VelgMoteHeader scope="col">{texts.velg}</VelgMoteHeader>
-              <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
-              <TH scope="col">{texts.veileder}</TH>
-              <FnrHeader scope="col">{texts.fnr}</FnrHeader>
-              <TH scope="col">{texts.sykmeldt}</TH>
-              <StatusHeader scope="col">{texts.status}</StatusHeader>
-              <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
-            </tr>
-          </thead>
-          <tbody>
-            {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
-              <Mote
-                key={index}
-                mote={mote}
-                isSelected={isSelected}
-                toggleSelected={toggleSelected}
-                showVeileder={true}
-                showVirksomhet={false}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <MoteTabell
+        moter={filtrerteMoter}
+        isSelected={isSelected}
+        toggleSelected={toggleSelected}
+        showVeileder={true}
+        showVirksomhet={false}
+      />
     </>
   );
-};
-
-export default MoteoversiktEnhet;
+}

@@ -123,7 +123,7 @@ describe("MineMoter", () => {
       "Velg",
       "Møtedato",
       "F.nr",
-      "Navn",
+      "Sykmeldt",
       "Virksomhet",
       "Status",
       "Respons fra deltakere",
@@ -138,7 +138,7 @@ describe("MineMoter", () => {
 
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
-      "VelgMøtedatoF.nrNavnVirksomhetStatusRespons fra deltakere",
+      "VelgMøtedatoF.nrSykmeldtVirksomhetStatusRespons fra deltakere",
       `${getDatoFraZulu(yesterday)}${arbeidstakerMock.fnr}${
         arbeidstakerMock.navn
       }${virksomhetNavn}Referat ikke sendtArbeidstaker:Kommer ikkeArbeidsgiver:Ikke åpnet`,

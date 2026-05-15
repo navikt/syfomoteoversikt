@@ -1,17 +1,12 @@
 import React, { ReactElement } from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
 import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
-import {
-  StatusColumn,
-  TruncatedTableColumn,
-  VelgMoteColumn,
-} from "./MoteTable";
 import { useVirksomhetQuery } from "@/data/virksomhet/virksomhetQueryHooks";
 import { useVeilederQuery } from "@/data/veiledere/veilederQueryHooks";
-import { MoteDato } from "./MoteDato";
-import { Checkbox } from "@navikt/ds-react";
-import { statusTekst } from "@/utils/dialogmoterUtil";
+import { Checkbox, Table } from "@navikt/ds-react";
+import { getDialogmoteDato, statusTekst } from "@/utils/dialogmoterUtil";
 import MoteresponsColumn from "@/components/MoteresponsColumn";
+import { getDatoFraZulu } from "@/utils/dateUtil.ts";
 
 interface Props {
   mote: DialogmoterDTO;
@@ -52,9 +47,14 @@ export default function Mote({
     }
   };
 
+  const moteDato = (mote: DialogmoterDTO): string => {
+    const moteDato = getDialogmoteDato(mote);
+    return moteDato ? getDatoFraZulu(moteDato) : "Mangler dato";
+  };
+
   return (
-    <tr>
-      <VelgMoteColumn>
+    <Table.Row>
+      <Table.DataCell>
         <Checkbox
           id={checkboxId}
           checked={isSelected(mote.uuid)}
@@ -63,17 +63,17 @@ export default function Mote({
         >
           {""}
         </Checkbox>
-      </VelgMoteColumn>
-      <MoteDato mote={mote} />
+      </Table.DataCell>
+      <Table.DataCell textSize="small">{moteDato(mote)}</Table.DataCell>
       {showVeileder && (
-        <TruncatedTableColumn>{veilederNavn()}</TruncatedTableColumn>
+        <Table.DataCell textSize="small">{veilederNavn()}</Table.DataCell>
       )}
       <DialogmoteArbeidstakerColumns dialogmote={mote} />
       {showVirksomhet && (
-        <TruncatedTableColumn>{virksomhetsNavn()}</TruncatedTableColumn>
+        <Table.DataCell textSize="small">{virksomhetsNavn()}</Table.DataCell>
       )}
-      <StatusColumn>{statusTekst(mote)}</StatusColumn>
+      <Table.DataCell textSize="small">{statusTekst(mote)}</Table.DataCell>
       <MoteresponsColumn dialogmote={mote} />
-    </tr>
+    </Table.Row>
   );
 }
