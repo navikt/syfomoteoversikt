@@ -285,8 +285,10 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
                   <Mote
                     key={index}
                     mote={mote}
-                    isMoteSelected={isSelected}
-                    modifyDialogmoterUuids={modifyDialogmoterUuids}
+                    isSelected={isSelected}
+                    toggleSelected={modifyDialogmoterUuids}
+                    showVeileder={false}
+                    showVirksomhet={true}
                   />
                 ))}
               </tbody>

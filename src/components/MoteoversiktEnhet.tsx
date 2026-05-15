@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { BodyShort, Select } from "@navikt/ds-react";
-import MoteEnhet from "./MoteEnhet";
+import Mote from "./Mote";
 import { MoteRespons, MoteResponsFilter } from "./MoteResponsFilter";
 import {
   compareByMotedato,
@@ -21,6 +21,8 @@ import {
   useDialogmoterVeiledere,
   useEnhetensDialogmoterQuery,
 } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
+import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
 
 const texts = {
   velg: "Velg",
@@ -31,7 +33,6 @@ const texts = {
   status: "Status",
   respons: "Respons fra deltakere",
   filtrer: "Filtrer på veileder",
-  filtrerType: "Filtrer på type",
 };
 
 const MoteoversiktEnhet = (): ReactElement => {
@@ -45,6 +46,21 @@ const MoteoversiktEnhet = (): ReactElement => {
   const dialogmoterVeiledere = useDialogmoterVeiledere();
   const moter = [...(dialogmoterQuery.data || [])];
   const veiledere = [...dialogmoterVeiledere];
+
+  const { dialogmoterMarkert, dispatch } = useMoteoverforing();
+
+  const isSelected = (uuid: string): boolean => {
+    return dialogmoterMarkert.includes(uuid);
+  };
+
+  const toggleSelected = (uuid: string): void => {
+    const isCurrentlySelected = dialogmoterMarkert.includes(uuid);
+    dispatch({
+      type: MoteoverforingActionType.MarkerDialogmote,
+      dialogmoteUuid: uuid,
+      overta: !isCurrentlySelected,
+    });
+  };
 
   const navnPaaVeiledere = (): string[] => {
     return veiledere
@@ -119,7 +135,14 @@ const MoteoversiktEnhet = (): ReactElement => {
           </thead>
           <tbody>
             {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
-              <MoteEnhet key={index} mote={mote} />
+              <Mote
+                key={index}
+                mote={mote}
+                isSelected={isSelected}
+                toggleSelected={toggleSelected}
+                showVeileder={true}
+                showVirksomhet={false}
+              />
             ))}
           </tbody>
         </table>

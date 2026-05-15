@@ -7,25 +7,40 @@ import {
   VelgMoteColumn,
 } from "./MoteTable";
 import { useVirksomhetQuery } from "@/data/virksomhet/virksomhetQueryHooks";
+import { useVeilederQuery } from "@/data/veiledere/veilederQueryHooks";
 import { MoteDato } from "./MoteDato";
 import { Checkbox } from "@navikt/ds-react";
 import { statusTekst } from "@/utils/dialogmoterUtil";
 import MoteresponsColumn from "@/components/MoteresponsColumn";
 
-interface MoteProps {
+interface Props {
   mote: DialogmoterDTO;
-  modifyDialogmoterUuids: (dialogmoteUuid: string) => void;
-  isMoteSelected: (moteUuid: string) => boolean;
+  isSelected: (moteUuid: string) => boolean;
+  toggleSelected: (moteUuid: string) => void;
+  showVeileder: boolean;
+  showVirksomhet: boolean;
 }
 
-const Mote = ({
+export default function Mote({
   mote,
-  modifyDialogmoterUuids,
-  isMoteSelected,
-}: MoteProps): ReactElement => {
+  isSelected,
+  toggleSelected,
+  showVeileder,
+  showVirksomhet,
+}: Props): ReactElement {
   const virksomhetQuery = useVirksomhetQuery(
     mote.arbeidsgiver.virksomhetsnummer
   );
+  const veilederQuery = useVeilederQuery(mote.tildeltVeilederIdent);
+
+  const checkboxId = `dialogmote-${mote.uuid}`;
+
+  const veilederNavn = (): string => {
+    if (veilederQuery.isLoading) return "Henter navn...";
+    return veilederQuery.data
+      ? veilederQuery.data.fulltNavn()
+      : "Fant ikke navn";
+  };
 
   const virksomhetsNavn = (): string => {
     if (virksomhetQuery.isLoading) {
@@ -41,21 +56,24 @@ const Mote = ({
     <tr>
       <VelgMoteColumn>
         <Checkbox
-          id="dialogmote"
-          checked={isMoteSelected(mote.uuid)}
-          onChange={(e) => modifyDialogmoterUuids(e.target.value)}
+          id={checkboxId}
+          checked={isSelected(mote.uuid)}
+          onChange={() => toggleSelected(mote.uuid)}
           value={mote.uuid}
         >
           {""}
         </Checkbox>
       </VelgMoteColumn>
       <MoteDato mote={mote} />
+      {showVeileder && (
+        <TruncatedTableColumn>{veilederNavn()}</TruncatedTableColumn>
+      )}
       <DialogmoteArbeidstakerColumns dialogmote={mote} />
-      <TruncatedTableColumn>{virksomhetsNavn()}</TruncatedTableColumn>
+      {showVirksomhet && (
+        <TruncatedTableColumn>{virksomhetsNavn()}</TruncatedTableColumn>
+      )}
       <StatusColumn>{statusTekst(mote)}</StatusColumn>
       <MoteresponsColumn dialogmote={mote} />
     </tr>
   );
-};
-
-export default Mote;
+}
