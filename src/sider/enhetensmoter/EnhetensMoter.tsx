@@ -23,7 +23,7 @@ const OverforFeilmelding = ({ children }: OverforFeilmeldingProps) => (
   </Alert>
 );
 
-const EnhetensMoter = (): ReactElement => {
+export default function EnhetensMoter(): ReactElement {
   const overforDialogmoter = useOverforDialogmoter();
   const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const harMoter =
@@ -42,6 +42,4 @@ const EnhetensMoter = (): ReactElement => {
       {harMoter && <MoteoversiktEnhet />}
     </div>
   );
-};
-
-export default EnhetensMoter;
+}

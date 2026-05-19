@@ -1,10 +1,9 @@
 import React from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { FnrColumn, TruncatedTableColumn } from "./MoteTable";
 import { useBrukerQuery } from "@/data/bruker/brukernavnQueryHooks";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil";
 import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
-import { Link } from "@navikt/ds-react";
+import { Link, Table } from "@navikt/ds-react";
 
 const texts = {
   henter: "Henter...",
@@ -63,10 +62,12 @@ export function DialogmoteArbeidstakerColumns({
 }: DialogmoteArbeidstakerColumnsProps) {
   return (
     <>
-      <FnrColumn>{dialogmote.arbeidstaker.personIdent}</FnrColumn>
-      <TruncatedTableColumn>
+      <Table.DataCell textSize="small">
+        {dialogmote.arbeidstaker.personIdent}
+      </Table.DataCell>
+      <Table.DataCell textSize="small">
         <BrukersNavn personident={dialogmote.arbeidstaker.personIdent} />
-      </TruncatedTableColumn>
+      </Table.DataCell>
     </>
   );
 }

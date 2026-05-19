@@ -3,19 +3,8 @@ import {
   MoteRespons,
   MoteResponsFilter,
 } from "../../components/MoteResponsFilter";
-import {
-  compareByMotedato,
-  getMoteRespons,
-  getMoteResponser,
-} from "@/utils/moterUtil";
-import {
-  FnrHeader,
-  MoteDatoHeader,
-  ResponsHeader,
-  StatusHeader,
-  TH,
-  VelgMoteHeader,
-} from "../../components/MoteTable";
+import { getMoteRespons, getMoteResponser } from "@/utils/moterUtil";
+import MoteTabell from "@/components/MoteTabell";
 import {
   Alert,
   BodyShort,
@@ -27,7 +16,6 @@ import {
 } from "@navikt/ds-react";
 import { useGetVeiledere } from "@/data/veiledere/veilederQueryHooks";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
-import Mote from "@/components/Mote";
 import { useTildelDialogmoter } from "@/data/dialogmoter/useTildelDialogmoter";
 import {
   DialogmoterDTO,
@@ -117,7 +105,10 @@ const hentTallordTekst = (tall: number) => {
   return tall === 1 ? `${tallord} nytt møte` : `${tallord} nye møter`;
 };
 
-const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
+export default function MineMoter({
+  aktivVeileder,
+  moter,
+}: Props): ReactElement {
   const { aktivEnhet } = useAktivEnhet();
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
     "alle"
@@ -266,38 +257,16 @@ const MineMoter = ({ aktivVeileder, moter }: Props): ReactElement => {
               </div>
             </div>
 
-            <table className="w-full border-collapse table-fixed mb-8">
-              <thead>
-                <tr>
-                  <VelgMoteHeader scope="col">
-                    {texts.velgKolonneTittel}
-                  </VelgMoteHeader>
-                  <MoteDatoHeader scope="col">{texts.motedato}</MoteDatoHeader>
-                  <FnrHeader scope="col">{texts.fnr}</FnrHeader>
-                  <TH scope="col">{texts.navn}</TH>
-                  <TH scope="col">{texts.virksomhet}</TH>
-                  <StatusHeader scope="col">{texts.status}</StatusHeader>
-                  <ResponsHeader scope="col">{texts.respons}</ResponsHeader>
-                </tr>
-              </thead>
-              <tbody>
-                {filtrerteMoter.sort(compareByMotedato()).map((mote, index) => (
-                  <Mote
-                    key={index}
-                    mote={mote}
-                    isSelected={isSelected}
-                    toggleSelected={modifyDialogmoterUuids}
-                    showVeileder={false}
-                    showVirksomhet={true}
-                  />
-                ))}
-              </tbody>
-            </table>
+            <MoteTabell
+              moter={filtrerteMoter}
+              isSelected={isSelected}
+              toggleSelected={modifyDialogmoterUuids}
+              showVeileder={false}
+              showVirksomhet={true}
+            />
           </form>
         </>
       )}
     </>
   );
-};
-
-export default MineMoter;
+}

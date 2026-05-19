@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
-import { ResponsColumn } from "@/components/MoteTable";
 import { DialogmoterDTO, SvarType } from "@/data/dialogmoter/dialogmoterTypes";
-import { BodyShort, Tag } from "@navikt/ds-react";
+import { BodyShort, Table, Tag } from "@navikt/ds-react";
 import {
   DeltakerRespons,
   getArbeidsgiverRespons,
@@ -82,7 +81,7 @@ export default function MoteresponsColumn({ dialogmote }: Props): ReactElement {
   const behandlerSvar = getBehandlerRespons(dialogmote);
 
   return (
-    <ResponsColumn>
+    <Table.DataCell className="space-y-1 ">
       <ResponseEntry deltaker={"Arbeidstaker"} respons={arbeidstakerRespons} />
       <ResponseEntry deltaker={"Arbeidsgiver"} respons={arbeidsgiverRespons} />
       {dialogmote.behandler && (
@@ -94,6 +93,6 @@ export default function MoteresponsColumn({ dialogmote }: Props): ReactElement {
           }}
         />
       )}
-    </ResponsColumn>
+    </Table.DataCell>
   );
 }
