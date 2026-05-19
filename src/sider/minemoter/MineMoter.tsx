@@ -251,8 +251,8 @@ export default function MineMoter({
                     setResponsFilter(changedFilter)
                   }
                 />
-                <BodyShort>
-                  <b>Viser {filtrerteMoter.length} møter</b>
+                <BodyShort size="small" weight="semibold">
+                  Viser {filtrerteMoter.length} møter
                 </BodyShort>
               </div>
             </div>

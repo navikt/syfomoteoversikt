@@ -1,12 +1,23 @@
 import React, { ReactElement } from "react";
 import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes";
-import { DialogmoteArbeidstakerColumns } from "./MoteArbeidstakerColumns";
 import { useVirksomhetQuery } from "@/data/virksomhet/virksomhetQueryHooks";
 import { useVeilederQuery } from "@/data/veiledere/veilederQueryHooks";
 import { Checkbox, Table } from "@navikt/ds-react";
 import { getDialogmoteDato, statusTekst } from "@/utils/dialogmoterUtil";
-import MoteresponsColumn from "@/components/MoteresponsColumn";
+import Moterespons from "@/components/Moterespons.tsx";
 import { getDatoFraZulu } from "@/utils/dateUtil.ts";
+import { useBrukerQuery } from "@/data/bruker/brukernavnQueryHooks.ts";
+import BrukerLenke from "@/components/BrukerLenke.tsx";
+
+const texts = {
+  henter: "Henter...",
+  henterNavn: "Henter navn...",
+  navnNotFound: "Fant ikke navn",
+  henterVirksomhet: "Henter virksomhet...",
+  virksomhetNotFound: "Fant ikke virksomheten",
+  henterVeileder: "Henter veileder...",
+  veilederNotFound: "Fant ikke veileder",
+};
 
 interface Props {
   mote: DialogmoterDTO;
@@ -29,19 +40,31 @@ export default function Mote({
   const checkboxId = `dialogmote-${mote.uuid}`;
 
   const veilederNavn = (): string => {
-    if (veilederQuery.isLoading) return "Henter navn...";
+    if (veilederQuery.isLoading) return texts.henterVeileder;
     return veilederQuery.data
       ? veilederQuery.data.fulltNavn()
-      : "Fant ikke navn";
+      : texts.veilederNotFound;
   };
+
+  function BrukersNavn({ personident }: { personident: string }) {
+    const brukernavnQuery = useBrukerQuery(personident);
+
+    if (brukernavnQuery.isLoading) {
+      return <>{texts.henterNavn}</>;
+    } else if (brukernavnQuery.data) {
+      return <BrukerLenke fnr={personident} navn={brukernavnQuery.data.navn} />;
+    } else {
+      return <>{texts.navnNotFound}</>;
+    }
+  }
 
   const virksomhetsNavn = (): string => {
     if (virksomhetQuery.isLoading) {
-      return "Henter virksomhet...";
+      return texts.henterVirksomhet;
     } else if (virksomhetQuery.virksomhetsnavn) {
       return virksomhetQuery.virksomhetsnavn;
     } else {
-      return "Fant ikke virksomheten";
+      return texts.virksomhetNotFound;
     }
   };
 
@@ -66,10 +89,17 @@ export default function Mote({
       {showVeileder && (
         <Table.DataCell textSize="small">{veilederNavn()}</Table.DataCell>
       )}
-      <DialogmoteArbeidstakerColumns dialogmote={mote} />
+      <Table.DataCell textSize="small">
+        {mote.arbeidstaker.personIdent}
+      </Table.DataCell>
+      <Table.DataCell textSize="small">
+        <BrukersNavn personident={mote.arbeidstaker.personIdent} />
+      </Table.DataCell>
       <Table.DataCell textSize="small">{virksomhetsNavn()}</Table.DataCell>
       <Table.DataCell textSize="small">{statusTekst(mote)}</Table.DataCell>
-      <MoteresponsColumn dialogmote={mote} />
+      <Table.DataCell textSize="small" className="space-y-1 ">
+        <Moterespons dialogmote={mote} />
+      </Table.DataCell>
     </Table.Row>
   );
 }
