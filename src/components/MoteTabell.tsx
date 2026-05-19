@@ -20,7 +20,6 @@ interface Props {
   isSelected: (uuid: string) => boolean;
   toggleSelected: (uuid: string) => void;
   showVeileder: boolean;
-  showVirksomhet: boolean;
 }
 
 export default function MoteTabell({
@@ -28,7 +27,6 @@ export default function MoteTabell({
   isSelected,
   toggleSelected,
   showVeileder,
-  showVirksomhet,
 }: Props): ReactElement {
   return (
     <Table size="small" className="mb-8 bg-white">
@@ -41,9 +39,7 @@ export default function MoteTabell({
           )}
           <Table.HeaderCell scope="col">{texts.fnr}</Table.HeaderCell>
           <Table.HeaderCell scope="col">{texts.sykmeldt}</Table.HeaderCell>
-          {showVirksomhet && (
-            <Table.HeaderCell scope="col">{texts.virksomhet}</Table.HeaderCell>
-          )}
+          <Table.HeaderCell scope="col">{texts.virksomhet}</Table.HeaderCell>
           <Table.HeaderCell scope="col">{texts.status}</Table.HeaderCell>
           <Table.HeaderCell scope="col">{texts.respons}</Table.HeaderCell>
         </Table.Row>
@@ -56,7 +52,6 @@ export default function MoteTabell({
             isSelected={isSelected}
             toggleSelected={toggleSelected}
             showVeileder={showVeileder}
-            showVirksomhet={showVirksomhet}
           />
         ))}
       </Table.Body>

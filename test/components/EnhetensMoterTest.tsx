@@ -9,11 +9,12 @@ import {
   assertTableRows,
   daysFromToday,
 } from "../testUtil";
-import { describe, it, expect, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import {
   aktivEnhetMock,
+  arbeidsgiverMock,
   arbeidstakerMock,
   createDialogmote,
   veilederMock,
@@ -26,6 +27,7 @@ import {
   stubVeilederApi,
 } from "../mocks/stubVeilederApi";
 import { stubDialogmoterApi } from "../mocks/stubDialogmoterApi";
+import { stubVirksomhetApi } from "../mocks/stubVirksomhetApi.ts";
 
 const yesterday = daysFromToday(-1);
 const inTwoDays = daysFromToday(2);
@@ -58,6 +60,7 @@ const queryClient = new QueryClient();
 describe("EnhetensMoter", () => {
   beforeEach(() => {
     stubBrukernavnApi();
+    stubVirksomhetApi();
     stubDialogmoterApi(dialogmoterData);
     stubVeilederApi(veilederMock);
     stubAktivVeilederApi(veilederMock);
@@ -114,27 +117,28 @@ describe("EnhetensMoter", () => {
       "Veileder",
       "F.nr",
       "Sykmeldt",
+      "Virksomhet",
       "Status",
       "Respons fra deltakere",
     ]);
 
     const rows = screen.getAllByRole("row");
     assertTableRows(rows, [
-      "VelgMøtedatoVeilederF.nrSykmeldtStatusRespons fra deltakere",
+      "VelgMøtedatoVeilederF.nrSykmeldtVirksomhetStatusRespons fra deltakere",
       `${getDatoFraZulu(yesterday)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
-      }${
-        arbeidstakerMock.navn
+      }${arbeidstakerMock.navn}${
+        arbeidsgiverMock.virksomhet
       }Referat ikke sendtArbeidstaker:KommerArbeidsgiver:Kommer`,
       `${getDatoFraZulu(inTwoDays)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
-      }${
-        arbeidstakerMock.navn
+      }${arbeidstakerMock.navn}${
+        arbeidsgiverMock.virksomhet
       }Innkalt (med behandler)Arbeidstaker:KommerArbeidsgiver:KommerBehandler:Endring ønskes`,
       `${getDatoFraZulu(inFiveDays)}${veilederMock.fulltNavn()}${
         arbeidstakerMock.fnr
-      }${
-        arbeidstakerMock.navn
+      }${arbeidstakerMock.navn}${
+        arbeidsgiverMock.virksomhet
       }Endring sendtArbeidstaker:Ikke åpnetArbeidsgiver:Ikke åpnet`,
     ]);
   });

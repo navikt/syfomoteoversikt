@@ -262,7 +262,6 @@ export default function MineMoter({
               isSelected={isSelected}
               toggleSelected={modifyDialogmoterUuids}
               showVeileder={false}
-              showVirksomhet={true}
             />
           </form>
         </>

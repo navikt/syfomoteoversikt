@@ -113,7 +113,6 @@ export default function MoteoversiktEnhet(): ReactElement {
         isSelected={isSelected}
         toggleSelected={toggleSelected}
         showVeileder={true}
-        showVirksomhet={false}
       />
     </>
   );

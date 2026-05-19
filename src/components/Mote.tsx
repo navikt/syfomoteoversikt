@@ -13,7 +13,6 @@ interface Props {
   isSelected: (moteUuid: string) => boolean;
   toggleSelected: (moteUuid: string) => void;
   showVeileder: boolean;
-  showVirksomhet: boolean;
 }
 
 export default function Mote({
@@ -21,7 +20,6 @@ export default function Mote({
   isSelected,
   toggleSelected,
   showVeileder,
-  showVirksomhet,
 }: Props): ReactElement {
   const virksomhetQuery = useVirksomhetQuery(
     mote.arbeidsgiver.virksomhetsnummer
@@ -69,9 +67,7 @@ export default function Mote({
         <Table.DataCell textSize="small">{veilederNavn()}</Table.DataCell>
       )}
       <DialogmoteArbeidstakerColumns dialogmote={mote} />
-      {showVirksomhet && (
-        <Table.DataCell textSize="small">{virksomhetsNavn()}</Table.DataCell>
-      )}
+      <Table.DataCell textSize="small">{virksomhetsNavn()}</Table.DataCell>
       <Table.DataCell textSize="small">{statusTekst(mote)}</Table.DataCell>
       <MoteresponsColumn dialogmote={mote} />
     </Table.Row>
