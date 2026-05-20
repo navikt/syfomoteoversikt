@@ -6,3 +6,4 @@ allowBuilds:
   styled-components: true
 minimumReleaseAge: 4320 # 3 days
 ignoreScripts: true
+
