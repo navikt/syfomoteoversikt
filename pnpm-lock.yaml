@@ -18,8 +18,8 @@ importers:
         specifier: 1.19.0
         version: 1.19.0
       '@navikt/aksel-icons':
-        specifier: 7.33.2
-        version: 7.33.2
+        specifier: 8.10.5
+        version: 8.10.5
       '@navikt/ds-css':
         specifier: 7.33.2
         version: 7.33.2
@@ -466,6 +466,9 @@ packages:
 
   '@navikt/aksel-icons@7.33.2':
     resolution: {integrity: sha512-yF676LoUCSVQoN9X03ONh0gi3svpTpWScpjmHqxxjBPDJf0okIBQKFztI6iGOrFIB/kVyI4M8Qy8EsBuop1KAA==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/7.33.2/e39a489773cb78aa2a0cb96ee89ba3793dc856de}
+
+  '@navikt/aksel-icons@8.10.5':
+    resolution: {integrity: sha512-XDmygarYMyGhGxE5x5uVDCxPPW5dty2A0yVvdT+I6VyRjvDDY/jtAw0NU/HV5itAm7prCwO19IKf1DvjuzU31g==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.10.5/5904f4043e27a4f7f7005fd9fd2fe1ceed130d3b}
 
   '@navikt/ds-css@7.33.2':
     resolution: {integrity: sha512-isd/GMpXLLrfEl1fLXVZmwxCQUa+tb7qY8V4zt+OqKVXxb9RkNvYONEAVmR7pFTklhPYafU4sJDt6mPfWBrhZw==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/7.33.2/479e17163cea5c114de01a6b6801b321b8e94207}
@@ -3776,6 +3779,8 @@ snapshots:
     optional: true
 
   '@navikt/aksel-icons@7.33.2': {}
+
+  '@navikt/aksel-icons@8.10.5': {}
 
   '@navikt/ds-css@7.33.2': {}
 
