@@ -11,11 +11,11 @@ import {
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
-import MoteresponsColumn from "@/components/MoteresponsColumn";
+import Moterespons from "@/components/Moterespons.tsx";
 
 const queryClient = new QueryClient();
 
-const renderMoreresponsColumn = (dialogmote: DialogmoterDTO) =>
+const renderMoterespons = (dialogmote: DialogmoterDTO) =>
   render(
     <QueryClientProvider client={queryClient}>
       <AktivEnhetContext.Provider
@@ -24,7 +24,7 @@ const renderMoreresponsColumn = (dialogmote: DialogmoterDTO) =>
           setAktivEnhet: () => void 0,
         }}
       >
-        <MoteresponsColumn dialogmote={dialogmote} />
+        <Moterespons dialogmote={dialogmote} />
       </AktivEnhetContext.Provider>
     </QueryClientProvider>
   );
@@ -90,7 +90,7 @@ moteATKommerAGKommerBehandlerIkkeSvart = {
 describe("MineMoter", () => {
   it("should render Ikke åpnet, Ikke åpnet", () => {
     stubDialogmoterVeilederidentApi(veilederMock, [moteInnkalt]);
-    renderMoreresponsColumn(moteInnkalt);
+    renderMoterespons(moteInnkalt);
 
     expect(screen.getAllByText("Ikke åpnet")).to.have.length(2);
     expect(screen.queryByText("Behandler:")).to.not.exist;
@@ -98,7 +98,7 @@ describe("MineMoter", () => {
 
   it("should render Har åpnet, Ikke åpnet", () => {
     stubDialogmoterVeilederidentApi(veilederMock, [moteATHarLest]);
-    renderMoreresponsColumn(moteATHarLest);
+    renderMoterespons(moteATHarLest);
 
     expect(screen.getAllByText("Har åpnet")).to.have.length(1);
     expect(screen.getAllByText("Ikke åpnet")).to.have.length(1);
@@ -107,7 +107,7 @@ describe("MineMoter", () => {
 
   it("should render Kommer, Har åpnet", () => {
     stubDialogmoterVeilederidentApi(veilederMock, [moteATSvartAGHarLest]);
-    renderMoreresponsColumn(moteATSvartAGHarLest);
+    renderMoterespons(moteATSvartAGHarLest);
 
     expect(screen.getAllByText("Kommer")).to.have.length(1);
     expect(screen.getAllByText("Har åpnet")).to.have.length(1);
@@ -116,7 +116,7 @@ describe("MineMoter", () => {
 
   it("should render Endring ønskes, Kommer ikke", () => {
     stubDialogmoterVeilederidentApi(veilederMock, [moteATEndringAGKommerIkke]);
-    renderMoreresponsColumn(moteATEndringAGKommerIkke);
+    renderMoterespons(moteATEndringAGKommerIkke);
 
     expect(screen.getAllByText("Endring ønskes")).to.have.length(1);
     expect(screen.getAllByText("Kommer ikke")).to.have.length(1);
@@ -127,7 +127,7 @@ describe("MineMoter", () => {
     stubDialogmoterVeilederidentApi(veilederMock, [
       moteATKommerAGKommerBehandlerKommer,
     ]);
-    renderMoreresponsColumn(moteATKommerAGKommerBehandlerKommer);
+    renderMoterespons(moteATKommerAGKommerBehandlerKommer);
 
     expect(screen.getAllByText("Kommer")).to.have.length(3);
   });
@@ -136,7 +136,7 @@ describe("MineMoter", () => {
     stubDialogmoterVeilederidentApi(veilederMock, [
       moteATKommerAGKommerBehandlerIkkeSvart,
     ]);
-    renderMoreresponsColumn(moteATKommerAGKommerBehandlerIkkeSvart);
+    renderMoterespons(moteATKommerAGKommerBehandlerIkkeSvart);
 
     expect(screen.getAllByText("Kommer")).to.have.length(2);
     expect(screen.getAllByText("Ikke svart")).to.have.length(1);

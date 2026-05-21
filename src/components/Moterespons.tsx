@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { DialogmoterDTO, SvarType } from "@/data/dialogmoter/dialogmoterTypes";
-import { BodyShort, Table, Tag } from "@navikt/ds-react";
+import { BodyShort, Tag } from "@navikt/ds-react";
 import {
   DeltakerRespons,
   getArbeidsgiverRespons,
@@ -75,13 +75,13 @@ interface Props {
   dialogmote: DialogmoterDTO;
 }
 
-export default function MoteresponsColumn({ dialogmote }: Props): ReactElement {
+export default function Moterespons({ dialogmote }: Props): ReactElement {
   const arbeidstakerRespons = getArbeidstakerRespons(dialogmote);
   const arbeidsgiverRespons = getArbeidsgiverRespons(dialogmote);
   const behandlerSvar = getBehandlerRespons(dialogmote);
 
   return (
-    <Table.DataCell className="space-y-1 ">
+    <>
       <ResponseEntry deltaker={"Arbeidstaker"} respons={arbeidstakerRespons} />
       <ResponseEntry deltaker={"Arbeidsgiver"} respons={arbeidsgiverRespons} />
       {dialogmote.behandler && (
@@ -93,6 +93,6 @@ export default function MoteresponsColumn({ dialogmote }: Props): ReactElement {
           }}
         />
       )}
-    </Table.DataCell>
+    </>
   );
 }
