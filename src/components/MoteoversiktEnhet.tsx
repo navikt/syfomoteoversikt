@@ -79,6 +79,7 @@ export default function MoteoversiktEnhet(): ReactElement {
   };
 
   const filtrerteMoter = getFiltrerteMoter();
+
   return (
     <>
       <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">

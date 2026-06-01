@@ -3,6 +3,14 @@ import { get } from "@/api";
 import { SYFOVEILEDER_ROOT } from "@/utils/apiUrlUtil";
 import { useQueries, useQuery } from "@tanstack/react-query";
 
+const selectVeileder = (data: VeilederDTO): Veileder =>
+  new Veileder(data.ident, data.fornavn, data.etternavn);
+
+const selectVeiledere = (data: VeilederDTO[]): Veileder[] =>
+  data.map(
+    ({ ident, fornavn, etternavn }) => new Veileder(ident, fornavn, etternavn)
+  );
+
 export const veilederQueryKeys = {
   veileder: ["veileder"],
   enhet: ["enhet"],
@@ -19,7 +27,7 @@ export const useAktivVeileder = () => {
   return useQuery({
     queryKey: veilederQueryKeys.veileder,
     queryFn: fetchVeileder,
-    select: (data) => new Veileder(data.ident, data.fornavn, data.etternavn),
+    select: selectVeileder,
   });
 };
 
@@ -28,21 +36,23 @@ export const useVeilederQuery = (ident: string) => {
     queryKey: veilederQueryKeys.veilederByIdent(ident),
     queryFn: () => fetchVeilederByIdent(ident),
     enabled: !!ident,
-    select: (data) => new Veileder(data.ident, data.fornavn, data.etternavn),
+    select: selectVeileder,
   });
 };
 
 export const useVeiledereQuery = (identList: string[]) => {
-  const veiledereQueries = useQueries({
+  return useQueries({
     queries: identList.map((ident) => ({
       queryKey: veilederQueryKeys.veilederByIdent(ident),
-      select: (data: VeilederDTO) =>
-        new Veileder(data.ident, data.fornavn, data.etternavn),
+      queryFn: () => fetchVeilederByIdent(ident),
+      select: selectVeileder,
     })),
+    combine: (result) => {
+      return result
+        .map((query) => query.data)
+        .filter((veileder) => veileder !== undefined);
+    },
   });
-  return veiledereQueries
-    .map((query) => query.data)
-    .filter((veileder) => veileder !== undefined) as Veileder[];
 };
 
 export function useGetVeiledere(enhet: string) {
@@ -51,10 +61,6 @@ export function useGetVeiledere(enhet: string) {
     queryFn: () =>
       get<VeilederDTO[]>(`${SYFOVEILEDER_ROOT}/v3/veiledere?enhetNr=${enhet}`),
     enabled: !!enhet,
-    select: (data) =>
-      data.map(
-        (veileder) =>
-          new Veileder(veileder.ident, veileder.fornavn, veileder.etternavn)
-      ),
+    select: selectVeiledere,
   });
 }
