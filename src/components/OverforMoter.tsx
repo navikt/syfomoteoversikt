@@ -2,11 +2,15 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
-import { Button } from "@navikt/ds-react";
+import { Alert, Button } from "@navikt/ds-react";
 import { mineMoterRoutePath } from "@/routers/AppRouter";
+import { resolveErrorMessage } from "@/api/errors.ts";
 
 const texts = {
   overta: "Overta møter",
+  overtaDialogmoterFeilet:
+    "Det skjedde en feil så du ikke fikk overtatt dialogmøte-innkallingene.",
+  provIgjen: "Prøv igjen senere.",
 };
 
 export const OverforMoter = () => {
@@ -25,7 +29,7 @@ export const OverforMoter = () => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-row gap-4 items-center">
       <Button
         variant="primary"
         disabled={overforDialogmoter.isPending}
@@ -34,6 +38,11 @@ export const OverforMoter = () => {
       >
         {texts.overta}
       </Button>
+      {overforDialogmoter.isError && (
+        <Alert size="small" variant="error">
+          {resolveErrorMessage(overforDialogmoter.error)}
+        </Alert>
+      )}
     </div>
   );
 };
