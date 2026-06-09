@@ -25,6 +25,7 @@ import { useDialogmoterUuids } from "@/data/dialogmoter/useDialogmoterUuids";
 import { Veileder } from "@/data/veiledere/veilederTypes";
 import { dagensDatoKortFormat } from "@/utils/dateUtil";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
+import { resolveErrorMessage } from "@/api/errors.ts";
 
 const texts = {
   velgKolonneTittel: "Velg",
@@ -198,12 +199,7 @@ export default function MineMoter({
                 <br />
               </Alert>
             )}
-            {tildelDialogmoter.isError && (
-              <Alert size="small" variant="error" className="mb-4 w-fit">
-                <Label size="small">{texts.moteTildelingFeilet}</Label>
-                <br />
-              </Alert>
-            )}
+
             <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">
               <div className="flex items-center gap-4">
                 <div>
@@ -212,7 +208,7 @@ export default function MineMoter({
                       {texts.noDialogmoterSelected}
                     </ErrorMessage>
                   )}
-                  <div className="flex gap-4 items-end">
+                  <div className="flex flex-row gap-4 items-center">
                     <Select
                       label={texts.selectVeilederToAssignLabel}
                       className="w-48"
@@ -238,9 +234,16 @@ export default function MineMoter({
                       loading={tildelDialogmoter.isPending}
                       variant="primary"
                       type="submit"
+                      className={"h-fit"}
                     >
                       {texts.assignMeetings}
                     </Button>
+
+                    {tildelDialogmoter.isError && (
+                      <Alert size="small" variant="error">
+                        {resolveErrorMessage(tildelDialogmoter.error)}
+                      </Alert>
+                    )}
                   </div>
                 </div>
               </div>
