@@ -14,21 +14,21 @@ export function useTildelDialogmoter() {
   const path = `${ISDIALOGMOTE_ROOT}/v2/dialogmote/tildel`;
 
   const tildelDialogmoterRequest = (
-    requestBody: TildelDialogmoterRequestBody
+    requestBody: TildelDialogmoterRequestBody,
   ) => patch(path, requestBody);
 
   return useMutation({
     mutationFn: tildelDialogmoterRequest,
     onMutate: (requestBody: TildelDialogmoterRequestBody) => {
       const previousDialogmoter = queryClient.getQueryData<DialogmoterDTO[]>(
-        dialogmoterQueryKeys.veilederident
+        dialogmoterQueryKeys.veilederident,
       );
       if (previousDialogmoter) {
         queryClient.setQueryData(
           dialogmoterQueryKeys.veilederident,
           previousDialogmoter.filter(
-            (mote) => !requestBody.dialogmoteUuids.includes(mote.uuid)
-          )
+            (mote) => !requestBody.dialogmoteUuids.includes(mote.uuid),
+          ),
         );
       }
       return { previousDialogmoter };
@@ -37,7 +37,7 @@ export function useTildelDialogmoter() {
       if (context?.previousDialogmoter) {
         queryClient.setQueryData(
           dialogmoterQueryKeys.veilederident,
-          context.previousDialogmoter
+          context.previousDialogmoter,
         );
       }
     },

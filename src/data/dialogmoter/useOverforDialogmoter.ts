@@ -36,7 +36,7 @@ export const useOverforDialogmoter = () => {
             }
 
             return dialogmote;
-          })
+          }),
         );
       }
 
@@ -46,7 +46,7 @@ export const useOverforDialogmoter = () => {
       if (context?.previousDialogmoter) {
         queryClient.setQueryData(
           dialogmoterQueryKey,
-          context.previousDialogmoter
+          context.previousDialogmoter,
         );
       }
     },

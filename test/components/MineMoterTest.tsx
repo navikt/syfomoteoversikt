@@ -43,12 +43,12 @@ const dialogmoterData = [
     DialogmoteStatus.INNKALT,
     yesterday,
     { lestDato: new Date(), svar: SvarType.KOMMER_IKKE },
-    {}
+    {},
   ),
   createDialogmote(
     annenVeilederMock,
     DialogmoteStatus.NYTT_TID_STED,
-    inFiveDays
+    inFiveDays,
   ),
   createDialogmote(
     veilederMock,
@@ -56,7 +56,7 @@ const dialogmoterData = [
     inTenDays,
     {},
     {},
-    SvarType.KOMMER
+    SvarType.KOMMER,
   ),
   createDialogmote(veilederMock, DialogmoteStatus.AVLYST, daysFromToday(-2)),
   createDialogmote(veilederMock, DialogmoteStatus.NYTT_TID_STED, inFiveDays),
@@ -88,7 +88,7 @@ describe("MineMoter", () => {
             moter={filterUnfinishedMoter(veilederMock, dialogmoterData)}
           />
         </AktivEnhetContext.Provider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText("Viser 3 møter")).to.exist;
@@ -113,7 +113,7 @@ describe("MineMoter", () => {
             moter={filterUnfinishedMoter(veilederMock, dialogmoterData)}
           />
         </AktivEnhetContext.Provider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText("Viser 3 møter")).to.exist;
@@ -130,10 +130,10 @@ describe("MineMoter", () => {
     ]);
 
     expect(
-      await screen.findAllByText(arbeidstakerMock.navn, { exact: false })
+      await screen.findAllByText(arbeidstakerMock.navn, { exact: false }),
     ).to.have.length.least(1);
     expect(
-      await screen.findAllByText(virksomhetNavn, { exact: false })
+      await screen.findAllByText(virksomhetNavn, { exact: false }),
     ).to.have.length.least(1);
 
     const rows = screen.getAllByRole("row");

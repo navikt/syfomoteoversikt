@@ -5,7 +5,7 @@ import { Link } from "@navikt/ds-react";
 
 const syfomodiapersonMoterUrl = fullNaisUrlDefault(
   "syfomodiaperson",
-  "/sykefravaer/moteoversikt"
+  "/sykefravaer/moteoversikt",
 );
 
 interface Props {

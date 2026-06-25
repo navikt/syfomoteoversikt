@@ -33,7 +33,7 @@ export default function Mote({
   showVeileder,
 }: Props): ReactElement {
   const virksomhetQuery = useVirksomhetQuery(
-    mote.arbeidsgiver.virksomhetsnummer
+    mote.arbeidsgiver.virksomhetsnummer,
   );
   const veilederQuery = useVeilederQuery(mote.tildeltVeilederIdent);
 
@@ -50,11 +50,11 @@ export default function Mote({
     const brukernavnQuery = useBrukerQuery(personident);
 
     if (brukernavnQuery.isLoading) {
-      return <>{texts.henterNavn}</>;
+      return texts.henterNavn;
     } else if (brukernavnQuery.data) {
       return <BrukerLenke fnr={personident} navn={brukernavnQuery.data.navn} />;
     } else {
-      return <>{texts.navnNotFound}</>;
+      return texts.navnNotFound;
     }
   }
 

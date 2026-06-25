@@ -14,7 +14,7 @@ export const virksomhetQueryKeys = {
 export const useVirksomhetQuery = (virksomhetsnummer: string) => {
   const fetchVirksomhet = () =>
     get<EregOrganisasjonResponseDTO>(
-      `${EREG_ROOT}/organisasjon/${virksomhetsnummer}`
+      `${EREG_ROOT}/organisasjon/${virksomhetsnummer}`,
     );
   const query = useQuery({
     queryKey: virksomhetQueryKeys.virksomhet(virksomhetsnummer),

@@ -25,7 +25,7 @@ const texts = {
 
 export default function MoteoversiktEnhet(): ReactElement {
   const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
-    "alle"
+    "alle",
   );
 
   const [filterVeileder, setFilterVeileder] = useState("alle");
@@ -58,7 +58,7 @@ export default function MoteoversiktEnhet(): ReactElement {
 
   const veilederNavnForMote = (mote: DialogmoterDTO): string | undefined => {
     const matchingVeileder = veiledere.find(
-      ({ ident }) => mote.tildeltVeilederIdent === ident
+      ({ ident }) => mote.tildeltVeilederIdent === ident,
     );
     return matchingVeileder?.fulltNavn();
   };

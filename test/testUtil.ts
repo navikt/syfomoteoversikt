@@ -8,7 +8,7 @@ export const daysFromToday = (days: number): Date => {
 
 export const assertTableHeaders = (
   headers: HTMLElement[],
-  expectedHeaders: string[]
+  expectedHeaders: string[],
 ): void => {
   expectedHeaders.forEach((expected, index) => {
     expect(headers[index]?.textContent).to.equal(expected);

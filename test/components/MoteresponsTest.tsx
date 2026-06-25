@@ -26,7 +26,7 @@ const renderMoterespons = (dialogmote: DialogmoterDTO) =>
       >
         <Moterespons dialogmote={dialogmote} />
       </AktivEnhetContext.Provider>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 
 const moteInnkalt = createDialogmote(
@@ -34,28 +34,28 @@ const moteInnkalt = createDialogmote(
   DialogmoteStatus.INNKALT,
   new Date(),
   {},
-  {}
+  {},
 );
 const moteATHarLest = createDialogmote(
   veilederMock,
   DialogmoteStatus.INNKALT,
   new Date(),
   { lestDato: new Date() },
-  {}
+  {},
 );
 const moteATSvartAGHarLest = createDialogmote(
   veilederMock,
   DialogmoteStatus.INNKALT,
   new Date(),
   { lestDato: new Date(), svar: SvarType.KOMMER },
-  { lestDato: new Date() }
+  { lestDato: new Date() },
 );
 const moteATEndringAGKommerIkke = createDialogmote(
   veilederMock,
   DialogmoteStatus.INNKALT,
   new Date(),
   { lestDato: new Date(), svar: SvarType.NYTT_TID_STED },
-  { lestDato: new Date(), svar: SvarType.KOMMER_IKKE }
+  { lestDato: new Date(), svar: SvarType.KOMMER_IKKE },
 );
 const moteATKommerAGKommerBehandlerKommer = createDialogmote(
   veilederMock,
@@ -63,7 +63,7 @@ const moteATKommerAGKommerBehandlerKommer = createDialogmote(
   new Date(),
   { lestDato: new Date(), svar: SvarType.KOMMER },
   { lestDato: new Date(), svar: SvarType.KOMMER },
-  SvarType.KOMMER
+  SvarType.KOMMER,
 );
 
 let moteATKommerAGKommerBehandlerIkkeSvart = createDialogmote(
@@ -72,7 +72,7 @@ let moteATKommerAGKommerBehandlerIkkeSvart = createDialogmote(
   new Date(),
   { lestDato: new Date(), svar: SvarType.KOMMER },
   { lestDato: new Date(), svar: SvarType.KOMMER },
-  SvarType.KOMMER
+  SvarType.KOMMER,
 );
 
 moteATKommerAGKommerBehandlerIkkeSvart = {

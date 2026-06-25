@@ -29,23 +29,23 @@ const aktivEnhet = {
 
 export const mockModiacontextholder = [
   http.get("/modiacontextholder/api/decorator", () =>
-    HttpResponse.json(saksbehandler)
+    HttpResponse.json(saksbehandler),
   ),
 
   http.get("/modiacontextholder/api/context/aktivbruker", () =>
-    HttpResponse.json(aktivBruker)
+    HttpResponse.json(aktivBruker),
   ),
 
   http.get("/modiacontextholder/api/context/aktivenhet", () =>
-    HttpResponse.json(aktivEnhet)
+    HttpResponse.json(aktivEnhet),
   ),
 
   http.get("/modiacontextholder/api/context/v2/aktivenhet", () =>
-    HttpResponse.json(aktivEnhet)
+    HttpResponse.json(aktivEnhet),
   ),
 
   http.post(
     "/modiacontextholder/api/context",
-    () => new HttpResponse(null, { status: 204 })
+    () => new HttpResponse(null, { status: 204 }),
   ),
 ];

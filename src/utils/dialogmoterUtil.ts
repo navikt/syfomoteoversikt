@@ -32,41 +32,41 @@ export const getDialogmoteDato = (dialogmote: DialogmoterDTO) =>
   new Date(dialogmote.tid);
 
 export const getBehandlerRespons = (
-  dialogmote: DialogmoterDTO
+  dialogmote: DialogmoterDTO,
 ): SvarType | undefined => {
   const varselType = varselTypeFromStatus(dialogmote.status);
   const varsel: DialogmotedeltakerBehandlerVarselDTO | undefined =
     dialogmote.behandler?.varselList?.find(
-      (varsel) => varsel.varselType === varselType
+      (varsel) => varsel.varselType === varselType,
     );
 
   return varsel?.svar[0]?.svarType;
 };
 
 export const getArbeidsgiverRespons = (
-  dialogmote: DialogmoterDTO
+  dialogmote: DialogmoterDTO,
 ): DeltakerRespons => {
   return getDeltakerRespons(
     dialogmote.status,
-    dialogmote.arbeidsgiver.varselList
+    dialogmote.arbeidsgiver.varselList,
   );
 };
 
 export const getArbeidstakerRespons = (
-  dialogmote: DialogmoterDTO
+  dialogmote: DialogmoterDTO,
 ): DeltakerRespons => {
   return getDeltakerRespons(
     dialogmote.status,
-    dialogmote.arbeidstaker.varselList
+    dialogmote.arbeidstaker.varselList,
   );
 };
 
 const getDeltakerRespons = (
   status: DialogmoteStatus,
-  varselList: DialogmotedeltakerVarselDTO[]
+  varselList: DialogmotedeltakerVarselDTO[],
 ): DeltakerRespons => {
   const latestVarsel = varselList.find(
-    (varsel) => varsel.varselType === varselTypeFromStatus(status)
+    (varsel) => varsel.varselType === varselTypeFromStatus(status),
   );
 
   return {
@@ -76,7 +76,7 @@ const getDeltakerRespons = (
 };
 
 const varselTypeFromStatus = (
-  status: DialogmoteStatus
+  status: DialogmoteStatus,
 ): DialogmoteDeltakerVarselType => {
   switch (status) {
     case DialogmoteStatus.INNKALT: {

@@ -8,7 +8,7 @@ export const eregOrganisasjonResponse = {
 };
 
 const mockEreg = http.get("/ereg/api/v1/organisasjon/:orgnr", () =>
-  HttpResponse.json(eregOrganisasjonResponse)
+  HttpResponse.json(eregOrganisasjonResponse),
 );
 
 export default mockEreg;

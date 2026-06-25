@@ -12,28 +12,28 @@ export const stubDialogmoterApi = (dialogmoter: DialogmoterDTO[]) =>
   mockServer.use(
     http.get(
       `*${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${aktivEnhetMock}`,
-      () => HttpResponse.json(dialogmoter)
-    )
+      () => HttpResponse.json(dialogmoter),
+    ),
   );
 
 export const stubDialogmoterVeilederidentApi = (
   veileder: Veileder,
-  dialogmoter: DialogmoterDTO[]
+  dialogmoter: DialogmoterDTO[],
 ) =>
   mockServer.use(
     http.get(`*${ISDIALOGMOTE_ROOT}/v2/dialogmote/veilederident`, () =>
-      HttpResponse.json(filterUnfinishedMoter(veileder, dialogmoter))
-    )
+      HttpResponse.json(filterUnfinishedMoter(veileder, dialogmoter)),
+    ),
   );
 
 export function filterUnfinishedMoter(
   veileder: Veileder,
-  dialogmoter: DialogmoterDTO[]
+  dialogmoter: DialogmoterDTO[],
 ): DialogmoterDTO[] {
   return dialogmoter.filter(
     (dialogmote) =>
       dialogmote.tildeltVeilederIdent === veileder.ident &&
       (dialogmote.status == DialogmoteStatus.INNKALT ||
-        dialogmote.status == DialogmoteStatus.NYTT_TID_STED)
+        dialogmote.status == DialogmoteStatus.NYTT_TID_STED),
   );
 }

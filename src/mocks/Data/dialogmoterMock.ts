@@ -15,7 +15,7 @@ const createDialogmote = (
   veileder: string,
   arbeidstakerVarsel: Partial<DialogmotedeltakerVarselDTO>,
   arbeidsgiverVarsel: Partial<DialogmotedeltakerVarselDTO>,
-  behandlerVarsel?: Partial<DialogmotedeltakerBehandlerVarselDTO>
+  behandlerVarsel?: Partial<DialogmotedeltakerBehandlerVarselDTO>,
 ) => {
   return {
     uuid,
@@ -77,7 +77,7 @@ const dialogmoter = [
     DialogmoteDeltakerVarselType.INNKALT,
     "S123456",
     { lestDato: addDaysToToday(-1).toISOString() },
-    { lestDato: addDaysToToday(-2).toISOString() }
+    { lestDato: addDaysToToday(-2).toISOString() },
   ),
   createDialogmote(
     "2",
@@ -86,7 +86,7 @@ const dialogmoter = [
     DialogmoteDeltakerVarselType.NYTT_TID_STED,
     "S123456",
     {},
-    {}
+    {},
   ),
   createDialogmote(
     "3",
@@ -95,7 +95,7 @@ const dialogmoter = [
     DialogmoteDeltakerVarselType.NYTT_TID_STED,
     "Z990197",
     { lestDato: addDaysToToday(-1).toISOString() },
-    {}
+    {},
   ),
   createDialogmote(
     "4",
@@ -104,7 +104,7 @@ const dialogmoter = [
     DialogmoteDeltakerVarselType.AVLYST,
     "S123456",
     {},
-    {}
+    {},
   ),
   createDialogmote(
     "5",
@@ -113,7 +113,7 @@ const dialogmoter = [
     DialogmoteDeltakerVarselType.REFERAT,
     "Z990197",
     {},
-    {}
+    {},
   ),
   createDialogmote(
     "6",
@@ -125,7 +125,7 @@ const dialogmoter = [
       lestDato: addDaysToToday(-1).toISOString(),
       svar: { svarType: SvarType.KOMMER },
     },
-    {}
+    {},
   ),
   createDialogmote(
     "7",
@@ -135,7 +135,7 @@ const dialogmoter = [
     "Z990197",
     {},
     { lestDato: addDaysToToday(-1).toISOString() },
-    { svar: [{ svarType: SvarType.KOMMER }] }
+    { svar: [{ svarType: SvarType.KOMMER }] },
   ),
   createDialogmote(
     "8",
@@ -145,7 +145,7 @@ const dialogmoter = [
     "Z990197",
     {},
     {},
-    { svar: [{ svarType: SvarType.NYTT_TID_STED }] }
+    { svar: [{ svarType: SvarType.NYTT_TID_STED }] },
   ),
   createDialogmote(
     "9",
@@ -157,7 +157,7 @@ const dialogmoter = [
     {
       lestDato: addDaysToToday(-1).toISOString(),
       svar: { svarType: SvarType.KOMMER_IKKE },
-    }
+    },
   ),
   createDialogmote(
     "10",
@@ -172,7 +172,7 @@ const dialogmoter = [
     {
       lestDato: addDaysToToday(-1).toISOString(),
       svar: { svarType: SvarType.KOMMER_IKKE },
-    }
+    },
   ),
   createDialogmote(
     "11",
@@ -188,7 +188,7 @@ const dialogmoter = [
       lestDato: addDaysToToday(-1).toISOString(),
       svar: { svarType: SvarType.KOMMER_IKKE },
     },
-    { varselType: DialogmoteDeltakerVarselType.INNKALT, svar: [] }
+    { varselType: DialogmoteDeltakerVarselType.INNKALT, svar: [] },
   ),
 ];
 

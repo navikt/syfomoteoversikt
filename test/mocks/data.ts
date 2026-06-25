@@ -45,7 +45,7 @@ export const createDialogmote = (
   dato: Date,
   arbeidstakerRespons: { lestDato?: Date; svar?: SvarType } = {},
   arbeidsgiverRespons: { lestDato?: Date; svar?: SvarType } = {},
-  behandlerRespons?: SvarType
+  behandlerRespons?: SvarType,
 ): DialogmoterDTO =>
   ({
     sted: "video",
@@ -99,4 +99,4 @@ export const createDialogmote = (
       : {}),
     tid: dato.toISOString(),
     tildeltVeilederIdent: veileder.ident,
-  } as unknown as DialogmoterDTO);
+  }) as unknown as DialogmoterDTO;
