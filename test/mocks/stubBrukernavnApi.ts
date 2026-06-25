@@ -6,7 +6,7 @@ import { http, HttpResponse } from "msw";
 export const stubBrukernavnApi = () => {
   mockServer.use(
     http.get(`*${SYFOPERSON_ROOT}/person/navn`, () =>
-      HttpResponse.json(brukernavnMock)
-    )
+      HttpResponse.json(brukernavnMock),
+    ),
   );
 };

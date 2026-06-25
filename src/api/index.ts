@@ -15,7 +15,7 @@ export const NAV_CONSUMER_ID = "syfomoteoversikt";
 export const NAV_PERSONIDENT_HEADER = "nav-personident";
 
 const defaultRequestHeaders = (
-  personIdent?: string
+  personIdent?: string,
 ): Record<string, string> => {
   const headers = {
     "Content-Type": "application/json",
@@ -46,19 +46,19 @@ const handleAxiosError = (error: AxiosError) => {
         window.location.href = `/login?redirectTo=${window.location.pathname}`;
         throw new ApiErrorException(
           loginRequiredError(error),
-          error.response.status
+          error.response.status,
         );
       }
       case 403: {
         throw new ApiErrorException(
           accessDeniedError(error),
-          error.response.status
+          error.response.status,
         );
       }
       case 409: {
         throw new ApiErrorException(
           conflictError(error),
-          error.response.status
+          error.response.status,
         );
       }
       default:
@@ -73,7 +73,7 @@ const handleAxiosError = (error: AxiosError) => {
 
 export const get = <ResponseData>(
   url: string,
-  personIdent?: string
+  personIdent?: string,
 ): Promise<ResponseData> => {
   return axios
     .get(url, {
@@ -91,7 +91,7 @@ export const get = <ResponseData>(
 
 export const post = <ResponseData>(
   url: string,
-  data: ResponseData
+  data: ResponseData,
 ): Promise<ResponseData> => {
   return axios
     .post(url, data, {
@@ -112,7 +112,7 @@ export const post = <ResponseData>(
 
 export const patch = <RequestBody, ResponseData>(
   url: string,
-  requestBody: RequestBody
+  requestBody: RequestBody,
 ): Promise<ResponseData> => {
   return axios
     .patch(url, requestBody, {

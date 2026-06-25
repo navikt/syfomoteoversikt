@@ -37,7 +37,7 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
 const proxyExternalHost = (
   { applicationName, host, removePathPrefix }: Config.ExternalAppConfig,
   accessToken: any,
-  parseReqBody: any
+  parseReqBody: any,
 ) =>
   expressHttpProxy(host, {
     https: false,
@@ -86,7 +86,7 @@ const proxyOnBehalfOf = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
-  externalAppConfig: Config.ExternalAppConfig
+  externalAppConfig: Config.ExternalAppConfig,
 ) => {
   getOnBehalfOfToken(req, externalAppConfig.clientId)
     .then((accessToken) => {
@@ -98,7 +98,7 @@ const proxyOnBehalfOf = (
       return proxyExternalHost(
         externalAppConfig,
         accessToken,
-        req.method === "POST" || req.method === "PATCH"
+        req.method === "POST" || req.method === "PATCH",
       )(req, res, next);
     })
     .catch((error: any) => {
@@ -112,7 +112,7 @@ export const setupProxy = (): express.Router => {
 
   router.use(
     "/ereg/*",
-    proxyExternalHostWithoutAuthentication(Config.auth.ereg.host)
+    proxyExternalHostWithoutAuthentication(Config.auth.ereg.host),
   );
 
   router.use(
@@ -120,10 +120,10 @@ export const setupProxy = (): express.Router => {
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.modiacontextholder);
-    }
+    },
   );
 
   router.use(
@@ -131,10 +131,10 @@ export const setupProxy = (): express.Router => {
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.isdialogmote);
-    }
+    },
   );
 
   router.use(
@@ -142,10 +142,10 @@ export const setupProxy = (): express.Router => {
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.syfoperson);
-    }
+    },
   );
 
   router.use(
@@ -153,10 +153,10 @@ export const setupProxy = (): express.Router => {
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.syfoveileder);
-    }
+    },
   );
 
   return router;

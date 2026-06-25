@@ -18,7 +18,7 @@ describe("dialogmoterUtil statusTekst", () => {
   it("Returnerer 'Innkalt' for innkalling", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.INNKALT,
-      daysFromToday(1)
+      daysFromToday(1),
     );
 
     const result = statusTekst(dialogmote);
@@ -27,7 +27,7 @@ describe("dialogmoterUtil statusTekst", () => {
   it("Returnerer 'Referat ikke sendt' når dato har passert for innkalling", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.INNKALT,
-      daysFromToday(-1)
+      daysFromToday(-1),
     );
 
     const result = statusTekst(dialogmote);
@@ -36,7 +36,7 @@ describe("dialogmoterUtil statusTekst", () => {
   it("Returnerer 'Endring sendt' for endret tid/sted", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.NYTT_TID_STED,
-      daysFromToday(1)
+      daysFromToday(1),
     );
 
     const result = statusTekst(dialogmote);
@@ -45,7 +45,7 @@ describe("dialogmoterUtil statusTekst", () => {
   it("Returnerer 'Referat ikke sendt' når dato har passert for endret tid/sted", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.NYTT_TID_STED,
-      daysFromToday(-1)
+      daysFromToday(-1),
     );
 
     const result = statusTekst(dialogmote);
@@ -55,7 +55,7 @@ describe("dialogmoterUtil statusTekst", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.NYTT_TID_STED,
       daysFromToday(1),
-      { varselList: [] }
+      { varselList: [] },
     );
 
     const result = statusTekst(dialogmote);
@@ -65,7 +65,7 @@ describe("dialogmoterUtil statusTekst", () => {
     const dialogmote = getDialogmote(
       DialogmoteStatus.INNKALT,
       daysFromToday(1),
-      { varselList: [] }
+      { varselList: [] },
     );
 
     const result = statusTekst(dialogmote);
@@ -78,16 +78,16 @@ describe("dialogmoterUtil erResponsMottatt", () => {
     it("returnerer false når ingen har svart på innkalling", () => {
       const arbeidstakerVarsel = getVarsel(
         DialogmoteDeltakerVarselType.INNKALT,
-        lestDato
+        lestDato,
       );
       const arbeidsgiverVarsel = getVarsel(
         DialogmoteDeltakerVarselType.INNKALT,
-        lestDato
+        lestDato,
       );
       const dialogmote = getDialogmoteMedVarsler(
         DialogmoteStatus.INNKALT,
         [arbeidstakerVarsel],
-        [arbeidsgiverVarsel]
+        [arbeidsgiverVarsel],
       );
 
       const respons = erResponsMottatt(dialogmote as DialogmoterDTO);
@@ -95,15 +95,15 @@ describe("dialogmoterUtil erResponsMottatt", () => {
     });
     it("returnerer false når ingen har svart på endring", () => {
       const arbeidstakerVarsel = getVarsel(
-        DialogmoteDeltakerVarselType.NYTT_TID_STED
+        DialogmoteDeltakerVarselType.NYTT_TID_STED,
       );
       const arbeidsgiverVarsel = getVarsel(
-        DialogmoteDeltakerVarselType.NYTT_TID_STED
+        DialogmoteDeltakerVarselType.NYTT_TID_STED,
       );
       const dialogmote = getDialogmoteMedVarsler(
         DialogmoteStatus.NYTT_TID_STED,
         [arbeidstakerVarsel],
-        [arbeidsgiverVarsel]
+        [arbeidsgiverVarsel],
       );
 
       const respons = erResponsMottatt(dialogmote as DialogmoterDTO);
@@ -115,16 +115,16 @@ describe("dialogmoterUtil erResponsMottatt", () => {
       const arbeidstakerVarsel = getVarsel(
         DialogmoteDeltakerVarselType.INNKALT,
         lestDato,
-        SvarType.KOMMER
+        SvarType.KOMMER,
       );
       const arbeidsgiverVarsel = getVarsel(
         DialogmoteDeltakerVarselType.INNKALT,
-        lestDato
+        lestDato,
       );
       const dialogmote = getDialogmoteMedVarsler(
         DialogmoteStatus.INNKALT,
         [arbeidstakerVarsel],
-        [arbeidsgiverVarsel]
+        [arbeidsgiverVarsel],
       );
 
       const respons = erResponsMottatt(dialogmote as DialogmoterDTO);
@@ -132,17 +132,17 @@ describe("dialogmoterUtil erResponsMottatt", () => {
     });
     it("returnerer true når noen har svart på endring", () => {
       const arbeidstakerVarsel = getVarsel(
-        DialogmoteDeltakerVarselType.NYTT_TID_STED
+        DialogmoteDeltakerVarselType.NYTT_TID_STED,
       );
       const arbeidsgiverVarsel = getVarsel(
         DialogmoteDeltakerVarselType.NYTT_TID_STED,
         lestDato,
-        SvarType.NYTT_TID_STED
+        SvarType.NYTT_TID_STED,
       );
       const dialogmote = getDialogmoteMedVarsler(
         DialogmoteStatus.NYTT_TID_STED,
         [arbeidstakerVarsel],
-        [arbeidsgiverVarsel]
+        [arbeidsgiverVarsel],
       );
 
       const respons = erResponsMottatt(dialogmote as DialogmoterDTO);
@@ -167,7 +167,7 @@ describe("dialogmoterUtil compareByMotedato", () => {
 const getDialogmote = (
   status: DialogmoteStatus,
   tid: Date,
-  behandler?: DialogmotedeltakerBehandlerDTO
+  behandler?: DialogmotedeltakerBehandlerDTO,
 ) => {
   return {
     sted: "Videomøte",
@@ -181,7 +181,7 @@ const getDialogmoteMedVarsler = (
   status: DialogmoteStatus,
   arbeidstakerVarsler: DialogmotedeltakerVarselDTO[],
   arbeidsgiverVarsler: DialogmotedeltakerVarselDTO[],
-  behandlerVarsler: DialogmotedeltakerBehandlerVarselDTO[] = []
+  behandlerVarsler: DialogmotedeltakerBehandlerVarselDTO[] = [],
 ) => {
   const dialogmote = {
     status,
@@ -203,7 +203,7 @@ const getDialogmoteMedVarsler = (
 const getVarsel = (
   type: DialogmoteDeltakerVarselType,
   lestDato?: string,
-  svar?: SvarType
+  svar?: SvarType,
 ) => {
   return {
     varselType: type,

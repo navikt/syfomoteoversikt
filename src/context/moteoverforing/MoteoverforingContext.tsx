@@ -21,7 +21,7 @@ export const MoteoverforingProvider = ({
 }: MoteoverforingProviderProps) => {
   const [moteoverforingState, dispatch] = React.useReducer(
     moteoverforingReducer,
-    moteoverforingInitialState
+    moteoverforingInitialState,
   );
   return (
     <MoteoverforingContext.Provider
@@ -36,7 +36,7 @@ export const useMoteoverforing = () => {
   const context = React.useContext(MoteoverforingContext);
   if (context === undefined) {
     throw new Error(
-      "useMoteoverforing must be used within a MoteoverforingProvider"
+      "useMoteoverforing must be used within a MoteoverforingProvider",
     );
   }
 

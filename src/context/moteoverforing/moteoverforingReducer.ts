@@ -6,7 +6,7 @@ import {
 
 export const moteoverforingReducer = (
   state: MoteoverforingState,
-  action: MoteoverforingAction
+  action: MoteoverforingAction,
 ): MoteoverforingState => {
   switch (action.type) {
     case MoteoverforingActionType.MarkerDialogmote: {
@@ -22,7 +22,7 @@ export const moteoverforingReducer = (
         return {
           ...state,
           dialogmoterMarkert: state.dialogmoterMarkert.filter(
-            (uuid) => uuid !== action.dialogmoteUuid
+            (uuid) => uuid !== action.dialogmoteUuid,
           ),
         };
       }

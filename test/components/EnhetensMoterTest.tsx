@@ -41,7 +41,7 @@ const dialogmoterData = [
     DialogmoteStatus.INNKALT,
     yesterday,
     { lestDato: new Date(), svar: SvarType.KOMMER },
-    { lestDato: new Date(), svar: SvarType.KOMMER }
+    { lestDato: new Date(), svar: SvarType.KOMMER },
   ),
   createDialogmote(
     veilederMock,
@@ -49,7 +49,7 @@ const dialogmoterData = [
     inTwoDays,
     { lestDato: new Date(), svar: SvarType.KOMMER },
     { lestDato: new Date(), svar: SvarType.KOMMER },
-    SvarType.NYTT_TID_STED
+    SvarType.NYTT_TID_STED,
   ),
   createDialogmote(veilederMock, DialogmoteStatus.NYTT_TID_STED, inFiveDays),
   createDialogmote(veilederMock, DialogmoteStatus.AVLYST, twoDaysAgo),
@@ -77,7 +77,7 @@ describe("EnhetensMoter", () => {
         >
           <EnhetensMoter />
         </AktivEnhetContext.Provider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText("Viser 3 møter")).to.exist;
@@ -85,12 +85,12 @@ describe("EnhetensMoter", () => {
     expect(screen.getByText("Filtrer på respons")).to.exist;
     expect(screen.getByText("Filtrer på veileder")).to.exist;
     expect(screen.getAllByRole("option", { name: "Vis alle" })).to.have.length(
-      2
+      2,
     );
     expect(screen.getByRole("option", { name: "Ingen respons" })).to.exist;
     expect(screen.getByRole("option", { name: "Respons mottatt" })).to.exist;
     expect(
-      await screen.findByRole("option", { name: veilederMock.fulltNavn() })
+      await screen.findByRole("option", { name: veilederMock.fulltNavn() }),
     ).to.exist;
   });
 
@@ -105,7 +105,7 @@ describe("EnhetensMoter", () => {
         >
           <EnhetensMoter />
         </AktivEnhetContext.Provider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText("Viser 3 møter")).to.exist;

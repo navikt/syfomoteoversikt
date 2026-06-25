@@ -9,7 +9,7 @@ describe("NavigasjonsTopp", () => {
     render(
       <MemoryRouter>
         <NavigasjonsTopp />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByText("Min oversikt")).to.exist;
     expect(screen.getByText("Enhetens oversikt")).to.exist;

@@ -6,13 +6,13 @@ import { http, HttpResponse } from "msw";
 export const stubVeilederApi = (veileder: Veileder) =>
   mockServer.use(
     http.get(`*${SYFOVEILEDER_ROOT}/v3/veiledere/${veileder.ident}`, () =>
-      HttpResponse.json(veileder)
-    )
+      HttpResponse.json(veileder),
+    ),
   );
 
 export const stubAktivVeilederApi = (veileder: Veileder) =>
   mockServer.use(
     http.get(`*${SYFOVEILEDER_ROOT}/v3/veiledere/self`, () =>
-      HttpResponse.json(veileder)
-    )
+      HttpResponse.json(veileder),
+    ),
   );

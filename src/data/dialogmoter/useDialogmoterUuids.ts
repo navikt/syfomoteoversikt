@@ -6,7 +6,7 @@ export function useDialogmoterUuids() {
   function modifyDialogmoterUuids(dialogmoteUuid: string) {
     if (isSelected(dialogmoteUuid)) {
       setDialogmoterUuids(
-        dialogmoterUuids.filter((uuid) => uuid !== dialogmoteUuid)
+        dialogmoterUuids.filter((uuid) => uuid !== dialogmoteUuid),
       );
     } else {
       setDialogmoterUuids(() => [...dialogmoterUuids, dialogmoteUuid]);

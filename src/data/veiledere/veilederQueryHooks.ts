@@ -8,7 +8,7 @@ const selectVeileder = (data: VeilederDTO): Veileder =>
 
 const selectVeiledere = (data: VeilederDTO[]): Veileder[] =>
   data.map(
-    ({ ident, fornavn, etternavn }) => new Veileder(ident, fornavn, etternavn)
+    ({ ident, fornavn, etternavn }) => new Veileder(ident, fornavn, etternavn),
   );
 
 export const veilederQueryKeys = {

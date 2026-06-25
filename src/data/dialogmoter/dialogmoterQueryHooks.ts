@@ -18,7 +18,7 @@ export const useEnhetensDialogmoterQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const fetchDialogmoter = () =>
     get<DialogmoterDTO[]>(
-      `${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${aktivEnhet}`
+      `${ISDIALOGMOTE_ROOT}/v2/dialogmote/enhet/${aktivEnhet}`,
     );
   return useQuery({
     queryKey: dialogmoterQueryKeys.dialogmoter(aktivEnhet),
@@ -45,7 +45,7 @@ export const useDialogmoterVeiledere = () => {
   const dialogmoterQuery = useEnhetensDialogmoterQuery();
   const veilederIdenter =
     dialogmoterQuery.data?.map(
-      (dialogmote) => dialogmote.tildeltVeilederIdent
+      (dialogmote) => dialogmote.tildeltVeilederIdent,
     ) || [];
   return useVeiledereQuery([...new Set(veilederIdenter)]);
 };
@@ -54,5 +54,5 @@ const aktiveDialogmoter = (dialogmoter: DialogmoterDTO[]) =>
   dialogmoter.filter(
     (dialogmote) =>
       dialogmote.status === DialogmoteStatus.INNKALT ||
-      dialogmote.status === DialogmoteStatus.NYTT_TID_STED
+      dialogmote.status === DialogmoteStatus.NYTT_TID_STED,
   );
