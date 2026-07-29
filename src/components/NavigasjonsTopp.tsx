@@ -21,7 +21,7 @@ export default function NavigasjonsTopp(): ReactElement {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   return (
-    <Box background="surface-default" className="mb-4">
+    <Box background="default" className="mb-4">
       <Tabs value={pathname} onChange={(value) => navigate(value)}>
         <Tabs.List>
           <LinkAsTab
