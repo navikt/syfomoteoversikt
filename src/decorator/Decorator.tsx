@@ -5,7 +5,7 @@ import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext.tsx";
 import { fullNaisUrlDefault } from "@/utils/miljoUtil.ts";
 
 const Decorator = () => {
-  const aktivEnhet = useAktivEnhet();
+  const { setAktivEnhet } = useAktivEnhet();
   const aktivBruker = useAktivBruker();
   const decoratorRef = useRef<InternarbeidsflateDecoratorElement>(null);
 
@@ -25,7 +25,7 @@ const Decorator = () => {
 
     const onEnhetChanged = (event: CustomEvent<EnhetChangedDetail>) => {
       const { enhet } = event.detail;
-      if (enhet) aktivEnhet.setAktivEnhet(enhet);
+      if (enhet) setAktivEnhet(enhet);
     };
 
     const onFnrChanged = (event: CustomEvent<FnrChangedDetail>) => {
