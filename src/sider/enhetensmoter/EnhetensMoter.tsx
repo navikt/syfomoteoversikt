@@ -1,24 +1,123 @@
-import React, { ReactElement } from "react";
-import MoteoversiktEnhet from "../../components/MoteoversiktEnhet";
-import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
+import React, { ReactElement, useState } from "react";
+import { BodyShort, Select } from "@navikt/ds-react";
+import {
+  MoteRespons,
+  MoteResponsFilter,
+} from "../../components/MoteResponsFilter.tsx";
+import { getMoteRespons, getMoteResponser } from "@/utils/moterUtil.ts";
+import { OverforMoter } from "../../components/OverforMoter.tsx";
+import MoteTabell from "../../components/MoteTabell.tsx";
+import { DialogmoterDTO } from "@/data/dialogmoter/dialogmoterTypes.ts";
+import {
+  useDialogmoterVeiledere,
+  useEnhetensDialogmoterQuery,
+} from "@/data/dialogmoter/dialogmoterQueryHooks.ts";
+import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext.tsx";
+import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions.ts";
 
 const texts = {
-  ingenMoter: "Enheten har ingen aktive møter.",
+  velg: "Velg",
+  motedato: "Møtedato",
+  veileder: "Veileder",
+  fnr: "F.nr",
+  sykmeldt: "Sykmeldt",
+  status: "Status",
+  respons: "Respons fra deltakere",
+  filtrer: "Filtrer på veileder",
 };
 
 export default function EnhetensMoter(): ReactElement {
+  const [responsFilter, setResponsFilter] = useState<MoteRespons | "alle">(
+    "alle",
+  );
+
+  const [filterVeileder, setFilterVeileder] = useState("alle");
+
   const dialogmoterQuery = useEnhetensDialogmoterQuery();
-  const harMoter =
-    dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0;
+  const dialogmoterVeiledere = useDialogmoterVeiledere();
+  const moter = [...(dialogmoterQuery.data || [])];
+  const veiledere = [...dialogmoterVeiledere];
+
+  const { dialogmoterMarkert, dispatch } = useMoteoverforing();
+
+  const isSelected = (uuid: string): boolean => {
+    return dialogmoterMarkert.includes(uuid);
+  };
+
+  const toggleSelected = (uuid: string): void => {
+    const isCurrentlySelected = dialogmoterMarkert.includes(uuid);
+    dispatch({
+      type: MoteoverforingActionType.MarkerDialogmote,
+      dialogmoteUuid: uuid,
+      overta: !isCurrentlySelected,
+    });
+  };
+
+  const navnPaaVeiledere = (): string[] => {
+    return veiledere
+      .map((veileder) => veileder.fulltNavn())
+      .filter((navn) => navn !== undefined) as string[];
+  };
+
+  const veilederNavnForMote = (mote: DialogmoterDTO): string | undefined => {
+    const matchingVeileder = veiledere.find(
+      ({ ident }) => mote.tildeltVeilederIdent === ident,
+    );
+    return matchingVeileder?.fulltNavn();
+  };
+
+  const getFiltrerteMoter = () => {
+    if (responsFilter === "alle" && filterVeileder === "alle") {
+      return moter;
+    }
+
+    return moter.filter((mote) => {
+      const veileder =
+        filterVeileder === "alle" ||
+        veilederNavnForMote(mote) === filterVeileder;
+      const status =
+        responsFilter === "alle" || getMoteRespons(mote) === responsFilter;
+      return veileder && status;
+    });
+  };
+
+  const filtrerteMoter = getFiltrerteMoter();
 
   return (
-    <div>
-      {!harMoter && (
-        <div className="panel">
-          <p>{texts.ingenMoter}</p>
+    <>
+      <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">
+        <OverforMoter />
+        <div className="flex gap-8 items-center">
+          <Select
+            size="small"
+            id="moteoversikt-filtrer"
+            label={texts.filtrer}
+            onChange={(e) => setFilterVeileder(e.currentTarget.value)}
+          >
+            <option value="alle">Vis alle</option>
+            {navnPaaVeiledere().map((veileder, index) => (
+              <option key={index} value={veileder}>
+                {veileder}
+              </option>
+            ))}
+          </Select>
+          <MoteResponsFilter
+            moteResponser={getMoteResponser(moter)}
+            onFilterChange={(changedFilter: MoteRespons) =>
+              setResponsFilter(changedFilter)
+            }
+          />
+          <BodyShort size="small" weight="semibold">
+            Viser {filtrerteMoter.length} møter
+          </BodyShort>
         </div>
-      )}
-      {harMoter && <MoteoversiktEnhet />}
-    </div>
+      </div>
+      <MoteTabell
+        moter={filtrerteMoter}
+        isSelected={isSelected}
+        toggleSelected={toggleSelected}
+        showVeileder={true}
+      />
+    </>
   );
 }

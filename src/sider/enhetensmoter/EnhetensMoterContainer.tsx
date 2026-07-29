@@ -2,17 +2,17 @@ import React, { ReactElement, useEffect } from "react";
 import SideFullBredde from "@/components/layout/SideFullbredde";
 import Feilmelding from "../../components/Feilmelding";
 import NavigasjonsTopp from "../../components/NavigasjonsTopp";
-import EnhetensMoter from "./EnhetensMoter";
 
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { useEnhetensDialogmoterQuery } from "@/data/dialogmoter/dialogmoterQueryHooks";
 import { useMoteoverforing } from "@/context/moteoverforing/MoteoverforingContext";
 import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
-import { Loader } from "@navikt/ds-react";
+import { BodyShort, Box, Loader } from "@navikt/ds-react";
 import { Column, RowCentered } from "@/components/layout/Layout";
+import EnhetensMoter from "@/sider/enhetensmoter/EnhetensMoter.tsx";
 
 const texts = {
-  ingenMoter: "Enheten har ingen møter",
+  ingenMoter: "Enheten har ingen aktive møter.",
 };
 
 const EnhetensMoterContainer = (): ReactElement => {
@@ -50,7 +50,11 @@ const EnhetensMoterContainer = (): ReactElement => {
           } else if (harMoter) {
             return <EnhetensMoter />;
           }
-          return <p>{texts.ingenMoter}</p>;
+          return (
+            <Box background="default" padding="space-16">
+              <BodyShort>{texts.ingenMoter}</BodyShort>
+            </Box>
+          );
         })()}
       </Column>
     </SideFullBredde>

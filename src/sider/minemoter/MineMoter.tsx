@@ -8,10 +8,10 @@ import MoteTabell from "@/components/MoteTabell";
 import {
   Alert,
   BodyShort,
+  Box,
   Button,
   ErrorMessage,
   Label,
-  Panel,
   Select,
 } from "@navikt/ds-react";
 import { useGetVeiledere } from "@/data/veiledere/veilederQueryHooks";
@@ -171,9 +171,9 @@ export default function MineMoter({
   }
 
   return !harMoter ? (
-    <Panel>
-      <p>{texts.ingenMoter}</p>
-    </Panel>
+    <Box background="default" padding="space-16">
+      <BodyShort>{texts.ingenMoter}</BodyShort>
+    </Box>
   ) : (
     <form onSubmit={onSubmitHandler}>
       {antallOverfort && isAntallOverfortVisible && (
