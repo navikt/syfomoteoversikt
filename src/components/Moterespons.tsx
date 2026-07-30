@@ -17,37 +17,37 @@ function ResponsTag({
 }): ReactElement {
   if (respons.svar === SvarType.KOMMER) {
     return (
-      <Tag variant="success" size="xsmall">
+      <Tag data-color="success" variant="outline" size="xsmall">
         Kommer
       </Tag>
     );
   } else if (respons.svar === SvarType.KOMMER_IKKE) {
     return (
-      <Tag variant="error" size="xsmall">
+      <Tag data-color="danger" variant="outline" size="xsmall">
         Kommer ikke
       </Tag>
     );
   } else if (respons.svar === SvarType.NYTT_TID_STED) {
     return (
-      <Tag variant="warning" size="xsmall">
+      <Tag data-color="warning" variant="outline" size="xsmall">
         Endring ønskes
       </Tag>
     );
   } else if (respons.harLest) {
     return (
-      <Tag variant="info" size="xsmall">
+      <Tag data-color="info" variant="outline" size="xsmall">
         Har åpnet
       </Tag>
     );
   } else if (deltaker === "Behandler" && !respons.harLest && !respons.svar) {
     return (
-      <Tag variant="alt2" size="xsmall">
+      <Tag data-color="meta-lime" variant="outline" size="xsmall">
         Ikke svart
       </Tag>
     );
   } else {
     return (
-      <Tag variant="alt2" size="xsmall">
+      <Tag data-color="meta-lime" variant="outline" size="xsmall">
         Ikke åpnet
       </Tag>
     );

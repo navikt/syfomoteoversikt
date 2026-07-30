@@ -1,4 +1,3 @@
-import EnhetensMoter from "@/sider/enhetensmoter/EnhetensMoter";
 import React from "react";
 import {
   DialogmoteStatus,
@@ -28,6 +27,7 @@ import {
 } from "../mocks/stubVeilederApi";
 import { stubDialogmoterApi } from "../mocks/stubDialogmoterApi";
 import { stubVirksomhetApi } from "../mocks/stubVirksomhetApi.ts";
+import EnhetensMoter from "@/sider/enhetensmoter/EnhetensMoter.tsx";
 
 const yesterday = daysFromToday(-1);
 const inTwoDays = daysFromToday(2);
