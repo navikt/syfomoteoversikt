@@ -13,6 +13,7 @@ export default defineConfig({
   },
   build: {
     outDir: "./dist",
+    sourcemap: true,
   },
   base: "/syfomoteoversikt/",
   plugins: [react(), svgr({ include: "**/*.svg" }), tailwindcss()],
