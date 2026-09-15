@@ -81,7 +81,7 @@ const setupServer = async () => {
   );
 
   server.get(
-    ["/", "/syfomoteoversikt/*"],
+    ["/", "/syfomoteoversikt/*splat"],
     [nocache, redirectIfUnauthorized],
     (
       req: express.Request,
