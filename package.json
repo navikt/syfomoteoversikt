@@ -41,13 +41,13 @@
     "http-proxy": "1.18.1",
     "https-proxy-agent": "5.0.1",
     "lodash.throttle": "4.1.1",
+    "mime-types": "^3.0.0",
     "prom-client": "11.5.3",
     "react": "19.2.7",
     "react-document-title": "2.0.3",
     "react-dom": "19.2.7",
     "react-router-dom": "7.18.1",
-    "styled-components": "5.3.6",
-    "mime-types": "^3.0.0"
+    "styled-components": "5.3.6"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
