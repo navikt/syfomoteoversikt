@@ -73,10 +73,15 @@ const setupServer = async () => {
     res.sendStatus(200);
   });
 
-  server.use("/syfomoteoversikt", express.static(DIST_DIR));
+  server.use(
+    "/syfomoteoversikt",
+    express.static(DIST_DIR, {
+      dotfiles: "allow" /* Express 5: preserve v4 behavior */,
+    }),
+  );
 
   server.get(
-    ["/", "/syfomoteoversikt/*"],
+    ["/", "/syfomoteoversikt/*splat"],
     [nocache, redirectIfUnauthorized],
     (
       req: express.Request,
@@ -87,7 +92,9 @@ const setupServer = async () => {
         return next();
       }
 
-      res.sendFile(HTML_FILE);
+      res.sendFile(HTML_FILE, {
+        dotfiles: "allow" /* Express 5: preserve v4 behavior */,
+      });
     },
   );
 

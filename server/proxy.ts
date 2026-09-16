@@ -111,12 +111,12 @@ export const setupProxy = (): express.Router => {
   const router = express.Router();
 
   router.use(
-    "/ereg/*",
+    "/ereg/*splat",
     proxyExternalHostWithoutAuthentication(Config.auth.ereg.host),
   );
 
   router.use(
-    "/modiacontextholder/*",
+    "/modiacontextholder/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -127,7 +127,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/isdialogmote/*",
+    "/isdialogmote/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -138,7 +138,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/syfoperson/*",
+    "/syfoperson/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -149,7 +149,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/syfoveileder/*",
+    "/syfoveileder/*splat",
     (
       req: express.Request,
       res: express.Response,
