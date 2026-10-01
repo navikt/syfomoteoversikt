@@ -26,7 +26,7 @@ const EnhetensMoterContainer = (): ReactElement => {
     dialogmoterQuery.isSuccess && dialogmoterQuery.data.length > 0;
 
   return (
-    <SideFullBredde tittel="Møteoversikt">
+    <SideFullBredde>
       <Column>
         <NavigasjonsTopp />
         {(() => {

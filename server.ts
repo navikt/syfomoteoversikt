@@ -1,7 +1,6 @@
 import express from "express";
 import helmet from "helmet";
 import path from "path";
-import prometheus from "prom-client";
 import { validateToken } from "./server/authUtils.js";
 import { setupProxy } from "./server/proxy.js";
 import { logger } from "@navikt/pino-logger";
@@ -9,18 +8,6 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// Prometheus metrics
-const collectDefaultMetrics = prometheus.collectDefaultMetrics;
-collectDefaultMetrics({ timeout: 5000 });
-
-const httpRequestDurationMicroseconds = new prometheus.Histogram({
-  name: "http_request_duration_ms",
-  help: "Duration of HTTP requests in ms",
-  labelNames: ["route"],
-  // buckets for response time from 0.1ms to 500ms
-  buckets: [0.1, 5, 15, 50, 100, 200, 300, 400, 500],
-});
 
 const server = express();
 
@@ -59,11 +46,6 @@ const setupServer = async () => {
   const HTML_FILE = path.join(DIST_DIR, "index.html");
 
   server.use(setupProxy());
-
-  server.get("/actuator/metrics", (req, res) => {
-    res.set("Content-Type", prometheus.register.contentType);
-    res.end(prometheus.register.metrics());
-  });
 
   server.get("/health/isAlive", (req, res) => {
     res.sendStatus(200);
