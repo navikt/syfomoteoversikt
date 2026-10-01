@@ -17,7 +17,7 @@ const MineMoterContainer = (): ReactElement => {
   const isSuccess = aktivVeilederQuery.isSuccess && dialogmoterQuery.isSuccess;
 
   return (
-    <SideFullBredde tittel="Møteoversikt">
+    <SideFullBredde>
       <Column>
         <NavigasjonsTopp />
         {isLoading && <Loader size="2xlarge" className="flex justify-center" />}
