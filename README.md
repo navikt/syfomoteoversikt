@@ -8,21 +8,7 @@ React-app for administrasjon av dialogmøter for veileder.
 
 ## Kjøre lokalt
 
-Node-versjonen styres av `.nvmrc`, og pnpm-versjonen er angitt i `package.json`.
-Med [nvm](https://github.com/nvm-sh/nvm) installert:
-
-```sh
-nvm install
-nvm use
-```
-
-Endre kun `.nvmrc` for å oppdatere Node lokalt, i GitHub Actions og i Docker.
-Docker bruker samme hovedversjon som bygget. Etter at appen er bygget, kan
-Docker-imaget bygges lokalt med den valgte Node-versjonen:
-
-```sh
-docker build --build-arg NODE_VERSION="$(node -p 'process.versions.node.split(".")[0]')" .
-```
+Du må ha Node v22 og npm v10 installert.
 
 - For å kjøre koden lokalt:
   - `$ pnpm install`
