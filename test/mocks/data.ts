@@ -39,6 +39,17 @@ export const eregOrganisasjonResponseMock: EregOrganisasjonResponseDTO = {
   },
 };
 
+const varselTypeFromStatus = (status: DialogmoteStatus) => {
+  switch (status) {
+    case DialogmoteStatus.INNKALT:
+      return DialogmoteDeltakerVarselType.INNKALT;
+    case DialogmoteStatus.ENDRET:
+      return DialogmoteDeltakerVarselType.ENDRET;
+    default:
+      return DialogmoteDeltakerVarselType.NYTT_TID_STED;
+  }
+};
+
 export const createDialogmote = (
   veileder: Veileder,
   status: DialogmoteStatus,
@@ -46,6 +57,7 @@ export const createDialogmote = (
   arbeidstakerRespons: { lestDato?: Date; svar?: SvarType } = {},
   arbeidsgiverRespons: { lestDato?: Date; svar?: SvarType } = {},
   behandlerRespons?: SvarType,
+  behandlerVarselType?: DialogmoteDeltakerVarselType,
 ): DialogmoterDTO =>
   ({
     sted: "video",
@@ -56,9 +68,7 @@ export const createDialogmote = (
       varselList: [
         {
           varselType:
-            DialogmoteStatus.INNKALT === status
-              ? DialogmoteDeltakerVarselType.INNKALT
-              : DialogmoteDeltakerVarselType.NYTT_TID_STED,
+            varselTypeFromStatus(status),
           lestDato: arbeidsgiverRespons?.lestDato?.toISOString() ?? null,
           svar: arbeidsgiverRespons.svar
             ? { svarType: arbeidsgiverRespons.svar }
@@ -70,9 +80,7 @@ export const createDialogmote = (
       varselList: [
         {
           varselType:
-            DialogmoteStatus.INNKALT === status
-              ? DialogmoteDeltakerVarselType.INNKALT
-              : DialogmoteDeltakerVarselType.NYTT_TID_STED,
+            varselTypeFromStatus(status),
           lestDato: arbeidstakerRespons?.lestDato?.toISOString() ?? null,
           svar: arbeidstakerRespons.svar
             ? { svarType: arbeidstakerRespons.svar }
@@ -88,9 +96,7 @@ export const createDialogmote = (
             varselList: [
               {
                 varselType:
-                  DialogmoteStatus.INNKALT === status
-                    ? DialogmoteDeltakerVarselType.INNKALT
-                    : DialogmoteDeltakerVarselType.NYTT_TID_STED,
+                  behandlerVarselType ?? varselTypeFromStatus(status),
                 svar: [{ svarType: behandlerRespons }],
               },
             ],

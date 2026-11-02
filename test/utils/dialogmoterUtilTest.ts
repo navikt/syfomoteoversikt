@@ -1,4 +1,9 @@
-import { erResponsMottatt, statusTekst } from "@/utils/dialogmoterUtil";
+import {
+  erResponsMottatt,
+  getArbeidstakerRespons,
+  getBehandlerRespons,
+  statusTekst,
+} from "@/utils/dialogmoterUtil";
 import {
   DialogmotedeltakerBehandlerDTO,
   DialogmotedeltakerBehandlerVarselDTO,
@@ -148,6 +153,52 @@ describe("dialogmoterUtil erResponsMottatt", () => {
       const respons = erResponsMottatt(dialogmote as DialogmoterDTO);
       expect(respons).to.be.true;
     });
+  });
+});
+
+describe("dialogmoterUtil respons for ENDRET", () => {
+  it("returnerer arbeidstakers svar på ENDRET-varsel", () => {
+    const dialogmote = getDialogmoteMedVarsler(
+      DialogmoteStatus.ENDRET,
+      [getVarsel(DialogmoteDeltakerVarselType.ENDRET, lestDato, SvarType.KOMMER)],
+      [getVarsel(DialogmoteDeltakerVarselType.ENDRET)],
+    );
+
+    expect(getArbeidstakerRespons(dialogmote)).to.deep.equal({
+      harLest: true,
+      svar: SvarType.KOMMER,
+    });
+  });
+  it("returnerer svar fra ny behandler som har fått INNKALT", () => {
+    const dialogmote = getDialogmoteMedVarsler(
+      DialogmoteStatus.ENDRET,
+      [getVarsel(DialogmoteDeltakerVarselType.ENDRET)],
+      [getVarsel(DialogmoteDeltakerVarselType.ENDRET)],
+      [
+        {
+          varselType: DialogmoteDeltakerVarselType.INNKALT,
+          svar: [{ svarType: SvarType.KOMMER_IKKE }],
+        },
+      ],
+    );
+
+    expect(getBehandlerRespons(dialogmote)).to.equal(SvarType.KOMMER_IKKE);
+  });
+  it("returnerer svar på nyeste behandler-varsel", () => {
+    const dialogmote = getDialogmoteMedVarsler(
+      DialogmoteStatus.ENDRET,
+      [getVarsel(DialogmoteDeltakerVarselType.ENDRET)],
+      [getVarsel(DialogmoteDeltakerVarselType.ENDRET)],
+      [
+        { varselType: DialogmoteDeltakerVarselType.ENDRET, svar: [] },
+        {
+          varselType: DialogmoteDeltakerVarselType.INNKALT,
+          svar: [{ svarType: SvarType.KOMMER }],
+        },
+      ],
+    );
+
+    expect(getBehandlerRespons(dialogmote)).to.be.undefined;
   });
 });
 
