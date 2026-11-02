@@ -160,7 +160,13 @@ describe("dialogmoterUtil respons for ENDRET", () => {
   it("returnerer arbeidstakers svar på ENDRET-varsel", () => {
     const dialogmote = getDialogmoteMedVarsler(
       DialogmoteStatus.ENDRET,
-      [getVarsel(DialogmoteDeltakerVarselType.ENDRET, lestDato, SvarType.KOMMER)],
+      [
+        getVarsel(
+          DialogmoteDeltakerVarselType.ENDRET,
+          lestDato,
+          SvarType.KOMMER,
+        ),
+      ],
       [getVarsel(DialogmoteDeltakerVarselType.ENDRET)],
     );
 

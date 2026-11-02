@@ -67,8 +67,7 @@ export const createDialogmote = (
       virksomhetsnummer: arbeidsgiverMock.orgnummer,
       varselList: [
         {
-          varselType:
-            varselTypeFromStatus(status),
+          varselType: varselTypeFromStatus(status),
           lestDato: arbeidsgiverRespons?.lestDato?.toISOString() ?? null,
           svar: arbeidsgiverRespons.svar
             ? { svarType: arbeidsgiverRespons.svar }
@@ -79,8 +78,7 @@ export const createDialogmote = (
     arbeidstaker: {
       varselList: [
         {
-          varselType:
-            varselTypeFromStatus(status),
+          varselType: varselTypeFromStatus(status),
           lestDato: arbeidstakerRespons?.lestDato?.toISOString() ?? null,
           svar: arbeidstakerRespons.svar
             ? { svarType: arbeidstakerRespons.svar }
@@ -95,8 +93,7 @@ export const createDialogmote = (
           behandler: {
             varselList: [
               {
-                varselType:
-                  behandlerVarselType ?? varselTypeFromStatus(status),
+                varselType: behandlerVarselType ?? varselTypeFromStatus(status),
                 svar: [{ svarType: behandlerRespons }],
               },
             ],
