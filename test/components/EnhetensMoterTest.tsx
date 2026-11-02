@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  DialogmoteDeltakerVarselType,
   DialogmoteStatus,
   SvarType,
 } from "@/data/dialogmoter/dialogmoterTypes";
@@ -34,6 +35,7 @@ const inTwoDays = daysFromToday(2);
 const inFiveDays = daysFromToday(5);
 const threeDaysAgo = daysFromToday(-3);
 const twoDaysAgo = daysFromToday(-2);
+const inSevenDays = daysFromToday(7);
 
 const dialogmoterData = [
   createDialogmote(
@@ -52,6 +54,15 @@ const dialogmoterData = [
     SvarType.NYTT_TID_STED,
   ),
   createDialogmote(veilederMock, DialogmoteStatus.NYTT_TID_STED, inFiveDays),
+  createDialogmote(
+    veilederMock,
+    DialogmoteStatus.ENDRET,
+    inSevenDays,
+    { lestDato: new Date(), svar: SvarType.KOMMER },
+    {},
+    SvarType.KOMMER,
+    DialogmoteDeltakerVarselType.INNKALT,
+  ),
   createDialogmote(veilederMock, DialogmoteStatus.AVLYST, twoDaysAgo),
   createDialogmote(veilederMock, DialogmoteStatus.FERDIGSTILT, threeDaysAgo),
 ];
@@ -80,7 +91,7 @@ describe("EnhetensMoter", () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText("Viser 3 møter")).to.exist;
+    expect(await screen.findByText("Viser 4 møter")).to.exist;
 
     expect(screen.getByText("Filtrer på respons")).to.exist;
     expect(screen.getByText("Filtrer på veileder")).to.exist;
@@ -108,7 +119,7 @@ describe("EnhetensMoter", () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByText("Viser 3 møter")).to.exist;
+    expect(await screen.findByText("Viser 4 møter")).to.exist;
 
     const headers = screen.getAllByRole("columnheader");
     assertTableHeaders(headers, [
@@ -140,6 +151,11 @@ describe("EnhetensMoter", () => {
       }${arbeidstakerMock.navn}${
         arbeidsgiverMock.virksomhet
       }Endring sendtArbeidstaker:Ikke åpnetArbeidsgiver:Ikke åpnet`,
+      `${getDatoFraZulu(inSevenDays)}${veilederMock.fulltNavn()}${
+        arbeidstakerMock.fnr
+      }${arbeidstakerMock.navn}${
+        arbeidsgiverMock.virksomhet
+      }Endring sendt (med behandler)Arbeidstaker:KommerArbeidsgiver:Ikke åpnetBehandler:Kommer`,
     ]);
   });
 });

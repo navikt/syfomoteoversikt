@@ -34,10 +34,10 @@ export const getDialogmoteDato = (dialogmote: DialogmoterDTO) =>
 export const getBehandlerRespons = (
   dialogmote: DialogmoterDTO,
 ): SvarType | undefined => {
-  const varselType = varselTypeFromStatus(dialogmote.status);
+  const varselTypes = behandlerVarselTypesFromStatus(dialogmote.status);
   const varsel: DialogmotedeltakerBehandlerVarselDTO | undefined =
-    dialogmote.behandler?.varselList?.find(
-      (varsel) => varsel.varselType === varselType,
+    dialogmote.behandler?.varselList?.find((varsel) =>
+      varselTypes.includes(varsel.varselType),
     );
 
   return varsel?.svar[0]?.svarType;
@@ -75,6 +75,19 @@ const getDeltakerRespons = (
   };
 };
 
+// Ved ENDRET får en ny behandler INNKALT, og en eksisterende behandler får bare ENDRET hvis tid/sted er endret.
+// Bruker derfor nyeste varsel av disse typene.
+const behandlerVarselTypesFromStatus = (
+  status: DialogmoteStatus,
+): DialogmoteDeltakerVarselType[] =>
+  status === DialogmoteStatus.ENDRET
+    ? [
+        DialogmoteDeltakerVarselType.ENDRET,
+        DialogmoteDeltakerVarselType.NYTT_TID_STED,
+        DialogmoteDeltakerVarselType.INNKALT,
+      ]
+    : [varselTypeFromStatus(status)];
+
 const varselTypeFromStatus = (
   status: DialogmoteStatus,
 ): DialogmoteDeltakerVarselType => {
@@ -84,6 +97,9 @@ const varselTypeFromStatus = (
     }
     case DialogmoteStatus.NYTT_TID_STED: {
       return DialogmoteDeltakerVarselType.NYTT_TID_STED;
+    }
+    case DialogmoteStatus.ENDRET: {
+      return DialogmoteDeltakerVarselType.ENDRET;
     }
     case DialogmoteStatus.AVLYST: {
       return DialogmoteDeltakerVarselType.AVLYST;

@@ -34,6 +34,7 @@ export function filterUnfinishedMoter(
     (dialogmote) =>
       dialogmote.tildeltVeilederIdent === veileder.ident &&
       (dialogmote.status == DialogmoteStatus.INNKALT ||
-        dialogmote.status == DialogmoteStatus.NYTT_TID_STED),
+        dialogmote.status == DialogmoteStatus.NYTT_TID_STED ||
+        dialogmote.status == DialogmoteStatus.ENDRET),
   );
 }

@@ -56,7 +56,7 @@ const createDialogmote = (
           behandler: {
             varselList: [
               {
-                varselType,
+                varselType: behandlerVarsel.varselType || varselType,
                 svar: behandlerVarsel.svar || [],
               },
             ],
@@ -189,6 +189,31 @@ const dialogmoter = [
       svar: { svarType: SvarType.KOMMER_IKKE },
     },
     { varselType: DialogmoteDeltakerVarselType.INNKALT, svar: [] },
+  ),
+  createDialogmote(
+    "12",
+    addDaysToToday(5),
+    DialogmoteStatus.ENDRET,
+    DialogmoteDeltakerVarselType.ENDRET,
+    "Z990197",
+    {
+      lestDato: addDaysToToday(-1).toISOString(),
+      svar: { svarType: SvarType.KOMMER },
+    },
+    {},
+  ),
+  createDialogmote(
+    "13",
+    addDaysToToday(6),
+    DialogmoteStatus.ENDRET,
+    DialogmoteDeltakerVarselType.ENDRET,
+    "Z990197",
+    {},
+    { lestDato: addDaysToToday(-1).toISOString() },
+    {
+      varselType: DialogmoteDeltakerVarselType.INNKALT,
+      svar: [{ svarType: SvarType.KOMMER }],
+    },
   ),
 ];
 

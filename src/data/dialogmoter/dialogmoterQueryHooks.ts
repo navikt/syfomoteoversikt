@@ -54,5 +54,6 @@ const aktiveDialogmoter = (dialogmoter: DialogmoterDTO[]) =>
   dialogmoter.filter(
     (dialogmote) =>
       dialogmote.status === DialogmoteStatus.INNKALT ||
-      dialogmote.status === DialogmoteStatus.NYTT_TID_STED,
+      dialogmote.status === DialogmoteStatus.NYTT_TID_STED ||
+      dialogmote.status === DialogmoteStatus.ENDRET,
   );
