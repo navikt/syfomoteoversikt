@@ -11,10 +11,10 @@ export const mockDialogmoter = [
   ),
 
   http.post("/isdialogmote/api/v2/dialogmote/overta", () =>
-    HttpResponse.text("OK"),
+    HttpResponse.text("Internal Server Error", { status: 500 }),
   ),
 
   http.patch("/isdialogmote/api/v2/dialogmote/tildel", () =>
-    HttpResponse.text("OK"),
+    HttpResponse.text("Internal Server Error", { status: 500 }),
   ),
 ];
