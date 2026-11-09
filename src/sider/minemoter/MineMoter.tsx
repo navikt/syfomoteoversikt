@@ -6,12 +6,11 @@ import {
 import { getMoteRespons, getMoteResponser } from "@/utils/moterUtil";
 import MoteTabell from "@/components/MoteTabell";
 import {
-  Alert,
   BodyShort,
   Box,
   Button,
   ErrorMessage,
-  Label,
+  LocalAlert,
   Select,
 } from "@navikt/ds-react";
 import { useGetVeiledere } from "@/data/veiledere/veilederQueryHooks";
@@ -177,24 +176,37 @@ export default function MineMoter({
   ) : (
     <form onSubmit={onSubmitHandler}>
       {antallOverfort && isAntallOverfortVisible && (
-        <Alert size="small" variant="success" className="mb-4 w-fit">
-          <Label size="small">{`Du har lagt til ${hentTallordTekst(
-            antallOverfort,
-          )}`}</Label>
-          <br />
-          <label>{`Dato: ${dagensDatoKortFormat()}`}</label>
-        </Alert>
+        <LocalAlert size="small" status="success" className="mb-4 w-fit">
+          <LocalAlert.Header>
+            <LocalAlert.Title as="div">
+              {`Du har lagt til ${hentTallordTekst(antallOverfort)}`}
+            </LocalAlert.Title>
+          </LocalAlert.Header>
+          <LocalAlert.Content>
+            {`Dato: ${dagensDatoKortFormat()}`}
+          </LocalAlert.Content>
+        </LocalAlert>
       )}
       {tildelDialogmoter.isSuccess && (
-        <Alert size="small" variant="success" className="mb-4 w-fit">
-          <Label size="small">
-            {texts.moterTildelt(
-              tildelDialogmoter.variables.dialogmoteUuids.length,
-              veilederNavn(tildelDialogmoter.variables.veilederIdent),
-            )}
-          </Label>
-          <br />
-        </Alert>
+        <LocalAlert size="small" status="success" className="mb-4 w-fit">
+          <LocalAlert.Header>
+            <LocalAlert.Title as="div">
+              {texts.moterTildelt(
+                tildelDialogmoter.variables.dialogmoteUuids.length,
+                veilederNavn(tildelDialogmoter.variables.veilederIdent),
+              )}
+            </LocalAlert.Title>
+          </LocalAlert.Header>
+        </LocalAlert>
+      )}
+      {tildelDialogmoter.isError && (
+        <LocalAlert size="small" status="error" className="mb-4 w-fit">
+          <LocalAlert.Header>
+            <LocalAlert.Title as="div">
+              {resolveErrorMessage(tildelDialogmoter.error)}
+            </LocalAlert.Title>
+          </LocalAlert.Header>
+        </LocalAlert>
       )}
 
       <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">
@@ -235,12 +247,6 @@ export default function MineMoter({
               >
                 {texts.assignMeetings}
               </Button>
-
-              {tildelDialogmoter.isError && (
-                <Alert size="small" variant="error">
-                  {resolveErrorMessage(tildelDialogmoter.error)}
-                </Alert>
-              )}
             </div>
           </div>
         </div>
