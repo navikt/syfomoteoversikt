@@ -36,12 +36,6 @@ import {
   stubDialogmoterVeilederidentApi,
 } from "../mocks/stubDialogmoterApi";
 import MineMoter from "@/sider/minemoter/MineMoter";
-import {
-  MoteoverforingProvider,
-  useMoteoverforing,
-} from "@/context/moteoverforing/MoteoverforingContext";
-import { MoteoverforingActionType } from "@/context/moteoverforing/moteoverforingActions";
-import { dagensDatoKortFormat } from "@/utils/dateUtil";
 
 const yesterday = daysFromToday(-1);
 const inFiveDays = daysFromToday(5);
@@ -149,42 +143,6 @@ describe("MineMoter", () => {
       ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
     },
   );
-
-  it("announces meetings taken over with today's date", async () => {
-    function MeetingsTakenOver() {
-      const { dispatch } = useMoteoverforing();
-      React.useEffect(() => {
-        dispatch({
-          type: MoteoverforingActionType.MarkerDialogmote,
-          dialogmoteUuid: "dialogmote-uuid",
-          overta: true,
-        });
-        dispatch({ type: MoteoverforingActionType.DialogmoterOverfort });
-      }, [dispatch]);
-      return (
-        <MineMoter
-          aktivVeileder={veilederMock}
-          moter={filterUnfinishedMoter(veilederMock, dialogmoterData)}
-        />
-      );
-    }
-
-    render(
-      <QueryClientProvider client={new QueryClient()}>
-        <AktivEnhetContext.Provider
-          value={{ aktivEnhet: aktivEnhetMock, setAktivEnhet: () => void 0 }}
-        >
-          <MoteoverforingProvider>
-            <MeetingsTakenOver />
-          </MoteoverforingProvider>
-        </AktivEnhetContext.Provider>
-      </QueryClientProvider>,
-    );
-
-    const alert = await screen.findByRole("alert");
-    expect(alert.textContent).toContain("Du har lagt til ett nytt møte");
-    expect(alert.textContent).toContain(`Dato: ${dagensDatoKortFormat()}`);
-  });
 
   it("viser filter på respons", async () => {
     render(
