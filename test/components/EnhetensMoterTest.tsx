@@ -19,7 +19,12 @@ import {
   createDialogmote,
   veilederMock,
 } from "../mocks/data";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { http, HttpResponse } from "msw";
+import { mockServer } from "../setup";
+import { ISDIALOGMOTE_ROOT } from "@/utils/apiUrlUtil";
+import { defaultErrorTexts } from "@/api/errors";
+import { MoteoverforingProvider } from "@/context/moteoverforing/MoteoverforingContext";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { stubBrukernavnApi } from "../mocks/stubBrukernavnApi";
 import {
@@ -157,5 +162,51 @@ describe("EnhetensMoter", () => {
         arbeidsgiverMock.virksomhet
       }Endring sendt (med behandler)Arbeidstaker:KommerArbeidsgiver:Ikke åpnetBehandler:Kommer`,
     ]);
+  });
+
+  it("shows transfer errors above and outside the action box", async () => {
+    stubDialogmoterApi(
+      dialogmoterData.map((mote, index) => ({
+        ...mote,
+        uuid: `dialogmote-${index}`,
+      })),
+    );
+    mockServer.use(
+      http.post(`*${ISDIALOGMOTE_ROOT}/v2/dialogmote/overta`, () =>
+        HttpResponse.text("Internal Server Error", { status: 500 }),
+      ),
+    );
+
+    render(
+      <QueryClientProvider client={new QueryClient()}>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock,
+            setAktivEnhet: () => void 0,
+          }}
+        >
+          <MoteoverforingProvider>
+            <EnhetensMoter />
+          </MoteoverforingProvider>
+        </AktivEnhetContext.Provider>
+      </QueryClientProvider>,
+    );
+
+    expect(await screen.findByText("Viser 4 møter")).toBeTruthy();
+    expect(screen.queryByRole("alert")).toBeNull();
+    screen.getAllByRole("checkbox").forEach((checkbox) => {
+      fireEvent.click(checkbox);
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Overta møter" }));
+
+    const alert = await screen.findByRole("alert");
+    const button = screen.getByRole("button", { name: "Overta møter" });
+    const actionBox = button.parentElement;
+
+    expect(alert.textContent).toContain(defaultErrorTexts.generalError);
+    expect(actionBox?.contains(alert)).toBe(false);
+    expect(
+      alert.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
   });
 });

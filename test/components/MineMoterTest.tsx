@@ -19,7 +19,11 @@ import {
   virksomhetNavn,
 } from "../mocks/data";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { http, HttpResponse } from "msw";
+import { mockServer } from "../setup";
+import { ISDIALOGMOTE_ROOT, SYFOVEILEDER_ROOT } from "@/utils/apiUrlUtil";
+import { defaultErrorTexts } from "@/api/errors";
 import { getDatoFraZulu } from "@/utils/dateUtil";
 import { stubBrukernavnApi } from "../mocks/stubBrukernavnApi";
 import { stubVirksomhetApi } from "../mocks/stubVirksomhetApi";
@@ -72,7 +76,73 @@ describe("MineMoter", () => {
     stubVeilederApi(veilederMock);
     stubVeilederApi(annenVeilederMock);
     stubDialogmoterVeilederidentApi(veilederMock, dialogmoterData);
+    mockServer.use(
+      http.get(`*${SYFOVEILEDER_ROOT}/v3/veiledere`, () =>
+        HttpResponse.json([annenVeilederMock]),
+      ),
+    );
   });
+
+  it.each([
+    [500, defaultErrorTexts.generalError],
+    [200, `Du har tildelt 3 møter til ${annenVeilederMock.fulltNavn()}`],
+  ])(
+    "shows assignment feedback above the action box for HTTP %s",
+    async (status, message) => {
+      mockServer.use(
+        http.patch(`*${ISDIALOGMOTE_ROOT}/v2/dialogmote/tildel`, () =>
+          HttpResponse.text(status === 200 ? "OK" : "Internal Server Error", {
+            status,
+          }),
+        ),
+      );
+
+      render(
+        <QueryClientProvider client={new QueryClient()}>
+          <AktivEnhetContext.Provider
+            value={{
+              aktivEnhet: aktivEnhetMock,
+              setAktivEnhet: () => void 0,
+            }}
+          >
+            <MineMoter
+              aktivVeileder={veilederMock}
+              moter={filterUnfinishedMoter(veilederMock, dialogmoterData).map(
+                (mote, index) => ({ ...mote, uuid: `dialogmote-${index}` }),
+              )}
+            />
+          </AktivEnhetContext.Provider>
+        </QueryClientProvider>,
+      );
+
+      expect(
+        await screen.findByRole("option", {
+          name: annenVeilederMock.fulltNavn(),
+        }),
+      ).toBeTruthy();
+      expect(screen.queryByRole("alert")).toBeNull();
+      fireEvent.change(
+        screen.getByRole("combobox", { name: "Hvem vil du tildele møtene?" }),
+        { target: { value: annenVeilederMock.ident } },
+      );
+      screen.getAllByRole("checkbox").forEach((checkbox) => {
+        fireEvent.click(checkbox);
+      });
+      fireEvent.click(screen.getByRole("button", { name: "Tildel møter" }));
+
+      const alert = await screen.findByRole("alert");
+      const actionBox =
+        screen.getByText("Viser 3 møter").parentElement?.parentElement;
+
+      expect(alert.textContent).toContain(message);
+      expect(actionBox?.contains(alert)).toBe(false);
+      expect(
+        alert.compareDocumentPosition(
+          screen.getByRole("button", { name: "Tildel møter" }),
+        ) & Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    },
+  );
 
   it("viser filter på respons", async () => {
     render(

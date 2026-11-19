@@ -1,5 +1,9 @@
 import React, { ReactElement, useState } from "react";
-import { BodyShort, Select } from "@navikt/ds-react";
+import { BodyShort, LocalAlert, Select } from "@navikt/ds-react";
+import { Navigate } from "react-router-dom";
+import { useOverforDialogmoter } from "@/data/dialogmoter/useOverforDialogmoter";
+import { mineMoterRoutePath } from "@/routers/AppRouter";
+import { resolveErrorMessage } from "@/api/errors.ts";
 import {
   MoteRespons,
   MoteResponsFilter,
@@ -39,6 +43,7 @@ export default function EnhetensMoter(): ReactElement {
   const veiledere = [...dialogmoterVeiledere];
 
   const { dialogmoterMarkert, dispatch } = useMoteoverforing();
+  const overforDialogmoter = useOverforDialogmoter();
 
   const isSelected = (uuid: string): boolean => {
     return dialogmoterMarkert.includes(uuid);
@@ -83,10 +88,26 @@ export default function EnhetensMoter(): ReactElement {
 
   const filtrerteMoter = getFiltrerteMoter();
 
+  if (overforDialogmoter.isSuccess) {
+    return <Navigate to={mineMoterRoutePath} />;
+  }
+
   return (
     <>
+      {overforDialogmoter.isError && (
+        <LocalAlert size="small" status="error" className="mb-4 w-fit">
+          <LocalAlert.Header>
+            <LocalAlert.Title as="div">
+              {resolveErrorMessage(overforDialogmoter.error)}
+            </LocalAlert.Title>
+          </LocalAlert.Header>
+        </LocalAlert>
+      )}
       <div className="flex items-center justify-between mb-2 bg-white sticky z-10 top-0 p-2 rounded shadow-[0_1px_3px_0px_rgba(0,0,0,0.5)]">
-        <OverforMoter />
+        <OverforMoter
+          isPending={overforDialogmoter.isPending}
+          onOverfor={overforDialogmoter.mutate}
+        />
         <div className="flex gap-8 items-center">
           <Select
             size="small"
