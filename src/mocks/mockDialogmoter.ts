@@ -7,7 +7,7 @@ export const mockDialogmoter = [
   ),
 
   http.get("/isdialogmote/api/v2/dialogmote/veilederident", () =>
-    HttpResponse.json(null, { status: 500 }),
+    HttpResponse.json(dialogmoterMock),
   ),
 
   http.post("/isdialogmote/api/v2/dialogmote/overta", () =>
