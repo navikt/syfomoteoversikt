@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { Heading, LocalAlert, Panel } from "@navikt/ds-react";
+import { ReactElement } from "react";
+import { LocalAlert } from "@navikt/ds-react";
 
 interface FeilmeldingProps {
   tittel?: string;
